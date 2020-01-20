@@ -1,9 +1,10 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Button } from 'react-native';
+import { ScrollView, StyleSheet, Button, Text } from 'react-native';
 
 export default function HomeScreen() {
   return (
     <ScrollView style={styles.container}>
+      <Text>Hello World!</Text>
     </ScrollView>
   );
 }
