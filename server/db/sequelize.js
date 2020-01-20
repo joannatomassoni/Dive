@@ -4,13 +4,13 @@ const { CommentModel, GenreModel, ShowModel, TypeModel, UserModel, VenueModel } 
 
 // create a new sequelize instance
 const sequelize = new Sequelize('dive', 'root', '', {
-    host: 'localhost',
-    dialect: 'mysql',
-    pool: {
-        max: 5,
-        min: 0,
-        idle: 10000
-      },
+  host: 'localhost',
+  dialect: 'mysql',
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  },
 });
 
 // instanstiate the models here
@@ -26,64 +26,74 @@ const Venue = VenueModel(sequelize, Sequelize);
 // each user has one type
 User.belongsTo(Type, { foreignKey: { allowNull: false } })
 // each show has one venue
-Show.belongsTo(Venue, { foreignKey: { allowNull: false }});
+Show.belongsTo(Venue, { foreignKey: { allowNull: false } });
 
 // join table for shows and fans
-Show.belongsToMany(User, { as: 'fans',
-                            through: 'fan_rsvps', 
-                            foreignKey: {
-                                name: 'id_show',
-                                allowNull: false
-                            },
-                            otherKey: {
-                                name: 'id_fan',
-                                allowNull: false
-                            } })
+Show.belongsToMany(User, {
+  as: 'fans',
+  through: 'fan_rsvps',
+  foreignKey: {
+    name: 'id_show',
+    allowNull: false
+  },
+  otherKey: {
+    name: 'id_fan',
+    allowNull: false
+  }
+})
 // join table for shows and bands
-Show.belongsToMany(User, { as: 'band', 
-                            through: 'show_bands', 
-                            foreignKey: { 
-                                name: 'id_band', 
-                                allowNull: false 
-                            } })
+Show.belongsToMany(User, {
+  as: 'band',
+  through: 'show_bands',
+  foreignKey: {
+    name: 'id_band',
+    allowNull: false
+  }
+})
 // join table for fans and bands
-User.belongsToMany(User, { as: 'fan', 
-                            through: 'fan_band', 
-                            foreignKey: {
-                                name: 'id_band',
-                                allowNull: false
-                            }, 
-                            otherKey: { 
-                                name: 'id_fan', 
-                                allowNull: false 
-                            } });
+User.belongsToMany(User, {
+  as: 'fan',
+  through: 'fan_band',
+  foreignKey: {
+    name: 'id_band',
+    allowNull: false
+  },
+  otherKey: {
+    name: 'id_fan',
+    allowNull: false
+  }
+});
 // join table for venues and fans
-Venue.belongsToMany(User, { as: 'fan', 
-                            through: 'fan_venue', 
-                            foreignKey: { 
-                                name: 'id_venue', 
-                                allowNull: false 
-                            },
-                            otherKey: { 
-                                name: 'id_fan', 
-                                allowNull: false 
-                            }  })
+Venue.belongsToMany(User, {
+  as: 'fan',
+  through: 'fan_venue',
+  foreignKey: {
+    name: 'id_venue',
+    allowNull: false
+  },
+  otherKey: {
+    name: 'id_fan',
+    allowNull: false
+  }
+})
 // join table for bands and genres
 // TODO: verify this is correct
-User.belongsToMany(Genre, { as: 'band', 
-                            through: 'band_genre', 
-                            foreignKey: {
-                                name: 'id_band',
-                                allowNull: false
-                            }, 
-                            otherKey: {
-                                name: 'id_genre', 
-                                allowNull: false 
-                            } }); 
+User.belongsToMany(Genre, {
+  as: 'band',
+  through: 'band_genre',
+  foreignKey: {
+    name: 'id_band',
+    allowNull: false
+  },
+  otherKey: {
+    name: 'id_genre',
+    allowNull: false
+  }
+});
 // each comment has one user
-Comment.belongsTo(User, { foreignKey: { allowNull: false } }); 
+Comment.belongsTo(User, { foreignKey: { allowNull: false } });
 // each comment has one show
-Comment.belongsTo(Show, { foreignKey: { allowNull: false }}); 
+Comment.belongsTo(Show, { foreignKey: { allowNull: false } });
 // each show has many comments
 Show.belongsToMany(Comment, { through: 'show_comments' })
 
@@ -95,11 +105,11 @@ sequelize.sync({ force: true })
     console.log(`Database & tables created!`)
   })
   .catch((err) => {
-      console.log(err);
+    console.log(err);
   })
 
 
 module.exports = {
-    // export sequelize for the model creation
-    sequelize,
+  // export sequelize for the model creation
+  sequelize, Genre, Comment, User, Show, Type, Venue
 }
