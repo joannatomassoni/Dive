@@ -1,6 +1,8 @@
 const feathers = require('@feathersjs/feathers');
 const express = require('@feathersjs/express');
 // const socketio = require('@feathersjs/socketio');
+// require db sequelize file to run it
+const db = require('./db/sequelize');
 
 // Creates an ExpressJS compatible Feathers application
 const app = express(feathers());
