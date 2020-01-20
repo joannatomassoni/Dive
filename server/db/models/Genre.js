@@ -1,9 +1,10 @@
 module.exports = (sequelize, type) => {
-  return sequelize.define('Genre', {
+  return sequelize.define('genre', {
     id: {
       type: type.INTEGER,
       primaryKey: true,
-      allowNull: false
+      allowNull: false,
+      autoIncrement: true
     },
     genre: {
       type: type.STRING,

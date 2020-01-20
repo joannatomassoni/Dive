@@ -1,9 +1,10 @@
 module.exports = (sequelize, type) => {
-    return sequelize.define('Venue', {
+    return sequelize.define('venue', {
         id: {
             type: type.INTEGER,
             primaryKey: true,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         name: {
             type: type.STRING,
