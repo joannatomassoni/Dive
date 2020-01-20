@@ -11,16 +11,10 @@ export default function HomeScreen() {
 HomeScreen.navigationOptions = {
   title: 'Shows',
   headerRight: () => (
-    <Button
-      onPress={() => alert('Login Redierect will happen now!')}
-      title="Login"
-    />
+    <Button onPress={() => alert('Login')} title="Login" />
   ),
   headerLeft: () => (
-    <Button
-      onPress={() => alert('Other screens will appear here!')}
-      title="Menu"
-    />
+    <Button onPress={() => alert('Menu')} title="Menu" />
   ),
 };
 
