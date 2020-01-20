@@ -1,15 +1,15 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
-export default function LinksScreen() {
+export default function BandsScreen() {
   return (
     <ScrollView style={styles.container}>
     </ScrollView>
   );
 }
 
-LinksScreen.navigationOptions = {
-  title: 'Links',
+BandsScreen.navigationOptions = {
+  title: 'Bands',
 };
 
 const styles = StyleSheet.create({
