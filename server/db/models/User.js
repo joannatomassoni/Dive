@@ -1,9 +1,10 @@
 module.exports = (sequelize, type) => {
-    return sequelize.define('User', {
+    return sequelize.define('user', {
         id: {
             type: type.INTEGER,
             primaryKey: true,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true
         },
         name: {
             type: type.STRING,
@@ -13,10 +14,21 @@ module.exports = (sequelize, type) => {
             type: type.STRING,
             allowNull: true,
         },
-        // type will be band or fan
-        type: {
+        link_facebook: {
             type: type.STRING,
-            allowNull: false
+            allowNull: true
+        },
+        link_spotify: {
+            type: type.STRING,
+            allowNull: true
+        },
+        link_instagram: {
+            type: type.STRING,
+            allowNull: true
+        },
+        photo: {
+            type: type.STRING,
+            allowNull: true
         }
     })
 }
