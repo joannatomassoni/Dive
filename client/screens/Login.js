@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import LoginForm from '../components/LoginForm'
 import MenuButton from '../components/MenuButton'
 
-export default class Bands extends React.Component {
+export default class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
         <MenuButton navigation={this.props.navigation} />
-        <Text style={styles.text}>Bands</Text>
+        <Text style={styles.text}>DIVE</Text>
+        <View style={styles.formContainer}>
+          {/* <LoginForm /> */}
+        </View>
       </View>
     )
   }
@@ -23,6 +27,11 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 30,
-    color: '#fff'
+    color: '#59C3D1',
+    opacity: 0.9,
+    fontWeight: 'bold'
+  },
+  formContainer: {
+
   }
 })

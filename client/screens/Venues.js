@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import MenuButton from '../components/MenuButton'
 
-export default class SettingsScreen extends React.Component {
+export default class Venues extends React.Component {
   render() {
     return (
       <View style={styles.container}>

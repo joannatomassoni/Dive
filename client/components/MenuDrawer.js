@@ -39,7 +39,7 @@ export default class MenuDrawer extends React.Component {
             {this.navLink('Shows', 'Shows')}
             {this.navLink('Bands', 'Bands')}
             {this.navLink('Venues', 'Venues')}
-            <Text style={styles.link}>Login</Text>
+            {this.navLink('Login', 'Login')}
           </View>
         <View style={styles.footer}>
           <Text style={styles.description}>Dive</Text>
@@ -92,12 +92,11 @@ const styles = StyleSheet.create({
   bottomLinks: {
     flex: 1,
     backgroundColor: '#3E5760',
-    paddingTop: 1,
     paddingBottom: 450,
   },
   link: {
     flex: 1,
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'bold',
     color: 'white',
     padding: 20,

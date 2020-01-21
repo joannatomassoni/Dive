@@ -6,6 +6,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import Shows from '../screens/Shows'
 import Bands from '../screens/Bands';
 import Venues from '../screens/Venues';
+import Login from '../screens/Login'
 
 import MenuDrawer from '../components/MenuDrawer'
 
@@ -28,6 +29,9 @@ const DrawerNavigator = createDrawerNavigator(
     },
     Venues: {
       screen: Venues
+    },
+    Login: {
+      screen: Login
     }
   },
   DrawerConfig
