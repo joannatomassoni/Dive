@@ -20,67 +20,21 @@ export default class Venues extends React.Component {
         query: 'music venue',
         near: 'new orleans, la',
         // ll: '29.9511, 90.0715',
-        limit: 1
+        limit: 3
       }
     })
       .then((response) => {
-        //this gets the name of the venue
-        console.log("????we're hitting api", response.data.response.venues[0].categories[0].pluralName);
+        console.log("we're hitting api", response.data.response.venues);
+        //this is hardcoded, gets the name of first music venue
+        const name = response.data.response.venues[0].categories[0].pluralName;
+        const address = response.data.response.venues[0].location.formattedAddress[0];
+        //right now city = city, state and zip.  It's a string that contains all of those
+        const city = response.data.response.venues[0].location.formattedAddress[1];
       })
       .catch((err) => {
         console.log("we're not hitting api", err);
       })
-    // fetch('https://api.foursquare.com/v2/venues/search', {
-    //   method: 'GET',
-    // qs: {
-    //   client_id: 'CLIENT_ID',
-    //   client_secret: 'CLIENT_SECRET',
-    //   ll: '40.7243,-74.0018',
-    //   query: 'coffee',
-    //   v: '20180323',
-    //   // limit: 1
-    // }
-    //   })
-    //       .then((response) => {
-    //   console.log("we're hitting api", response);
-    // })
-    //       .catch ((err) => {
-    //   console.log("we're not hitting api", err);
-    // })
-
-
-    // .then((response) => response.json())
-    // .then((responseJson) => {
-    //   console.log(responseJson);
-    //   this.setState({
-    //     data: responseJson
-    //   })
-    // })
-    // .catch((error) => {
-    //   console.error(error);
-    // });
   }
-
-  //     request({
-  //       url: 'https://api.foursquare.com/v2/venues/explore',
-  //       method: 'GET',
-  //       qs: {
-  //         client_id: 'CLIENT_ID',
-  //         client_secret: 'CLIENT_SECRET',
-  //         ll: '40.7243,-74.0018',
-  //         query: 'coffee',
-  //         v: '20180323',
-  //         limit: 1
-  //       }
-  //     }, function (err, res, body) {
-  //       if (err) {
-  //         console.error(err);
-  //       } else {
-  //         console.log(body);
-  //       }
-  //     });
-
-  //  }
 
   render() {
     return (
