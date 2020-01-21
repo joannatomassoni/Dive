@@ -104,25 +104,28 @@ sequelize.sync({ force: true })
     console.log(`Database & tables created!`)
   }).then(() => {
     Type.create({
-      name: 'fan'
+      typeName: 'fan'
     });
     Type.create({
-      name: 'band'
+      typeName: 'band'
     });
     Genre.create({
-      name: 'rock'
+      genreName: 'rock'
     });
     Genre.create({
-      name: 'punk'
+      genreName: 'punk'
     });
     Genre.create({
-      name: 'folk'
+      genreName: 'folk'
     });
     Genre.create({
-      name: 'indie'
+      genreName: 'indie'
     });
     Genre.create({
-      name: 'noise'
+      genreName: 'brass'
+    });
+    Genre.create({
+      genreName: 'jazz'
     });
   })
   .catch((err) => {

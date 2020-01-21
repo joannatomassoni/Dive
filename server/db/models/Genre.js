@@ -1,6 +1,6 @@
 module.exports = (sequelize, type) => {
   return sequelize.define('genre', {
-    genre: {
+    genreName: {
       type: type.STRING,
       allowNull: false
     },
