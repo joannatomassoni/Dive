@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Platform,
+  View,
   Text,
   Dimensions,
   StyleSheet,
@@ -22,6 +23,6 @@ export default class MenuDrawer extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    background: '#000000',
+    backgroundColor: 'black',
   }
 })
