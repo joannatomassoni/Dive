@@ -6,12 +6,22 @@ import { StyleSheet, Text, View } from 'react-native';
 import MenuButton from '../components/MenuButton'
 
 export default class Venues extends React.Component {
+  constructor() {
+    super()
+    state = {
+      name: '',
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      zip_code: 0,
+    }
+  }
+
   componentDidMount() {
     axios({
       method: 'get',
-      // url: 'https://api.foursquare.com/v2/venues/search?client_id=11ACWOWAADHLRUWGOKR4JCPTN3ENHFS25UVOHLKKYDYBIVWR&client_secret=DGVIU40XZ35VVOJWJCEZEDYI5BWQNJIPDG3MCNK2N3AF1CLO&v=20180301&query=music venue&ll=40.74224,-73.99386',
       // url: 'https://api.foursquare.com/v2/venues/search?near= new orleans, la&query=music venue&v=20150214&m=foursquare&client_secret=DGVIU40XZ35VVOJWJCEZEDYI5BWQNJIPDG3MCNK2N3AF1CLO&client_id=11ACWOWAADHLRUWGOKR4JCPTN3ENHFS25UVOHLKKYDYBIVWR',
-
       url: 'https://api.foursquare.com/v2/venues/search',
       params: {
         client_id: '11ACWOWAADHLRUWGOKR4JCPTN3ENHFS25UVOHLKKYDYBIVWR',
@@ -26,14 +36,18 @@ export default class Venues extends React.Component {
       .then((response) => {
         console.log("we're hitting api", response.data.response.venues[0].location.formattedAddress[1].split(' ')[3]);
         //this is hardcoded, gets the name of first music venue
+        this.setState({
+          name: response.data.response.venues[0].categories[0].pluralName,
+          address1: response.data.response.venues[0].location.address,
+          city: response.data.response.venues[0].location.city,
+          state: response.data.response.venues[0].location.formattedAddress[1].split(' ')[2],
+          zip_code: response.data.response.venues[0].location.formattedAddress[1].split(' ')[3]
+        });
         const name = response.data.response.venues[0].categories[0].pluralName;
         const address = response.data.response.venues[0].location.address;
-
         const city = response.data.response.venues[0].location.city;
         const state = response.data.response.venues[0].location.formattedAddress[1].split(' ')[2];
         const zip = response.data.response.venues[0].location.formattedAddress[1].split(' ')[3]
-        //right now city = city, state and zip.  It's a string that contains all of those
-        // response.data.response.venues[0].location.formattedAddress[1]
       })
       .catch((err) => {
         console.log("we're not hitting api", err);
