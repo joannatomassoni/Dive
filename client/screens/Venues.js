@@ -3,12 +3,12 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import MenuButton from '../components/MenuButton'
 
-export default class LinksScreen extends React.Component {
+export default class SettingsScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
         <MenuButton navigation={this.props.navigation} />
-        <Text style={styles.text}>Links</Text>
+        <Text style={styles.text}>Venues</Text>
       </View>
     )
   }

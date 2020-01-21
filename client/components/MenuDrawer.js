@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   Text,
-  Platform,
   ScrollView,
   Dimensions,
   StyleSheet,
@@ -37,9 +36,9 @@ export default class MenuDrawer extends React.Component {
             </View>
           </View>
           <View style={styles.bottomLinks}>
-            {this.navLink('Home', 'Home')}
-            {this.navLink('Links', 'Links')}
-            {this.navLink('Settings', 'Settings')}
+            {this.navLink('Shows', 'Shows')}
+            {this.navLink('Bands', 'Bands')}
+            {this.navLink('Venues', 'Venues')}
           </View>
         <View style={styles.footer}>
           <Text style={styles.description}>Dive</Text>

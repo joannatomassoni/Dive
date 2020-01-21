@@ -1,12 +1,11 @@
 import React from 'react';
-import { Platform, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
-import HomeScreen from '../screens/HomeScreen'
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import MenuButton from '../components/MenuButton';
+import Shows from '../screens/Shows'
+import Bands from '../screens/Bands';
+import Venues from '../screens/Venues';
 
 import MenuDrawer from '../components/MenuDrawer'
 
@@ -21,14 +20,14 @@ const DrawerConfig = {
 
 const DrawerNavigator = createDrawerNavigator(
   {
-    Home: {
-      screen: HomeScreen
+    Shows: {
+      screen: Shows
     },
-    Links: {
-      screen: LinksScreen
+    Bands: {
+      screen: Bands
     },
-    Settings: {
-      screen: SettingsScreen
+    Venues: {
+      screen: Venues
     }
   },
   DrawerConfig
