@@ -6,7 +6,6 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
-  Button
 } from 'react-native';
 
 const WIDTH = Dimensions.get('window').width
