@@ -53,15 +53,15 @@ export default class MenuDrawer extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'lightgray',
+    backgroundColor: '#2D323A',
   },
   profile: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     paddingTop: 25,
-    borderBottomWidth: 1,
-    borderBottomColor: '#777777'
+    borderBottomWidth: 3,
+    borderBottomColor: '#59C3D1'
   },
   profileText: {
     flex: 3,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   bottomLinks: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#3E5760',
     fontWeight: 'bold',
     paddingTop: 10,
     paddingBottom: 450,
@@ -107,19 +107,20 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#2D323A',
     borderTopWidth: 1,
-    borderTopColor: 'lightgray',
+    borderTopColor: '#9F92A3',
   },
   version: {
     flex: 1,
     textAlign: 'right',
     marginRight: 20,
-    color: 'gray',
+    color: '#75A4AD',
   },
   description: {
     flex: 1,
     marginLeft: 20, 
     fontSize: 16,
+    color: '#59C3D1'
   }
 })
