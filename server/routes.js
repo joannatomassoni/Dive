@@ -1,26 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const { getTypes } = require('./db/controllers/index');
-
+const ctrl = require('./db/controllers/index');
 
 router.get('/', function (req, res) {
   res.send("we're getting routes!");
 })
 
-//GET skeleton route for getting user info
-router.get('/users', function (req, res) {
-  res.send("we are getting users!");
-})
+//GET skeleton route for getting all fans
+router.get('/fans', ctrl.getAllFans);
 
 //POST skeleton route to post data to user table 
-router.post('/users', function (req, res) {
-  res.send("We received your user info");
-})
+router.post('/users', ctrl.createUser);
 
-//GET skeleton route for getting ONE band info
-router.get('/bands', function (req, res) {
-  res.send("we are getting band!");
-})
+//GET skeleton route for getting all band info
+router.get('/bands', ctrl.getAllBands)
 
 //POST skeleton route to post data to band table for ONE band
 router.post('/bands', function (req, res) {
@@ -43,9 +36,7 @@ router.get('/venues', function (req, res) {
 })
 
 //POST skeleton route to post data ONE venue table
-router.post('/venues', function (req, res) {
-  res.send("We received your venue info");
-})
+router.post('/venues', ctrl.createVenue)
 
 //GET skeleton route for getting ONE comment info
 router.get('/comments', function (req, res) {
@@ -58,7 +49,7 @@ router.post('/comments', function (req, res) {
 })
 
 //GET skeleton route for getting the two user types
-router.get('/types', getTypes);
+router.get('/types', ctrl.getTypes);
 
 
 module.exports = router;
