@@ -24,7 +24,8 @@ export default class Venues extends React.Component {
       }
     })
       .then((response) => {
-        console.log("????we're hitting api", response);
+        //this gets the name of the venue
+        console.log("????we're hitting api", response.data.response.venues[0].categories[0].pluralName);
       })
       .catch((err) => {
         console.log("we're not hitting api", err);
