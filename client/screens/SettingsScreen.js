@@ -25,26 +25,3 @@ const styles = StyleSheet.create({
     fontSize: 30
   }
 })
-
-
-// import React from 'react';
-// import { ScrollView, StyleSheet } from 'react-native';
-
-// export default function SettingsScreen() {
-//   return (
-//     <ScrollView style={styles.container}>
-//     </ScrollView>
-//   );
-// }
-
-// SettingsScreen.navigationOptions = {
-//   title: 'Venues',
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingTop: 15,
-//     backgroundColor: '#fff',
-//   },
-// });
