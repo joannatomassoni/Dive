@@ -2,6 +2,7 @@ const express = require('express');
 // const path = require('path');
 const bodyParser = require('body-parser');
 const router = require('./routes');
+const db = require('./db/sequelize');
 
 const app = express();
 

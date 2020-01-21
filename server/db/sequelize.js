@@ -97,12 +97,33 @@ Comment.belongsTo(Show, { foreignKey: { allowNull: false } });
 // each show has many comments
 Show.belongsToMany(Comment, { through: 'show_comments' })
 
-
-
-// create database and tables
+// create database and tables, and prepopulate type and genre tables
+// TODO: should we prepopulate venues?
 sequelize.sync({ force: true })
   .then(() => {
     console.log(`Database & tables created!`)
+  }).then(() => {
+    Type.create({
+      name: 'fan'
+    });
+    Type.create({
+      name: 'band'
+    });
+    Genre.create({
+      name: 'rock'
+    });
+    Genre.create({
+      name: 'punk'
+    });
+    Genre.create({
+      name: 'folk'
+    });
+    Genre.create({
+      name: 'indie'
+    });
+    Genre.create({
+      name: 'noise'
+    });
   })
   .catch((err) => {
     console.log(err);
