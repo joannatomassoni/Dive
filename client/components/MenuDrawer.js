@@ -14,7 +14,7 @@ const HEIGHT = Dimensions.get('window').height
 export default class MenuDrawer extends React.Component {
   navLink(nav, text) {
     return (
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity style={{height: 50}} onPress={() => this.props.navigation.navigate(nav)}>
         <Text style={styles.link}>{text}</Text>
       </TouchableOpacity>
     )
@@ -26,6 +26,9 @@ export default class MenuDrawer extends React.Component {
         <Text style={{paddingTop: 40, color: 'white'}}>MenuDrawer</Text>
         </View>
         <View style={styles.bottomLinks}>
+          {this.navLink('Home', 'Home')}
+          {this.navLink('Links', 'Links')}
+          {this.navLink('Settings', 'Settings')}
         </View>
       </View>
     )
