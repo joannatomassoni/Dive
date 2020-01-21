@@ -6,6 +6,7 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
+  Button
 } from 'react-native';
 
 const WIDTH = Dimensions.get('window').width
@@ -22,7 +23,7 @@ export default class MenuDrawer extends React.Component {
   render() {
     return( 
       <View style ={styles.container}>
-        <ScrollView styles={styles.Scroller}>
+        <ScrollView>
           <View style={styles.topLinks}>
             <View style={styles.profile}>
               <View style={styles.imgView}>
@@ -39,6 +40,7 @@ export default class MenuDrawer extends React.Component {
             {this.navLink('Shows', 'Shows')}
             {this.navLink('Bands', 'Bands')}
             {this.navLink('Venues', 'Venues')}
+            <Text style={styles.link}>Login</Text>
           </View>
         <View style={styles.footer}>
           <Text style={styles.description}>Dive</Text>
@@ -85,22 +87,22 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   topLinks: {
-    height: 160,
+    height: 150,
     backgroundColor: '#2D323A',
   },
   bottomLinks: {
     flex: 1,
     backgroundColor: '#3E5760',
-    fontWeight: 'bold',
-    paddingTop: 10,
+    paddingTop: 1,
     paddingBottom: 450,
   },
   link: {
     flex: 1,
-    fontSize: 20,
-    padding: 6,
-    paddingLeft: 14,
-    margin: 5,
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'white',
+    padding: 20,
+    paddingLeft: 30,
     textAlign: 'left',
   },
   footer: {
