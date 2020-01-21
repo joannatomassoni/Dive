@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { getTypes } = require('./db/controllers/index');
 
 
 router.get('/', function (req, res) {
@@ -55,5 +56,9 @@ router.get('/comments', function (req, res) {
 router.post('/comments', function (req, res) {
   res.send("We received your comment info");
 })
+
+//GET skeleton route for getting the two user types
+router.get('/types', getTypes);
+
 
 module.exports = router;
