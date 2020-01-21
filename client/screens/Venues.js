@@ -24,12 +24,16 @@ export default class Venues extends React.Component {
       }
     })
       .then((response) => {
-        console.log("we're hitting api", response.data.response.venues);
+        console.log("we're hitting api", response.data.response.venues[0].location.formattedAddress[1].split(' ')[3]);
         //this is hardcoded, gets the name of first music venue
         const name = response.data.response.venues[0].categories[0].pluralName;
-        const address = response.data.response.venues[0].location.formattedAddress[0];
+        const address = response.data.response.venues[0].location.address;
+
+        const city = response.data.response.venues[0].location.city;
+        const state = response.data.response.venues[0].location.formattedAddress[1].split(' ')[2];
+        const zip = response.data.response.venues[0].location.formattedAddress[1].split(' ')[3]
         //right now city = city, state and zip.  It's a string that contains all of those
-        const city = response.data.response.venues[0].location.formattedAddress[1];
+        // response.data.response.venues[0].location.formattedAddress[1]
       })
       .catch((err) => {
         console.log("we're not hitting api", err);
