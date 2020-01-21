@@ -1,24 +1,21 @@
-const feathers = require('@feathersjs/feathers');
-const express = require('@feathersjs/express');
-// const socketio = require('@feathersjs/socketio');
-// require db sequelize file to run it
-const db = require('./db/sequelize');
+const express = require('express');
+// const path = require('path');
+const bodyParser = require('body-parser');
+// const { apiRouter } = require('./api');
+// require('dotenv').config();
 
-// Creates an ExpressJS compatible Feathers application
-const app = express(feathers());
+const app = express();
 
-// Parse HTTP JSON bodies
-app.use(express.json());
-// Parse URL-encoded params
-app.use(express.urlencoded({ extended: true }));
-// Host static files from the current folder
-app.use(express.static(__dirname));
-// Add REST API support
-app.configure(express.rest());
-// Configure Socket.io real-time APIs
-// app.configure(socketio());
+let PORT = process.env.PORT || 8080;
+// const CLIENT_PATH = path.join(__dirname, '../client/dist');
 
-// Start the server
-app.listen(8080).on('listening', () =>
-  console.log('Feathers server listening on localhost:8080')
-);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// var router = express.Router();
+app.use('/', router);
+
+app.listen(PORT, () => {
+  console.log(`Listening on :${PORT} 🚀`);
+});
+
