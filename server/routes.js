@@ -28,7 +28,7 @@ router.post('/bands/genres', ctrl.addGenreToBand)
 router.get('/bands/genres/:id', ctrl.getBandGenres); 
 
 // get all fans of a band
-// router.get('/bands/fans', ctrl.getAllFans);
+router.get('/bands/fans/:band', ctrl.getAllFans);
 
 
 // POST skeleton route to post data to band table for ONE band
