@@ -93,7 +93,8 @@ Show.belongsToMany(Comment, { through: 'show_comments' })
 
 // create database and tables, and prepopulate type and genre tables
 // TODO: should we prepopulate venues?
-// got rid of force: true so db does not empty on every server reload
+
+// get rid of force: true if you don't want db to empty on every server reload
 // sequelize.sync()
 sequelize.sync({ force: true })
   .then(() => {
