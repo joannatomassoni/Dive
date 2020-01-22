@@ -38,6 +38,7 @@ const getSingleUser = async (req, res) => {
           res.status(200).send(user);
     }
     catch (err) {
+        console.log(err);
         res.send(err);        
     }
 }
