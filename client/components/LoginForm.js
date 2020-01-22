@@ -7,46 +7,38 @@ import {
   TouchableOpacity,
   } from 'react-native';
 
-export default class LoginForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { 
-      count: 0 
-    }
-  }
+export default function LoginForm (props) {
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <TextInput 
-        placeholder="username or email"
-        placeholderTextColor="#75A4AD"
-        returnKeyType="next"
-        onSubmitEditing={() => this.passwordInput.focus()}
-        keyboardType="email-address"
-        style={styles.input} 
-        />
-        <TextInput 
-        placeholder="password"
-        placeholderTextColor="#75A4AD"
-        returnKeyType="go"
-        secureTextEntry
-        style={styles.input}
-        ref={(input) => {this.passwordInput = input}}
-        />
-        <TouchableOpacity 
-        style={styles.loginContainer}
-        >
-          <Text style={styles.buttonText}>LOGIN</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        style={styles.googleLoginContainer}
-        >
-          <Text style={styles.buttonText}>GOOGLE  LOGIN</Text>
-        </TouchableOpacity>
-      </View>
-    )
-  }
+  return (
+    <View style={styles.container}>
+      <TextInput 
+      placeholder="username or email"
+      placeholderTextColor="#75A4AD"
+      returnKeyType="next"
+      // onSubmitEditing={() => this.passwordInput.focus()}
+      keyboardType="email-address"
+      style={styles.input} 
+      />
+      <TextInput 
+      placeholder="password"
+      placeholderTextColor="#75A4AD"
+      returnKeyType="go"
+      secureTextEntry
+      style={styles.input}
+      // ref={(input) => {this.passwordInput = input}}
+      />
+      <TouchableOpacity 
+      style={styles.loginContainer}
+      >
+      <Text style={styles.buttonText}>LOGIN</Text>
+      </TouchableOpacity>
+      <TouchableOpacity 
+      style={styles.googleLoginContainer}
+      >
+        <Text style={styles.buttonText}>GOOGLE  LOGIN</Text>
+      </TouchableOpacity>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
