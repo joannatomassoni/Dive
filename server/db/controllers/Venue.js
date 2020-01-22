@@ -24,6 +24,8 @@ const createVenue = async (req, res) => {
 // Get all venues
 // const getAllVenues = ()
 
+// Get shows at a given venue
+
 // Update venue
 
 // Delete venue
