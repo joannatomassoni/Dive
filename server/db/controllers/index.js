@@ -9,7 +9,7 @@ const { addFanToVenue,
     getSingleUser
 } = require('./User');
 const { getTypes } = require('./Type');
-const { createVenue } = require('./Venue');
+const { createVenue, getAllVenues } = require('./Venue');
 const { 
         createShow,
         getFanRSVPs,
@@ -34,5 +34,6 @@ module.exports = {
     createVenue,
     removeFanRSVP,
     rsvpFanToShow,
+    getAllVenues,
     getAllVenues
 }

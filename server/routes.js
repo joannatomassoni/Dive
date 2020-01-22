@@ -3,6 +3,10 @@ const router = express.Router();
 const ctrl = require('./db/controllers/index');
 const { getAllVenues } = require('./db/controllers/Venue');
 
+router.get('/', function (req, res) {
+  res.send("we're getting routes!");
+})
+
 // SIGNUP
 router.post('/users', ctrl.createUser);
 
