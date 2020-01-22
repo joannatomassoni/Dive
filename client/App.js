@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import DrawerNavigator from './navigation/DrawerNavigator'
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
+export const SignedInContext = createContext(false);
+
+export default function App (props) {
+
+  return (
+    <View style={styles.container}>
+      <SignedInContext.Provider value={false}>
         <DrawerNavigator />
-      </View>
-    )
-  }
+      </SignedInContext.Provider>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor:'#fff',
   }
 })

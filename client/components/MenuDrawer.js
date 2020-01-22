@@ -7,48 +7,49 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import { UserContext } from '../context/UserContext';
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
-export default class MenuDrawer extends React.Component {
-  navLink(nav, text) {
+export default function MenuDrawer(props) {
+  //const { value, setVale } = useContext(UserContext);
+  const navLink = (nav, text) => {
     return (
-      <TouchableOpacity style={{height: 50}} onPress={() => this.props.navigation.navigate(nav)}>
+      <TouchableOpacity style={{height: 50}} onPress={() => props.navigation.navigate(nav)}>
         <Text style={styles.link}>{text}</Text>
       </TouchableOpacity>
     )
   }
-  render() {
-    return( 
-      <View style ={styles.container}>
-        <ScrollView>
-          <View style={styles.topLinks}>
-            <View style={styles.profile}>
-              <View style={styles.imgView}>
-                {/* <Image style={styles.img} source={require('//link goes in here')} /> */}
-              </View>
-              <View style={styles.profileText}>
-                <Text style={styles.name}>
-                  {/* username here */}
-                </Text>
-              </View>
+
+  return( 
+    <View style ={styles.container}>
+      <ScrollView>
+        <View style={styles.topLinks}>
+          <View style={styles.profile}>
+            <View style={styles.imgView}>
+              {/* <Image style={styles.img} source={require('//link goes in here')} /> */}
+            </View>
+            <View style={styles.profileText}>
+              <Text style={styles.name}>
+                {/* username here */}
+              </Text>
             </View>
           </View>
-          <View style={styles.bottomLinks}>
-            {this.navLink('Shows', 'Shows')}
-            {this.navLink('Bands', 'Bands')}
-            {this.navLink('Venues', 'Venues')}
-            {this.navLink('Login', 'Login')}
-          </View>
-        <View style={styles.footer}>
-          <Text style={styles.description}>Dive</Text>
-          <Text style={styles.version}>v1.0</Text>
         </View>
-        </ScrollView>
+        <View style={styles.bottomLinks}>
+          {navLink('Shows', 'Shows')}
+          {navLink('Bands', 'Bands')}
+          {navLink('Venues', 'Venues')}
+          {navLink('Login', 'Login')}
+        </View>
+      <View style={styles.footer}>
+        <Text style={styles.description}>Dive</Text>
+        <Text style={styles.version}>v1.0</Text>
       </View>
-    )
-  }
+      </ScrollView>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
