@@ -29,9 +29,28 @@ const rsvpFanToShow = async (req, res) => {
         })
         res.sendStatus(201);
     }
-    catch(err) {
+    catch (err) {
         console.log(err);
         res.send(400);
+    }
+}
+
+// Allow fan to remove their rsvp
+const removeFanRSVP = async (req, res) => {
+    try {
+        // show id
+        const { id_fan, id_show } = req.body;
+        await RSVP.destroy({
+            where: {
+                id_fan: id_fan,
+                id_show: id_show
+            }
+        })
+        res.sendStatus(200);
+    }
+    catch (err) {
+        console.log(err);
+        res.sendStatus(400);
     }
 }
 
@@ -69,5 +88,6 @@ const getRSVPs = async (req, res) => {
 module.exports = {
     createShow,
     getRSVPs,
+    removeFanRSVP,
     rsvpFanToShow
 }

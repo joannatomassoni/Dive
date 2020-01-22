@@ -46,7 +46,19 @@ router.post('/shows', ctrl.createShow)
 // get a single show
 // router.post('/shows:id', () => {})
 
-// TODO:
+// rsvp fan to a show
+router.post('/shows/rsvps', ctrl.rsvpFanToShow)
+
+
+/**
+ * remove a fan rsvp from a show
+ * needs fan id and show id passed in body
+ */
+router.delete('/shows/rsvps', ctrl.removeFanRSVP)
+
+// get fans who have rsvpd to a given show. id in params will be show id.
+router.get('/shows/rsvps/:id', ctrl.getRSVPs)
+
 // create a venue
 router.post('/venues', ctrl.createVenue)
 

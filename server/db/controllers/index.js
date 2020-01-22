@@ -13,6 +13,7 @@ const { createVenue } = require('./Venue');
 const { 
         createShow,
         getRSVPs,
+        removeFanRSVP,
         rsvpFanToShow
     } = require('./Show');
 
@@ -29,5 +30,6 @@ module.exports = {
     getSingleUser,
     getTypes,
     createVenue,
+    removeFanRSVP,
     rsvpFanToShow
 }
