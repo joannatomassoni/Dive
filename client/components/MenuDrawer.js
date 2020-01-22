@@ -12,6 +12,7 @@ const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 export default class MenuDrawer extends React.Component {
+  
   navLink(nav, text) {
     return (
       <TouchableOpacity style={{height: 50}} onPress={() => this.props.navigation.navigate(nav)}>
@@ -19,7 +20,7 @@ export default class MenuDrawer extends React.Component {
       </TouchableOpacity>
     )
   }
-  render() {
+  render() {;
     return( 
       <View style ={styles.container}>
         <ScrollView>

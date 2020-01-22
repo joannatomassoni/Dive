@@ -10,6 +10,10 @@ import LoginForm from '../components/LoginForm'
 import MenuButton from '../components/MenuButton'
 
 export default class Login extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>

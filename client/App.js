@@ -1,13 +1,28 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, StatusBar } from 'react-native';
 
 import DrawerNavigator from './navigation/DrawerNavigator'
 
 export default class App extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      signedIn: false,
+    }
+
+    this.handleSignIn = this.handleSignIn.bind(this);
+  }
+
+  handleSignIn() {
+    this.setState({
+      signedIn: !this.state.signedIn,
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <DrawerNavigator />
+        <DrawerNavigator screenProps={() => this.handleSignIn()} />
       </View>
     )
   }
@@ -16,6 +31,5 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor:'#fff',
   }
 })

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -14,8 +14,9 @@ const WIDTH = Dimensions.get('window').width;
 
 const DrawerConfig = {
   drawerWidth: WIDTH * 0.65,
-  contentComponent: ({ navigation }) => {
-    return (<MenuDrawer navigation={navigation} />)
+
+  contentComponent: (props) => {
+    return (<MenuDrawer navigation={props.navigation} />)
   }
 }
 

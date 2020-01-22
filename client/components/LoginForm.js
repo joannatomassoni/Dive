@@ -8,7 +8,9 @@ import {
   } from 'react-native';
 
 export default class LoginForm extends React.Component {
+
   render() {
+    console.log(this.props);
     return (
       <View style={styles.container}>
         <TextInput 
@@ -27,10 +29,14 @@ export default class LoginForm extends React.Component {
         style={styles.input}
         ref={(input) => {this.passwordInput = input}}
         />
-        <TouchableOpacity style={styles.loginContainer}>
+        <TouchableOpacity 
+        style={styles.loginContainer}
+        >
           <Text style={styles.buttonText}>LOGIN</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.googleLoginContainer}>
+        <TouchableOpacity 
+        style={styles.googleLoginContainer}
+        >
           <Text style={styles.buttonText}>GOOGLE  LOGIN</Text>
         </TouchableOpacity>
       </View>
