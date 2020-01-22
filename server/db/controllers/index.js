@@ -3,7 +3,6 @@ const { addFanToVenue,
         addFanToBand, 
         addGenreToBand, 
         createUser, 
-        createShow,
         getAllBands,
         getBandFans,
         getBandGenres,
@@ -11,6 +10,7 @@ const { addFanToVenue,
     } = require('./User');
 const { getTypes } = require('./Type');
 const { createVenue } = require('./Venue');
+const { createShow } = require('./Show');
 
 module.exports = {
     addFanToBand,

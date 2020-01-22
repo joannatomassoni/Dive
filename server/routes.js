@@ -39,14 +39,12 @@ router.get('/shows', function (req, res) {
 })
 
 // TODO:
-// get a single show
-
+// add a show
+router.post('/shows', ctrl.createShow)
 
 // TODO:
-// add a show
-router.post('/shows', function (req, res) {
-  res.send("We received your show info");
-})
+// get a single show
+// router.post('/shows:id', () => {})
 
 // TODO:
 // create a venue
