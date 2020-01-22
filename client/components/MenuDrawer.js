@@ -13,7 +13,7 @@ const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 export default function MenuDrawer(props) {
-  // const { value, setVale } = useContext(UserContext);
+  //const { value, setVale } = useContext(UserContext);
   const navLink = (nav, text) => {
     return (
       <TouchableOpacity style={{height: 50}} onPress={() => props.navigation.navigate(nav)}>

@@ -1,31 +1,19 @@
-import React from 'react';
-import { StyleSheet, View, StatusBar } from 'react-native';
+import React, { createContext } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import DrawerNavigator from './navigation/DrawerNavigator'
 
-export default class App extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      signedIn: false,
-    }
+export const SignedInContext = createContext(false);
 
-    this.handleSignIn = this.handleSignIn.bind(this);
-  }
+export default function App (props) {
 
-  handleSignIn() {
-    this.setState({
-      signedIn: !this.state.signedIn,
-    })
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <DrawerNavigator screenProps={() => this.handleSignIn()} />
-      </View>
-    )
-  }
+  return (
+    <View style={styles.container}>
+      <SignedInContext.Provider value={false}>
+        <DrawerNavigator />
+      </SignedInContext.Provider>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
