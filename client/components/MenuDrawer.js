@@ -37,7 +37,7 @@ export default function MenuDrawer(props) {
               </View>
               <View style={styles.profileText}>
                 <Text style={styles.name}>
-                  {/* username here */}
+                  {/* {userInfo.name} */}
                 </Text>
               </View>
             </View>
@@ -61,14 +61,6 @@ export default function MenuDrawer(props) {
         : <ScrollView>
           <View style={styles.topLinks}>
             <View style={styles.profile}>
-              <View style={styles.imgView}>
-                {/* <Image style={styles.img} source={require('//link goes in here')} /> */}
-              </View>
-              <View style={styles.profileText}>
-                <Text style={styles.name}>
-                  {/* username here */}
-                </Text>
-              </View>
             </View>
           </View>
           <View style={styles.bottomLinks}>

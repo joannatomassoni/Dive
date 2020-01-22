@@ -19,7 +19,6 @@ export default class Venues extends React.Component {
   }
 
   componentDidMount() {
-    console.log();
     axios({
       method: 'get',
       // url: 'https://api.foursquare.com/v2/venues/search?near= new orleans, la&query=music venue&v=20150214&m=foursquare&client_secret=DGVIU40XZ35VVOJWJCEZEDYI5BWQNJIPDG3MCNK2N3AF1CLO&client_id=11ACWOWAADHLRUWGOKR4JCPTN3ENHFS25UVOHLKKYDYBIVWR',

@@ -16,9 +16,6 @@ export default function LoginForm (props) {
   //set username to text in username textInput
   const [usernameValue, setUsernameValue] = useState('');
   
-  console.log(userInfo);
-  console.log(usernameValue);
-
   //function to sign in with google auth
   const googleSignIn = async () => {
     try {
@@ -58,7 +55,6 @@ export default function LoginForm (props) {
       returnKeyType="go"
       secureTextEntry
       style={styles.input}
-      // ref={(input) => {this.passwordInput = input}}
       />
       <TouchableOpacity 
         style={styles.loginContainer}
