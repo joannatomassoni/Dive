@@ -37,7 +37,7 @@ export default function MenuDrawer(props) {
               </View>
               <View style={styles.profileText}>
                 <Text style={styles.name}>
-                  {/* {userInfo.name} */}
+                  {userInfo.name}
                 </Text>
               </View>
             </View>
@@ -48,7 +48,11 @@ export default function MenuDrawer(props) {
             {navLink('Venues', 'Venues')}
             {navLink('Hub', 'Hub')}
             <TouchableOpacity 
-            onPress={() => setUserInfo(userInfo => ({ ...userInfo, signedIn: false }))}
+            onPress={() => setUserInfo(userInfo => ({
+              ...userInfo,
+              signedIn: false,
+              name: '',
+              photoUrl: ''}))}
             >
               <Text style={styles.link}>Log Out</Text>
             </TouchableOpacity>
