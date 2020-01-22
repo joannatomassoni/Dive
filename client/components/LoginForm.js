@@ -26,6 +26,7 @@ export default function LoginForm (props) {
       })
       if (type === "success") {
         console.log('User Info: ', user, 'Access Token: ', accessToken);
+        //key values to add to the userInfo global state
         setUserInfo(userInfo => 
           ({ 
             ...userInfo, 
@@ -41,6 +42,7 @@ export default function LoginForm (props) {
 
   return (
     <View style={styles.container}>
+      {/* username text box */}
       <TextInput 
       placeholder="username or email"
       placeholderTextColor="#75A4AD"
@@ -49,6 +51,7 @@ export default function LoginForm (props) {
       keyboardType="email-address"
       style={styles.input} 
       />
+      {/* password text box */}
       <TextInput 
       placeholder="password"
       placeholderTextColor="#75A4AD"
@@ -56,12 +59,14 @@ export default function LoginForm (props) {
       secureTextEntry
       style={styles.input}
       />
+      {/* login button */}
       <TouchableOpacity 
         style={styles.loginContainer}
         onPress={() => setUserInfo(userInfo => ({ ...userInfo, signedIn: true }))}
       >
       <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
+      {/* google login button */}
       <TouchableOpacity
         onPress={() => {googleSignIn()}}
         style={styles.googleLoginContainer}

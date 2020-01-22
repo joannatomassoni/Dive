@@ -9,7 +9,7 @@ import {
   Image,
 } from 'react-native';
 import { SignedInContext } from '../App'
-
+//screen dimensions for menu bar
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
@@ -33,9 +33,11 @@ export default function MenuDrawer(props) {
         <ScrollView>
           <View style={styles.topLinks}>
             <View style={styles.profile}>
+              {/* image from user's google auth */}
               <View style={styles.imgView}>
                 <Image style={styles.img} source={{uri: userInfo.photoUrl}} />
               </View>
+              {/* user's name */}
               <View style={styles.profileText}>
                 <Text style={styles.name}>
                   {userInfo.name}
@@ -43,11 +45,13 @@ export default function MenuDrawer(props) {
               </View>
             </View>
           </View>
+          {/* nav links in menu bar for when signed in*/}
           <View style={styles.bottomLinks}>
             {navLink('Shows', 'Shows')}
             {navLink('Bands', 'Bands')}
             {navLink('Venues', 'Venues')}
             {navLink('Hub', 'Hub')}
+            {/* logout button when user is signed in */}
             <TouchableOpacity 
             onPress={() => setUserInfo(userInfo => ({
               ...userInfo,
@@ -58,6 +62,7 @@ export default function MenuDrawer(props) {
               <Text style={styles.link}>Log Out</Text>
             </TouchableOpacity>
           </View>
+          {/* menu bar footer info */}
           <View style={styles.footer}>
             <Text style={styles.description}>Dive</Text>
             <Text style={styles.version}>v1.0</Text>
@@ -69,12 +74,14 @@ export default function MenuDrawer(props) {
             <View style={styles.profile}>
             </View>
           </View>
+          {/* nav links in menu bar for when signed out*/}
           <View style={styles.bottomLinks}>
             {navLink('Shows', 'Shows')}
             {navLink('Bands', 'Bands')}
             {navLink('Venues', 'Venues')}
             {navLink('Login', 'Login')}
           </View>
+          {/* menu bar footer info */}
           <View style={styles.footer}>
             <Text style={styles.description}>Dive</Text>
             <Text style={styles.version}>v1.0</Text>

@@ -5,7 +5,7 @@ import MenuButton from '../components/MenuButton'
 
 export default function Bands (props) {
   //global user signin info and editing function
-  const userInfo = useContext(SignedInContext);
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
   //console.log(userInfo[0]);
   
   return (
