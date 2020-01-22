@@ -4,6 +4,7 @@ const { addFanToVenue,
         addGenreToBand, 
         createUser, 
         getAllBands,
+        getBandFans,
         getBandGenres,
         getSingleUser 
     } = require('./User');
@@ -16,6 +17,7 @@ module.exports = {
     addGenreToBand,
     createUser,
     getAllBands,
+    getBandFans,
     getBandGenres,
     getSingleUser,
     getTypes,
