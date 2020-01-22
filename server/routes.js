@@ -13,11 +13,9 @@ router.post('/users', ctrl.createUser);
 // TODO: modify params to be for id
 router.get('/users/:id', ctrl.getSingleUser)
 
-// TODO:
 // get all bands 
 router.get('/bands', ctrl.getAllBands)
 
-// TODO:
 // add fan for band
 router.post('/bands/fans', ctrl.addFanToBand)
 
@@ -28,7 +26,7 @@ router.post('/bands/genres', ctrl.addGenreToBand)
 router.get('/bands/genres/:id', ctrl.getBandGenres); 
 
 // get all fans of a band
-router.get('/bands/fans/:band', ctrl.getAllFans);
+// router.get('/bands/fans/:band', ctrl.getAllFans);
 
 
 // POST skeleton route to post data to band table for ONE band
