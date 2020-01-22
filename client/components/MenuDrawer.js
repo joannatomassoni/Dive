@@ -50,7 +50,6 @@ export default function MenuDrawer(props) {
       </ScrollView>
     </View>
   )
-  
 }
 
 const styles = StyleSheet.create({

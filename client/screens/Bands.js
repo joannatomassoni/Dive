@@ -3,15 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import MenuButton from '../components/MenuButton'
 
-export default class Bands extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <MenuButton navigation={this.props.navigation} />
-        <Text style={styles.text}>Bands</Text>
-      </View>
-    )
-  }
+export default function Bands (props) {
+  return (
+    <View style={styles.container}>
+      <MenuButton navigation={props.navigation} />
+      <Text style={styles.text}>Bands</Text>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
