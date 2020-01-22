@@ -56,13 +56,7 @@ const getAllFans = async (req, res, next) => {
     catch (err) {
         res.send(500, 'Failed to get fans');
     }
-                // .catch((err) => {
-        //     console.log(err);
-        //     res.send(err);
-        // })
 }
-
-// Get single user
 
 // Get fans who have rsvpd to a show
 
