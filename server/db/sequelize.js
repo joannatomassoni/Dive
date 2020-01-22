@@ -34,9 +34,9 @@ const User = UserModel(sequelize, Sequelize);
 // create associations, save in variables to use in queries
 
 // each user has one type
-User.Type = User.belongsTo(Type, { foreignKey: { allowNull: false } })
+User.Type = User.belongsTo(Type, { foreignKey: { name: 'id_type', allowNull: false } })
 // each show has one venue
-Show.belongsTo(Venue, { foreignKey: { allowNull: false } });
+Show.belongsTo(Venue, { foreignKey: { name: 'id_venue', allowNull: false } });
 
 // join table for shows and fans
 Show.belongsToMany(User, {
