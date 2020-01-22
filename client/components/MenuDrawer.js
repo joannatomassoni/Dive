@@ -6,6 +6,7 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { SignedInContext } from '../App'
 
@@ -23,7 +24,7 @@ export default function MenuDrawer(props) {
       </TouchableOpacity>
     )
   }
-
+  console.log(userInfo);
   return( 
     <View style ={styles.container}>
       {/* Change menu options for when user is signed in */}
@@ -33,7 +34,7 @@ export default function MenuDrawer(props) {
           <View style={styles.topLinks}>
             <View style={styles.profile}>
               <View style={styles.imgView}>
-                {/* <Image style={styles.img} source={require('//link goes in here')} /> */}
+                <Image style={styles.img} source={{uri: userInfo.photoUrl}} />
               </View>
               <View style={styles.profileText}>
                 <Text style={styles.name}>
