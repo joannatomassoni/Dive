@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -7,12 +7,15 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import { SignedInContext } from '../App'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 export default function MenuDrawer(props) {
-  //const { value, setVale } = useContext(UserContext);
+  //global user signin info and editing function
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
+
   const navLink = (nav, text) => {
     return (
       <TouchableOpacity style={{height: 50}} onPress={() => props.navigation.navigate(nav)}>
@@ -23,30 +26,63 @@ export default function MenuDrawer(props) {
 
   return( 
     <View style ={styles.container}>
-      <ScrollView>
-        <View style={styles.topLinks}>
-          <View style={styles.profile}>
-            <View style={styles.imgView}>
-              {/* <Image style={styles.img} source={require('//link goes in here')} /> */}
-            </View>
-            <View style={styles.profileText}>
-              <Text style={styles.name}>
-                {/* username here */}
-              </Text>
+      {/* Change menu options for when user is signed in */}
+      {userInfo.signedIn ?
+        //view for when user is not signed in
+        <ScrollView>
+          <View style={styles.topLinks}>
+            <View style={styles.profile}>
+              <View style={styles.imgView}>
+                {/* <Image style={styles.img} source={require('//link goes in here')} /> */}
+              </View>
+              <View style={styles.profileText}>
+                <Text style={styles.name}>
+                  {/* username here */}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-        <View style={styles.bottomLinks}>
-          {navLink('Shows', 'Shows')}
-          {navLink('Bands', 'Bands')}
-          {navLink('Venues', 'Venues')}
-          {navLink('Login', 'Login')}
-        </View>
-      <View style={styles.footer}>
-        <Text style={styles.description}>Dive</Text>
-        <Text style={styles.version}>v1.0</Text>
-      </View>
-      </ScrollView>
+          <View style={styles.bottomLinks}>
+            {navLink('Shows', 'Shows')}
+            {navLink('Bands', 'Bands')}
+            {navLink('Venues', 'Venues')}
+            <TouchableOpacity 
+            onPress={() => setUserInfo(userInfo => ({ ...userInfo, signedIn: false }))}
+            >
+              <Text style={styles.link}>Log Out</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.footer}>
+            <Text style={styles.description}>Dive</Text>
+            <Text style={styles.version}>v1.0</Text>
+          </View>
+        </ScrollView>
+        // view for when user is signed in
+        : <ScrollView>
+          <View style={styles.topLinks}>
+            <View style={styles.profile}>
+              <View style={styles.imgView}>
+                {/* <Image style={styles.img} source={require('//link goes in here')} /> */}
+              </View>
+              <View style={styles.profileText}>
+                <Text style={styles.name}>
+                  {/* username here */}
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View style={styles.bottomLinks}>
+            {navLink('Shows', 'Shows')}
+            {navLink('Bands', 'Bands')}
+            {navLink('Venues', 'Venues')}
+            {navLink('Login', 'Login')}
+          </View>
+          <View style={styles.footer}>
+            <Text style={styles.description}>Dive</Text>
+            <Text style={styles.version}>v1.0</Text>
+          </View>
+        </ScrollView>
+      }
     </View>
   )
 }

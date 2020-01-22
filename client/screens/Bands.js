@@ -4,9 +4,11 @@ import { SignedInContext } from '../App'
 import MenuButton from '../components/MenuButton'
 
 export default function Bands (props) {
-  //global user signin info
+  //global user signin info and editing function
   const userInfo = useContext(SignedInContext);
 
+  console.log(userInfo[0].signedIn);
+  
   return (
     <View style={styles.container}>
       <MenuButton navigation={props.navigation} />
