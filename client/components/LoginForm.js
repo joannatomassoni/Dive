@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { 
   StyleSheet, 
   View, 
@@ -6,9 +6,16 @@ import {
   TextInput,
   TouchableOpacity,
   } from 'react-native';
+  import { SignedInContext } from '../App'
 
 export default function LoginForm (props) {
-  const [usernameValue, setUsernameValue] = useState('')
+  //pull signedin boolean from glabal context
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
+  //set username to text in username textInput
+  const [usernameValue, setUsernameValue] = useState('');
+  
+  console.log(userInfo);
+  console.log(usernameValue);
 
   return (
     <View style={styles.container}>
@@ -30,6 +37,7 @@ export default function LoginForm (props) {
       />
       <TouchableOpacity 
       style={styles.loginContainer}
+      onPress={() => setUserInfo(userInfo => ({ ...userInfo, signedIn: true }))}
       >
       <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
