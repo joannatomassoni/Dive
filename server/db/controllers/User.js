@@ -4,6 +4,7 @@ const {
         Genre,
         User, 
         Type, 
+        sequelize
     } = require('../sequelize');
 
 // Create user
@@ -51,19 +52,18 @@ const getSingleUser = async (req, res) => {
 
 // allow a fan follow a band
 const addFanToBand = async (req, res) => {
-    // console.log('hey');
-    // try {
-    //     const sql = 'INSERT INTO fan_band (id_band, id_fan, createdAt, updatedAt) VALUES (?, ?, ?, ?)';
-    //     const { id_band, id_fan } = req.body;
-    //     await sequelize.query(sql, {
-    //         replacements: [id_band, id_fan, new Date(), new Date()]
-    //     })
-    //     res.send(201);
-    // }
-    // catch (err) {
-    //     console.log(err);
-    //     res.send(err);
-    // }
+    try {
+        const sql = 'INSERT INTO fans_bands (id_band, id_fan, createdAt, updatedAt) VALUES (?, ?, ?, ?)';
+        const { id_band, id_fan } = req.body;
+        await sequelize.query(sql, {
+            replacements: [id_band, id_fan, new Date(), new Date()]
+        })
+        res.send(201);
+    }
+    catch (err) {
+        console.log(err);
+        res.send(err);
+    }
 }
 
 // Get all fans of a given band
