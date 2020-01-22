@@ -14,17 +14,17 @@ const sequelize = new Sequelize('dive', 'root', '', {
 });
 
 // instanstiate the models here
+const Type = TypeModel(sequelize, Sequelize);
 const Genre = GenreModel(sequelize, Sequelize);
 const Comment = CommentModel(sequelize, Sequelize);
 const Show = ShowModel(sequelize, Sequelize);
-const Type = TypeModel(sequelize, Sequelize);
-const User = UserModel(sequelize, Sequelize);
 const Venue = VenueModel(sequelize, Sequelize);
+const User = UserModel(sequelize, Sequelize);
 
 
-// create associations
+// create associations, save in variables to use in queries
 // each user has one type
-User.belongsTo(Type, { foreignKey: { allowNull: false } })
+User.Type = User.belongsTo(Type, { foreignKey: { allowNull: false } })
 // each show has one venue
 Show.belongsTo(Venue, { foreignKey: { allowNull: false } });
 
@@ -99,7 +99,9 @@ Show.belongsToMany(Comment, { through: 'show_comments' })
 
 // create database and tables, and prepopulate type and genre tables
 // TODO: should we prepopulate venues?
-sequelize.sync({ force: true })
+// got rid of force: true so db does not empty on every server reload
+sequelize.sync()
+// sequelize.sync({ force: true })
   .then(() => {
     console.log(`Database & tables created!`)
   }).then(() => {
