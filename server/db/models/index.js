@@ -1,3 +1,4 @@
+const BandGenreModel = require('./BandGenre');
 const CommentModel = require('./Comment');
 const FanBandModel = require('./FanBand');
 const FanVenueModel = require('./FanVenue');
@@ -8,5 +9,13 @@ const UserModel = require('./User');
 const VenueModel = require('./Venue');
 
 module.exports = {
-    CommentModel, FanBandModel, FanVenueModel, GenreModel, ShowModel, TypeModel, UserModel, VenueModel
+    BandGenreModel, 
+    CommentModel, 
+    FanBandModel, 
+    FanVenueModel, 
+    GenreModel, 
+    ShowModel, 
+    TypeModel, 
+    UserModel, 
+    VenueModel
 }

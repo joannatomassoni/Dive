@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize');
-// we will require our models here
-const { CommentModel, 
+// we require our models here to be instantiated after sequelize connection is made
+const { BandGenreModel,
+        CommentModel, 
         FanBandModel, 
         FanVenueModel, 
         GenreModel, 
@@ -22,6 +23,7 @@ const sequelize = new Sequelize('dive', 'root', '', {
 
 // instanstiate the models here
 const Type = TypeModel(sequelize, Sequelize);
+const BandGenre = BandGenreModel(sequelize, Sequelize);
 const FanBand = FanBandModel(sequelize, Sequelize);
 const FanVenue = FanVenueModel(sequelize, Sequelize);
 const Genre = GenreModel(sequelize, Sequelize);
@@ -32,6 +34,7 @@ const User = UserModel(sequelize, Sequelize);
 
 
 // create associations, save in variables to use in queries
+
 // each user has one type
 User.Type = User.belongsTo(Type, { foreignKey: { allowNull: false } })
 // each show has one venue
@@ -59,6 +62,8 @@ Show.belongsToMany(User, {
     allowNull: false
   }
 })
+
+// TODO: figure out fan/band associations
 // // join table for fans and bands
 // User.belongsToMany(User, {
 //   as: 'fan',
@@ -80,19 +85,9 @@ User.hasMany(FanVenue, { foreignKey: 'id_fan' });
 Venue.hasMany(FanVenue, { foreignKey: 'id_venue' });
 
 // join table for bands and genres
-// TODO: verify this is correct
-User.belongsToMany(Genre, {
-  as: 'band',
-  through: 'band_genre',
-  foreignKey: {
-    name: 'id_band',
-    allowNull: false
-  },
-  otherKey: {
-    name: 'id_genre',
-    allowNull: false
-  }
-});
+User.hasMany(BandGenre, { foreignKey: 'id_band' });
+Genre.hasMany(BandGenre, { foreignKey: 'id_genre' });
+
 // each comment has one user
 Comment.belongsTo(User, { foreignKey: { allowNull: false } });
 // each comment has one show
@@ -140,5 +135,5 @@ sequelize.sync({ force: true })
 
 module.exports = {
   // export sequelize for the model creation
-  sequelize, Genre, Comment, FanVenue, User, Show, Type, Venue
+  sequelize, BandGenre, Genre, Comment, FanVenue, User, Show, Type, Venue
 }
