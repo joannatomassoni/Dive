@@ -18,10 +18,10 @@ router.get('/bands', ctrl.getAllBands)
 
 // TODO:
 // add fan for band
-router.post('bands/fans', ctrl.addFanToBand)
+router.post('/bands/fans', ctrl.addFanToBand)
 
 // get all fans of a band
-router.get('/bands/fans', ctrl.getAllFans);
+// router.get('/bands/fans', ctrl.getAllFans);
 
 
 // POST skeleton route to post data to band table for ONE band
@@ -57,6 +57,10 @@ router.get('/venues', function (req, res) {
 
 // TODO: 
 // get all venues
+
+// TODO:
+// add fan to venue
+router.post('/venues/fans', ctrl.addFanToVenue);
 
 
 // TODO:
