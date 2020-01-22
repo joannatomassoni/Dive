@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
+import { SignedInContext } from '../App'
 import MenuButton from '../components/MenuButton'
 
-export default class Bands extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <MenuButton navigation={this.props.navigation} />
-        <Text style={styles.text}>Bands</Text>
-      </View>
-    )
-  }
+export default function Bands (props) {
+  //global user signin info
+  const userInfo = useContext(SignedInContext);
+
+  return (
+    <View style={styles.container}>
+      <MenuButton navigation={props.navigation} />
+      <Text style={styles.text}>Bands</Text>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

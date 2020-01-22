@@ -2,7 +2,7 @@ const { Venue } = require('../sequelize');
 const bodyParser = require('body-parser');
 
 // Create venue
-const createVenue = (req, res) => {
+const createVenue = async (req, res) => {
     try {
         const { name, address1, address2, city, state, zip_code } = req.body;
         Venue.create({
@@ -26,13 +26,8 @@ const createVenue = (req, res) => {
 // Get all venues
 const getAllVenues = () => {
     const venues = Venue.findAll()
-    // .then((venues) => {
-
     console.log("retrieved venues from db", venues);
     return venues;
-    // res.send("meep");
-    // })
-    // res.send(venues);
 }
 // const getAllVenues = async (req, res) => {
 //     try {
@@ -54,6 +49,8 @@ const getAllVenues = () => {
 //         res.send(err);
 //     }
 // }
+
+// Get shows at a given venue
 
 // Update venue
 

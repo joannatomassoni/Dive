@@ -1,4 +1,11 @@
-const { User, Type, FanVenue, sequelize } = require('../sequelize');
+const { 
+        BandGenre,
+        FanVenue,
+        Genre,
+        User, 
+        Type, 
+        sequelize
+    } = require('../sequelize');
 
 // Create user
 const createUser = async (req, res) => {
@@ -11,7 +18,7 @@ const createUser = async (req, res) => {
         });
         User.create({
             name,
-            typeId: type.id,
+            id_type: type.id,
             bio,
             link_facebook,
             link_instagram,
@@ -29,10 +36,10 @@ const createUser = async (req, res) => {
 // Get single user
 const getSingleUser = async (req, res) => {
     try {
-        const { name } = req.params;
+        const { id } = req.params;
         const user = await User.findOrCreate({
             where: {
-              name: name
+              id: id
             }
           })
           res.status(200).send(user);
@@ -43,42 +50,43 @@ const getSingleUser = async (req, res) => {
     }
 }
 
-// function to allow a fan follow a band
+// allow a fan follow a band
 const addFanToBand = async (req, res) => {
-    // console.log('hey');
-    // try {
-    //     const sql = 'INSERT INTO fan_band (id_band, id_fan, createdAt, updatedAt) VALUES (?, ?, ?, ?)';
-    //     const { id_band, id_fan } = req.body;
-    //     await sequelize.query(sql, {
-    //         replacements: [id_band, id_fan, new Date(), new Date()]
-    //     })
-    //     res.send(201);
-    // }
-    // catch (err) {
-    //     console.log(err);
-    //     res.send(err);
-    // }
+    try {
+        const sql = 'INSERT INTO fans_bands (id_band, id_fan, createdAt, updatedAt) VALUES (?, ?, ?, ?)';
+        const { id_band, id_fan } = req.body;
+        await sequelize.query(sql, {
+            replacements: [id_band, id_fan, new Date(), new Date()]
+        })
+        res.send(201);
+    }
+    catch (err) {
+        console.log(err);
+        res.send(err);
+    }
 }
 
-// // Get all fans 
-// // this is probably unnecessary
-// const getAllFans = async (req, res) => {
-//     try {
-//         const fans = await User.findAll({
-//             where: {
-//                 typeId: 1
-//             }
-//         })
-//         res.send(fans);
-//     }
-//     catch (err) {
-//         res.send(500, 'Failed to get fans');
-//     }
-// }
+// Get all fans of a given band
+// TODO: fix this so it's not returning two copies of the fans
+const getBandFans = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const sql = `SELECT * FROM users WHERE id IN (
+                        SELECT id_fan FROM fans_bands WHERE id_band = ?)`;
+        const fans = await sequelize.query(sql, {
+            replacements: [id]
+        })
+        res.status(200).send(fans[0]);
+    }
+    catch (err) {
+        console.log(err)
+        res.send(400);
+    }
+}
+
+// Allow fans to rsvp to a show
 
 // Get fans who have rsvpd to a show
-
-// Get fans who follow a given band
 
 // Allow user to follow a venue
 const addFanToVenue = async (req, res) => {
@@ -107,7 +115,7 @@ const getAllBands = async (req, res) => {
     try {
         const bands = await User.findAll({
             where: {
-                typeId: 2
+                id_type: 2
             }
         })
         res.send(bands);
@@ -118,9 +126,52 @@ const getAllBands = async (req, res) => {
     }
 }
 
+// Allow bands to choose genres for themselves
+const addGenreToBand = async (req, res) => {
+    const { id_band, id_genre } = req.body;
+    try {
+        BandGenre.create({
+            id_band,
+            id_genre
+        })
+        res.sendStatus(201);
+    }
+    catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+}
+
+// get band genres
+const getBandGenres = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const genres = await BandGenre.findAll({
+            where: { id_band: id }
+        });
+        const getGenres = () => { 
+            return Promise.all(genres.map(async(genre) => {
+                return Genre.findOne({
+                    where: {
+                        id: genre.id_genre
+                    }
+                }); 
+        }))}
+        getGenres().then(response => console.log(response));
+        res.sendStatus(200);
+    }
+    catch(err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+}
+
 module.exports = {
     addFanToVenue,
+    addGenreToBand,
     createUser,
+    getBandFans,
+    getBandGenres,
     getSingleUser,
     addFanToBand,
     getAllBands,

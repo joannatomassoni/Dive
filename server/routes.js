@@ -11,19 +11,22 @@ router.get('/', function (req, res) {
 router.post('/users', ctrl.createUser);
 
 // Used for user login and getting a single band
-router.get('/users/:name', ctrl.getSingleUser)
+router.get('/users/:id', ctrl.getSingleUser)
 
-// TODO:
 // get all bands 
 router.get('/bands', ctrl.getAllBands)
 
-// TODO:
 // add fan for band
 router.post('/bands/fans', ctrl.addFanToBand)
 
-// get all fans of a band
-// router.get('/bands/fans', ctrl.getAllFans);
+// add band-genre assocation
+router.post('/bands/genres', ctrl.addGenreToBand)
 
+// get a given band's genres
+router.get('/bands/genres/:id', ctrl.getBandGenres); 
+
+// get all fans of a band
+router.get('/bands/fans/:id', ctrl.getBandFans);
 
 // POST skeleton route to post data to band table for ONE band
 router.post('/bands', function (req, res) {
@@ -37,14 +40,12 @@ router.get('/shows', function (req, res) {
 })
 
 // TODO:
-// get a single show
-
+// add a show
+router.post('/shows', ctrl.createShow)
 
 // TODO:
-// add a show
-router.post('/shows', function (req, res) {
-  res.send("We received your show info");
-})
+// get a single show
+// router.post('/shows:id', () => {})
 
 // TODO:
 // create a venue
