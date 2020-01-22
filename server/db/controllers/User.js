@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
         });
         User.create({
             name,
-            typeId: type.id,
+            id_type: type.id,
             bio,
             link_facebook,
             link_instagram,
@@ -67,6 +67,22 @@ const addFanToBand = async (req, res) => {
 }
 
 // Get all fans of a given band
+// TODO: fix this so it's not returning two copies of the fans
+const getBandFans = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const sql = `SELECT * FROM users WHERE id IN (
+                        SELECT id_fan FROM fans_bands WHERE id_band = ?)`;
+        const fans = await sequelize.query(sql, {
+            replacements: [id]
+        })
+        res.status(200).send(fans[0]);
+    }
+    catch (err) {
+        console.log(err)
+        res.send(400);
+    }
+}
 
 // Allow fans to rsvp to a show
 
@@ -99,7 +115,7 @@ const getAllBands = async (req, res) => {
     try {
         const bands = await User.findAll({
             where: {
-                typeId: 2
+                id_type: 2
             }
         })
         res.send(bands);
@@ -154,6 +170,7 @@ module.exports = {
     addFanToVenue,
     addGenreToBand,
     createUser,
+    getBandFans,
     getBandGenres,
     getSingleUser,
     addFanToBand,
