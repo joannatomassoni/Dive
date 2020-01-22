@@ -74,21 +74,11 @@ Show.belongsToMany(User, {
 // });
 User.hasMany(FanBand, { as: 'id_fan' });
 User.hasMany(FanBand, { as: 'id_band' });
+
 // join table for venues and fans
-// Venue.belongsToMany(User, {
-//   as: 'fan',
-//   through: 'fan_venue',
-//   foreignKey: {
-//     name: 'id_venue',
-//     allowNull: false
-//   },
-//   otherKey: {
-//     name: 'id_fan',
-//     allowNull: false
-//   }
-// })
 User.hasMany(FanVenue, { foreignKey: 'id_fan' });
 Venue.hasMany(FanVenue, { foreignKey: 'id_venue' });
+
 // join table for bands and genres
 // TODO: verify this is correct
 User.belongsToMany(Genre, {
@@ -150,5 +140,5 @@ sequelize.sync({ force: true })
 
 module.exports = {
   // export sequelize for the model creation
-  sequelize, Genre, Comment, User, Show, Type, Venue
+  sequelize, Genre, Comment, FanVenue, User, Show, Type, Venue
 }

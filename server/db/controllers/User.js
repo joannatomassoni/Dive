@@ -1,4 +1,4 @@
-const { User, Type, sequelize } = require('../sequelize');
+const { User, Type, FanVenue, sequelize } = require('../sequelize');
 
 // Create user
 const createUser = async (req, res) => {
@@ -22,7 +22,7 @@ const createUser = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.send(err);
+        res.sendStatus(404);
     }
 }
 
@@ -43,25 +43,58 @@ const getSingleUser = async (req, res) => {
     }
 }
 
-// Get all fans
-const getAllFans = async (req, res, next) => {
-    try {
-        const { band } = req.body;
-        const sql = `SELECT * FROM users WHERE id IN 
-                        (SELECT id_fan FROM fan_band WHERE id_band IN (
-                            SELECT id from users WHERE name = ?
-                        ))`
-        const fans = await sequelize.query(sql, [band]);
-        res.status(200).send(fans);
-    }
-    catch (err) {
-        res.send(500, 'Failed to get fans');
-    }
+// function to allow a fan follow a band
+const addFanToBand = async (req, res) => {
+    // console.log('hey');
+    // try {
+    //     const sql = 'INSERT INTO fan_band (id_band, id_fan, createdAt, updatedAt) VALUES (?, ?, ?, ?)';
+    //     const { id_band, id_fan } = req.body;
+    //     await sequelize.query(sql, {
+    //         replacements: [id_band, id_fan, new Date(), new Date()]
+    //     })
+    //     res.send(201);
+    // }
+    // catch (err) {
+    //     console.log(err);
+    //     res.send(err);
+    // }
 }
+
+// // Get all fans 
+// // this is probably unnecessary
+// const getAllFans = async (req, res) => {
+//     try {
+//         const fans = await User.findAll({
+//             where: {
+//                 typeId: 1
+//             }
+//         })
+//         res.send(fans);
+//     }
+//     catch (err) {
+//         res.send(500, 'Failed to get fans');
+//     }
+// }
 
 // Get fans who have rsvpd to a show
 
 // Get fans who follow a given band
+
+// Allow user to follow a venue
+const addFanToVenue = async (req, res) => {
+    const { id_fan, id_venue } = req.body;
+    try {
+        FanVenue.create({
+            id_fan,
+            id_venue
+        })
+    res.send(201);
+    }
+    catch(err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+} 
 
 // Get fans who follow a given venue
 
@@ -70,21 +103,25 @@ const getAllFans = async (req, res, next) => {
 // Delete user
 
 // Get all bands
-const getAllBands = (req, res) => {
-    User.findAll()
-        .then((users) => {
-            console.log(users);
-            res.sendStatus(200);
+const getAllBands = async (req, res) => {
+    try {
+        const bands = await User.findAll({
+            where: {
+                typeId: 2
+            }
         })
-        .catch((err) => {
-            console.log(err);
-            res.send(err);
-        })
+        res.send(bands);
+    }
+    catch (err) {
+        console.log(err);
+        res.end(err);
+    }
 }
 
 module.exports = {
+    addFanToVenue,
     createUser,
     getSingleUser,
-    getAllFans,
+    addFanToBand,
     getAllBands,
 }
