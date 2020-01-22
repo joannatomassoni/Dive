@@ -22,7 +22,7 @@ export default class Venues extends React.Component {
   componentDidMount() {
 
     //Get this get request is for FOURSQUARE API to get address for venue
-    //commented out below is the setState for the values we need for to get info
+    //commented out below is are variables for the values we need for to get info
     axios({
       method: 'get',
       //   // url: 'https://api.foursquare.com/v2/venues/search?near= new orleans, la&query=music venue&v=20150214&m=foursquare&client_secret=DGVIU40XZ35VVOJWJCEZEDYI5BWQNJIPDG3MCNK2N3AF1CLO&client_id=11ACWOWAADHLRUWGOKR4JCPTN3ENHFS25UVOHLKKYDYBIVWR',
@@ -39,14 +39,7 @@ export default class Venues extends React.Component {
     })
       .then((response) => {
         console.log("we're hitting api", response.data.response.venues[0].location.formattedAddress[1].split(' ')[3]);
-        //     //this is hardcoded, gets the name of first music venue
-        //     this.setState({
-        //       name: response.data.response.venues[0].categories[0].pluralName,
-        //       address1: response.data.response.venues[0].location.address,
-        //       city: response.data.response.venues[0].location.city,
-        //       state: response.data.response.venues[0].location.formattedAddress[1].split(' ')[2],
-        //       zip_code: response.data.response.venues[0].location.formattedAddress[1].split(' ')[3]
-        //     });
+        //this is hardcoded, gets the name of first music venue
         //     const name = response.data.response.venues[0].categories[0].pluralName;
         //     const address = response.data.response.venues[0].location.address;
         //     const city = response.data.response.venues[0].location.city;
