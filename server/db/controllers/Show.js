@@ -54,13 +54,39 @@ const removeFanRSVP = async (req, res) => {
     }
 }
 
-// Get all fans who have rsvpd to a show
-const getRSVPs = async (req, res) => {
+// Get all shows that a given user has rsvpd to
+const getFanRSVPs = async (req, res) => {
     try {
-        const { id } = req.params;
+        const id_fan = req.params.id;
         const rsvps = await RSVP.findAll({
             where: {
-                id_show: id
+                id_fan: id_fan
+            }
+        }) 
+        Promise.all(rsvps.map(async(rsvp) => {
+         const show = await Show.findOne({
+             where: {
+                 id: rsvp.id_show
+             }
+         })
+         return show;
+     })).then((data) => {
+         res.send(data)
+     })
+    }
+    catch (err) {
+        console.log(err)
+        res.send(400);
+    }
+}
+
+// Get all fans who have rsvpd to a show
+const getShowRSVPs = async (req, res) => {
+    try {
+        const id_show = req.params.id;
+        const rsvps = await RSVP.findAll({
+            where: {
+                id_show: id_show
             }
         })
         Promise.all(rsvps.map(async(rsvp) => {
@@ -87,7 +113,8 @@ const getRSVPs = async (req, res) => {
 
 module.exports = {
     createShow,
-    getRSVPs,
+    getFanRSVPs,
+    getShowRSVPs,
     removeFanRSVP,
     rsvpFanToShow
 }

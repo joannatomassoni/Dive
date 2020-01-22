@@ -12,7 +12,8 @@ const { getTypes } = require('./Type');
 const { createVenue } = require('./Venue');
 const { 
         createShow,
-        getRSVPs,
+        getFanRSVPs,
+        getShowRSVPs,
         removeFanRSVP,
         rsvpFanToShow
     } = require('./Show');
@@ -26,7 +27,8 @@ module.exports = {
     getAllBands,
     getBandFans,
     getBandGenres,
-    getRSVPs,
+    getFanRSVPs,
+    getShowRSVPs,
     getSingleUser,
     getTypes,
     createVenue,

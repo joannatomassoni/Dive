@@ -101,8 +101,8 @@ Show.belongsToMany(Comment, { through: 'show_comments' })
 // TODO: should we prepopulate venues?
 
 // get rid of force: true if you don't want db to empty on every server reload
-// sequelize.sync()
-sequelize.sync({ force: true })
+sequelize.sync()
+// sequelize.sync({ force: true })
   .then(() => {
     console.log(`Database & tables created!`)
   }).then(() => {
@@ -138,5 +138,15 @@ sequelize.sync({ force: true })
 
 module.exports = {
   // export sequelize for the model creation
-  sequelize, BandGenre, Genre, Comment, FanVenue, User, Show, Type, Venue
+  sequelize, 
+  // export model instances for controller functions
+  BandGenre,
+  Comment, 
+  FanVenue, 
+  Genre,
+  RSVP, 
+  Show, 
+  Type, 
+  User, 
+  Venue
 }

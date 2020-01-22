@@ -2,10 +2,6 @@ const express = require('express');
 const router = express.Router();
 const ctrl = require('./db/controllers/index');
 
-router.get('/', function (req, res) {
-  res.send("we're getting routes!");
-})
-
 // SIGNUP
 router.post('/users', ctrl.createUser);
 
@@ -18,13 +14,13 @@ router.get('/bands', ctrl.getAllBands)
 // add fan for band
 router.post('/bands/fans', ctrl.addFanToBand)
 
-// add band-genre assocation
+// add genre to band.
 router.post('/bands/genres', ctrl.addGenreToBand)
 
-// get a given band's genres
+// get a given band's genres. id in params is the band's id.
 router.get('/bands/genres/:id', ctrl.getBandGenres); 
 
-// get all fans of a band
+// get all fans of a given band. id in params is the band's id.
 router.get('/bands/fans/:id', ctrl.getBandFans);
 
 // POST skeleton route to post data to band table for ONE band
@@ -46,19 +42,27 @@ router.post('/shows', ctrl.createShow)
 // get a single show
 // router.post('/shows:id', () => {})
 
+
+/**
+ * RSVPs
+ */
 // rsvp fan to a show
 router.post('/shows/rsvps', ctrl.rsvpFanToShow)
 
-
-/**
- * remove a fan rsvp from a show
- * needs fan id and show id passed in body
- */
+// remove a fan rsvp from a show
+// fan id and show id passed in body
 router.delete('/shows/rsvps', ctrl.removeFanRSVP)
 
 // get fans who have rsvpd to a given show. id in params will be show id.
-router.get('/shows/rsvps/:id', ctrl.getRSVPs)
+router.get('/shows/rsvps/:id', ctrl.getShowRSVPs)
 
+// get shows that a given fan has rsvpd to. id in params will be fan id.
+router.get('/fans/rsvps/:id', ctrl.getFanRSVPs)
+
+
+/**
+ * VENUES
+ */
 // create a venue
 router.post('/venues', ctrl.createVenue)
 
