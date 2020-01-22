@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
+import { SignedInContext } from '../App'
 import MenuButton from '../components/MenuButton'
 
 export default function Bands (props) {
+  //global user signin info
+  const userInfo = useContext(SignedInContext);
+
   return (
     <View style={styles.container}>
       <MenuButton navigation={props.navigation} />
