@@ -1,7 +1,7 @@
 const { Venue } = require('../sequelize');
 
 // Create venue
-const createVenue = (req, res) => {
+const createVenue = async (req, res) => {
     try {
         const { name, address1, address2, city, state, zip_code } = req.body;
         Venue.create({
