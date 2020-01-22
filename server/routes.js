@@ -10,7 +10,6 @@ router.get('/', function (req, res) {
 router.post('/users', ctrl.createUser);
 
 // Used for user login and getting a single band
-// TODO: modify params to be for id
 router.get('/users/:id', ctrl.getSingleUser)
 
 // get all bands 
