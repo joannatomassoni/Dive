@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Dimensions } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-
+import Hub from '../screens/Hub'
 import Shows from '../screens/Shows'
 import Bands from '../screens/Bands';
 import Venues from '../screens/Venues';
@@ -31,9 +31,12 @@ const DrawerNavigator = createDrawerNavigator(
     Venues: {
       screen: Venues
     },
+    Hub: {
+      screen: Hub
+    },
     Login: {
       screen: Login
-    }
+    },
   },
   DrawerConfig
 );

@@ -46,6 +46,7 @@ export default function MenuDrawer(props) {
             {navLink('Shows', 'Shows')}
             {navLink('Bands', 'Bands')}
             {navLink('Venues', 'Venues')}
+            {navLink('Hub', 'Hub')}
             <TouchableOpacity 
             onPress={() => setUserInfo(userInfo => ({ ...userInfo, signedIn: false }))}
             >

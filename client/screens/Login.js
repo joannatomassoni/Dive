@@ -1,23 +1,37 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet, 
   Text, 
   View,
   KeyboardAvoidingView 
 } from 'react-native';
-
 import LoginForm from '../components/LoginForm'
 import MenuButton from '../components/MenuButton'
+import { SignedInContext } from '../App'
+import Hub from './Hub'
 
 export default function Login (props) {
+  //global user signin info and editing function
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <MenuButton navigation={props.navigation} />
-      <View style={styles.title}>
-      <Text style={styles.text}>DIVE</Text>
-      </View>
+      {/* Show different views if user is signed in */}
+      {userInfo.signedIn ?
+        // welcome screen when user logs in
+        <View style={styles.title}>
+          <MenuButton navigation={props.navigation} />
+          <Text style= {styles.text}>WELCOME</Text>
+        </View>
+        //login screen if user is not logged in
+        :<View style={styles.container}>
+        <MenuButton navigation={props.navigation} />
+        <View style={styles.title}>
+        <Text style={styles.text}>DIVE</Text>
+        </View>
         <LoginForm />
+        </View>
+      }
     </KeyboardAvoidingView>
   )
 }
