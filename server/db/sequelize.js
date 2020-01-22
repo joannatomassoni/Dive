@@ -4,6 +4,7 @@ const { BandGenreModel,
         CommentModel, 
         FanVenueModel, 
         GenreModel, 
+        RSVPModel,
         ShowModel, 
         TypeModel, 
         UserModel, 
@@ -23,6 +24,7 @@ const sequelize = new Sequelize('dive', 'root', '', {
 // instanstiate the models here
 const Type = TypeModel(sequelize, Sequelize);
 const BandGenre = BandGenreModel(sequelize, Sequelize);
+const RSVP = RSVPModel(sequelize, Sequelize);
 const FanVenue = FanVenueModel(sequelize, Sequelize);
 const Genre = GenreModel(sequelize, Sequelize);
 const Comment = CommentModel(sequelize, Sequelize);
@@ -38,19 +40,23 @@ User.Type = User.belongsTo(Type, { foreignKey: { name: 'id_type', allowNull: fal
 // each show has one venue
 Show.belongsTo(Venue, { foreignKey: { name: 'id_venue', allowNull: false } });
 
-// join table for shows and fans
-Show.belongsToMany(User, {
-  as: 'fans',
-  through: 'fan_rsvps',
-  foreignKey: {
-    name: 'id_show',
-    allowNull: false
-  },
-  otherKey: {
-    name: 'id_fan',
-    allowNull: false
-  }
-})
+// join table for shows and fans (rsvps)
+Show.hasMany(RSVP, { foreignKey: { name: 'id_show', allowNull: false } });
+User.hasMany(RSVP, { foreignKey: { name: 'id_fan', allowNull: false } });
+
+// // join table for shows and fans
+// Show.belongsToMany(User, {
+//   as: 'fans',
+//   through: 'fan_rsvps',
+//   foreignKey: {
+//     name: 'id_show',
+//     allowNull: false
+//   },
+//   otherKey: {
+//     name: 'id_fan',
+//     allowNull: false
+//   }
+// })
 // join table for shows and bands
 Show.belongsToMany(User, {
   as: 'band',
