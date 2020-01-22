@@ -8,9 +8,14 @@ import {
   } from 'react-native';
 
 export default class LoginForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { 
+      count: 0 
+    }
+  }
 
   render() {
-    console.log(this.props);
     return (
       <View style={styles.container}>
         <TextInput 
