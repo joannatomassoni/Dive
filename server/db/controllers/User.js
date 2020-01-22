@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
         });
         User.create({
             name,
-            typeId: type.id,
+            id_type: type.id,
             bio,
             link_facebook,
             link_instagram,
@@ -115,7 +115,7 @@ const getAllBands = async (req, res) => {
     try {
         const bands = await User.findAll({
             where: {
-                typeId: 2
+                id_type: 2
             }
         })
         res.send(bands);
