@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { 
   StyleSheet, 
   View, 
@@ -8,6 +8,7 @@ import {
   } from 'react-native';
 
 export default function LoginForm (props) {
+  const [usernameValue, setUsernameValue] = useState('')
 
   return (
     <View style={styles.container}>
@@ -15,7 +16,7 @@ export default function LoginForm (props) {
       placeholder="username or email"
       placeholderTextColor="#75A4AD"
       returnKeyType="next"
-      // onSubmitEditing={() => this.passwordInput.focus()}
+      onChangeText={setUsernameValue}
       keyboardType="email-address"
       style={styles.input} 
       />
