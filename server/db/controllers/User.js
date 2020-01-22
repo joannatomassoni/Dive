@@ -15,8 +15,10 @@ const createUser = async (req, res) => {
             bio,
             link_facebook,
             link_instagram,
-            link_spotify
-        }).then(() => res.status(201).send('success'));
+            link_spotify,
+            photo
+        });
+        res.status(201).send('success');
     }
     catch (err) {
         console.log(err);
