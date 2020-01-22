@@ -9,22 +9,17 @@ import {
 import LoginForm from '../components/LoginForm'
 import MenuButton from '../components/MenuButton'
 
-export default class Login extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+export default function Login (props) {
 
-  render() {
-    return (
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <MenuButton navigation={this.props.navigation} />
-        <View style={styles.title}>
-        <Text style={styles.text}>DIVE</Text>
-        </View>
-          <LoginForm />
-      </KeyboardAvoidingView>
-    )
-  }
+  return (
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <MenuButton navigation={props.navigation} />
+      <View style={styles.title}>
+      <Text style={styles.text}>DIVE</Text>
+      </View>
+        <LoginForm />
+    </KeyboardAvoidingView>
+  )
 }
 
 const styles = StyleSheet.create({
