@@ -1,6 +1,13 @@
 const { Sequelize } = require('sequelize');
 // we will require our models here
-const { CommentModel, GenreModel, ShowModel, TypeModel, UserModel, VenueModel } = require('./models/index')
+const { CommentModel, 
+        FanBandModel, 
+        FanVenueModel, 
+        GenreModel, 
+        ShowModel, 
+        TypeModel, 
+        UserModel, 
+        VenueModel } = require('./models/index')
 
 // create a new sequelize instance
 const sequelize = new Sequelize('dive', 'root', '', {
@@ -15,6 +22,8 @@ const sequelize = new Sequelize('dive', 'root', '', {
 
 // instanstiate the models here
 const Type = TypeModel(sequelize, Sequelize);
+const FanBand = FanBandModel(sequelize, Sequelize);
+const FanVenue = FanVenueModel(sequelize, Sequelize);
 const Genre = GenreModel(sequelize, Sequelize);
 const Comment = CommentModel(sequelize, Sequelize);
 const Show = ShowModel(sequelize, Sequelize);
@@ -50,32 +59,26 @@ Show.belongsToMany(User, {
     allowNull: false
   }
 })
-// join table for fans and bands
-User.belongsToMany(User, {
-  as: 'fan',
-  through: 'fan_band',
-  foreignKey: {
-    name: 'id_band',
-    allowNull: false
-  },
-  otherKey: {
-    name: 'id_fan',
-    allowNull: false
-  }
-});
+// // join table for fans and bands
+// User.belongsToMany(User, {
+//   as: 'fan',
+//   through: 'fan_band',
+//   foreignKey: {
+//     name: 'id_band',
+//     allowNull: false
+//   },
+//   otherKey: {
+//     name: 'id_fan',
+//     allowNull: false
+//   }
+// });
+User.hasMany(FanBand, { as: 'id_fan' });
+User.hasMany(FanBand, { as: 'id_band' });
+
 // join table for venues and fans
-Venue.belongsToMany(User, {
-  as: 'fan',
-  through: 'fan_venue',
-  foreignKey: {
-    name: 'id_venue',
-    allowNull: false
-  },
-  otherKey: {
-    name: 'id_fan',
-    allowNull: false
-  }
-})
+User.hasMany(FanVenue, { foreignKey: 'id_fan' });
+Venue.hasMany(FanVenue, { foreignKey: 'id_venue' });
+
 // join table for bands and genres
 // TODO: verify this is correct
 User.belongsToMany(Genre, {
@@ -100,8 +103,8 @@ Show.belongsToMany(Comment, { through: 'show_comments' })
 // create database and tables, and prepopulate type and genre tables
 // TODO: should we prepopulate venues?
 // got rid of force: true so db does not empty on every server reload
-sequelize.sync()
-// sequelize.sync({ force: true })
+// sequelize.sync()
+sequelize.sync({ force: true })
   .then(() => {
     console.log(`Database & tables created!`)
   }).then(() => {
@@ -137,5 +140,5 @@ sequelize.sync()
 
 module.exports = {
   // export sequelize for the model creation
-  sequelize, Genre, Comment, User, Show, Type, Venue
+  sequelize, Genre, Comment, FanVenue, User, Show, Type, Venue
 }

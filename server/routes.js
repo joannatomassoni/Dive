@@ -12,46 +12,70 @@ router.post('/users', ctrl.createUser);
 // Used for user login and getting a single band
 router.get('/users/:name', ctrl.getSingleUser)
 
-// GET skeleton route for getting all fans
-router.get('/fans', ctrl.getAllFans);
-
-// GET skeleton route for getting all band info
+// TODO:
+// get all bands 
 router.get('/bands', ctrl.getAllBands)
+
+// TODO:
+// add fan for band
+router.post('/bands/fans', ctrl.addFanToBand)
+
+// get all fans of a band
+// router.get('/bands/fans', ctrl.getAllFans);
+
 
 // POST skeleton route to post data to band table for ONE band
 router.post('/bands', function (req, res) {
   res.send("We received your band info");
 })
 
-// GET skeleton route for getting ONE show info
+// TODO:
+// get all shows
 router.get('/shows', function (req, res) {
   res.send("we are getting show!");
 })
 
-// POST skeleton route to post data ONE show table
+// TODO:
+// get a single show
+
+
+// TODO:
+// add a show
 router.post('/shows', function (req, res) {
   res.send("We received your show info");
 })
 
-// GET skeleton route for getting ONE venue info
+// TODO:
+// create a venue
+router.post('/venues', ctrl.createVenue)
+
+// TODO:
+// get one venue
 router.get('/venues', function (req, res) {
   res.send("we are getting a venue!");
 })
 
-// POST skeleton route to post data ONE venue table
-router.post('/venues', ctrl.createVenue)
+// TODO: 
+// get all venues
 
-// GET skeleton route for getting ONE comment info
-router.get('/comments', function (req, res) {
-  res.send("we are getting comment!");
-})
+// TODO:
+// add fan to venue
+router.post('/venues/fans', ctrl.addFanToVenue);
 
-// POST skeleton route to post data ONE comment table
+
+// TODO:
+// create comment
 router.post('/comments', function (req, res) {
   res.send("We received your comment info");
 })
 
-// GET skeleton route for getting the two user types
+// TODO: 
+// get all comments for a show
+router.get('/comments', function (req, res) {
+  res.send("we are getting comment!");
+})
+
+// get two types (for signup)
 router.get('/types', ctrl.getTypes);
 
 
