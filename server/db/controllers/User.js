@@ -34,7 +34,7 @@ const createUser = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.sendStatus(404);
+        res.sendStatus(400);
     }
 }
 
@@ -285,5 +285,5 @@ module.exports = {
     getSingleUser,
     removeBandGenre,
     updateUserBio,
-    updatebandPhoto
+    updateBandPhoto
 }
