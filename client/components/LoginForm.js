@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Alert
   } from 'react-native';
-  import { SignedInContext } from '../App';
+import { SignedInContext } from '../App';
 import * as Google from "expo-google-app-auth";
 import SignUpModal from '../modals/SignUpModal'
 
