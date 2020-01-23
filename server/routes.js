@@ -34,6 +34,9 @@ router.get('/users/:id', ctrl.getSingleUser)
 // Update user info
 router.patch('/users/:name/bio', ctrl.updateUserBio)
 
+// Update user photo
+router.patch('/users/:name/photo', ctrl.updateUserPhoto)
+
 /**
  * BANDS ROUTES
  */

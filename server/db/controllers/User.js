@@ -54,13 +54,13 @@ const getSingleUser = async (req, res) => {
     }
 }
 
-// Update user
+// Update user bio
 const updateUserBio = async (req, res) => {
     try {
         const { name } = req.params;
         const { bio } = req.body;
         // const [ number, user ]  = await getRecordByName('user', name);
-        const [ numberRows, user ] = await User.update(
+        await User.update(
             { bio: bio }, 
             { where: { name: name },
             returning: true,
@@ -74,7 +74,36 @@ const updateUserBio = async (req, res) => {
     }
 }
 
+// Update user photo
+const updateUserPhoto = async (req, res) => {
+    try {
+        const { name } = req.params;
+        const { photo } = req.body;
+        // const [ number, user ]  = await getRecordByName('user', name);
+        await User.update(
+            { photo: photo }, 
+            { where: { name: name },
+            returning: true,
+            plain: true
+            })
+        res.sendStatus(204);
+    }
+    catch (err) {
+        console.log(err);
+        res.send(400);
+    }
+}
+
+
+// TODO: function to let bands edit their social media info
+const updateBandSM = async (req, res) => {
+
+}
+
 // Delete user
+const deleteUser = async (req, res) => {
+
+}
 
 // Get all bands
 const getAllBands = async (req, res) => {
@@ -258,5 +287,6 @@ module.exports = {
     getBandGenres,
     getSingleUser,
     removeBandGenre,
-    updateUserBio
+    updateUserBio,
+    updateUserPhoto
 }
