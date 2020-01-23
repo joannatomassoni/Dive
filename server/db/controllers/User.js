@@ -70,14 +70,14 @@ const updateUserBio = async (req, res) => {
     }
 }
 
-// Update user photo
-const updateUserPhoto = async (req, res) => {
+// Update band photo
+const updateBandPhoto = async (req, res) => {
     try {
         const { name } = req.params;
         const { photo } = req.body;
         // const [ number, user ]  = await getRecordByName('user', name);
         await User.update(
-            { photo: photo }, 
+            { bandPhoto: photo }, 
             { where: { name: name },
             returning: true,
             plain: true
@@ -285,5 +285,5 @@ module.exports = {
     getSingleUser,
     removeBandGenre,
     updateUserBio,
-    updateUserPhoto
+    updatebandPhoto
 }
