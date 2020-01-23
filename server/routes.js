@@ -106,12 +106,12 @@ router.get('/fans/:fanName/venues')
  */
 
 // create a show
-// req.body = { name, date, time, venueName, photo }
+// req.body = { name, date, time, venueName, photo, bandNames }
+// bandNames is an array
 // date and time are both strings, like '7/20' and '9:00PM'
 // photo is optional
 router.post('/shows', ctrl.createShow)
 
-// TODO:
 // get all shows
 router.get('/shows', ctrl.getAllShows)
 
