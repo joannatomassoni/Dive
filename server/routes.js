@@ -78,7 +78,7 @@ router.post('/venues', ctrl.createVenue)
 router.get('/venues', ctrl.getAllVenues);
 
 //to remove a venue
-router.post('/venues', ctrl.removeVenue);
+router.delete('/venues', ctrl.removeVenue);
 
 // TODO:
 // add fan to venue
