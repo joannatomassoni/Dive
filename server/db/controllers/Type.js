@@ -1,3 +1,5 @@
+// Requiring the models we need for our queries
+// Types shouldn't need to be manipulated
 const { Type } = require('../sequelize');
 
 // Read types
