@@ -23,6 +23,10 @@ module.exports = (sequelize, type) => {
         photo: {
             type: type.STRING,
             allowNull: true
+        },
+        bandPhoto: {
+            type: type.STRING,
+            allowNull: true
         }
     })
 }
