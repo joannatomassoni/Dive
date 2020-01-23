@@ -1,14 +1,16 @@
 // Requiring the models we need for our queries
 const { Show, RSVP, User } = require('../sequelize');
+const { getRecordByName } = require('./utils')
 
 // Create show
 const createShow = async (req, res) => {
-    const { name, date, id_venue } = req.body;
+    const { name, date, venueName } = req.body;
+    const venue = await getRecordByName('venue', venueName);
     try {
         await Show.create({
             name: name,
             date: date,
-            id_venue: id_venue
+            id_venue: venue.id
         })
         res.send(201);
     }
@@ -24,10 +26,12 @@ const createShow = async (req, res) => {
 // Allow fan to rsvp to a show
 const rsvpFanToShow = async (req, res) => {
     try {
-        const { id_show, id_fan } = req.body;
+        const { showName, fanName } = req.body;
+        const show = await getRecordByName('show', showName);
+        const fan = await getRecordByName('fan', fanName);
         await RSVP.create({
-            id_show: id_show,
-            id_fan: id_fan
+            id_show: show.id,
+            id_fan: fan.id
         })
         res.sendStatus(201);
     }
@@ -40,12 +44,13 @@ const rsvpFanToShow = async (req, res) => {
 // Allow fan to remove their rsvp
 const removeFanRSVP = async (req, res) => {
     try {
-        // show id
-        const { id_fan, id_show } = req.body;
+        const { fanName, showName } = req.body;
+        const show = await getRecordByName('show', showName);
+        const fan = await getRecordByName('fan', fanName);
         await RSVP.destroy({
             where: {
-                id_fan: id_fan,
-                id_show: id_show
+                id_fan: fan.id,
+                id_show: show.id
             }
         })
         res.sendStatus(200);
@@ -59,10 +64,11 @@ const removeFanRSVP = async (req, res) => {
 // Get all shows that a given user has rsvpd to
 const getFanRSVPs = async (req, res) => {
     try {
-        const id_fan = req.params.id;
+        const { fanName } = req.body;
+        const fan = await getRecordByName('fan', fanName);
         const rsvps = await RSVP.findAll({
             where: {
-                id_fan: id_fan
+                id_fan: fan.id
             }
         }) 
         Promise.all(rsvps.map(async(rsvp) => {
@@ -85,10 +91,11 @@ const getFanRSVPs = async (req, res) => {
 // Get all fans who have rsvpd to a show
 const getShowRSVPs = async (req, res) => {
     try {
-        const id_show = req.params.id;
+        const { showName } = req.body;
+        const show = await getRecordByName('show', showName);
         const rsvps = await RSVP.findAll({
             where: {
-                id_show: id_show
+                id_show: show.id
             }
         })
         Promise.all(rsvps.map(async(rsvp) => {
