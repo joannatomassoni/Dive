@@ -47,7 +47,7 @@ router.get('/bands/genres/:id', ctrl.getBandGenres);
 // TODO:
 // delete a genre from a band
 // req.body = { id_band, id_genre }
-router.delete('/bands/genres')
+router.delete('/bands/genres', ctrl.removeBandGenre)
 
 // add fan for band
 // req.body = { id_band, id_fan }
