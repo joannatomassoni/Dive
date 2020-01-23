@@ -27,9 +27,7 @@ const ctrl = require('./db/controllers/index')
 router.post('/users', ctrl.createUser);
 
 // Used for user login and getting a single band
-// id in param is user id
-// TODO: refactor to take in name instead of id
-router.get('/users/:id', ctrl.getSingleUser)
+router.get('/users/:name', ctrl.getSingleUser)
 
 // Update user info
 router.patch('/users/:name/bio', ctrl.updateUserBio)
@@ -48,10 +46,11 @@ router.delete('/users/:name', ctrl.deleteUser)
 router.get('/bands', ctrl.getAllBands)
 
 // add genre to band
+// req.body = { bandName, genreName }
 router.post('/bands/genres', ctrl.addGenreToBand)
 
 // get a given band's genres. 
-router.get('/bands/genres/:bandName', ctrl.getBandGenres); 
+router.get('/bands/:bandName/genres', ctrl.getBandGenres); 
 
 // delete a genre from a band
 // req.body = { bandName, genreName }
@@ -62,29 +61,32 @@ router.delete('/bands/genres', ctrl.removeBandGenre)
 router.post('/bands/fans', ctrl.addFanToBand)
 
 // get all fans of a given band. 
-// id in params is the band's id.
-router.get('/bands/fans/:bandName', ctrl.getBandFans);
+router.get('/bands/:bandName/fans', ctrl.getBandFans);
 
 /**
  * VENUES
  */
-// TODO:
 // create a venue
 router.post('/venues', ctrl.createVenue)
 
 // TODO:
 // get one venue
-router.get('/venues', ctrl.getAllVenues);
 
 // TODO: 
 // get all venues
+router.get('/venues', ctrl.getAllVenues);
 
 // TODO:
 // add fan to venue
+// req.body = { venueName, fanName }
 router.post('/venues/fans', ctrl.addFanToVenue);
 
 // TODO:
 // get all venues that a fan follows
+router.get('/fans/:fanName/venues')
+
+// get all fans who follow a given venue
+// router.get('/venues/fans/:venueName', ctrl.getVenueFans)
 
 /**
  * SHOWS

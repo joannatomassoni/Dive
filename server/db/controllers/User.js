@@ -41,13 +41,8 @@ const createUser = async (req, res) => {
 // Get single user
 const getSingleUser = async (req, res) => {
     try {
-        // TODO: change this to a name passed in from body
-        const { id } = req.params;
-        const user = await User.findOrCreate({
-            where: {
-                id: id
-            }
-        })
+        const { name } = req.params;
+        const user = await getRecordByName('user', name);
         res.status(200).send(user);
     }
     catch (err) {
@@ -61,7 +56,6 @@ const updateUserBio = async (req, res) => {
     try {
         const { name } = req.params;
         const { bio } = req.body;
-        // const [ number, user ]  = await getRecordByName('user', name);
         await User.update(
             { bio: bio }, 
             { where: { name: name },
@@ -241,11 +235,13 @@ const getBandFans = async (req, res) => {
 // TODO: move ths function to controllers/Venue.js
 // Allow user to follow a venue
 const addFanToVenue = async (req, res) => {
-    const { id_fan, id_venue } = req.body;
+    const { fanName, venueName } = req.body;
+    const venue = await getRecordByName('venue', venueName);
+    const fan = await getRecordByName('fan', fanName);
     try {
         FanVenue.create({
-            id_fan,
-            id_venue
+            id_fan: fan.id,
+            id_venue: venue.id
         })
     res.send(201);
     }
@@ -257,6 +253,22 @@ const addFanToVenue = async (req, res) => {
 
 // TODO: move ths function to controllers/Venue.js
 // Get fans who follow a given venue
+const getVenueFans = async (req, res) => {
+    try {
+        const { venueName } = req.params;
+        const venue = await getRecordByName('venue', venueName);
+        const sql = `SELECT * FROM users WHERE id IN (
+                        SELECT id_fan FROM fans_venues WHERE id_venue = ?)`;
+        const fans = await sequelize.query(sql, {
+            replacements: [venue.id]
+        })
+        res.status(200).send(fans[0]);
+    }
+    catch (err) {
+        console.log(err)
+        res.send(400);
+    }
+}
 
 
 
