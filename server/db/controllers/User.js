@@ -74,19 +74,8 @@ const getAllBands = async (req, res) => {
 const addGenreToBand = async (req, res) => {
     try {
         const { bandName, genreName } = req.body;
-        const band = await User.findOne({
-            // attributs is not currently working as expected
-            attributes: ['id'],
-            where: {
-                name: bandName
-            }
-        });
-        const genre = await Genre.findOne({
-            attributes: ['id'],
-            where: {
-                genreName: genreName
-            }
-        });
+        const band = await getIdByName('band', bandName);
+        const genre = await getIdByName('genre', genreName);
         BandGenre.create({
             id_band: band.id,
             id_genre: genre.id
@@ -166,7 +155,7 @@ const removeBandGenre = async (req, res) => {
 const addFanToBand = async (req, res) => {
     try {
         const sql = 'INSERT INTO fans_bands (id_band, id_fan, createdAt, updatedAt) VALUES (?, ?, ?, ?)';
-        const { id_band, id_fan } = req.body;
+        const { bandName, id_fan } = req.body;
         await sequelize.query(sql, {
             replacements: [id_band, id_fan, new Date(), new Date()]
         })
@@ -235,7 +224,31 @@ const addFanToVenue = async (req, res) => {
 // }
 
 
-
+const getIdByName = async (type, name) => {
+    try {
+        if (type === 'band') {
+            const band = await User.findOne({
+                attributes: ['id'],
+                where: {
+                    name: name
+                }
+            });
+            return band;
+        } 
+        if (type === 'genre') {
+            const genre = await Genre.findOne({
+                attributes: ['id'],
+                where: {
+                    genreName: name
+                }
+            });
+            return genre;
+        }
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
 
 module.exports = {
     addFanToVenue,
