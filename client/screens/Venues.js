@@ -6,7 +6,7 @@ import MenuButton from '../components/MenuButton'
 
 // export default class Venues extends React.Component {
 export default function Venues(props) {
-  const [venues, setVenues] = useState();
+  const [venues, setVenues] = useState({});
 
   useEffect(() => {
     axios.get('http://localhost:8080/venues')
