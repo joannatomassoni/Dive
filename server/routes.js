@@ -37,6 +37,9 @@ router.patch('/users/:name/bio', ctrl.updateUserBio)
 // Update user photo
 router.patch('/users/:name/photo', ctrl.updateUserPhoto)
 
+// Delete user
+router.delete('/users/:name', ctrl.deleteUser)
+
 /**
  * BANDS ROUTES
  */

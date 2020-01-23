@@ -102,7 +102,19 @@ const updateBandSM = async (req, res) => {
 
 // Delete user
 const deleteUser = async (req, res) => {
-
+    try {
+        const { name } = req.params;
+        await User.destroy({
+            where: {
+                name: name
+            }
+        })
+        res.send(200);
+    }
+    catch (err) {
+        console.log(err);
+        res.send(400);
+    }
 }
 
 // Get all bands
@@ -282,6 +294,7 @@ module.exports = {
     addFanToVenue,
     addGenreToBand,
     createUser,
+    deleteUser,
     getAllBands,
     getBandFans,
     getBandGenres,
