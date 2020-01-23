@@ -1,5 +1,11 @@
 import React, { useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { 
+  StyleSheet, 
+  Text, 
+  View,
+  SafeAreaView,
+  SectionList, 
+} from 'react-native';
 import { SignedInContext } from '../App'
 import MenuButton from '../components/MenuButton'
 
