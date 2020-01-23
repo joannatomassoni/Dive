@@ -5,8 +5,17 @@ module.exports = (sequelize, type) => {
         allowNull: false
       },
       date: {
-        type: type.DATE,
+        type: type.STRING,
         allowNull: false
       },
+      time: {
+        type: type.STRING,
+        allowNull: false
+      },
+      photo: {
+        type: type.STRING,
+        allowNull: true
+      },
+
     })
   }
