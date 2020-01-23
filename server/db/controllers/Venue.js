@@ -25,7 +25,7 @@ const createVenue = async (req, res) => {
 //INSERT INTO `venues` (`name`, `address1`, `city`, `zip_code`, `createdAt`,`updatedAt`) VALUES ('Tipitinas', '501 Napolean Ave', 'New Orleans', 70115, '2020-01-01 10:10:10', '2020-01-01 10:10:10');
 
 // Get all venues
-const getAllVenues = async () => {
+const getAllVenues = async (req, res) => {
     try {
         const venues = await Venue.findAll()
         console.log("retrieved venues from db", venues);
@@ -36,15 +36,15 @@ const getAllVenues = async () => {
         console.log(err);
         res.end(err);
     }
+}
+
+// Get shows at a given venue
+
+// Update venue
+
+// Delete venue
 
 
-    // Get shows at a given venue
-
-    // Update venue
-
-    // Delete venue
-
-
-    module.exports = {
-        createVenue, getAllVenues
-    }
+module.exports = {
+    createVenue, getAllVenues
+}
