@@ -96,7 +96,7 @@ User.hasMany(BandGenre, { foreignKey: 'id_band' });
 Genre.hasMany(BandGenre, { foreignKey: 'id_genre' });
 
 // each comment has one user
-Comment.belongsTo(User, { foreignKey: { name: 'id_fan', allowNull: false } });
+Comment.belongsTo(User, { foreignKey: { name: 'id_user', allowNull: false } });
 
 // each comment has one show
 Comment.belongsTo(Show, { foreignKey: { name: 'id_show', allowNull: false } });
