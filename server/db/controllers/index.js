@@ -13,6 +13,7 @@ const { addFanToVenue,
     updateBandPhoto
 } = require('./User');
 const { getTypes } = require('./Type');
+const { createComment } = require('./Comment');
 const { createVenue, getAllVenues, removeVenue, getVenueShows } = require('./Venue');
 const {
     createShow,
@@ -44,5 +45,6 @@ module.exports = {
     removeBandGenre,
     rsvpFanToShow,
     updateUserBio,
-    updateBandPhoto
+    updateBandPhoto,
+    createComment
 }
