@@ -19,7 +19,7 @@ const createUser = async (req, res) => {
                 typeName: typeName
             }
         });
-        User.create({
+        await User.create({
             name,
             id_type: type.id,
             bio,
@@ -53,6 +53,28 @@ const getSingleUser = async (req, res) => {
         res.sendStatus(400);        
     }
 }
+
+// Update user
+const updateUserBio = async (req, res) => {
+    try {
+        const { name } = req.params;
+        const { bio } = req.body;
+        // const [ number, user ]  = await getRecordByName('user', name);
+        const [ numberRows, user ] = await User.update(
+            { bio: bio }, 
+            { where: { name: name },
+            returning: true,
+            plain: true
+            })
+        res.sendStatus(204);
+    }
+    catch (err) {
+        console.log(err);
+        res.send(400);
+    }
+}
+
+// Delete user
 
 // Get all bands
 const getAllBands = async (req, res) => {
@@ -173,10 +195,7 @@ const getBandFans = async (req, res) => {
     }
 }
 
-// Allow fans to rsvp to a show
-
-// Get fans who have rsvpd to a show
-
+// TODO: move ths function to controllers/Venue.js
 // Allow user to follow a venue
 const addFanToVenue = async (req, res) => {
     const { id_fan, id_venue } = req.body;
@@ -193,25 +212,8 @@ const addFanToVenue = async (req, res) => {
     }
 } 
 
+// TODO: move ths function to controllers/Venue.js
 // Get fans who follow a given venue
-
-// Update user
-
-// Delete user
-
-// // QUERY HELPERS?
-// const getBandIDFromName = async (name) => {
-//     const id = await User.findOne({
-//         // attributes is not currently working as expected
-//         attributes: ['id'],
-//         where: {
-//             name: name
-//         }
-//     });
-//     return id;
-// }
-
-
 
 /**
  * This is a helper function to grab all data from a single record 
@@ -222,7 +224,7 @@ const addFanToVenue = async (req, res) => {
  */
 const getRecordByName = async (type, name) => {
     try {
-        if (type === 'band' || type === 'fan') {
+        if (type === 'band' || type === 'fan' || type === 'user') {
             let userRecord = await User.findOne({
                 attributes: ['id'],
                 where: {
@@ -247,13 +249,14 @@ const getRecordByName = async (type, name) => {
 }
 
 module.exports = {
+    addFanToBand,
     addFanToVenue,
     addGenreToBand,
     createUser,
-    removeBandGenre,
+    getAllBands,
     getBandFans,
     getBandGenres,
     getSingleUser,
-    addFanToBand,
-    getAllBands,
+    removeBandGenre,
+    updateUserBio
 }

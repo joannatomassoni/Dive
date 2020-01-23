@@ -7,7 +7,8 @@ const { addFanToVenue,
     getBandFans,
     getBandGenres,
     getSingleUser,
-    removeBandGenre
+    removeBandGenre,
+    updateUserBio
 } = require('./User');
 const { getTypes } = require('./Type');
 const { createVenue, getAllVenues } = require('./Venue');
@@ -26,6 +27,7 @@ module.exports = {
     createUser,
     createShow,
     getAllBands,
+    getAllVenues,
     getBandFans,
     getBandGenres,
     getFanRSVPs,
@@ -36,6 +38,5 @@ module.exports = {
     removeFanRSVP,
     removeBandGenre,
     rsvpFanToShow,
-    getAllVenues,
-    getAllVenues
+    updateUserBio
 }

@@ -32,7 +32,7 @@ router.post('/users', ctrl.createUser);
 router.get('/users/:id', ctrl.getSingleUser)
 
 // Update user info
-router.patch('/users/userName', ctrl.updateUser)
+router.patch('/users/:name/bio', ctrl.updateUserBio)
 
 /**
  * BANDS ROUTES
