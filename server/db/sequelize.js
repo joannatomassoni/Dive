@@ -107,8 +107,8 @@ Show.belongsToMany(Comment, { through: 'show_comments' })
 // TODO: should we prepopulate venues?
 
 // Use line 99 instead of line 100 if you don't want the database to drop on server refresh
-// sequelize.sync()
-sequelize.sync({ force: true })
+sequelize.sync()
+// sequelize.sync({ force: true })
   .then(() => {
     console.log(`Database & tables created!`)
   }).then(() => {
@@ -152,6 +152,7 @@ module.exports = {
   Genre,
   RSVP, 
   Show, 
+  ShowBand,
   Type, 
   User, 
   Venue
