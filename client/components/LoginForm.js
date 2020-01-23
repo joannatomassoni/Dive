@@ -5,8 +5,10 @@ import {
   Text, 
   TextInput,
   TouchableOpacity,
+  Alert
   } from 'react-native';
-  import { SignedInContext } from '../App'
+  import { SignedInContext } from '../App';
+import * as Google from "expo-google-app-auth";
 
 export default function LoginForm (props) {
   //pull signedin boolean from glabal context
@@ -14,11 +16,33 @@ export default function LoginForm (props) {
   //set username to text in username textInput
   const [usernameValue, setUsernameValue] = useState('');
   
-  console.log(userInfo);
-  console.log(usernameValue);
+  //function to sign in with google auth
+  const googleSignIn = async () => {
+    try {
+      const { type, user, accessToken } = await Google.logInAsync({
+        iosClientId: '453096591840-naqf4nslt86oor0avi1t97717v3c3bld.apps.googleusercontent.com',
+        androidClioentId: '453096591840-s4924si2rd6moneqt77laoss6q28o1kp.apps.googleusercontent.com',
+        scopes: ["profile", "email"]
+      })
+      if (type === "success") {
+        console.log('User Info: ', user, 'Access Token: ', accessToken);
+        //key values to add to the userInfo global state
+        setUserInfo(userInfo => 
+          ({ 
+            ...userInfo, 
+            signedIn: true,
+            name: user.name,
+            photoUrl: user.photoUrl
+          }))
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <View style={styles.container}>
+      {/* username text box */}
       <TextInput 
       placeholder="username or email"
       placeholderTextColor="#75A4AD"
@@ -27,22 +51,25 @@ export default function LoginForm (props) {
       keyboardType="email-address"
       style={styles.input} 
       />
+      {/* password text box */}
       <TextInput 
       placeholder="password"
       placeholderTextColor="#75A4AD"
       returnKeyType="go"
       secureTextEntry
       style={styles.input}
-      // ref={(input) => {this.passwordInput = input}}
       />
+      {/* login button */}
       <TouchableOpacity 
-      style={styles.loginContainer}
-      onPress={() => setUserInfo(userInfo => ({ ...userInfo, signedIn: true }))}
+        style={styles.loginContainer}
+        onPress={() => setUserInfo(userInfo => ({ ...userInfo, signedIn: true }))}
       >
       <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
-      <TouchableOpacity 
-      style={styles.googleLoginContainer}
+      {/* google login button */}
+      <TouchableOpacity
+        onPress={() => {googleSignIn()}}
+        style={styles.googleLoginContainer}
       >
         <Text style={styles.buttonText}>GOOGLE  LOGIN</Text>
       </TouchableOpacity>
