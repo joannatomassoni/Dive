@@ -91,10 +91,11 @@ const getFanRSVPs = async (req, res) => {
 // Get all fans who have rsvpd to a show
 const getShowRSVPs = async (req, res) => {
     try {
-        const id_show = req.params.id;
+        const { showName } = req.body;
+        const show = await getRecordByName('show', showName);
         const rsvps = await RSVP.findAll({
             where: {
-                id_show: id_show
+                id_show: show.id
             }
         })
         Promise.all(rsvps.map(async(rsvp) => {
