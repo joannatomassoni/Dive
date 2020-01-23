@@ -4,6 +4,11 @@ const bodyParser = require('body-parser');
 const router = require('./routes');
 const db = require('./db/sequelize');
 
+if (process.env.NODE_ENV !== 'production') {
+  const dotenv = require('dotenv').config();
+}
+console.log(process.env);
+
 const app = express();
 
 let PORT = process.env.PORT || 8080;
@@ -19,3 +24,6 @@ app.listen(PORT, () => {
   console.log(`Listening on :${PORT} 🚀`);
 });
 
+module.exports = {
+  // dotenv
+}

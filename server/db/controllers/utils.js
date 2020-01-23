@@ -8,7 +8,7 @@ const { User, Genre, Venue, Show } = require('../sequelize');
  * 
  * (call it with await in an async function)
  * 
- * @param {*} type (genre, venue, fan, band, or use)
+ * @param {*} type (genre, venue, fan, band, or user)
  * @param {*} name (passed in through req.body)
  */
 const getRecordByName = async (type, name) => {
