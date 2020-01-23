@@ -77,6 +77,9 @@ router.post('/venues', ctrl.createVenue)
 // get all venues
 router.get('/venues', ctrl.getAllVenues);
 
+//to remove a venue
+router.post('/venues', ctrl.removeVenue);
+
 // TODO:
 // add fan to venue
 // req.body = { venueName, fanName }
