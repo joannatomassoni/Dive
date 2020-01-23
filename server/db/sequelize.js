@@ -96,10 +96,10 @@ User.hasMany(BandGenre, { foreignKey: 'id_band' });
 Genre.hasMany(BandGenre, { foreignKey: 'id_genre' });
 
 // each comment has one user
-Comment.belongsTo(User, { foreignKey: { allowNull: false } });
+Comment.belongsTo(User, { foreignKey: { name: 'id_fan', allowNull: false } });
 
 // each comment has one show
-Comment.belongsTo(Show, { foreignKey: { allowNull: false } });
+Comment.belongsTo(Show, { foreignKey: { name: 'id_show', allowNull: false } });
 
 // each show has many comments
 Show.belongsToMany(Comment, { through: 'show_comments' })
@@ -111,8 +111,8 @@ Show.belongsToMany(Comment, { through: 'show_comments' })
 // TODO: should we prepopulate venues?
 
 // Use line 99 instead of line 100 if you don't want the database to drop on server refresh
-sequelize.sync()
-// sequelize.sync({ force: true })
+// sequelize.sync()
+sequelize.sync({ force: true })
   .then(() => {
     console.log(`Database & tables created!`)
   }).then(() => {
