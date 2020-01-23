@@ -256,6 +256,8 @@ const addFanToVenue = async (req, res) => {
 // TODO: move ths function to controllers/Venue.js
 // Get fans who follow a given venue
 
+
+
 /**
  * This is a helper function to grab all data from a single record 
  * when provided its name, depending on the type
