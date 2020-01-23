@@ -1,3 +1,4 @@
+// Requiring the models we need for our queries
 const { Show, RSVP, User } = require('../sequelize');
 
 // Create show
@@ -17,7 +18,8 @@ const createShow = async (req, res) => {
     }
 }
 
-// Get all upcoming shows
+// TODO:
+// Get all upcoming shows in database
 
 // Allow fan to rsvp to a show
 const rsvpFanToShow = async (req, res) => {

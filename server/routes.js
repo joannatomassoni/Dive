@@ -1,38 +1,83 @@
+/**
+ * This is where our endpoints are created and our controllers are called.
+ * Descriptions will include what is needed from the request body and/or endpoint parameters
+ */
+
 const express = require('express');
 const router = express.Router();
-const ctrl = require('./db/controllers/index');
-const { getAllVenues } = require('./db/controllers/Venue');
+const ctrl = require('./db/controllers/index')
 
-router.get('/', function (req, res) {
-  res.send("we're getting routes!");
-})
+// GENERAL USERS ROUTES
 
-// SIGNUP
+// signup / create user
+/**
+ * req.body = 
+ * { 
+ * name REQUIRED
+ * typeName REQUIRED
+ * bio
+ * link_facebook
+ * link_spotify
+ * link_instagram
+ * photo 
+ * }
+ */
+// creates fans and bands
 router.post('/users', ctrl.createUser);
 
 // Used for user login and getting a single band
+// id in param is user id
 router.get('/users/:id', ctrl.getSingleUser)
 
+
+/**
+ * BANDS ROUTES
+ */
 // get all bands 
+// FIXME: rendering empty array currently
 router.get('/bands', ctrl.getAllBands)
 
-// add fan for band
-router.post('/bands/fans', ctrl.addFanToBand)
-
-// add genre to band.
+// add genre to band
 router.post('/bands/genres', ctrl.addGenreToBand)
 
-// get a given band's genres. id in params is the band's id.
+// get a given band's genres. 
+// id in params is the band's id.
 router.get('/bands/genres/:id', ctrl.getBandGenres); 
 
-// get all fans of a given band. id in params is the band's id.
+// TODO:
+// delete a genre from a band
+// req.body = { id_band, id_genre }
+router.delete('/bands/genres')
+
+// add fan for band
+// req.body = { id_band, id_fan }
+router.post('/bands/fans', ctrl.addFanToBand)
+
+// get all fans of a given band. 
+// id in params is the band's id.
 router.get('/bands/fans/:id', ctrl.getBandFans);
 
-// POST skeleton route to post data to band table for ONE band
-router.post('/bands', function (req, res) {
-  res.send("We received your band info");
-})
+/**
+ * VENUES
+ */
+// TODO:
+// create a venue
+router.post('/venues', ctrl.createVenue)
 
+// TODO:
+// get one venue
+router.get('/venues', ctrl.getAllVenues);
+
+// TODO: 
+// get all venues
+
+// TODO:
+// add fan to venue
+router.post('/venues/fans', ctrl.addFanToVenue);
+
+/**
+ * SHOWS
+ */
 // TODO:
 // get all shows
 router.get('/shows', function (req, res) {
@@ -49,56 +94,30 @@ router.post('/shows', ctrl.createShow)
 
 
 /**
- * RSVPs
+ * RSVPs (shows/fans)
  */
-// rsvp fan to a show
+// fan rsvps to a show
+// req.body = { id_user, id_fan }
 router.post('/shows/rsvps', ctrl.rsvpFanToShow)
 
 // remove a fan rsvp from a show
-// fan id and show id passed in body
+// req.body = { id_fan, id_show }
 router.delete('/shows/rsvps', ctrl.removeFanRSVP)
 
-// get fans who have rsvpd to a given show. id in params will be show id.
+// get fans who have rsvpd to a given show. 
+// id in params will be the show's id.
 router.get('/shows/rsvps/:id', ctrl.getShowRSVPs)
 
-// get shows that a given fan has rsvpd to. id in params will be fan id.
+// get shows that a given fan has rsvpd to. 
+// id in params will be the fan's id.
 router.get('/fans/rsvps/:id', ctrl.getFanRSVPs)
 
 
 /**
- * VENUES
+ * SHOW COMMENTS
  */
-// create a venue
-router.post('/venues', ctrl.createVenue)
-
 // TODO:
-// get one venue
-router.get('/venues', function (req, res) {
-  getAllVenues()
-    .then(response => {
-
-      res.send(response);
-      console.log("route is getting data", response);
-    })
-
-  // // let venues = getAllVenues();
-  // getAllVenues()
-  // // .then(response => {
-  // // console.log("route is getting venues", response)
-  // res.send("we are getting a venue!", res);
-  // // })
-})
-
-// TODO: 
-// get all venues
-
-// TODO:
-// add fan to venue
-router.post('/venues/fans', ctrl.addFanToVenue);
-
-
-// TODO:
-// create comment
+// create a comment
 router.post('/comments', function (req, res) {
   res.send("We received your comment info");
 })
@@ -109,7 +128,10 @@ router.get('/comments', function (req, res) {
   res.send("we are getting comment!");
 })
 
-// get two types (for signup)
+/**
+ * TYPES
+ */
+// get two types (for signup form?)
 router.get('/types', ctrl.getTypes);
 
 

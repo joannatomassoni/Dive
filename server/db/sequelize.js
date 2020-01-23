@@ -33,30 +33,20 @@ const Venue = VenueModel(sequelize, Sequelize);
 const User = UserModel(sequelize, Sequelize);
 
 
-// create associations, save in variables to use in queries
+/**
+ * Below, we create the associations between tables.
+ */
 
 // each user has one type
-User.Type = User.belongsTo(Type, { foreignKey: { name: 'id_type', allowNull: false } })
+User.Type = User.belongsTo(Type, { foreignKey: { name: 'id_type', allowNull: false } });
+
 // each show has one venue
 Show.belongsTo(Venue, { foreignKey: { name: 'id_venue', allowNull: false } });
 
-// join table for shows and fans (rsvps)
+// join table for shows and fans (RSVPs)
 Show.hasMany(RSVP, { foreignKey: { name: 'id_show', allowNull: false } });
 User.hasMany(RSVP, { foreignKey: { name: 'id_fan', allowNull: false } });
 
-// // join table for shows and fans
-// Show.belongsToMany(User, {
-//   as: 'fans',
-//   through: 'fan_rsvps',
-//   foreignKey: {
-//     name: 'id_show',
-//     allowNull: false
-//   },
-//   otherKey: {
-//     name: 'id_fan',
-//     allowNull: false
-//   }
-// })
 // join table for shows and bands
 Show.belongsToMany(User, {
   as: 'band',
@@ -67,8 +57,8 @@ Show.belongsToMany(User, {
   }
 })
 
-// TODO: figure out fan/band associations
-// // join table for fans and bands
+// join table for fans and bands
+// (this is the only join table that sequelize is automating for us)
 User.belongsToMany(User, {
   as: 'fan',
   through: 'fans_bands',
@@ -92,15 +82,20 @@ Genre.hasMany(BandGenre, { foreignKey: 'id_genre' });
 
 // each comment has one user
 Comment.belongsTo(User, { foreignKey: { allowNull: false } });
+
 // each comment has one show
 Comment.belongsTo(Show, { foreignKey: { allowNull: false } });
+
 // each show has many comments
 Show.belongsToMany(Comment, { through: 'show_comments' })
 
-// create database and tables, and prepopulate type and genre tables
+
+/**
+ * Next we create the database and tables, and prepopulate our type and genre tables.
+ */
 // TODO: should we prepopulate venues?
 
-// get rid of force: true if you don't want db to empty on every server reload
+// Use line 99 instead of line 100 if you don't want the database to drop on server refresh
 sequelize.sync()
 // sequelize.sync({ force: true })
   .then(() => {
