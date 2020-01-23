@@ -13,7 +13,7 @@ const { addFanToVenue,
     updateUserPhoto
 } = require('./User');
 const { getTypes } = require('./Type');
-const { createVenue, getAllVenues } = require('./Venue');
+const { createVenue, getAllVenues, removeVenue } = require('./Venue');
 const {
     createShow,
     getFanRSVPs,
