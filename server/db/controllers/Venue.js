@@ -1,4 +1,4 @@
-// Requiring the models we need for our queries.
+// Requiring the models we need for our queries
 const { Venue } = require('../sequelize');
 const bodyParser = require('body-parser');
 
@@ -9,7 +9,6 @@ const createVenue = async (req, res) => {
         Venue.create({
             name,
             address1,
-            address2,
             city,
             state,
             zip_code

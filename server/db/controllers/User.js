@@ -10,6 +10,8 @@ const {
         sequelize
     } = require('../sequelize');
 
+const { getRecordByName } = require('./utils');
+
 // Create user
 const createUser = async (req, res) => {
     try {
@@ -257,39 +259,6 @@ const addFanToVenue = async (req, res) => {
 // Get fans who follow a given venue
 
 
-
-/**
- * This is a helper function to grab all data from a single record 
- * when provided its name, depending on the type
- * 
- * @param {*} type 
- * @param {*} name 
- */
-const getRecordByName = async (type, name) => {
-    try {
-        if (type === 'band' || type === 'fan' || type === 'user') {
-            let userRecord = await User.findOne({
-                attributes: ['id'],
-                where: {
-                    name: name
-                }
-            });
-            return userRecord;
-        } 
-        if (type === 'genre') {
-            const genreRecord = await Genre.findOne({
-                attributes: ['id'],
-                where: {
-                    genreName: name
-                }
-            });
-            return genreRecord;
-        }
-    }
-    catch(err) {
-        console.log(err);
-    }
-}
 
 module.exports = {
     addFanToBand,

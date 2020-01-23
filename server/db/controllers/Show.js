@@ -1,14 +1,16 @@
 // Requiring the models we need for our queries
 const { Show, RSVP, User } = require('../sequelize');
+const { getRecordByName } = require('./utils')
 
 // Create show
 const createShow = async (req, res) => {
-    const { name, date, id_venue } = req.body;
+    const { name, date, venueName } = req.body;
+    const venue = await getRecordByName('venue', venueName);
     try {
         await Show.create({
             name: name,
             date: date,
-            id_venue: id_venue
+            id_venue: venue.id
         })
         res.send(201);
     }
