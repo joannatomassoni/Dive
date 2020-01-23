@@ -120,23 +120,25 @@ const getBandGenres = async (req, res) => {
 const removeBandGenre = async (req, res) => {
     try {
         const { bandName, genreName } = req.body;
-        const id_band = await User.findOne({
-            // attributs is not currently working as expected
-            attributes: ['id'],
-            where: {
-                name: bandName
-            }
-        });
-        const id_genre = await Genre.findOne({
-            attributes: ['id'],
-            where: {
-                genreName: genreName
-            }
-        })
+        // const id_band = await User.findOne({
+        //     // attributs is not currently working as expected
+        //     attributes: ['id'],
+        //     where: {
+        //         name: bandName
+        //     }
+        // });
+        // const id_genre = await Genre.findOne({
+        //     attributes: ['id'],
+        //     where: {
+        //         genreName: genreName
+        //     }
+        // })
+        const band = await getRecordByName('band', bandName);
+        const genre = await getRecordByName('genre', genreName);
         await BandGenre.destroy({
             where: {
-                id_genre: id_genre.id,
-                id_band: id_band.id
+                id_genre: genre.id,
+                id_band: band.id
             }
         })
         res.send(200);
