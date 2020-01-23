@@ -18,18 +18,6 @@ export default function Shows(props) {
       <MenuButton navigation={props.navigation}/>
       <Text style={styles.text}>Shows</Text>
     </View>
-
-
-    <SafeAreaView style={styles.container}>
-      <SectionList
-        sections={'DATA'}
-        keyExtractor={(item, index) => item + index}
-        renderItem={({ item }) => <Item title={item} />}
-        renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.header}>{title}</Text>
-        )}
-      />
-    </SafeAreaView>
   )
 }
 
