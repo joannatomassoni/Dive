@@ -37,6 +37,7 @@ module.exports = {
     getShowRSVPs,
     getSingleUser,
     getTypes,
+    getVenueShows,
     createVenue,
     removeVenue,
     removeFanRSVP,
