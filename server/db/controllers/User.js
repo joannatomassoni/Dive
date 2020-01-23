@@ -49,7 +49,7 @@ const getSingleUser = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.send(err);        
+        res.sendStatus(400);        
     }
 }
 
@@ -66,7 +66,7 @@ const getAllBands = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.end(err);
+        res.sendStatus(400);
     }
 }
 
@@ -82,10 +82,11 @@ const addGenreToBand = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.send(err);
+        res.sendStatus(400);
     }
 }
 
+// FIXME:
 // get band genres
 const getBandGenres = async (req, res) => {
     try {
@@ -107,6 +108,16 @@ const getBandGenres = async (req, res) => {
     catch(err) {
         console.log(err);
         res.sendStatus(400);
+    }
+}
+
+// delete genre from band
+const deleteGenre = async (req, res) => {
+    try {
+
+    }
+    catch {
+
     }
 }
 
