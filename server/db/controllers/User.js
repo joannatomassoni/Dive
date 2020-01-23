@@ -34,13 +34,14 @@ const createUser = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.sendStatus(404);
+        res.sendStatus(400);
     }
 }
 
 // Get single user
 const getSingleUser = async (req, res) => {
     try {
+        debugger;
         const { name } = req.params;
         const user = await getRecordByName('user', name);
         res.status(200).send(user);
@@ -70,14 +71,14 @@ const updateUserBio = async (req, res) => {
     }
 }
 
-// Update user photo
-const updateUserPhoto = async (req, res) => {
+// Update band photo
+const updateBandPhoto = async (req, res) => {
     try {
         const { name } = req.params;
         const { photo } = req.body;
         // const [ number, user ]  = await getRecordByName('user', name);
         await User.update(
-            { photo: photo }, 
+            { bandPhoto: photo }, 
             { where: { name: name },
             returning: true,
             plain: true
@@ -285,5 +286,5 @@ module.exports = {
     getSingleUser,
     removeBandGenre,
     updateUserBio,
-    updateUserPhoto
+    updateBandPhoto
 }

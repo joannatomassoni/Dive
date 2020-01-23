@@ -36,7 +36,7 @@ router.patch('/users/:name/bio', ctrl.updateUserBio)
 
 // Update user photo
 // req.body = { photo }
-router.patch('/users/:name/photo', ctrl.updateUserPhoto)
+router.patch('/users/:name/photo', ctrl.updateBandPhoto)
 
 // Delete user
 router.delete('/users/:name', ctrl.deleteUser)

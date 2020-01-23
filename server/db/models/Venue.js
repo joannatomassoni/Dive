@@ -4,13 +4,7 @@ module.exports = (sequelize, type) => {
             type: type.STRING,
             allowNull: false
         },
-        // something like '123 Main Street'
         address1: {
-            type: type.STRING,
-            allowNull: true,
-        },
-        // something like 'Apt 2'
-        address2: {
             type: type.STRING,
             allowNull: true,
         },
