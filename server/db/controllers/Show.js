@@ -64,10 +64,11 @@ const removeFanRSVP = async (req, res) => {
 // Get all shows that a given user has rsvpd to
 const getFanRSVPs = async (req, res) => {
     try {
-        const id_fan = req.params.id;
+        const { fanName } = req.body;
+        const fan = await getRecordByName('fan', fanName);
         const rsvps = await RSVP.findAll({
             where: {
-                id_fan: id_fan
+                id_fan: fan.id
             }
         }) 
         Promise.all(rsvps.map(async(rsvp) => {

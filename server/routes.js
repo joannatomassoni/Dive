@@ -119,8 +119,7 @@ router.delete('/shows/rsvps', ctrl.removeFanRSVP)
 router.get('/shows/rsvps/:id', ctrl.getShowRSVPs)
 
 // get shows that a given fan has rsvpd to. 
-// id in params will be the fan's id.
-router.get('/fans/rsvps/:id', ctrl.getFanRSVPs)
+router.get('/fans/rsvps/:name', ctrl.getFanRSVPs)
 
 
 /**
