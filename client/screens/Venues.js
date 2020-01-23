@@ -23,34 +23,10 @@ export default function Venues(props) {
         )
         console.log('component mounted');
       })
-    console.log('component mounted');
+      .catch((err) => {
+        console.log("frontend not getting venues from db", err);
+      })
   })
-
-  // axios.get('http://localhost:8080/venues')
-  //     .then((response) => {
-  //       // this.setState({
-  //       setVenues(
-  //         {
-  //           name: response.data[4].name,
-  //           address1: response.data[4].address1,
-  //           city: response.data[4].city,
-  //           state: response.data[4].state,
-  //           zip_code: response.data[4].zip_code,
-  //         }
-  //       )
-  //       console.log('component mounted');
-  //     })
-  // constructor() {
-  //   super()
-  //   this.state = {
-  //     name: '',
-  //     address1: '',
-  //     address2: '',
-  //     city: '',
-  //     state: '',
-  //     zip_code: 0,
-  //   }
-  // }
 
   // componentDidMount() {
 
@@ -82,24 +58,6 @@ export default function Venues(props) {
   //     .catch((err) => {
   //       console.log("we're not hitting api", err);
   //     })
-
-  //GET This get request gets all venues from database. 
-  //  Right now it is hard coded for just one band
-  // axios.get('http://localhost:8080/venues')
-  //   .then((response) => {
-  //     this.setState({
-  //       name: response.data[4].name,
-  //       address1: response.data[4].address1,
-  //       city: response.data[4].city,
-  //       state: response.data[4].state,
-  //       zip_code: response.data[4].zip_code,
-  //     });
-  //     console.log('UI is getting venues!', response.data[4].name);
-  //   }).catch(err => {
-  //     console.log('uh oh, not getting venues', err);
-  //   })
-  // }
-
 
 
   // const { name, address1, city, state, zip_code } = this.state;
