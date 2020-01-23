@@ -26,10 +26,12 @@ const createShow = async (req, res) => {
 // Allow fan to rsvp to a show
 const rsvpFanToShow = async (req, res) => {
     try {
-        const { id_show, id_fan } = req.body;
+        const { showName, fanName } = req.body;
+        const show = await getRecordByName('show', showName);
+        const fan = await getRecordByName('fan', fanName);
         await RSVP.create({
-            id_show: id_show,
-            id_fan: id_fan
+            id_show: show.id,
+            id_fan: fan.id
         })
         res.sendStatus(201);
     }
