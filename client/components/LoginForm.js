@@ -72,7 +72,7 @@ export default function LoginForm (props) {
         onPress={() => {googleSignIn()}}
         style={styles.googleLoginContainer}
       >
-        <Text style={styles.buttonText}>Login with GOOGLE </Text>
+        <Text style={styles.buttonText}>Login w/ GOOGLE </Text>
       </TouchableOpacity>
       {/* button to open modal */}
       <SignUpModal />

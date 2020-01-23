@@ -8,6 +8,11 @@ import {
   TextInput,
   KeyboardAvoidingView
 } from 'react-native';
+import RadioForm, { 
+  RadioButton, 
+  RadioButtonInput, 
+  RadioButtonLabel 
+} from 'react-native-simple-radio-button';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function ModalExample(props) {
@@ -15,6 +20,13 @@ export default function ModalExample(props) {
   const [modalVisible, setModalVisible] = useState(false);
   //set username to text in username textInput
   const [usernameValue, setUsernameValue] = useState('');
+  //state for fan or band selector
+  const [userType, setUserType] = useState('');
+
+  const radio_props = [
+    { label: 'Fan', value: 'fan' },
+    { label: 'Band', value: 'band' }
+  ];
 
   return (
     <View>
@@ -52,20 +64,34 @@ export default function ModalExample(props) {
               secureTextEntry
               style={styles.input}
             />
+            {/* radio button to select user type */}
+              <RadioForm
+                style={styles.modal}
+                buttonInnerColor={'#59C3D1'}
+                radio_props={radio_props}
+                initial={null}
+                formHorizontal={true}
+                labelHorizontal={false}
+                buttonColor={'#59C3D1'}
+                animation={true}
+                labelColor={'#fff'}
+                onPress={(value) => {setUserType(value)}}
+              />
+
             {/* sign in button when modal is showing */}
             <TouchableOpacity
               style={styles.loginContainer}
               // onPress={() => setUserInfo(userInfo => ({ ...userInfo, signedIn: true }))}
               onPress={() => {setModalVisible(false)}}
             >
-              <Text style={styles.buttonText}>Sign Up</Text>
+              <Text style={styles.buttonText}>Signup</Text>
             </TouchableOpacity>
             {/* google sign in button */}
             <TouchableOpacity
               style={styles.googleSignupContainer}
               onPress={() => {setModalVisible(false)}}
             >
-              <Text style={styles.buttonText}>Login with GOOGLE </Text>
+              <Text style={styles.buttonText}>Signup w/ GOOGLE </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -107,6 +133,8 @@ const styles = StyleSheet.create({
     color: '#59C3D1',
     opacity: 0.9,
     fontWeight: 'bold',
+    marginLeft: 90,
+    marginBottom: 15
   },
   loginContainer: {
     backgroundColor: '#59C3D1',
@@ -128,6 +156,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 90,
     marginBottom: 15
+  },
+  modal: {
+    marginLeft: 120
   },
   buttonText: {
     textAlign: 'center',
