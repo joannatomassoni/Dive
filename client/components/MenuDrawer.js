@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  Alert
 } from 'react-native';
 import { SignedInContext } from '../App'
 //screen dimensions for menu bar
@@ -53,11 +54,27 @@ export default function MenuDrawer(props) {
             {navLink('Hub', 'Hub')}
             {/* logout button when user is signed in */}
             <TouchableOpacity 
-            onPress={() => setUserInfo(userInfo => ({
-              ...userInfo,
-              signedIn: false,
-              name: '',
-              photoUrl: ''}))}
+            // log out triggers alert box
+              onPress={() => {
+                Alert.alert(
+                  'Log Out',
+                  'Are you sure you want to log out?',
+                  [
+                    {
+                      //log out resets the global user state
+                      text: 'Log Out', 
+                      onPress: () => setUserInfo(userInfo => ({
+                        ...userInfo,
+                        signedIn: false,
+                        name: '',
+                        photoUrl: ''
+                      })) 
+                    },
+                    { text: 'Cancel', style: 'cancel' },
+                  ],
+                );
+              }}
+            
             >
               <Text style={styles.link}>Log Out</Text>
             </TouchableOpacity>

@@ -31,7 +31,6 @@ export default function Venues(props) {
       })
   }, [])
 
-
   // const { name, address1, city, state, zip_code } = this.state;
   return (
     <View style={styles.container}>
@@ -53,7 +52,6 @@ export default function Venues(props) {
     </View>
   )
 }
-
 
 const styles = StyleSheet.create({
   container: {

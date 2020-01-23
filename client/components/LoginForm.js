@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Alert
   } from 'react-native';
-  import { SignedInContext } from '../App';
+import axios from 'axios';
+import { SignedInContext } from '../App';
 import * as Google from "expo-google-app-auth";
 import SignUpModal from '../modals/SignUpModal'
 
@@ -28,13 +29,16 @@ export default function LoginForm (props) {
       if (type === "success") {
         console.log('User Info: ', user, 'Access Token: ', accessToken);
         //key values to add to the userInfo global state
-        setUserInfo(userInfo => 
-          ({ 
-            ...userInfo, 
+        axios.get(`http://localhost:8080/users/${user.email}`)
+          .then(res => setUserInfo(userInfo => ({
+            ...userInfo,
             signedIn: true,
             name: user.name,
-            photoUrl: user.photoUrl
-          }))
+            userType: res.data.id_type === 1 ? 'fan' : 'band',
+            photoUrl: res.data.photo,
+            id: res.data.id
+          })))
+          .catch(error => console.log('failed to find user', error));
       }
     } catch (error) {
       console.log(error)
@@ -63,7 +67,18 @@ export default function LoginForm (props) {
       {/* login button */}
       <TouchableOpacity 
         style={styles.loginContainer}
-        onPress={() => setUserInfo(userInfo => ({ ...userInfo, signedIn: true }))}
+        onPress={() => {
+          axios.get(`http://localhost:8080/users/${usernameValue}`)
+            .then(res => setUserInfo(userInfo => ({
+              ...userInfo,
+              signedIn: true,
+              name: res.data.name,
+              userType: res.data.id_type === 1 ? 'fan' : 'band',
+              photoUrl: res.data.photo,
+              id: res.data.id
+            })))
+            .catch(error => console.log('failed to find user', error));
+        }}
       >
       <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
