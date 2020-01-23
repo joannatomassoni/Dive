@@ -75,6 +75,9 @@ router.get('/venues', ctrl.getAllVenues);
 // add fan to venue
 router.post('/venues/fans', ctrl.addFanToVenue);
 
+// TODO:
+// get all venues that a fan follows
+
 /**
  * SHOWS
  */
