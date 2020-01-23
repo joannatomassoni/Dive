@@ -38,9 +38,11 @@ module.exports = {
     getSingleUser,
     getTypes,
     createVenue,
+    removeVenue,
     removeFanRSVP,
     removeBandGenre,
     rsvpFanToShow,
     updateUserBio,
-    updateUserPhoto
+    updateUserPhoto,
+
 }
