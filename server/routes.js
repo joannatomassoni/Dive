@@ -51,7 +51,7 @@ router.get('/bands', ctrl.getAllBands)
 router.post('/bands/genres', ctrl.addGenreToBand)
 
 // get a given band's genres. 
-router.get('/bands/:bandName/genres', ctrl.getBandGenres); 
+router.get('/bands/:bandName/genres', ctrl.getBandGenres);
 
 // delete a genre from a band
 // req.body = { bandName, genreName }
