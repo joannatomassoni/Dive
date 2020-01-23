@@ -8,6 +8,7 @@ const express = require('express');
 const router = express.Router();
 const ctrl = require('./db/controllers/index')
 
+
 // GENERAL USERS ROUTES
 
 // signup / create user
@@ -76,6 +77,16 @@ router.post('/venues', ctrl.createVenue)
 // TODO: 
 // get all venues
 router.get('/venues', ctrl.getAllVenues);
+
+//to remove a venue
+router.delete('/venues', ctrl.removeVenue);
+
+
+//to get all shows from a venue
+router.get('/venues/shows/:venueName', ctrl.getVenueShows);
+
+
+
 
 // TODO:
 // add fan to venue
