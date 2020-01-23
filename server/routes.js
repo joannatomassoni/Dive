@@ -28,8 +28,11 @@ router.post('/users', ctrl.createUser);
 
 // Used for user login and getting a single band
 // id in param is user id
+// TODO: refactor to take in name instead of id
 router.get('/users/:id', ctrl.getSingleUser)
 
+// Update user info
+router.patch('/users/userName', ctrl.updateUser)
 
 /**
  * BANDS ROUTES
