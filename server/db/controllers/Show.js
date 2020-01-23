@@ -44,12 +44,13 @@ const rsvpFanToShow = async (req, res) => {
 // Allow fan to remove their rsvp
 const removeFanRSVP = async (req, res) => {
     try {
-        // show id
-        const { id_fan, id_show } = req.body;
+        const { fanName, showName } = req.body;
+        const show = await getRecordByName('show', showName);
+        const fan = await getRecordByName('fan', fanName);
         await RSVP.destroy({
             where: {
-                id_fan: id_fan,
-                id_show: id_show
+                id_fan: fan.id,
+                id_show: show.id
             }
         })
         res.sendStatus(200);

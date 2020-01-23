@@ -95,7 +95,6 @@ router.get('/shows', function (req, res) {
   res.send("we are getting show!");
 })
 
-// TODO:
 // add a show
 router.post('/shows', ctrl.createShow)
 
@@ -108,11 +107,11 @@ router.post('/shows', ctrl.createShow)
  * RSVPs (shows/fans)
  */
 // fan rsvps to a show
-// req.body = { id_user, id_fan }
+// req.body = { showName, fanName }
 router.post('/shows/rsvps', ctrl.rsvpFanToShow)
 
 // remove a fan rsvp from a show
-// req.body = { id_fan, id_show }
+// req.body = { showName, fanName }
 router.delete('/shows/rsvps', ctrl.removeFanRSVP)
 
 // get fans who have rsvpd to a given show. 
