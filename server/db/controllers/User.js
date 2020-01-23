@@ -1,3 +1,6 @@
+// Requiring the models we need for our queries
+// The User model contains instances of both fans and bands. 
+// Controllers for fans and bands are found here. 
 const { 
         BandGenre,
         FanVenue,
@@ -39,14 +42,71 @@ const getSingleUser = async (req, res) => {
         const { id } = req.params;
         const user = await User.findOrCreate({
             where: {
-              id: id
+                id: id
             }
-          })
-          res.status(200).send(user);
+        })
+        res.status(200).send(user);
     }
     catch (err) {
         console.log(err);
         res.send(err);        
+    }
+}
+
+// Get all bands
+const getAllBands = async (req, res) => {
+    try {
+        const bands = await User.findAll({
+            where: {
+                id_type: 2
+            }
+        })
+        console.log(bands);
+        res.send(bands);
+    }
+    catch (err) {
+        console.log(err);
+        res.end(err);
+    }
+}
+
+// Allow bands to choose genres for themselves
+const addGenreToBand = async (req, res) => {
+    const { id_band, id_genre } = req.body;
+    try {
+        BandGenre.create({
+            id_band,
+            id_genre
+        })
+        res.sendStatus(201);
+    }
+    catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+}
+
+// get band genres
+const getBandGenres = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const genres = await BandGenre.findAll({
+            where: { id_band: id }
+        });
+        const getGenres = () => { 
+            return Promise.all(genres.map(async(genre) => {
+                return Genre.findOne({
+                    where: {
+                        id: genre.id_genre
+                    }
+                }); 
+        }))}
+        getGenres().then(response => console.log(response));
+        res.sendStatus(200);
+    }
+    catch(err) {
+        console.log(err);
+        res.sendStatus(400);
     }
 }
 
@@ -110,61 +170,7 @@ const addFanToVenue = async (req, res) => {
 
 // Delete user
 
-// Get all bands
-const getAllBands = async (req, res) => {
-    try {
-        const bands = await User.findAll({
-            where: {
-                id_type: 2
-            }
-        })
-        res.send(bands);
-    }
-    catch (err) {
-        console.log(err);
-        res.end(err);
-    }
-}
 
-// Allow bands to choose genres for themselves
-const addGenreToBand = async (req, res) => {
-    const { id_band, id_genre } = req.body;
-    try {
-        BandGenre.create({
-            id_band,
-            id_genre
-        })
-        res.sendStatus(201);
-    }
-    catch (err) {
-        console.log(err);
-        res.send(err);
-    }
-}
-
-// get band genres
-const getBandGenres = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const genres = await BandGenre.findAll({
-            where: { id_band: id }
-        });
-        const getGenres = () => { 
-            return Promise.all(genres.map(async(genre) => {
-                return Genre.findOne({
-                    where: {
-                        id: genre.id_genre
-                    }
-                }); 
-        }))}
-        getGenres().then(response => console.log(response));
-        res.sendStatus(200);
-    }
-    catch(err) {
-        console.log(err);
-        res.sendStatus(400);
-    }
-}
 
 module.exports = {
     addFanToVenue,

@@ -1,3 +1,4 @@
+// Requiring the models we need for our queries.
 const { Venue } = require('../sequelize');
 const bodyParser = require('body-parser');
 

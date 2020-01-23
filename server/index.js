@@ -15,7 +15,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // use imported router for all endpoints
 app.use('/', router);
 
-
 app.listen(PORT, () => {
   console.log(`Listening on :${PORT} 🚀`);
 });
