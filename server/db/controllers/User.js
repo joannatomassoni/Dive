@@ -72,38 +72,58 @@ const getAllBands = async (req, res) => {
 
 // Allow bands to choose genres for themselves
 const addGenreToBand = async (req, res) => {
-    const { id_band, id_genre } = req.body;
     try {
+        const { bandName, genreName } = req.body;
+        const band = await User.findOne({
+            // attributs is not currently working as expected
+            attributes: ['id'],
+            where: {
+                name: bandName
+            }
+        });
+        const genre = await Genre.findOne({
+            attributes: ['id'],
+            where: {
+                genreName: genreName
+            }
+        });
         BandGenre.create({
-            id_band,
-            id_genre
+            id_band: band.id,
+            id_genre: genre.id
         })
         res.sendStatus(201);
     }
-    catch (err) {
+    catch(err) {
         console.log(err);
         res.sendStatus(400);
     }
 }
 
-// FIXME:
 // get band genres
 const getBandGenres = async (req, res) => {
     try {
-        const { id } = req.params;
-        const genres = await BandGenre.findAll({
-            where: { id_band: id }
+        const { bandName } = req.params;
+        const band = await User.findOne({
+            where: {
+                name: bandName
+            }
         });
-        const getGenres = () => { 
-            return Promise.all(genres.map(async(genre) => {
-                return Genre.findOne({
-                    where: {
-                        id: genre.id_genre
-                    }
-                }); 
-        }))}
-        getGenres().then(response => console.log(response));
-        res.sendStatus(200);
+        const genres = await BandGenre.findAll({
+            where: { id_band: band.id }
+        });
+        Promise.all(genres.map(async(genre) => {
+         const singleGenre = await Genre.findOne({
+             where: {
+                 id: genre.id_genre
+             }
+         }) 
+         return singleGenre;
+        })).then((data) => {
+            const genreNames = data.map(genre => {
+                return genre.genreName;
+            })
+            res.send(genreNames);
+        })
     }
     catch(err) {
         console.log(err);
@@ -201,6 +221,19 @@ const addFanToVenue = async (req, res) => {
 // Update user
 
 // Delete user
+
+// // QUERY HELPERS?
+// const getBandIDFromName = async (name) => {
+//     const id = await User.findOne({
+//         // attributes is not currently working as expected
+//         attributes: ['id'],
+//         where: {
+//             name: name
+//         }
+//     });
+//     return id;
+// }
+
 
 
 
