@@ -23,7 +23,7 @@ export default function ModalExample(props) {
   const [usernameValue, setUsernameValue] = useState('');
   //state for fan or band selector
   const [userType, setUserType] = useState('');
-
+  //values for buttons
   const radio_props = [
     { label: 'Fan', value: 'fan' },
     { label: 'Band', value: 'band' }
@@ -48,9 +48,14 @@ export default function ModalExample(props) {
             photoUrl: user.photoUrl
           }))
       }
-    } catch (error) {
-      console.log(error)
-    }
+      axios.post('http://localhost:8080/users', {
+        name: user.email,
+        typeName: userType,
+        photo: user.photoUrl
+      })
+      .then(response => response)
+      .catch(error => console.log('failed to create user', error));
+    } catch(error){console.log(error)}
   }
 
   return (
@@ -114,6 +119,12 @@ export default function ModalExample(props) {
                   name: usernameValue,
                   userType: userType
                 }));
+                axios.post('http://localhost:8080/users', {
+                  name: usernameValue,
+                  typeName: userType,
+                })
+                .then(response => response)
+                .catch(error => console.log('failed to create user', error))
               }}
             >
               <Text style={styles.buttonText}>Signup</Text>
