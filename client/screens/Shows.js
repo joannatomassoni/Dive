@@ -34,20 +34,6 @@ export default function Shows(props) {
       <ScrollView style={{marginTop:30}}>
       <Text style={styles.text}>Shows</Text>
 
-      {/* implemented with Text and Button as children */}
-      <Card
-        title='SHOW TITLE HERE'
-        style={styles.card}
-        // image={require('../images/pic2.jpg')}
-        >
-        <Text style={{ marginBottom: 10 }}>
-          General information about the bands or specific show can go here.
-        </Text>
-        <Button
-          style={styles.button}
-          title='View More' />
-      </Card>
-
         {/* implemented with Text and Button as children */}
         <Card
           title='SHOW TITLE HERE'
@@ -57,79 +43,6 @@ export default function Shows(props) {
           <Text style={{ marginBottom: 10 }}>
             General information about the bands or specific show can go here.
         </Text>
-          <Button
-            style={styles.button}
-            title='View More' />
-        </Card>
-
-        {/* implemented with Text and Button as children */}
-        <Card
-          title='SHOW TITLE HERE'
-          style={styles.card}
-        // image={require('../images/pic2.jpg')}
-        >
-          <Text style={{ marginBottom: 10 }}>
-            General information about the bands or specific show can go here.
-        </Text>
-          <Button
-            style={styles.button}
-            title='View More' />
-        </Card>
-
-        {/* implemented with Text and Button as children */}
-        <Card
-          title='SHOW TITLE HERE'
-          style={styles.card}
-        // image={require('../images/pic2.jpg')}
-        >
-          <Text style={{ marginBottom: 10 }}>
-            General information about the bands or specific show can go here.
-        </Text>
-          <Button
-            style={styles.button}
-            title='View More' />
-        </Card>
-
-        {/* implemented with Text and Button as children */}
-        <Card
-          title='SHOW TITLE HERE'
-          style={styles.card}
-        // image={require('../images/pic2.jpg')}
-        >
-          <Text style={{ marginBottom: 10 }}>
-            General information about the bands or specific show can go here.
-        </Text>
-          <Button
-            style={styles.button}
-            title='View More' />
-        </Card>
-
-        {/* implemented with Text and Button as children */}
-        <Card
-          title='SHOW TITLE HERE'
-          style={styles.card}
-        // image={require('../images/pic2.jpg')}
-        >
-          <Text style={{ marginBottom: 10 }}>
-            General information about the bands or specific show can go here.
-        </Text>
-          <Button
-            style={styles.button}
-            title='View More' />
-        </Card>
-
-        {/* implemented with Text and Button as children */}
-        <Card
-          title='SHOW TITLE HERE'
-          style={styles.card}
-        // image={require('../images/pic2.jpg')}
-        >
-          <Text style={{ marginBottom: 10 }}>
-            General information about the bands or specific show can go here.
-        </Text>
-          <Button
-            style={styles.button}
-            title='View More' />
         </Card>
 
       </ScrollView>
