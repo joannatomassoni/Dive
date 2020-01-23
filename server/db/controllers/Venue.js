@@ -1,5 +1,5 @@
 // Requiring the models we need for our queries
-const { Venue } = require('../sequelize');
+const { Venue, Show } = require('../sequelize');
 const bodyParser = require('body-parser');
 
 // Create venue
@@ -42,12 +42,12 @@ const getVenueShows = async (req, res) => {
     try {
         const venue = await Venue.findAll({
             where: {
-                name: req.params.name
+                name: req.params.venueName
             }
         })
         const venueShows = await Show.findAll({
             where: {
-                id_venue: venue.id
+                id_venue: venue[0].id
             }
         })
         console.log("got shows at this venue", venueShows);
@@ -86,22 +86,26 @@ const updateVenue = async (req, res) => {
 // Delete venue
 const removeVenue = async (req, res) => {
     try {
-        await Venue.Destroy({
+        console.log(req);
+        await Venue.destroy({
             where: {
-                name: req.params.name
+                name: req.body.name
             }
         })
-        console.log("deleted venue from db");
+
+        console.log("deleted venue from db", req);
         res.sendStatus(200);
     }
     catch {
-        console.log("error deleting venue from db", err);
+        console.log("error deleting venue from db");
         res.send(400);
     }
 }
 
 
 
+
 module.exports = {
-    createVenue, getAllVenues
+    createVenue, getAllVenues, removeVenue, getVenueShows
 }
+

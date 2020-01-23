@@ -7,6 +7,7 @@
 const express = require('express');
 const router = express.Router();
 const ctrl = require('./db/controllers/index')
+const { getVenueShows } = require('./db/controllers/Venue');
 
 // GENERAL USERS ROUTES
 
@@ -79,6 +80,35 @@ router.get('/venues', ctrl.getAllVenues);
 
 //to remove a venue
 router.delete('/venues', ctrl.removeVenue);
+// router.delete('/venues', function (req, res) {
+//   console.log("are we getting the request info", req)
+//   removeVenue(req)
+//     .then(response => {
+//       res.send(response);
+//       console.log("route is deleting venues", response);
+//     })
+//     .catch(err => {
+//       console.log("venue route not deleting venues");
+//       res.send(400);
+//     })
+// })
+
+//to get all shows from a venue
+router.get('/venues/shows/:venueName', ctrl.getVenueShows);
+
+// router.post('/venues/shows', function (req, res) {
+//   console.log("are we getting the request info", req)
+//   getVenueShows(req)
+//     .then(response => {
+//       res.send(response);
+//       console.log("route is getting shows", response);
+//     })
+//     .catch(err => {
+//       console.log("venue route not getting shows");
+//       res.send(400);
+//     })
+// })
+
 
 // TODO:
 // add fan to venue
