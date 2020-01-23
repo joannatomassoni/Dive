@@ -3,5 +3,5 @@
  * */
 
 module.exports = (sequelize, type) => {
-    return sequelize.define('fan_band', {})
+    return sequelize.define('fans_band', {})
 }
