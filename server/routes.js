@@ -54,7 +54,7 @@ router.post('/bands/fans', ctrl.addFanToBand)
 
 // get all fans of a given band. 
 // id in params is the band's id.
-router.get('/bands/fans/:id', ctrl.getBandFans);
+router.get('/bands/fans/:bandName', ctrl.getBandFans);
 
 /**
  * VENUES

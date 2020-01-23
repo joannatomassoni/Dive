@@ -158,11 +158,12 @@ const addFanToBand = async (req, res) => {
 // TODO: fix this so it's not returning two copies of the fans
 const getBandFans = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { bandName } = req.params;
+        const band = await getRecordByName('band', bandName);
         const sql = `SELECT * FROM users WHERE id IN (
                         SELECT id_fan FROM fans_bands WHERE id_band = ?)`;
         const fans = await sequelize.query(sql, {
-            replacements: [id]
+            replacements: [band.id]
         })
         res.status(200).send(fans[0]);
     }
