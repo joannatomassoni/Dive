@@ -31,7 +31,7 @@ export default class ModalExample extends Component {
           <View style={{ marginTop: 22 }}>
             <View>
               <Text>Hello World!</Text>
-
+              {/* button when modal is hidden */}
               <TouchableHighlight
                 onPress={() => {
                   this.setModalVisible(!this.state.modalVisible);
