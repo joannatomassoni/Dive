@@ -16,6 +16,7 @@ const { getTypes } = require('./Type');
 const { createVenue, getAllVenues, removeVenue, getVenueShows } = require('./Venue');
 const {
     createShow,
+    getAllShows,
     getFanRSVPs,
     getShowRSVPs,
     removeFanRSVP,
@@ -30,6 +31,7 @@ module.exports = {
     createShow,
     deleteUser,
     getAllBands,
+    getAllShows,
     getAllVenues,
     getBandFans,
     getBandGenres,
@@ -37,6 +39,7 @@ module.exports = {
     getShowRSVPs,
     getSingleUser,
     getTypes,
+    getVenueShows,
     createVenue,
     removeVenue,
     removeFanRSVP,

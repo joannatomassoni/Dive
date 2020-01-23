@@ -4,12 +4,14 @@ const { getRecordByName } = require('./utils')
 
 // Create show
 const createShow = async (req, res) => {
-    const { name, date, venueName } = req.body;
+    const { name, date, time, photo, venueName } = req.body;
     const venue = await getRecordByName('venue', venueName);
     try {
         await Show.create({
             name: name,
             date: date,
+            time: time,
+            photo: photo,
             id_venue: venue.id
         })
         res.send(201);
@@ -22,6 +24,16 @@ const createShow = async (req, res) => {
 
 // TODO:
 // Get all upcoming shows in database
+const getAllShows = async (req, res) => {
+    try {
+        const shows = await Show.findAll();
+        res.send(shows);
+    }
+    catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+}
 
 // Allow fan to rsvp to a show
 const rsvpFanToShow = async (req, res) => {
@@ -122,6 +134,7 @@ const getShowRSVPs = async (req, res) => {
 
 module.exports = {
     createShow,
+    getAllShows,
     getFanRSVPs,
     getShowRSVPs,
     removeFanRSVP,
