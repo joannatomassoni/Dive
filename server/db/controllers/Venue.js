@@ -36,26 +36,7 @@ const getAllVenues = async () => {
         console.log(err);
         res.end(err);
     }
-    // const getAllVenues = async (req, res) => {
-    //     try {
-    //         const { name, address1, address2, city, state, zip_code } = req.params;
-    //         const venues = await Venues.findOrCreate({
-    //             where: {
-    //                 name: name,
-    //                 address1: address1,
-    //                 address2: address2,
-    //                 city: city,
-    //                 zip_code: zip_code,
-    //             }
-    //         })
-    //         console.log("we're getting venues from db", venues);
-    //         res.status(200).send(venues);
-    //     }
-    //     catch (err) {
-    //         console.log("error getting venues from db", err);
-    //         res.send(err);
-    //     }
-    // }
+
 
     // Get shows at a given venue
 
