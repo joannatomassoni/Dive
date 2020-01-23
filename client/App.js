@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import DrawerNavigator from './navigation/DrawerNavigator'
 
 //create global state for user signIn
-export const SignedInContext = createContext([{}, () => {}]);
+export const SignedInContext = createContext({});
 
 export default function App (props) {
   //initial login state of app

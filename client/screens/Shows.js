@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
+import { SignedInContext } from '../App'
 import MenuButton from '../components/MenuButton'
 
 export default function Shows(props) {
+  ///global user signin info and editing function
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
 
   return (
     <View style={styles.container}>
