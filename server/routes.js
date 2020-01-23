@@ -1,6 +1,7 @@
 /**
  * This is where our endpoints are created and our controllers are called.
  * Descriptions will include what is needed from the request body and/or endpoint parameters
+ * Mostly req.body should include strings of names
  */
 
 const express = require('express');
@@ -26,57 +27,68 @@ const ctrl = require('./db/controllers/index')
 router.post('/users', ctrl.createUser);
 
 // Used for user login and getting a single band
-// id in param is user id
-router.get('/users/:id', ctrl.getSingleUser)
+router.get('/users/:name', ctrl.getSingleUser)
 
+// Update user info
+// req.body = { bio }
+router.patch('/users/:name/bio', ctrl.updateUserBio)
+
+// Update user photo
+// req.body = { photo }
+router.patch('/users/:name/photo', ctrl.updateUserPhoto)
+
+// Delete user
+router.delete('/users/:name', ctrl.deleteUser)
 
 /**
  * BANDS ROUTES
  */
 // get all bands 
-// FIXME: rendering empty array currently
 router.get('/bands', ctrl.getAllBands)
 
 // add genre to band
+// req.body = { bandName, genreName }
 router.post('/bands/genres', ctrl.addGenreToBand)
 
 // get a given band's genres. 
-// id in params is the band's id.
-router.get('/bands/genres/:id', ctrl.getBandGenres); 
+router.get('/bands/:bandName/genres', ctrl.getBandGenres);
 
-// TODO:
 // delete a genre from a band
-// req.body = { id_band, id_genre }
-router.delete('/bands/genres')
+// req.body = { bandName, genreName }
+router.delete('/bands/genres', ctrl.removeBandGenre)
 
 // add fan for band
-// req.body = { id_band, id_fan }
+// req.body = { bandName, fanName }
 router.post('/bands/fans', ctrl.addFanToBand)
 
 // get all fans of a given band. 
-// id in params is the band's id.
-router.get('/bands/fans/:id', ctrl.getBandFans);
+router.get('/bands/:bandName/fans', ctrl.getBandFans);
 
 /**
  * VENUES
  */
-// TODO:
 // create a venue
 router.post('/venues', ctrl.createVenue)
 
 // TODO:
 // get one venue
-router.get('/venues', ctrl.getAllVenues);
 
 // TODO: 
 // get all venues
+router.get('/venues', ctrl.getAllVenues);
 
 // TODO:
 // add fan to venue
+// req.body = { venueName, fanName }
 router.post('/venues/fans', ctrl.addFanToVenue);
 
 // TODO:
 // get all venues that a fan follows
+router.get('/fans/:fanName/venues')
+
+// TODO:
+// get all fans who follow a given venue
+// router.get('/venues/fans/:venueName', ctrl.getVenueFans)
 
 /**
  * SHOWS
@@ -87,7 +99,6 @@ router.get('/shows', function (req, res) {
   res.send("we are getting show!");
 })
 
-// TODO:
 // add a show
 router.post('/shows', ctrl.createShow)
 
@@ -100,20 +111,18 @@ router.post('/shows', ctrl.createShow)
  * RSVPs (shows/fans)
  */
 // fan rsvps to a show
-// req.body = { id_user, id_fan }
+// req.body = { showName, fanName }
 router.post('/shows/rsvps', ctrl.rsvpFanToShow)
 
 // remove a fan rsvp from a show
-// req.body = { id_fan, id_show }
+// req.body = { showName, fanName }
 router.delete('/shows/rsvps', ctrl.removeFanRSVP)
 
 // get fans who have rsvpd to a given show. 
-// id in params will be the show's id.
-router.get('/shows/rsvps/:id', ctrl.getShowRSVPs)
+router.get('/shows/rsvps/:showName', ctrl.getShowRSVPs)
 
 // get shows that a given fan has rsvpd to. 
-// id in params will be the fan's id.
-router.get('/fans/rsvps/:id', ctrl.getFanRSVPs)
+router.get('/fans/rsvps/:fanName', ctrl.getFanRSVPs)
 
 
 /**
