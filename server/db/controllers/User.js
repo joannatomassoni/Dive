@@ -121,6 +121,7 @@ const getAllBands = async (req, res) => {
                 id_type: 2
             }
         })
+        console.log(bands);
         res.send(bands);
     }
     catch (err) {

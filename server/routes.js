@@ -30,9 +30,11 @@ router.post('/users', ctrl.createUser);
 router.get('/users/:name', ctrl.getSingleUser)
 
 // Update user info
+// req.body = { bio }
 router.patch('/users/:name/bio', ctrl.updateUserBio)
 
 // Update user photo
+// req.body = { photo }
 router.patch('/users/:name/photo', ctrl.updateUserPhoto)
 
 // Delete user
@@ -42,7 +44,6 @@ router.delete('/users/:name', ctrl.deleteUser)
  * BANDS ROUTES
  */
 // get all bands 
-// FIXME: rendering empty array currently
 router.get('/bands', ctrl.getAllBands)
 
 // add genre to band
@@ -85,6 +86,7 @@ router.post('/venues/fans', ctrl.addFanToVenue);
 // get all venues that a fan follows
 router.get('/fans/:fanName/venues')
 
+// TODO:
 // get all fans who follow a given venue
 // router.get('/venues/fans/:venueName', ctrl.getVenueFans)
 
@@ -117,10 +119,10 @@ router.post('/shows/rsvps', ctrl.rsvpFanToShow)
 router.delete('/shows/rsvps', ctrl.removeFanRSVP)
 
 // get fans who have rsvpd to a given show. 
-router.get('/shows/rsvps/:name', ctrl.getShowRSVPs)
+router.get('/shows/rsvps/:showName', ctrl.getShowRSVPs)
 
 // get shows that a given fan has rsvpd to. 
-router.get('/fans/rsvps/:name', ctrl.getFanRSVPs)
+router.get('/fans/rsvps/:fanName', ctrl.getFanRSVPs)
 
 
 /**
