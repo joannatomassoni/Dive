@@ -1,18 +1,26 @@
 // Requiring the models we need for our queries
-const { Show, RSVP, User } = require('../sequelize');
-const { getRecordByName } = require('./utils')
+const { Show, RSVP, User, ShowBand, Venue } = require('../sequelize');
+const { getRecordByName, getRecordByID } = require('./utils')
 
 // Create show
 const createShow = async (req, res) => {
-    const { name, date, time, photo, venueName } = req.body;
-    const venue = await getRecordByName('venue', venueName);
     try {
-        await Show.create({
+        const { name, date, time, photo, venueName, bandNames } = req.body;
+        const venue = await getRecordByName('venue', venueName);
+        // add bands and venue to ShowBand join tables
+        const show = await Show.create({
             name: name,
             date: date,
             time: time,
             photo: photo,
             id_venue: venue.id
+        })
+        bandNames.forEach(async (bandName) => {
+            const band = await getRecordByName('band', bandName);
+            await ShowBand.create({
+                id_show: show.id,
+                id_band: band.id
+            })
         })
         res.send(201);
     }
@@ -22,11 +30,31 @@ const createShow = async (req, res) => {
     }
 }
 
-// TODO:
+// TODO: pass bands for shows in here
 // Get all upcoming shows in database
 const getAllShows = async (req, res) => {
     try {
+        // array of shows
         const shows = await Show.findAll();
+        // for each show, we want to add the venuename as well
+        // for each show, we want to add an array of bands
+        shows.forEach(async (show) => {
+            // get venuename
+            const venue = await getRecordByID('venue', show.id_venue);
+            show['venueName'] = venue.name;
+            // get all names of bands 
+            const records = await ShowBand.findAll({
+                where: {
+                    id_show: show.id
+                }
+            })
+            const bandNames = [];
+            records.forEach((record) => {
+                bandNames.push(record.name);
+            })
+            show['bands'] = bandNames;
+            return show;
+        })
         res.send(shows);
     }
     catch (err) {
