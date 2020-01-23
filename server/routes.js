@@ -23,7 +23,7 @@ router.post('/bands/fans', ctrl.addFanToBand)
 router.post('/bands/genres', ctrl.addGenreToBand)
 
 // get a given band's genres. id in params is the band's id.
-router.get('/bands/genres/:id', ctrl.getBandGenres); 
+router.get('/bands/genres/:id', ctrl.getBandGenres);
 
 // get all fans of a given band. id in params is the band's id.
 router.get('/bands/fans/:id', ctrl.getBandFans);
@@ -76,7 +76,6 @@ router.post('/venues', ctrl.createVenue)
 router.get('/venues', function (req, res) {
   getAllVenues()
     .then(response => {
-
       res.send(response);
       console.log("route is getting data", response);
     })
