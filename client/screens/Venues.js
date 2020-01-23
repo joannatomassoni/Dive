@@ -68,7 +68,6 @@ export default class Venues extends React.Component {
       }).catch(err => {
         console.log('uh oh, not getting venues', err);
       })
-
   }
 
   render() {

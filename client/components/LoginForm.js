@@ -9,6 +9,7 @@ import {
   } from 'react-native';
   import { SignedInContext } from '../App';
 import * as Google from "expo-google-app-auth";
+import SignUpModal from '../modals/SignUpModal'
 
 export default function LoginForm (props) {
   //pull signedin boolean from glabal context
@@ -73,6 +74,7 @@ export default function LoginForm (props) {
       >
         <Text style={styles.buttonText}>GOOGLE  LOGIN</Text>
       </TouchableOpacity>
+      <SignUpModal />
     </View>
   )
 }
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   googleLoginContainer: {
-    backgroundColor: '#9F92A3',
+    backgroundColor: '#C70039',
     paddingVertical: 10,
     borderRadius: 5,
     marginHorizontal: 90,
