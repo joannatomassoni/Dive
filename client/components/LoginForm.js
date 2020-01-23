@@ -72,8 +72,9 @@ export default function LoginForm (props) {
         onPress={() => {googleSignIn()}}
         style={styles.googleLoginContainer}
       >
-        <Text style={styles.buttonText}>GOOGLE  LOGIN</Text>
+        <Text style={styles.buttonText}>Login with GOOGLE </Text>
       </TouchableOpacity>
+      {/* button to open modal */}
       <SignUpModal />
     </View>
   )
@@ -106,6 +107,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 90,
     marginBottom: 15
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   buttonText: {
     textAlign: 'center',
