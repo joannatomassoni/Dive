@@ -1,63 +1,70 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { 
   Modal, 
   Text, 
-  TouchableHighlight, 
-  View, 
-  Alert, 
+  View,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  TextInput
 } from 'react-native';
 
-export default class ModalExample extends Component {
-  state = {
-    modalVisible: false,
-  };
+export default function ModalExample(props) {
+  //state for modal visibility
+  const [modalVisible, setModalVisible] = useState(false);
 
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
-  }
-
-  render() {
-    return (
-      <View style={{ marginTop: 22 }}>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
-          <View style={{ marginTop: 22 }}>
-            <View>
-              <Text>Hello World!</Text>
-              {/* button when modal is hidden */}
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
+  return (
+    <View>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+      >
+        {/* start of modal when showing */}
+        <View style={styles.container}>
+          <View style={styles.title}>
+            <Text style={styles.text}>Sign Up</Text>
+            <TextInput
+              placeholder="username or email"
+              placeholderTextColor="#75A4AD"
+              returnKeyType="next"
+              //onChangeText={setUsernameValue}
+              keyboardType="email-address"
+              style={styles.input}
+            />
+            {/* password text box */}
+            <TextInput
+              placeholder="password"
+              placeholderTextColor="#75A4AD"
+              returnKeyType="go"
+              secureTextEntry
+              style={styles.input}
+            />
+            {/* button when modal is hidden */}
+            <TouchableOpacity
+              style={styles.loginContainer}
+              // onPress={() => setUserInfo(userInfo => ({ ...userInfo, signedIn: true }))}
+              onPress={() => {setModalVisible(!modalVisible);}}
+            >
+              <Text style={styles.buttonText}>Sign Up</Text>
+            </TouchableOpacity>
           </View>
-        </Modal>
-          {/* button when modal is hidden */}
-          <TouchableOpacity
-            style={styles.loginContainer}
-            // onPress={() => setUserInfo(userInfo => ({ ...userInfo, signedIn: true }))}
-            onPress={() => {this.setModalVisible(true);}}
-          >
-            <Text style={styles.buttonText}>NEW USER</Text>
-          </TouchableOpacity>
-      </View>
-    );
-  }
+        </View>
+      </Modal>
+        {/* button when modal is hidden */}
+        <TouchableOpacity
+          style={styles.loginContainer}
+          onPress={() => {setModalVisible(true);}}
+        >
+          <Text style={styles.buttonText}>NEW USER</Text>
+        </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20
+    backgroundColor: '#2D323A'
   },
   input: {
     height: 40,
@@ -66,6 +73,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 5,
     marginHorizontal: 40,
+    fontWeight: 'bold'
+  },
+  title: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: 40,
+    color: '#59C3D1',
+    opacity: 0.9,
     fontWeight: 'bold'
   },
   loginContainer: {
