@@ -39,6 +39,7 @@ const createUser = async (req, res) => {
 // Get single user
 const getSingleUser = async (req, res) => {
     try {
+        // TODO: change this to a name passed in from body
         const { id } = req.params;
         const user = await User.findOrCreate({
             where: {
@@ -61,7 +62,6 @@ const getAllBands = async (req, res) => {
                 id_type: 2
             }
         })
-        console.log(bands);
         res.send(bands);
     }
     catch (err) {
@@ -74,8 +74,8 @@ const getAllBands = async (req, res) => {
 const addGenreToBand = async (req, res) => {
     try {
         const { bandName, genreName } = req.body;
-        const band = await getIdByName('band', bandName);
-        const genre = await getIdByName('genre', genreName);
+        const band = await getRecordByName('band', bandName);
+        const genre = await getRecordByName('genre', genreName);
         BandGenre.create({
             id_band: band.id,
             id_genre: genre.id
@@ -92,11 +92,7 @@ const addGenreToBand = async (req, res) => {
 const getBandGenres = async (req, res) => {
     try {
         const { bandName } = req.params;
-        const band = await User.findOne({
-            where: {
-                name: bandName
-            }
-        });
+        const band = await getRecordByName('band', bandName);
         const genres = await BandGenre.findAll({
             where: { id_band: band.id }
         });
@@ -224,25 +220,33 @@ const addFanToVenue = async (req, res) => {
 // }
 
 
-const getIdByName = async (type, name) => {
+
+/**
+ * This is a helper function to grab all data from a single record 
+ * when provided its name, depending on the type
+ * 
+ * @param {*} type 
+ * @param {*} name 
+ */
+const getRecordByName = async (type, name) => {
     try {
         if (type === 'band') {
-            const band = await User.findOne({
+            let bandRecord = await User.findOne({
                 attributes: ['id'],
                 where: {
                     name: name
                 }
             });
-            return band;
+            return bandRecord;
         } 
         if (type === 'genre') {
-            const genre = await Genre.findOne({
+            const genreRecord = await Genre.findOne({
                 attributes: ['id'],
                 where: {
                     genreName: name
                 }
             });
-            return genre;
+            return genreRecord;
         }
     }
     catch(err) {
