@@ -1,6 +1,7 @@
 /**
  * This is where our endpoints are created and our controllers are called.
  * Descriptions will include what is needed from the request body and/or endpoint parameters
+ * Mostly req.body should include strings of names
  */
 
 const express = require('express');
@@ -41,16 +42,14 @@ router.get('/bands', ctrl.getAllBands)
 router.post('/bands/genres', ctrl.addGenreToBand)
 
 // get a given band's genres. 
-// id in params is the band's id.
-router.get('/bands/genres/:id', ctrl.getBandGenres); 
+router.get('/bands/genres/:bandName', ctrl.getBandGenres); 
 
-// TODO:
 // delete a genre from a band
-// req.body = { id_band, id_genre }
+// req.body = { bandName, genreName }
 router.delete('/bands/genres', ctrl.removeBandGenre)
 
 // add fan for band
-// req.body = { id_band, id_fan }
+// req.body = { bandName, fanName }
 router.post('/bands/fans', ctrl.addFanToBand)
 
 // get all fans of a given band. 

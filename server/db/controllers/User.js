@@ -120,19 +120,6 @@ const getBandGenres = async (req, res) => {
 const removeBandGenre = async (req, res) => {
     try {
         const { bandName, genreName } = req.body;
-        // const id_band = await User.findOne({
-        //     // attributs is not currently working as expected
-        //     attributes: ['id'],
-        //     where: {
-        //         name: bandName
-        //     }
-        // });
-        // const id_genre = await Genre.findOne({
-        //     attributes: ['id'],
-        //     where: {
-        //         genreName: genreName
-        //     }
-        // })
         const band = await getRecordByName('band', bandName);
         const genre = await getRecordByName('genre', genreName);
         await BandGenre.destroy({
@@ -153,9 +140,11 @@ const removeBandGenre = async (req, res) => {
 const addFanToBand = async (req, res) => {
     try {
         const sql = 'INSERT INTO fans_bands (id_band, id_fan, createdAt, updatedAt) VALUES (?, ?, ?, ?)';
-        const { bandName, id_fan } = req.body;
+        const { bandName, fanName } = req.body;
+        const band = await getRecordByName('band', bandName);
+        const fan = await getRecordByName('fan', fanName);
         await sequelize.query(sql, {
-            replacements: [id_band, id_fan, new Date(), new Date()]
+            replacements: [band.id, fan.id, new Date(), new Date()]
         })
         res.send(201);
     }
@@ -232,14 +221,14 @@ const addFanToVenue = async (req, res) => {
  */
 const getRecordByName = async (type, name) => {
     try {
-        if (type === 'band') {
-            let bandRecord = await User.findOne({
+        if (type === 'band' || type === 'fan') {
+            let userRecord = await User.findOne({
                 attributes: ['id'],
                 where: {
                     name: name
                 }
             });
-            return bandRecord;
+            return userRecord;
         } 
         if (type === 'genre') {
             const genreRecord = await Genre.findOne({
