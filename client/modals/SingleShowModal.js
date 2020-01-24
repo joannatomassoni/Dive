@@ -6,19 +6,23 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  KeyboardAvoidingView, 
+  KeyboardAvoidingView,
   SafeAreaView
 } from 'react-native';
 import { Card } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
+import axios from 'axios';
+
 
 export default function SingleShowModal(props) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //set username to text in username textInput
   const [showTitle, setShowTitle] = useState('');
-
+  const [singleShow, setSingleShow] = useState([]);
+  // console.log(props);
+  let show = props.show;
   return (
     <View>
       <Modal
@@ -40,16 +44,30 @@ export default function SingleShowModal(props) {
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText}>Show Title</Text>
 
-              <Text style={{ marginBottom: 10, color: '#fff' }}>
-                General information about the bands or specific show can go here.
-              </Text>
+            <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.name}</Text>
+            <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.time}</Text>
+            <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.venue.name}</Text>
+
+
           </ScrollView>
         </SafeAreaView>
       </Modal>
       {/* create show button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
-        onPress={() => { setModalVisible(true); }}
+        onPress={() => {
+          setModalVisible(true);
+          //axios
+          axios.get(`http://localhost:8080/shows/${show}`)
+            .then((response) => {
+              // this.setState({
+              console.log("getting single show", response.data)
+              setSingleShow(response.data);
+            })
+            .catch((err) => {
+              console.log("frontend not getting single show from db", err);
+            })
+        }}
       >
         <Text style={styles.signupButtonText}>Show More</Text>
       </TouchableOpacity>
