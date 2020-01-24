@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   Image,
-  SafeAreaView
+  SafeAreaView,
+  MaskedViewIOS,
 } from 'react-native';
 import {
   Card,
@@ -12,43 +13,22 @@ import {
   Button,
   Icon,
 } from 'react-native-elements'
-import axios from 'axios';
-import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
+import { ScrollView } from 'react-native-gesture-handler';
 
-export default function Bands(props) {
-  //global user signin info and editing function
+export default function Shows(props) {
+  ///global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
-  //state to hold bands
-  const [bands, setBands] = useState([]);
-  useEffect(() => {
-    axios.get('http://localhost:8080/bands')
-      .then((response) => {
-        console.log('hey');
-        console.log(response);
-        setBands(response.data)
-      })
-      .catch(err => console.log(err))
-  }, [])
+
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
-        <Text style={styles.text}>Bands</Text>
-        <Card
-          title='BAND TITLE HERE'
-          style={styles.card}
-          backgroundColor='#fff'
-          borderWidth={0}
-          borderRadius={10}
-          padding={10}
-        // image={require('../images/pic2.jpg')}
-        >
-          <Text style={{ marginBottom: 10 }}>
-            General information about the band can go here.
+        <Text style={styles.headerText}>Show Title Here</Text>
+          <Text style={{ marginBottom: 10, color: '#000' }}>
+            General information about the bands or specific show can go here.
           </Text>
-        </Card>
       </ScrollView>
     </SafeAreaView>
   )
@@ -61,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
+  headerText: {
     fontSize: 50,
     color: '#59C3D1',
     opacity: 0.9,
@@ -82,4 +62,3 @@ const styles = StyleSheet.create({
 
   },
 })
-

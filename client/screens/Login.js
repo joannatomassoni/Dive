@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import LoginForm from '../components/LoginForm'
 import MenuButton from '../components/MenuButton'
-import { SignedInContext } from '../App'
+import { SignedInContext } from '../context/UserContext'
 
 export default function Login (props) {
   //global user signin info and editing function

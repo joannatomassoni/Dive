@@ -1,13 +1,12 @@
 import React, { createContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import DrawerNavigator from './navigation/DrawerNavigator'
-
-//create global state for user signIn
-export const SignedInContext = createContext({});
+import { SignedInContext } from './context/UserContext'
 
 export default function App (props) {
   //initial login state of app
   const [userInfo, setUserInfo] = useState({});
+  console.disableYellowBox = true;
 
   return (
     <View style={styles.container}>

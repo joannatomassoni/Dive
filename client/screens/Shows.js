@@ -4,7 +4,8 @@ import {
   Text,
   View,
   Image,
-  SafeAreaView
+  SafeAreaView,
+  MaskedViewIOS,
 } from 'react-native';
 import {
   Card,
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
+  headerText: {
     fontSize: 50,
     color: '#59C3D1',
     opacity: 0.9,
