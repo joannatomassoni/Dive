@@ -24,7 +24,24 @@ const createComment = async (req, res) => {
   }
 }
 
+const getAllComments = async (req, res) => {
+  try {
+    const comments = await Comment.findAll({
+      where: {
+        id_show: req.params.id_show
+      }
+    });
+    console.log("retrieved comments from db", comments);
+    res.status(200).send(comments);
+    // return venues;
+  }
+  catch (err) {
+    console.log("can't get comments", err);
+    res.send(err);
+  }
+
+}
 
 module.exports = {
-  createComment
+  createComment, getAllComments
 }

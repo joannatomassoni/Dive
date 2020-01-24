@@ -148,9 +148,10 @@ router.post('/comments/:id_user', ctrl.createComment);
 
 // TODO: 
 // get all comments for a show
-router.get('/comments/', function (req, res) {
-  res.send("we are getting comment!");
-})
+router.get('/comments/:id_show', ctrl.getAllComments);
+// router.get('/comments/:show', function (req, res) {
+//   res.send("we are getting comment!", res);
+// })
 
 /**
  * TYPES
