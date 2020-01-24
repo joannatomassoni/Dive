@@ -1,6 +1,7 @@
 // Requiring the models we need for our queries
 const { Venue, Show, User } = require('../sequelize');
 const bodyParser = require('body-parser');
+const { getRecordByName, getRecordByID } = require('./utils');
 
 // Create venue
 // should we include photos?
