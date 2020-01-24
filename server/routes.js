@@ -73,22 +73,16 @@ router.post('/venues', ctrl.createVenue)
 
 // TODO:
 // get one venue
-
-// TODO: 
+ 
 // get all venues
 router.get('/venues', ctrl.getAllVenues);
 
 //to remove a venue
 router.delete('/venues', ctrl.removeVenue);
 
-
 //to get all shows from a venue
 router.get('/venues/shows/:venueName', ctrl.getVenueShows);
 
-
-
-
-// TODO:
 // add fan to venue
 // req.body = { venueName, fanName }
 router.post('/venues/fans', ctrl.addFanToVenue);
@@ -97,9 +91,8 @@ router.post('/venues/fans', ctrl.addFanToVenue);
 // get all venues that a fan follows
 router.get('/fans/:fanName/venues')
 
-// TODO:
 // get all fans who follow a given venue
-// router.get('/venues/fans/:venueName', ctrl.getVenueFans)
+router.get('/venues/fans/:venueName', ctrl.getVenueFans)
 
 /**
  * SHOWS

@@ -12,8 +12,13 @@ const {
     updateUserBio,
     updateBandPhoto
 } = require('./User');
-const { getTypes } = require('./Type');
-const { createComment, getAllComments } = require('./Comment');
+const { 
+    getTypes 
+} = require('./Type');
+const { 
+    createComment, 
+    getAllComments 
+} = require('./Comment');
 const { 
     addFanToVenue,
     createVenue, 
