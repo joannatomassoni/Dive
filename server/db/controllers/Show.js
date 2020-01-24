@@ -13,6 +13,7 @@ const createShow = async (req, res) => {
             date: date,
             time: time,
             photo: photo,
+            description: description,
             id_venue: venue.id
         })
         bandNames.forEach(async (bandName) => {
