@@ -1,5 +1,5 @@
 // Requiring the models we need for our queries
-const { Venue, Show, User, FanVenue, Fan, sequelize } = require('../sequelize');
+const { Venue, Show, User, FanVenue, sequelize } = require('../sequelize');
 const { getRecordByName, getRecordByID } = require('./utils');
 
 // Create venue
@@ -82,8 +82,7 @@ const addFanToVenue = async (req, res) => {
 const getVenueFans = async (req, res) => {
     try {
         const { venueName } = req.params;
-        // const venue = await getRecordByName('venue', venueName);
-        const venue = await Venue.findAll({
+        const venueFans = await Venue.findAll({
             where: {
                 name: venueName
             },
@@ -91,7 +90,7 @@ const getVenueFans = async (req, res) => {
                 { model: User, as: 'fans', attributes: ['name']}
             ]
         })
-        res.send(venue);
+        res.send(venueFans);
     }
     catch (err) {
         console.log(err)
@@ -99,6 +98,25 @@ const getVenueFans = async (req, res) => {
     }
 }
 
+// get venues that a fan follows
+const getFanVenues = async (req, res) => {
+    try {
+        const { fanName } = req.params;
+        const fanVenues = await User.findAll({
+            where: {
+                name: fanName
+            },
+            include: [
+                { model: Venue, attributes: ['name']}
+            ]
+        })
+        res.send(fanVenues);
+    }
+    catch (err) {
+        console.log(err)
+        res.send(400);
+    }
+}
 
 // Update venue
 const updateVenue = async (req, res) => {
@@ -144,7 +162,8 @@ const removeVenue = async (req, res) => {
 module.exports = {
     addFanToVenue,
     createVenue, 
-    getAllVenues, 
+    getAllVenues,
+    getFanVenues, 
     getVenueFans,
     getVenueShows,
     removeVenue

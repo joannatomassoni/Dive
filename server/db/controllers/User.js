@@ -3,7 +3,6 @@
 // Controllers for fans and bands are found here. 
 const { 
         BandGenre,
-        FanVenue,
         Genre,
         User, 
         Type, 

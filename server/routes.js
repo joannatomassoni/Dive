@@ -89,7 +89,7 @@ router.post('/venues/fans', ctrl.addFanToVenue);
 
 // TODO:
 // get all venues that a fan follows
-router.get('/fans/:fanName/venues')
+router.get('/fans/:fanName/venues', ctrl.getFanVenues)
 
 // get all fans who follow a given venue
 router.get('/venues/fans/:venueName', ctrl.getVenueFans)
