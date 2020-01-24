@@ -30,7 +30,6 @@ const createShow = async (req, res) => {
     }
 }
 
-// TODO: pass bands for shows in here
 // Get all upcoming shows in database
 const getAllShows = async (req, res) => {
     try {
@@ -89,10 +88,11 @@ const removeFanRSVP = async (req, res) => {
     }
 }
 
+// TODO: refactor to use eager loading
 // Get all shows that a given user has rsvpd to
 const getFanRSVPs = async (req, res) => {
     try {
-        const { fanName } = req.body;
+        const { fanName } = req.params;
         const fan = await getRecordByName('fan', fanName);
         const rsvps = await RSVP.findAll({
             where: {
@@ -116,10 +116,11 @@ const getFanRSVPs = async (req, res) => {
     }
 }
 
+// TODO: refactor to use eager loading
 // Get all fans who have rsvpd to a show
 const getShowRSVPs = async (req, res) => {
     try {
-        const { showName } = req.body;
+        const { showName } = req.params;
         const show = await getRecordByName('show', showName);
         const rsvps = await RSVP.findAll({
             where: {
