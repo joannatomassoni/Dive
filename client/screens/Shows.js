@@ -5,7 +5,6 @@ import {
   View,
   Image,
   SafeAreaView,
-  MaskedViewIOS,
 } from 'react-native';
 import {
   Card,
@@ -17,6 +16,7 @@ import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
+import SingleShowModal from '../modals/SingleShowModal'
 
 export default function Shows(props) {
   ///global user signin info and editing function
@@ -34,7 +34,6 @@ export default function Shows(props) {
       })
   }, [])
 
-
   //dummy data
   const users = [
     {
@@ -47,8 +46,9 @@ export default function Shows(props) {
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
-        <Text style={styles.headerText}>Shows</Text>
-        {shows.map(show => {
+        <Text style={styles.text}>Shows</Text>
+        {shows ? null
+        :shows.map(show => {
           return (
             <Card
               title={show.name}
@@ -67,7 +67,6 @@ export default function Shows(props) {
             </Card>
           )
         })}
-        {/* implemented with Text and Button as children */}
       </ScrollView>
     </SafeAreaView >
   )
