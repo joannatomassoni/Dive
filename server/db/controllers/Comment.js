@@ -4,26 +4,27 @@ const { getRecordByName } = require('./utils')
 
 const createComment = async (req, res) => {
   try {
-    const showComment = await Show.findAll({
+    console.log(req.body.show);
+    const show = await Show.findAll({
       where: {
-        id_venue: venue[0].id
-      } 
-      const venueShows = await Show.findAll({
-        where: {
-          id_venue: venue[0].id
-        }
+        name: req.body.show
+      }
+    })
     Comment.create({
-          text: req.body.text
-        })
+      text: req.body.text,
+      id_user: req.params.id_user,
+      id_show: show[0].id
+    })
     console.log("we're saving a comment", req.body.text);
-        res.send(201);
-      }
-  catch(err) {
-        console.log("we didn't save a comment", err);
-        res.send(400);
-      }
-    }
+    res.send(201);
+  }
+  catch (err) {
+    console.log("we didn't save a comment", err);
+    res.send(400);
+  }
+}
+
 
 module.exports = {
-        createComment
-      }
+  createComment
+}

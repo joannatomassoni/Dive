@@ -2,14 +2,14 @@ const { Sequelize } = require('sequelize');
 const dotenv = require('dotenv')
 // we require our models here to be instantiated after sequelize connection is made
 const { BandGenreModel,
-        CommentModel, 
-        FanVenueModel, 
-        GenreModel, 
-        RSVPModel,
-        ShowModel, 
-        TypeModel, 
-        UserModel, 
-        VenueModel } = require('./models/index');
+  CommentModel,
+  FanVenueModel,
+  GenreModel,
+  RSVPModel,
+  ShowModel,
+  TypeModel,
+  UserModel,
+  VenueModel } = require('./models/index');
 dotenv.config();
 const { DB_USER, DB_PASS, DB_NAME, DB_HOST, CLOUD_SQL_CONNECTION_NAME } = process.env;
 
@@ -111,52 +111,54 @@ Show.belongsToMany(Comment, { through: 'show_comments' })
 // TODO: should we prepopulate venues?
 
 // Use line 99 instead of line 100 if you don't want the database to drop on server refresh
-// sequelize.sync()
-sequelize.sync({ force: true })
-  .then(() => {
-    console.log(`Database & tables created!`)
-  }).then(() => {
-    Type.create({
-      typeName: 'fan'
-    });
-    Type.create({
-      typeName: 'band'
-    });
-    Genre.create({
-      genreName: 'rock'
-    });
-    Genre.create({
-      genreName: 'punk'
-    });
-    Genre.create({
-      genreName: 'folk'
-    });
-    Genre.create({
-      genreName: 'indie'
-    });
-    Genre.create({
-      genreName: 'brass'
-    });
-    Genre.create({
-      genreName: 'jazz'
-    });
-  })
-  .catch((err) => {
-    console.log(err);
-  })
+sequelize.sync()
+// sequelize.sync({ force: true })
+//   .then(() => {
+//     console.log(`Database & tables created!`)
+//   }).then(() => {
+//     Type.create({
+//       typeName: 'fan'
+//     });
+//     Type.create({
+//       typeName: 'band'
+//     });
+//     Genre.create({
+//       genreName: 'rock'
+//     });
+//     Genre.create({
+//       genreName: 'punk'
+//     });
+//     Genre.create({
+//       genreName: 'folk'
+//     });
+//     Genre.create({
+//       genreName: 'indie'
+//     });
+//     Genre.create({
+//       genreName: 'brass'
+//     });
+//     Genre.create({
+//       genreName: 'jazz'
+//     });
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   })
 
 
 module.exports = {
   // export sequelize for the model creation
-  sequelize, 
+  sequelize,
   // export model instances for controller functions
   BandGenre,
-  Comment, 
-  FanVenue, 
+  Comment,
+  FanVenue,
   Genre,
-  RSVP, 
-  Show, 
-  Type, 
-  User, 
+  RSVP,
+  Show,
+  Type,
+  User,
   Venue
 }
+
+
