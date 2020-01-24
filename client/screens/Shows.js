@@ -54,11 +54,11 @@ export default function Shows(props) {
               style={styles.card}
             // image={require('../images/pic2.jpg')}
             >
-              <Text style={styles.cardText}>{show.time}</Text>
+              <Text style={styles.cardText} key={show.id}>{show.time}</Text>
               {show.bands.map(band => {
-                <Text style={styles.cardText}>{band.name}</Text>
+                <Text style={styles.cardText} key={band.id}>{band.name}</Text>
               })}
-              <Text style={styles.cardText}>{show.venue.name}</Text>
+              <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
             </Card>
           )
         })}
