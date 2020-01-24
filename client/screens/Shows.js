@@ -13,7 +13,7 @@ import {
   Button,
   Icon,
 } from 'react-native-elements'
-import { SignedInContext } from '../App'
+import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 import { ScrollView } from 'react-native-gesture-handler';
 

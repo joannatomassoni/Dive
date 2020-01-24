@@ -8,7 +8,7 @@ import {
   Alert
   } from 'react-native';
 import axios from 'axios';
-import { SignedInContext } from '../App';
+import { SignedInContext } from '../context/UserContext';
 import * as Google from "expo-google-app-auth";
 import SignUpModal from '../modals/SignUpModal'
 

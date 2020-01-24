@@ -14,8 +14,9 @@ import {
 } from 'react-native-elements'
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
-import { SignedInContext } from '../App'
+import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
+import CreateShowModal from '../modals/CreateShowModal'
 
 export default function Hub(props) {
   //global user signin info and editing function
@@ -26,6 +27,8 @@ export default function Hub(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Hub</Text>
+
+        <CreateShowModal />
         
         <Card
           title='BAND TITLE HERE'

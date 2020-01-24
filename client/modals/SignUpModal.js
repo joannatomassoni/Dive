@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView
 } from 'react-native';
 import axios from 'axios';
-import { SignedInContext } from '../App';
+import { SignedInContext } from '../context/UserContext';
 import RadioForm from 'react-native-simple-radio-button';
 import { Ionicons } from '@expo/vector-icons';
 import * as Google from "expo-google-app-auth";

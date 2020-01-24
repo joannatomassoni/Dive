@@ -1,5 +1,3 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext } from 'react';
 
 export const SignedInContext = createContext({});
-
-const [userInfo, setUserInfo] = useState({});

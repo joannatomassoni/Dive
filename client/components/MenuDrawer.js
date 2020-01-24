@@ -9,7 +9,7 @@ import {
   Image,
   Alert
 } from 'react-native';
-import { SignedInContext } from '../App'
+import { SignedInContext } from '../context/UserContext'
 //screen dimensions for menu bar
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -74,7 +74,6 @@ export default function MenuDrawer(props) {
                   ],
                 );
               }}
-            
             >
               <Text style={styles.link}>Log Out</Text>
             </TouchableOpacity>

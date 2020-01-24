@@ -11,11 +11,11 @@ import {
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function ModalExample(props) {
+export default function CreateShowModal(props) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //set username to text in username textInput
-  const [usernameValue, setUsernameValue] = useState('');
+  const [showTitle, setShowTitle] = useState('');
 
   return (
     <View>
@@ -35,38 +35,38 @@ export default function ModalExample(props) {
           />
           <View style={styles.container}>
             <View style={styles.title}>
-              <Text style={styles.text}>Sign Up</Text>
+              <Text style={styles.text}>New Show</Text>
               {/* username text box */}
               <TextInput
-                placeholder="username or email"
+                placeholder="Show Title"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
-                onChangeText={setUsernameValue}
+                // onChangeText={setShowTitle}
                 keyboardType="email-address"
                 style={styles.input}
               />
-              {/* password text box */}
-              <TextInput
-                placeholder="password"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="go"
-                secureTextEntry
-                style={styles.input}
-              />
 
-              {/* sign in button when modal is showing */}
+              {/* create show button when modal is showing */}
               <TouchableOpacity
                 style={styles.loginContainer}
-                onPress={console.log('click')}
+                onPress={() => {setModalVisible(false)}}
               >
-                <Text style={styles.buttonText}>Signup</Text>
+                <Text style={styles.buttonText}>Create Show</Text>
+              </TouchableOpacity>
+
+              {/* create show button when modal is showing */}
+              <TouchableOpacity
+                style={styles.loginContainer}
+                onPress={() => {setModalVisible(false)}}
+              >
+                <Text style={styles.buttonText}>Create Show</Text>
               </TouchableOpacity>
 
             </View>
           </View>
         </KeyboardAvoidingView>
       </Modal>
-      {/* sign in button when modal is hidden */}
+      {/* create show button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
         onPress={() => { setModalVisible(true); }}
@@ -107,13 +107,6 @@ const styles = StyleSheet.create({
   },
   loginContainer: {
     backgroundColor: '#59C3D1',
-    paddingVertical: 10,
-    borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
-  },
-  googleSignupContainer: {
-    backgroundColor: '#C70039',
     paddingVertical: 10,
     borderRadius: 5,
     marginHorizontal: 90,
