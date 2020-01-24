@@ -14,9 +14,22 @@ import { Ionicons } from '@expo/vector-icons';
 export default function CreateShowModal(props) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
-  //set username to text in username textInput
+  //shwo title
   const [showTitle, setShowTitle] = useState('');
+  //band title
+  const [bandName, setBandName] = useState('');
+  //array of all bands
+  const [bandNames, addBandName] = useState('');
+  //venue name
+  const [venueName, setVenueName] = useState('');
+  //date
+  const [showDate, setShowDate] = useState('');
+  //time
+  const [showTime, setShowTime] = useState('');
+  //show description
+  const [showDesc, setShowDesc] = useState('');
 
+  console.log(showTitle);
   return (
     <View>
       <Modal
@@ -26,6 +39,7 @@ export default function CreateShowModal(props) {
       >
         {/* start of modal when showing */}
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
+          {/* back button */}
           <Ionicons
             name='ios-arrow-back'
             color='#59C3D1'
@@ -41,23 +55,72 @@ export default function CreateShowModal(props) {
                 placeholder="Show Title"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
-                // onChangeText={setShowTitle}
-                keyboardType="email-address"
+                onChangeText={setShowTitle}
                 style={styles.input}
               />
-
+              {/* Bands input */}
+              <TextInput
+                placeholder="Add Band"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                onChangeText={setBandName}
+                style={styles.input}
+              />
               {/* create show button when modal is showing */}
               <TouchableOpacity
                 style={styles.loginContainer}
-                onPress={() => {setModalVisible(false)}}
+                onPress={() => addBandName([...bandNames, bandName])}
               >
-                <Text style={styles.buttonText}>Create Show</Text>
+                <Text style={styles.buttonText}>Add Band</Text>
               </TouchableOpacity>
-
+              {/* Venue input */}
+              <TextInput
+                placeholder="Show Venue"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                onChangeText={setVenueName}
+                style={styles.input}
+              />
+              {/* Date input */}
+              <TextInput
+                placeholder="Date"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                onChangeText={setShowDate}
+                style={styles.input}
+              />
+              {/* Time input */}
+              <TextInput
+                placeholder="Time"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                onChangeText={setShowTime}
+                style={styles.input}
+              />
+              {/* Description input */}
+              <TextInput
+                placeholder="Show Description"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                onChangeText={setShowDesc}
+                style={styles.input}
+              />
               {/* create show button when modal is showing */}
               <TouchableOpacity
                 style={styles.loginContainer}
-                onPress={() => {setModalVisible(false)}}
+                onPress={() => {
+                  setModalVisible(false);
+                  axios.post('http://localhost:8080/shows', {
+                    name: showTitle,
+                    date: showDate,
+                    time: showTime,
+                    photo: null,
+                    venueName: venueName,
+                    bandName: bandNames
+                  })
+                  .then(response => response)
+                  .catch(error => console.log('failed to create show', error));
+              }}
               >
                 <Text style={styles.buttonText}>Create Show</Text>
               </TouchableOpacity>
