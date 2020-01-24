@@ -117,7 +117,7 @@ router.get('/shows', ctrl.getAllShows)
 
 // TODO:
 // get a single show
-// router.get('/shows/:name', () => {})
+router.get('/shows/:name', ctrl.getSingleShow)
 
 
 /**

@@ -1,5 +1,5 @@
 // Requiring the models we need for our queries
-const { Show, RSVP, User, ShowBand, Venue } = require('../sequelize');
+const { Show, RSVP, User, ShowBand, Venue, Comment } = require('../sequelize');
 const { getRecordByName, getRecordByID } = require('./utils')
 
 // Create show
@@ -36,10 +36,8 @@ const getAllShows = async (req, res) => {
         // array of shows
         const shows = await Show.findAll({
             include: [
-                { model: User, as: 'bands' }, 
-                // { model: User, as: 'bands', through: { attributes: ['name'] } }, 
-                { model: Venue }
-                // { model: Venue, through: { attributes: ['name'] }}
+                { model: User, as: 'bands', attributes: ['name'] }, 
+                { model: Venue, attributes: ['name'] }
             ],
         });
         res.status(200).send(shows); 
@@ -47,6 +45,29 @@ const getAllShows = async (req, res) => {
     catch(err) {
         console.log(err);
         res.send(err);
+    }
+}
+
+// get detailed info for single show
+const getSingleShow = async (req, res) => {
+    try {
+        const { name } = req.params;
+        const show = await Show.findOne({
+            where: {
+                name: name
+            },
+            include: [
+                { model: User, as: 'bands', attributes: ['name'] },
+                { model: Venue, attributes: ['name'] },
+                { model: User, as: 'Fans', attributes: ['name'] },
+                { model: Comment }
+            ]
+        })
+        res.send(show);
+    }
+    catch(err) {
+        console.log(err);
+        res.send(400);
     }
 }
 
@@ -153,6 +174,7 @@ module.exports = {
     createShow,
     getAllShows,
     getFanRSVPs,
+    getSingleShow,
     getShowRSVPs,
     removeFanRSVP,
     rsvpFanToShow
