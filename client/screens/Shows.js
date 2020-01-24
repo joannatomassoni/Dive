@@ -1,21 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { 
   StyleSheet, 
-  Text, 
-  View,
-  Image,
+  Text,
   SafeAreaView,
-  MaskedViewIOS,
 } from 'react-native';
-import { 
-  Card,
-  ListItem,
-  Button,
-  Icon,
-} from 'react-native-elements'
+import { Card } from 'react-native-elements'
 import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 import { ScrollView } from 'react-native-gesture-handler';
+import SingleShowModal from '../modals/SingleShowModal'
 
 export default function Shows(props) {
   ///global user signin info and editing function
@@ -42,6 +35,7 @@ export default function Shows(props) {
           <Text style={{ marginBottom: 10, color: '#000' }}>
             General information about the bands or specific show can go here.
           </Text>
+          <SingleShowModal />
         </Card>
 
       </ScrollView>

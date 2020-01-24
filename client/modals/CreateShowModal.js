@@ -26,6 +26,7 @@ export default function CreateShowModal(props) {
       >
         {/* start of modal when showing */}
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
+          {/* back button */}
           <Ionicons
             name='ios-arrow-back'
             color='#59C3D1'
