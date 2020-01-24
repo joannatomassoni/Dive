@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 // Create venue
 const createVenue = async (req, res) => {
     try {
-        const { name, address1, address2, city, state, zip_code } = req.body;
+        const { name, address1, city, state, zip_code } = req.body;
         Venue.create({
             name,
             address1,
