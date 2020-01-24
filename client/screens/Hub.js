@@ -27,11 +27,11 @@ export default function Hub(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Hub</Text>
-
+        {/* Button to open create show modal */}
         <CreateShowModal />
-        
+        {/* Cards for all upcoming shows */}
         <Card
-          title='BAND TITLE HERE'
+          title='Show TITLE HERE'
           style={styles.card}
           backgroundColor='#fff'
           borderWidth={0}

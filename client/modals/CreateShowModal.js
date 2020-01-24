@@ -76,7 +76,6 @@ export default function CreateShowModal(props) {
                 // onChangeText={setShowTitle}
                 style={styles.input}
               />
-
               {/* create show button when modal is showing */}
               <TouchableOpacity
                 style={styles.loginContainer}
