@@ -26,6 +26,7 @@ export default function Hub(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Hub</Text>
+        
         <Card
           title='BAND TITLE HERE'
           style={styles.card}
