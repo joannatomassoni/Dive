@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
+import React, { useContext } from 'react';
+import {
+  StyleSheet,
+  Text,
   View,
   Image,
   SafeAreaView,
   MaskedViewIOS,
 } from 'react-native';
-import { 
+import {
   Card,
   ListItem,
   Button,
@@ -20,30 +20,15 @@ import { ScrollView } from 'react-native-gesture-handler';
 export default function Shows(props) {
   ///global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
-  //state switching between single show view
-  const [singleView, setSingleView] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
-      <MenuButton navigation={props.navigation}/>
-      <ScrollView style={{marginTop:30}}>
-        <Text style={styles.headerText}>Shows</Text>
-
-        <Card
-          title='SHOW TITLE HERE'
-          style={styles.card}
-          backgroundColor='#fff'
-          borderWidth={0}
-          borderRadius={10}
-          padding={10}
-          //onPress={setSingleView(!singleView)}
-        // image={require('../images/pic2.jpg')}
-        >
+      <MenuButton navigation={props.navigation} />
+      <ScrollView style={{ marginTop: 30 }}>
+        <Text style={styles.headerText}>Show Title Here</Text>
           <Text style={{ marginBottom: 10, color: '#000' }}>
             General information about the bands or specific show can go here.
           </Text>
-        </Card>
-
       </ScrollView>
     </SafeAreaView>
   )
@@ -69,8 +54,8 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   button: {
-    borderRadius: 5, 
-    marginHorizontal: 40, 
+    borderRadius: 5,
+    marginHorizontal: 40,
     backgroundColor: '#59C3D1',
   },
   cardText: {
