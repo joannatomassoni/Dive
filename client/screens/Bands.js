@@ -37,8 +37,6 @@ export default function Bands(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Bands</Text>
-
-        {/* implemented with Text and Button as children */}
         <Card
           title='BAND TITLE HERE'
           style={styles.card}
@@ -46,9 +44,8 @@ export default function Bands(props) {
         >
           <Text style={{ marginBottom: 10 }}>
             General information about the band can go here.
-        </Text>
+          </Text>
         </Card>
-
       </ScrollView>
     </SafeAreaView>
   )

@@ -20,21 +20,11 @@ export default function Shows(props) {
   ///global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
 
-  //dummy data
-  const users = [
-    {
-      name: 'Ryan',
-      avatar: "https://lh3.googleusercontent.com/a-/AAuE7mAY3iahzehnNyuj1PJ8iiDn1zi8v7LFz7jB6dzcPw"
-    },
-]
-
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation}/>
       <ScrollView style={{marginTop:30}}>
       <Text style={styles.text}>Shows</Text>
-
-        {/* implemented with Text and Button as children */}
         <Card
           title='SHOW TITLE HERE'
           style={styles.card}
@@ -42,9 +32,8 @@ export default function Shows(props) {
         >
           <Text style={{ marginBottom: 10 }}>
             General information about the bands or specific show can go here.
-        </Text>
+          </Text>
         </Card>
-
       </ScrollView>
     </SafeAreaView>
   )
