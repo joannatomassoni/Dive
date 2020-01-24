@@ -1,5 +1,5 @@
 // Requiring the models we need for our queries
-const { Show, RSVP, User, ShowBand, Venue } = require('../sequelize');
+const { Show, RSVP, User, ShowBand, Venue, Comment } = require('../sequelize');
 const { getRecordByName, getRecordByID } = require('./utils')
 
 // Create show
@@ -58,16 +58,18 @@ const getSingleShow = async (req, res) => {
             where: {
                 name: name
             },
-            // include: [
-            //     {
-
-            //     }
-            // ]
+            include: [
+                { model: User, as: 'bands' },
+                { model: Venue },
+                { model: User, as: 'Fans' },
+                { model: Comment }
+            ]
         })
         res.send(show);
     }
     catch(err) {
-
+        console.log(err);
+        res.send(400);
     }
 }
 
