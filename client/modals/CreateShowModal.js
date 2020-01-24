@@ -42,17 +42,40 @@ export default function CreateShowModal(props) {
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
                 // onChangeText={setShowTitle}
-                keyboardType="email-address"
                 style={styles.input}
               />
-
-              {/* create show button when modal is showing */}
-              <TouchableOpacity
-                style={styles.loginContainer}
-                onPress={() => {setModalVisible(false)}}
-              >
-                <Text style={styles.buttonText}>Create Show</Text>
-              </TouchableOpacity>
+              {/* Bands input */}
+              <TextInput
+                placeholder="Add Band"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                // onChangeText={setShowTitle}
+                style={styles.input}
+              />
+              {/* Date input */}
+              <TextInput
+                placeholder="Date"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                // onChangeText={setShowTitle}
+                style={styles.input}
+              />
+              {/* Time input */}
+              <TextInput
+                placeholder="Time"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                // onChangeText={setShowTitle}
+                style={styles.input}
+              />
+              {/* Description input */}
+              <TextInput
+                placeholder="Show Description"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                // onChangeText={setShowTitle}
+                style={styles.input}
+              />
 
               {/* create show button when modal is showing */}
               <TouchableOpacity
