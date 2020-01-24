@@ -150,7 +150,7 @@ const updateVenue = async (req, res) => {
                 address: address,
                 city: city,
                 state: state,
-                zip_code: ip_code
+                zip_code: zip_code
             },
             { where: { name: name } }
         )
