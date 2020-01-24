@@ -1,5 +1,5 @@
 // compile all controllers and export to router from here
-const { addFanToVenue,
+const { 
     addFanToBand,
     addGenreToBand,
     createUser,
@@ -14,7 +14,14 @@ const { addFanToVenue,
 } = require('./User');
 const { getTypes } = require('./Type');
 const { createComment, getAllComments } = require('./Comment');
-const { createVenue, getAllVenues, removeVenue, getVenueShows } = require('./Venue');
+const { 
+    addFanToVenue,
+    createVenue, 
+    getAllVenues, 
+    getVenueFans,
+    getVenueShows,
+    removeVenue, 
+} = require('./Venue');
 const {
     createShow,
     getAllShows,
@@ -42,6 +49,7 @@ module.exports = {
     getSingleUser,
     getSingleShow,
     getTypes,
+    getVenueFans,
     getVenueShows,
     createVenue,
     removeVenue,
