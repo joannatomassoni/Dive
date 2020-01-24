@@ -14,11 +14,11 @@ const createVenue = async (req, res) => {
             state,
             zip_code
         })
-        res.send(201);
+        res.sendStatus(201);
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -31,7 +31,7 @@ const getAllVenues = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -51,7 +51,7 @@ const getSingleVenue = async (req, res) => {
     }
     catch(err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -76,7 +76,7 @@ const getVenueShows = async (req, res) => {
     }
     catch (err) {
         console.log("error getting shows from this venue", err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -90,7 +90,7 @@ const addFanToVenue = async (req, res) => {
             id_fan: fan.id,
             id_venue: venue.id
         })
-    res.send(201);
+    res.sendStatus(201);
     }
     catch(err) {
         console.log(err);
@@ -114,7 +114,7 @@ const getVenueFans = async (req, res) => {
     }
     catch (err) {
         console.log(err)
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -134,7 +134,7 @@ const getFanVenues = async (req, res) => {
     }
     catch (err) {
         console.log(err)
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -153,11 +153,11 @@ const updateVenue = async (req, res) => {
             { where: { name: name } }
         )
         console.log("updated venue");
-        res.send(200);
+        res.sendStatus(200);
     }
     catch {
         console.log("error updating venue in db", err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -175,7 +175,7 @@ const removeVenue = async (req, res) => {
     }
     catch {
         console.log("error deleting venue from db");
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 

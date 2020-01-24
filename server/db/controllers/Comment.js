@@ -17,11 +17,11 @@ const createComment = async (req, res) => {
       id_show: show[0].id
     })
     console.log("we're saving a comment", req.body.text);
-    res.send(201);
+    res.sendStatus(201);
   }
   catch (err) {
     console.log("we didn't save a comment", err);
-    res.send(400);
+    res.sendStatus(400);
   }
 }
 

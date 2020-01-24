@@ -65,7 +65,7 @@ const updateUserBio = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -85,7 +85,7 @@ const updateBandPhoto = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -104,11 +104,11 @@ const deleteUser = async (req, res) => {
                 name: name
             }
         })
-        res.send(200);
+        res.sendStatus(200);
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -188,11 +188,11 @@ const removeBandGenre = async (req, res) => {
                 id_band: band.id
             }
         })
-        res.send(200);
+        res.sendStatus(200);
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }  
 }
 
@@ -230,7 +230,7 @@ const getBandFans = async (req, res) => {
     }
     catch (err) {
         console.log(err)
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 

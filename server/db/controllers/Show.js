@@ -23,11 +23,11 @@ const createShow = async (req, res) => {
                 id_band: band.id
             })
         })
-        res.send(201);
+        res.sendStatus(201);
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -79,7 +79,7 @@ const getSingleShow = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -97,7 +97,7 @@ const rsvpFanToShow = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -145,7 +145,7 @@ const getFanRSVPs = async (req, res) => {
     }
     catch (err) {
         console.log(err)
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -174,7 +174,7 @@ const getShowRSVPs = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
