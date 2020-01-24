@@ -19,7 +19,7 @@ export default function CreateShowModal(props) {
   //band title
   const [bandName, setBandName] = useState('');
   //array of all bands
-  const [bandNames, addBandName] = useState('');
+  const [bandNames, addBandName] = useState([]);
   //venue name
   const [venueName, setVenueName] = useState('');
   //date
@@ -29,7 +29,7 @@ export default function CreateShowModal(props) {
   //show description
   const [showDesc, setShowDesc] = useState('');
 
-  console.log(showTitle);
+  console.log(showDesc);
   return (
     <View>
       <Modal
@@ -110,16 +110,22 @@ export default function CreateShowModal(props) {
                 style={styles.loginContainer}
                 onPress={() => {
                   setModalVisible(false);
-                  axios.post('http://localhost:8080/shows', {
-                    name: showTitle,
-                    date: showDate,
-                    time: showTime,
-                    photo: null,
-                    venueName: venueName,
-                    bandName: bandNames
+                  axios.post('http://localhost:8080/venues', {
+                    name: venueName,
                   })
-                  .then(response => response)
-                  .catch(error => console.log('failed to create show', error));
+                    .then(response => {
+                      console.log(response);
+                      return axios.post('http://localhost:8080/shows', {
+                      name: showTitle,
+                      date: showDate,
+                      time: showTime,
+                      photo: null,
+                      venueName: venueName,
+                      bandName: bandNames,
+                      description: showDesc
+                    })})
+                    .then(response => response)
+                    .catch(error => console.log('failed to create show', error));
               }}
               >
                 <Text style={styles.buttonText}>Create Show</Text>

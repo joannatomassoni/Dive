@@ -5,7 +5,7 @@ const { getRecordByName, getRecordByID } = require('./utils')
 // Create show
 const createShow = async (req, res) => {
     try {
-        const { name, date, time, photo, venueName, bandNames } = req.body;
+        const { name, date, time, photo, venueName, bandNames, description } = req.body;
         const venue = await getRecordByName('venue', venueName);
         // add bands and venue to ShowBand join tables
         const show = await Show.create({
