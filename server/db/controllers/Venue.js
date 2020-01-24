@@ -1,14 +1,15 @@
 // Requiring the models we need for our queries
-const { Venue, Show } = require('../sequelize');
+const { Venue, Show, User } = require('../sequelize');
 const bodyParser = require('body-parser');
 
 // Create venue
+// should we include photos?
 const createVenue = async (req, res) => {
     try {
-        const { name, address1, city, state, zip_code } = req.body;
+        const { name, address, city, state, zip_code } = req.body;
         Venue.create({
             name,
-            address1,
+            address,
             city,
             state,
             zip_code
@@ -20,8 +21,6 @@ const createVenue = async (req, res) => {
         res.send(400);
     }
 }
-//raw mysql data format to enter data into db
-//INSERT INTO `venues` (`name`, `address1`, `city`, `zip_code`, `createdAt`,`updatedAt`) VALUES ('Tipitinas', '501 Napolean Ave', 'New Orleans', 70115, '2020-01-01 10:10:10', '2020-01-01 10:10:10');
 
 // Get all venues
 const getAllVenues = async (req, res) => {
@@ -29,7 +28,6 @@ const getAllVenues = async (req, res) => {
         const venues = await Venue.findAll()
         console.log("retrieved venues from db", venues);
         res.status(200).send(venues);
-        // return venues;
     }
     catch (err) {
         console.log(err);
@@ -40,15 +38,18 @@ const getAllVenues = async (req, res) => {
 // Get shows at a given venue
 const getVenueShows = async (req, res) => {
     try {
-        const venue = await Venue.findAll({
+        const venue = await Venue.findOne({
             where: {
                 name: req.params.venueName
             }
         })
         const venueShows = await Show.findAll({
             where: {
-                id_venue: venue[0].id
-            }
+                id_venue: venue.id
+            },
+            include: [
+                { model: User, as: 'bands', attributes: ['name'] }, 
+            ],
         })
         console.log("got shows at this venue", venueShows);
         res.send(venueShows);
