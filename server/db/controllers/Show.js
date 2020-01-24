@@ -1,16 +1,26 @@
 // Requiring the models we need for our queries
-const { Show, RSVP, User } = require('../sequelize');
-const { getRecordByName } = require('./utils')
+const { Show, RSVP, User, ShowBand, Venue } = require('../sequelize');
+const { getRecordByName, getRecordByID } = require('./utils')
 
 // Create show
 const createShow = async (req, res) => {
-    const { name, date, venueName } = req.body;
-    const venue = await getRecordByName('venue', venueName);
     try {
-        await Show.create({
+        const { name, date, time, photo, venueName, bandNames } = req.body;
+        const venue = await getRecordByName('venue', venueName);
+        // add bands and venue to ShowBand join tables
+        const show = await Show.create({
             name: name,
             date: date,
+            time: time,
+            photo: photo,
             id_venue: venue.id
+        })
+        bandNames.forEach(async (bandName) => {
+            const band = await getRecordByName('band', bandName);
+            await ShowBand.create({
+                id_show: show.id,
+                id_band: band.id
+            })
         })
         res.send(201);
     }
@@ -20,8 +30,25 @@ const createShow = async (req, res) => {
     }
 }
 
-// TODO:
 // Get all upcoming shows in database
+const getAllShows = async (req, res) => {
+    try {
+        // array of shows
+        const shows = await Show.findAll({
+            include: [
+                { model: User, as: 'bands' }, 
+                // { model: User, as: 'bands', through: { attributes: ['name'] } }, 
+                { model: Venue }
+                // { model: Venue, through: { attributes: ['name'] }}
+            ],
+        });
+        res.status(200).send(shows); 
+    }
+    catch(err) {
+        console.log(err);
+        res.send(err);
+    }
+}
 
 // Allow fan to rsvp to a show
 const rsvpFanToShow = async (req, res) => {
@@ -61,10 +88,11 @@ const removeFanRSVP = async (req, res) => {
     }
 }
 
+// TODO: refactor to use eager loading
 // Get all shows that a given user has rsvpd to
 const getFanRSVPs = async (req, res) => {
     try {
-        const { fanName } = req.body;
+        const { fanName } = req.params;
         const fan = await getRecordByName('fan', fanName);
         const rsvps = await RSVP.findAll({
             where: {
@@ -88,10 +116,11 @@ const getFanRSVPs = async (req, res) => {
     }
 }
 
+// TODO: refactor to use eager loading
 // Get all fans who have rsvpd to a show
 const getShowRSVPs = async (req, res) => {
     try {
-        const { showName } = req.body;
+        const { showName } = req.params;
         const show = await getRecordByName('show', showName);
         const rsvps = await RSVP.findAll({
             where: {
@@ -122,6 +151,7 @@ const getShowRSVPs = async (req, res) => {
 
 module.exports = {
     createShow,
+    getAllShows,
     getFanRSVPs,
     getShowRSVPs,
     removeFanRSVP,

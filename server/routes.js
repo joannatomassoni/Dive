@@ -104,18 +104,20 @@ router.get('/fans/:fanName/venues')
 /**
  * SHOWS
  */
-// TODO:
-// get all shows
-router.get('/shows', function (req, res) {
-  res.send("we are getting show!");
-})
 
-// add a show
+// create a show
+// req.body = { name, date, time, venueName, photo, bandNames }
+// bandNames is an array
+// date and time are both strings, like '7/20' and '9:00PM'
+// photo is optional
 router.post('/shows', ctrl.createShow)
+
+// get all shows
+router.get('/shows', ctrl.getAllShows)
 
 // TODO:
 // get a single show
-// router.post('/shows:id', () => {})
+// router.get('/shows/:name', () => {})
 
 
 /**
@@ -141,15 +143,13 @@ router.get('/fans/rsvps/:fanName', ctrl.getFanRSVPs)
  */
 // TODO:
 // create a comment
-router.post('/comments', function (req, res) {
-  res.send("We received your comment info");
-})
+router.post('/comments/:id_user', ctrl.createComment);
+
 
 // TODO: 
 // get all comments for a show
-router.get('/comments', function (req, res) {
-  res.send("we are getting comment!");
-})
+router.get('/comments/:id_show', ctrl.getAllComments);
+
 
 /**
  * TYPES

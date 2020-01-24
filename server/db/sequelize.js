@@ -7,6 +7,7 @@ const { BandGenreModel,
         GenreModel, 
         RSVPModel,
         ShowModel, 
+        ShowBandModel,
         TypeModel, 
         UserModel, 
         VenueModel } = require('./models/index');
@@ -39,6 +40,7 @@ const sequelize = new Sequelize('dive', 'root', '', {
 // instanstiate the models here
 const Type = TypeModel(sequelize, Sequelize);
 const BandGenre = BandGenreModel(sequelize, Sequelize);
+const ShowBand = ShowBandModel(sequelize, Sequelize);
 const RSVP = RSVPModel(sequelize, Sequelize);
 const FanVenue = FanVenueModel(sequelize, Sequelize);
 const Genre = GenreModel(sequelize, Sequelize);
@@ -59,18 +61,12 @@ User.Type = User.belongsTo(Type, { foreignKey: { name: 'id_type', allowNull: fal
 Show.belongsTo(Venue, { foreignKey: { name: 'id_venue', allowNull: false } });
 
 // join table for shows and fans (RSVPs)
-Show.hasMany(RSVP, { foreignKey: { name: 'id_show', allowNull: false } });
-User.hasMany(RSVP, { foreignKey: { name: 'id_fan', allowNull: false } });
+Show.belongsToMany(User, { as: 'Fans', through: RSVP, foreignKey: { name: 'id_show', allowNull: false }})
+User.belongsToMany(Show, { through: RSVP, foreignKey: { name: 'id_fan', allowNull: false }})
 
 // join table for shows and bands
-Show.belongsToMany(User, {
-  as: 'band',
-  through: 'show_bands',
-  foreignKey: {
-    name: 'id_band',
-    allowNull: false
-  }
-})
+Show.belongsToMany(User, { as: 'bands', through: ShowBand, foreignKey: { name: 'id_show', allowNull: false } });
+User.belongsToMany(Show, { through: ShowBand, foreignKey: { name: 'id_band', allowNull: false } });
 
 // join table for fans and bands
 // (this is the only join table that sequelize is automating for us)
@@ -88,18 +84,18 @@ User.belongsToMany(User, {
 });
 
 // join table for venues and fans
-User.hasMany(FanVenue, { foreignKey: 'id_fan' });
-Venue.hasMany(FanVenue, { foreignKey: 'id_venue' });
+User.belongsToMany(Venue, { through: FanVenue, foreignKey: { name: 'id_fan', allowNull: false }})
+Venue.belongsToMany(User, { as: 'fans', through: FanVenue, foreignKey: { name: 'id_venue', allowNull: false }})
 
 // join table for bands and genres
-User.hasMany(BandGenre, { foreignKey: 'id_band' });
-Genre.hasMany(BandGenre, { foreignKey: 'id_genre' });
+User.belongsToMany(Genre, { through: BandGenre, foreignKey: { name: 'id_band', allowNull: false }})
+Genre.belongsToMany(User, { as: 'Bands', through: BandGenre, foreignKey: { name: 'id_genre', allowNull: false }})
 
 // each comment has one user
-Comment.belongsTo(User, { foreignKey: { allowNull: false } });
+Comment.belongsTo(User, { foreignKey: { name: 'id_user', allowNull: false } });
 
 // each comment has one show
-Comment.belongsTo(Show, { foreignKey: { allowNull: false } });
+Comment.belongsTo(Show, { foreignKey: { name: 'id_show', allowNull: false } });
 
 // each show has many comments
 Show.belongsToMany(Comment, { through: 'show_comments' })
@@ -145,18 +141,20 @@ sequelize.sync()
     console.log(err);
   })
 
-
 module.exports = {
   // export sequelize for the model creation
-  sequelize, 
+  sequelize,
   // export model instances for controller functions
   BandGenre,
-  Comment, 
-  FanVenue, 
+  Comment,
+  FanVenue,
   Genre,
   RSVP, 
   Show, 
+  ShowBand,
   Type, 
   User, 
   Venue
 }
+
+

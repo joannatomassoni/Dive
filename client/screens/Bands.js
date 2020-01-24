@@ -1,15 +1,27 @@
 import React, { useContext, useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  SafeAreaView
+} from 'react-native';
+import {
+  Card,
+  ListItem,
+  Button,
+  Icon,
+} from 'react-native-elements'
 import axios from 'axios';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../App'
 import MenuButton from '../components/MenuButton'
 
-export default function Bands (props) {
+export default function Bands(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
+  //state to hold bands
   const [bands, setBands] = useState([]);
-  //console.log(userInfo[0]);
-
   useEffect(() => {
     axios.get('http://localhost:8080/bands')
       .then((response) => {
@@ -19,12 +31,25 @@ export default function Bands (props) {
       })
       .catch(err => console.log(err))
   }, [])
-  
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
-      <Text style={styles.text}>Bands</Text>
-    </View>
+      <ScrollView style={{ marginTop: 30 }}>
+        <Text style={styles.text}>Bands</Text>
+
+        {/* implemented with Text and Button as children */}
+        <Card
+          title='BAND TITLE HERE'
+          style={styles.card}
+        // image={require('../images/pic2.jpg')}
+        >
+          <Text style={{ marginBottom: 10 }}>
+            General information about the band can go here.
+        </Text>
+        </Card>
+
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
@@ -36,7 +61,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 30,
-    color: '#fff'
-  }
+    fontSize: 50,
+    color: '#59C3D1',
+    opacity: 0.9,
+    fontWeight: 'bold',
+    textAlign: 'right',
+    paddingRight: 20
+  },
+  card: {
+    backgroundColor: '#75A4AD',
+    borderRadius: 10
+  },
+  button: {
+    borderRadius: 5,
+    marginHorizontal: 40,
+    backgroundColor: '#59C3D1',
+  },
+  cardText: {
+
+  },
 })
+
