@@ -16,6 +16,7 @@ import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
+import SingleBandModal from '../modals/SingleBandModal';
 
 export default function Bands(props) {
   //global user signin info and editing function
@@ -47,7 +48,7 @@ export default function Bands(props) {
             // image={require('../images/pic2.jpg')}
             >
               <Text style={{ marginBottom: 10, color: '#000' }} key={band.id} >Bio: {band.bio}</Text>
-
+              <SingleBandModal band={band.name} />
             </Card>
           )
         })}
