@@ -33,23 +33,47 @@ export default function Venues(props) {
 
   // const { name, address1, city, state, zip_code } = this.state;
   return (
-    <View style={styles.container}>
+    <SafeAreaView >
       <MenuButton navigation={props.navigation} />
-      <Text style={styles.text}>Venues</Text>
-      <View>
+      <ScrollView style={{ marginTop: 30 }}>
+        <Text style={styles.text}>Venues</Text>
         {venues.map(venue => {
           return (
-            <View>
-              <Text style={styles.text}>{venue.name}</Text>
-              <Text style={styles.text}>{venue.address1}</Text>
-              <Text style={styles.text}>{venue.city}</Text>
-              <Text style={styles.text}>{venue.state}</Text>
-              <Text style={styles.text}>{venue.zip_code}</Text>
-            </View>
+            <Card
+              title={venue.name}
+              style={styles.card}
+            // image={require('../images/pic2.jpg')}
+            >
+              <Text style={{ marginBottom: 10 }}>
+                <Text style={styles.text}>{venue.name}</Text>
+                <Text style={styles.text}>{venue.address1}</Text>
+                <Text style={styles.text}>{venue.city}</Text>
+                <Text style={styles.text}>{venue.state}</Text>
+                <Text style={styles.text}>{venue.zip_code}</Text>
+              </Text>
+            </Card>
           )
         })}
-      </View>
-    </View>
+        {/* implemented with Text and Button as children */}
+      </ScrollView>
+    </SafeAreaView >
+    // <View style={styles.container}>
+    //   <MenuButton navigation={props.navigation} />
+    //   <Text style={styles.text}>Venues</Text>
+    //   <View>
+    //     {venues.map(venue => {
+    //       return (
+    //         <View>
+    //           <Text style={styles.text}>{venue.name}</Text>
+    //           <Text style={styles.text}>{venue.address1}</Text>
+    //           <Text style={styles.text}>{venue.city}</Text>
+    //           <Text style={styles.text}>{venue.state}</Text>
+    //           <Text style={styles.text}>{venue.zip_code}</Text>
+    //         </View>
+    //       )
+    //     })}
+    //   </View>
+    // </View>
   )
 }
 
