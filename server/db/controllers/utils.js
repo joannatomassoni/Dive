@@ -1,8 +1,8 @@
 const { User, Genre, Venue, Show } = require('../sequelize');
 
 /**
- * This is a helper function to grab all data from a single record 
- * when provided its name, depending on the type
+ * These are a helper functions to grab all data from a single record 
+ * when provided its name or id, depending on the type
  * We use this in the controllers to grab record info 
  * when we're passed a name from the front end
  * 
@@ -51,6 +51,47 @@ const getRecordByName = async (type, name) => {
     }
 }
 
+const getRecordByID = async (type, id) => {
+    try {
+        if (type === 'band' || type === 'fan' || type === 'user') {
+            let userRecord = await User.findOne({
+                where: {
+                    id: id
+                }
+            });
+            return userRecord;
+        } 
+        if (type === 'genre') {
+            const genreRecord = await Genre.findOne({
+                where: {
+                    id: id
+                }
+            });
+            return genreRecord;
+        }
+        if (type === 'venue') {
+            const venueRecord = await Venue.findOne({
+                where: {
+                    id: id
+                }
+            });
+            return venueRecord;
+        }
+        if (type === 'show') {
+            const showRecord = await Show.findOne({
+                where: {
+                    id: id
+                }
+            });
+            return showRecord;
+        }
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
-    getRecordByName
+    getRecordByName,
+    getRecordByID
 }

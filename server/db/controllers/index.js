@@ -17,6 +17,7 @@ const { createComment, getAllComments } = require('./Comment');
 const { createVenue, getAllVenues, removeVenue, getVenueShows } = require('./Venue');
 const {
     createShow,
+    getAllShows,
     getFanRSVPs,
     getShowRSVPs,
     removeFanRSVP,
@@ -32,6 +33,7 @@ module.exports = {
     createShow,
     deleteUser,
     getAllBands,
+    getAllShows,
     getAllVenues,
     getBandFans,
     getBandGenres,

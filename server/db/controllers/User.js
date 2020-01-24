@@ -41,7 +41,6 @@ const createUser = async (req, res) => {
 // Get single user
 const getSingleUser = async (req, res) => {
     try {
-        debugger;
         const { name } = req.params;
         const user = await getRecordByName('user', name);
         res.status(200).send(user);
@@ -149,6 +148,7 @@ const addGenreToBand = async (req, res) => {
     }
 }
 
+// TODO: refactor to use eager loading
 // get band genres
 const getBandGenres = async (req, res) => {
     try {
@@ -215,6 +215,7 @@ const addFanToBand = async (req, res) => {
     }
 }
 
+// TODO: refactor to use eager loading
 // Get all fans of a given band
 // TODO: fix this so it's not returning two copies of the fans
 const getBandFans = async (req, res) => {
