@@ -55,10 +55,11 @@ const User = UserModel(sequelize, Sequelize);
  */
 
 // each user has one type
-User.Type = User.belongsTo(Type, { foreignKey: { name: 'id_type', allowNull: false } });
+User.belongsTo(Type, { foreignKey: { name: 'id_type', allowNull: false } });
 
 // each show has one venue
 Show.belongsTo(Venue, { foreignKey: { name: 'id_venue', allowNull: false } });
+Venue.hasMany(Show, { foreignKey: { name: 'id_venue', allowNull: false } });
 
 // join table for shows and fans (RSVPs)
 Show.belongsToMany(User, { as: 'Fans', through: RSVP, foreignKey: { name: 'id_show', allowNull: false } })

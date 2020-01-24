@@ -1,34 +1,37 @@
 // Requiring the models we need for our queries
 const { Comment, Show, User } = require('../sequelize');
-const { getRecordByName } = require('./utils')
+const { getRecordByName, getRecordByID } = require('./utils')
 
 const createComment = async (req, res) => {
   try {
-    console.log(req.body.show);
+    const { id } = req.params;
+    const { userName, text } = req.body;
+    const user = await getRecordByName('user', userName)
     const show = await Show.findAll({
       where: {
-        name: req.body.show
+        id
       }
     })
     Comment.create({
-      text: req.body.text,
-      id_user: req.params.id_user,
+      text: text,
+      id_user: user.id,
       id_show: show[0].id
     })
     console.log("we're saving a comment", req.body.text);
-    res.send(201);
+    res.sendStatus(201);
   }
   catch (err) {
     console.log("we didn't save a comment", err);
-    res.send(400);
+    res.sendStatus(400);
   }
 }
 
 const getAllComments = async (req, res) => {
   try {
+    const { id } = req.params;
     const comments = await Comment.findAll({
       where: {
-        id_show: req.params.id_show
+        id_show: id
       }
     });
     console.log("retrieved comments from db", comments);
