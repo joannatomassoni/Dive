@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
@@ -18,27 +17,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../App'
 import MenuButton from '../components/MenuButton'
 
-
-// import React, { useContext, useState, useEffect } from 'react';
-// import {
-//   Card,
-//   StyleSheet,
-//   Text,
-//   View,
-//   SafeAreaView,
-//   SectionList,
-//   Image,
-// } from 'react-native';
-// import {
-//   ListItem,
-//   Button,
-//   Icon,
-// } from 'react-native-elements'
-// import { SignedInContext } from '../App'
-// import MenuButton from '../components/MenuButton'
-// import axios from 'axios';
-// import { ScrollView } from 'react-native-gesture-handler';
-
 export default function Shows(props) {
   ///global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
@@ -47,10 +25,8 @@ export default function Shows(props) {
   useEffect(() => {
     axios.get('http://localhost:8080/shows')
       .then((response) => {
-        // this.setState({
         console.log("shows response from db", response.data[0])
         setShows(response.data);
-        // console.log("is setState working?", shows);
       })
       .catch((err) => {
         console.log("frontend not getting shows from db", err);
@@ -78,14 +54,11 @@ export default function Shows(props) {
               style={styles.card}
             // image={require('../images/pic2.jpg')}
             >
-              {/* <Text style={styles.cardText}>Address:</Text> */}
               <Text style={styles.cardText}>{show.time}</Text>
               {show.bands.map(band => {
                 <Text style={styles.cardText}>{band.name}</Text>
               })}
               <Text style={styles.cardText}>{show.venue.name}</Text>
-              {/* <Text style={styles.cardText}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text> */}
-              {/* <Text style={styles.cardText}>{venue.zip_code}</Text> */}
             </Card>
           )
         })}
