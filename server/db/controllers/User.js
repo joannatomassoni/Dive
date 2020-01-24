@@ -3,7 +3,6 @@
 // Controllers for fans and bands are found here. 
 const { 
         BandGenre,
-        FanVenue,
         Genre,
         User, 
         Type, 
@@ -235,49 +234,9 @@ const getBandFans = async (req, res) => {
     }
 }
 
-// TODO: move ths function to controllers/Venue.js
-// Allow user to follow a venue
-const addFanToVenue = async (req, res) => {
-    const { fanName, venueName } = req.body;
-    const venue = await getRecordByName('venue', venueName);
-    const fan = await getRecordByName('fan', fanName);
-    try {
-        FanVenue.create({
-            id_fan: fan.id,
-            id_venue: venue.id
-        })
-    res.send(201);
-    }
-    catch(err) {
-        console.log(err);
-        res.sendStatus(400);
-    }
-} 
-
-// TODO: move ths function to controllers/Venue.js
-// Get fans who follow a given venue
-const getVenueFans = async (req, res) => {
-    try {
-        const { venueName } = req.params;
-        const venue = await getRecordByName('venue', venueName);
-        const sql = `SELECT * FROM users WHERE id IN (
-                        SELECT id_fan FROM fans_venues WHERE id_venue = ?)`;
-        const fans = await sequelize.query(sql, {
-            replacements: [venue.id]
-        })
-        res.status(200).send(fans[0]);
-    }
-    catch (err) {
-        console.log(err)
-        res.send(400);
-    }
-}
-
-
 
 module.exports = {
     addFanToBand,
-    addFanToVenue,
     addGenreToBand,
     createUser,
     deleteUser,

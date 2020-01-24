@@ -4,7 +4,7 @@ module.exports = (sequelize, type) => {
             type: type.STRING,
             allowNull: false
         },
-        address1: {
+        address: {
             type: type.STRING,
             allowNull: true,
         },
