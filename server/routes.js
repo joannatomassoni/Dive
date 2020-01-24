@@ -141,7 +141,7 @@ router.get('/fans/rsvps/:fanName', ctrl.getFanRSVPs)
  */
 // TODO:
 // create a comment
-router.post('/comments/id_user', ctrl.createComment);
+router.post('/comments/:id_user', ctrl.createComment);
 // router.post('/comments', function (req, res) {
 //   res.send("We received your comment info");
 // })
