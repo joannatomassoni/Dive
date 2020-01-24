@@ -53,6 +53,14 @@ export default function CreateShowModal(props) {
                 // onChangeText={setShowTitle}
                 style={styles.input}
               />
+              {/* Venue input */}
+              <TextInput
+                placeholder="Show Venue"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                // onChangeText={setShowTitle}
+                style={styles.input}
+              />
               {/* Date input */}
               <TextInput
                 placeholder="Date"
