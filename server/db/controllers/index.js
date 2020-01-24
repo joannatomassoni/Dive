@@ -19,6 +19,7 @@ const {
     createShow,
     getAllShows,
     getFanRSVPs,
+    getSingleShow,
     getShowRSVPs,
     removeFanRSVP,
     rsvpFanToShow
@@ -39,6 +40,7 @@ module.exports = {
     getFanRSVPs,
     getShowRSVPs,
     getSingleUser,
+    getSingleShow,
     getTypes,
     getVenueShows,
     createVenue,

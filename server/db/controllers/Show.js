@@ -50,6 +50,27 @@ const getAllShows = async (req, res) => {
     }
 }
 
+// get detailed info for single show
+const getSingleShow = async (req, res) => {
+    try {
+        const { name } = req.params;
+        const show = await Show.findOne({
+            where: {
+                name: name
+            },
+            // include: [
+            //     {
+
+            //     }
+            // ]
+        })
+        res.send(show);
+    }
+    catch(err) {
+
+    }
+}
+
 // Allow fan to rsvp to a show
 const rsvpFanToShow = async (req, res) => {
     try {
@@ -153,6 +174,7 @@ module.exports = {
     createShow,
     getAllShows,
     getFanRSVPs,
+    getSingleShow,
     getShowRSVPs,
     removeFanRSVP,
     rsvpFanToShow
