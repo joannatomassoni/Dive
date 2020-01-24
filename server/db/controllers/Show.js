@@ -35,31 +35,19 @@ const createShow = async (req, res) => {
 const getAllShows = async (req, res) => {
     try {
         // array of shows
-        const shows = await Show.findAll();
-        // for each show, we want to add the venuename as well
-        // for each show, we want to add an array of bands
-        shows.forEach(async (show) => {
-            // get venuename
-            const venue = await getRecordByID('venue', show.id_venue);
-            show['venueName'] = venue.name;
-            // get all names of bands 
-            const records = await ShowBand.findAll({
-                where: {
-                    id_show: show.id
-                }
-            })
-            const bandNames = [];
-            records.forEach((record) => {
-                bandNames.push(record.name);
-            })
-            show['bands'] = bandNames;
-            return show;
-        })
-        res.send(shows);
+        const shows = await Show.findAll({
+            include: [
+                { model: User, as: 'bands' }, 
+                // { model: User, as: 'bands', through: { attributes: ['name'] } }, 
+                { model: Venue }
+                // { model: Venue, through: { attributes: ['name'] }}
+            ],
+        });
+        res.status(200).send(shows); 
     }
-    catch (err) {
+    catch(err) {
         console.log(err);
-        res.sendStatus(400);
+        res.send(err);
     }
 }
 
