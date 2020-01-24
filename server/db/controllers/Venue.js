@@ -121,15 +121,16 @@ const getFanVenues = async (req, res) => {
 // Update venue
 const updateVenue = async (req, res) => {
     try {
-        const update = await Venue.update(
+        const { name, address, city, state, zip_code } = req.params;
+        await Venue.update(
             {
-                name: req.params.name,
-                address1: req.params.address1,
-                city: req.params.city,
-                state: req.params.state,
-                zip_code: req.params.zip_code
+                name: name,
+                address: address,
+                city: city,
+                state: state,
+                zip_code: ip_code
             },
-            { where: { name: req.params.name } }
+            { where: { name: name } }
         )
         console.log("updated venue");
         res.send(200);
@@ -143,7 +144,6 @@ const updateVenue = async (req, res) => {
 // Delete venue
 const removeVenue = async (req, res) => {
     try {
-        console.log(req);
         await Venue.destroy({
             where: {
                 name: req.body.name
