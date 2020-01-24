@@ -14,9 +14,22 @@ import { Ionicons } from '@expo/vector-icons';
 export default function CreateShowModal(props) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
-  //set username to text in username textInput
+  //shwo title
   const [showTitle, setShowTitle] = useState('');
+  //band title
+  const [bandName, setBandName] = useState('');
+  //array of all bands
+  const [bandNames, addBandName] = useState('');
+  //venue name
+  const [venueName, setVenueName] = useState('');
+  //date
+  const [showDate, setShowDate] = useState('');
+  //time
+  const [showTime, setShowTime] = useState('');
+  //show description
+  const [showDesc, setShowDesc] = useState('');
 
+  console.log(showTitle);
   return (
     <View>
       <Modal
@@ -42,7 +55,7 @@ export default function CreateShowModal(props) {
                 placeholder="Show Title"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
-                // onChangeText={setShowTitle}
+                onChangeText={setShowTitle}
                 style={styles.input}
               />
               {/* Bands input */}
@@ -50,15 +63,22 @@ export default function CreateShowModal(props) {
                 placeholder="Add Band"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
-                // onChangeText={setShowTitle}
+                onChangeText={setBandName}
                 style={styles.input}
               />
+              {/* create show button when modal is showing */}
+              <TouchableOpacity
+                style={styles.loginContainer}
+                onPress={() => addBandName([...bandNames, bandName])}
+              >
+                <Text style={styles.buttonText}>Add Band</Text>
+              </TouchableOpacity>
               {/* Venue input */}
               <TextInput
                 placeholder="Show Venue"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
-                // onChangeText={setShowTitle}
+                onChangeText={setVenueName}
                 style={styles.input}
               />
               {/* Date input */}
@@ -66,7 +86,7 @@ export default function CreateShowModal(props) {
                 placeholder="Date"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
-                // onChangeText={setShowTitle}
+                onChangeText={setShowDate}
                 style={styles.input}
               />
               {/* Time input */}
@@ -74,7 +94,7 @@ export default function CreateShowModal(props) {
                 placeholder="Time"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
-                // onChangeText={setShowTitle}
+                onChangeText={setShowTime}
                 style={styles.input}
               />
               {/* Description input */}
@@ -82,13 +102,25 @@ export default function CreateShowModal(props) {
                 placeholder="Show Description"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
-                // onChangeText={setShowTitle}
+                onChangeText={setShowDesc}
                 style={styles.input}
               />
               {/* create show button when modal is showing */}
               <TouchableOpacity
                 style={styles.loginContainer}
-                onPress={() => {setModalVisible(false)}}
+                onPress={() => {
+                  setModalVisible(false);
+                  axios.post('http://localhost:8080/shows', {
+                    name: showTitle,
+                    date: showDate,
+                    time: showTime,
+                    photo: null,
+                    venueName: venueName,
+                    bandName: bandNames
+                  })
+                  .then(response => response)
+                  .catch(error => console.log('failed to create show', error));
+              }}
               >
                 <Text style={styles.buttonText}>Create Show</Text>
               </TouchableOpacity>
