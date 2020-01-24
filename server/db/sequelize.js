@@ -2,15 +2,15 @@ const { Sequelize } = require('sequelize');
 const dotenv = require('dotenv')
 // we require our models here to be instantiated after sequelize connection is made
 const { BandGenreModel,
-        CommentModel, 
-        FanVenueModel, 
-        GenreModel, 
-        RSVPModel,
-        ShowModel, 
-        ShowBandModel,
-        TypeModel, 
-        UserModel, 
-        VenueModel } = require('./models/index');
+  CommentModel,
+  FanVenueModel,
+  GenreModel,
+  RSVPModel,
+  ShowModel,
+  ShowBandModel,
+  TypeModel,
+  UserModel,
+  VenueModel } = require('./models/index');
 dotenv.config();
 const { DB_USER, DB_PASS, DB_NAME, DB_HOST, CLOUD_SQL_CONNECTION_NAME } = process.env;
 
@@ -61,8 +61,8 @@ User.Type = User.belongsTo(Type, { foreignKey: { name: 'id_type', allowNull: fal
 Show.belongsTo(Venue, { foreignKey: { name: 'id_venue', allowNull: false } });
 
 // join table for shows and fans (RSVPs)
-Show.belongsToMany(User, { as: 'Fans', through: RSVP, foreignKey: { name: 'id_show', allowNull: false }})
-User.belongsToMany(Show, { through: RSVP, foreignKey: { name: 'id_fan', allowNull: false }})
+Show.belongsToMany(User, { as: 'Fans', through: RSVP, foreignKey: { name: 'id_show', allowNull: false } })
+User.belongsToMany(Show, { through: RSVP, foreignKey: { name: 'id_fan', allowNull: false } })
 
 // join table for shows and bands
 Show.belongsToMany(User, { as: 'bands', through: ShowBand, foreignKey: { name: 'id_show', allowNull: false } });
@@ -84,12 +84,12 @@ User.belongsToMany(User, {
 });
 
 // join table for venues and fans
-User.belongsToMany(Venue, { through: FanVenue, foreignKey: { name: 'id_fan', allowNull: false }})
-Venue.belongsToMany(User, { as: 'fans', through: FanVenue, foreignKey: { name: 'id_venue', allowNull: false }})
+User.belongsToMany(Venue, { through: FanVenue, foreignKey: { name: 'id_fan', allowNull: false } })
+Venue.belongsToMany(User, { as: 'fans', through: FanVenue, foreignKey: { name: 'id_venue', allowNull: false } })
 
 // join table for bands and genres
-User.belongsToMany(Genre, { through: BandGenre, foreignKey: { name: 'id_band', allowNull: false }})
-Genre.belongsToMany(User, { as: 'Bands', through: BandGenre, foreignKey: { name: 'id_genre', allowNull: false }})
+User.belongsToMany(Genre, { through: BandGenre, foreignKey: { name: 'id_band', allowNull: false } })
+Genre.belongsToMany(User, { as: 'Bands', through: BandGenre, foreignKey: { name: 'id_genre', allowNull: false } })
 
 // each comment has one user
 Comment.belongsTo(User, { foreignKey: { name: 'id_user', allowNull: false } });
@@ -108,7 +108,7 @@ Show.belongsToMany(Comment, { through: 'show_comments' })
 
 // Use line 99 instead of line 100 if you don't want the database to drop on server refresh
 sequelize.sync()
-// sequelize.sync({ force: true })
+  // sequelize.sync({ force: true })
   .then(() => {
     console.log(`Database & tables created!`)
   }).then(() => {
@@ -149,11 +149,11 @@ module.exports = {
   Comment,
   FanVenue,
   Genre,
-  RSVP, 
-  Show, 
+  RSVP,
+  Show,
   ShowBand,
-  Type, 
-  User, 
+  Type,
+  User,
   Venue
 }
 

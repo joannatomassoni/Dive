@@ -55,11 +55,19 @@ export default function Venues(props) {
             <Card
               title={venue.name}
               style={styles.card}
+              backgroundColor='#fff'
+              borderWidth={0}
+              borderRadius={10}
+              padding={10}
             // image={require('../images/pic2.jpg')}
             >
-              <Text style={styles.cardText} key={venue.id} >Address:</Text>
-              <Text style={styles.cardText} key={venue.id}>{venue.address1}</Text>
-              <Text style={styles.cardText} key={venue.id}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
+              <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id} >Address:</Text>
+              <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id}>{venue.address}</Text>
+              <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id} >{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
+
+              {/* <Text style={styles.cardText} key={venue.id} >Address:</Text> */}
+              {/* <Text style={styles.cardText} key={venue.id}>{venue.address1}</Text> */}
+              {/* <Text style={styles.cardText} key={venue.id}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text> */}
               {/* <Text style={styles.cardText}>{venue.zip_code}</Text> */}
             </Card>
           )
