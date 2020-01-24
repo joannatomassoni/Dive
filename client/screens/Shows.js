@@ -15,7 +15,7 @@ import {
 } from 'react-native-elements'
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
-import { SignedInContext } from '../App'
+import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 
 export default function Shows(props) {
