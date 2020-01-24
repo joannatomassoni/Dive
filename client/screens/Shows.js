@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
+import {
+  StyleSheet,
+  Text,
   View,
   SafeAreaView,
-  SectionList, 
+  SectionList,
 } from 'react-native';
 import { SignedInContext } from '../App'
 import MenuButton from '../components/MenuButton'
@@ -15,7 +15,7 @@ export default function Shows(props) {
 
   return (
     <View style={styles.container}>
-      <MenuButton navigation={props.navigation}/>
+      <MenuButton navigation={props.navigation} />
       <Text style={styles.text}>Shows</Text>
     </View>
   )
@@ -33,3 +33,5 @@ const styles = StyleSheet.create({
     color: '#fff'
   }
 })
+
+

@@ -106,9 +106,8 @@ router.get('/fans/:fanName/venues')
  */
 // TODO:
 // get all shows
-router.get('/shows', function (req, res) {
-  res.send("we are getting show!");
-})
+router.get('/shows', ctrl.getAllShows);
+
 
 // add a show
 router.post('/shows', ctrl.createShow)

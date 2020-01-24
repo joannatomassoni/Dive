@@ -22,6 +22,19 @@ const createShow = async (req, res) => {
 
 // TODO:
 // Get all upcoming shows in database
+const getAllShows = async (req, res) => {
+    try {
+        const shows = await Show.findAll()
+        console.log("retrieved shows from db", shows);
+        res.status(200).send(shows);
+        // return venues;
+    }
+    catch (err) {
+        console.log("couldn't get shows", err);
+        res.send(err);
+    }
+}
+
 
 // Allow fan to rsvp to a show
 const rsvpFanToShow = async (req, res) => {
@@ -70,17 +83,17 @@ const getFanRSVPs = async (req, res) => {
             where: {
                 id_fan: fan.id
             }
-        }) 
-        Promise.all(rsvps.map(async(rsvp) => {
-         const show = await Show.findOne({
-             where: {
-                 id: rsvp.id_show
-             }
-         })
-         return show;
-     })).then((data) => {
-         res.send(data)
-     })
+        })
+        Promise.all(rsvps.map(async (rsvp) => {
+            const show = await Show.findOne({
+                where: {
+                    id: rsvp.id_show
+                }
+            })
+            return show;
+        })).then((data) => {
+            res.send(data)
+        })
     }
     catch (err) {
         console.log(err)
@@ -98,19 +111,19 @@ const getShowRSVPs = async (req, res) => {
                 id_show: show.id
             }
         })
-        Promise.all(rsvps.map(async(rsvp) => {
-                console.log(rsvp);
-             const fan = await User.findOne({
-                 where: {
-                     id: rsvp.id_fan
-                 }
-             })
-             return fan;
-         })).then((data) => {
-             res.send(data)
-         })
+        Promise.all(rsvps.map(async (rsvp) => {
+            console.log(rsvp);
+            const fan = await User.findOne({
+                where: {
+                    id: rsvp.id_fan
+                }
+            })
+            return fan;
+        })).then((data) => {
+            res.send(data)
+        })
     }
-    catch(err) {
+    catch (err) {
         console.log(err);
         res.send(400);
     }
@@ -125,5 +138,6 @@ module.exports = {
     getFanRSVPs,
     getShowRSVPs,
     removeFanRSVP,
-    rsvpFanToShow
+    rsvpFanToShow,
+    getAllShows
 }
