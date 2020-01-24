@@ -40,6 +40,10 @@ export default function Bands(props) {
         <Card
           title='BAND TITLE HERE'
           style={styles.card}
+          backgroundColor='#fff'
+          borderWidth={0}
+          borderRadius={10}
+          padding={10}
         // image={require('../images/pic2.jpg')}
         >
           <Text style={{ marginBottom: 10 }}>

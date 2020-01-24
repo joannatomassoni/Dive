@@ -8,6 +8,7 @@ export const SignedInContext = createContext({});
 export default function App (props) {
   //initial login state of app
   const [userInfo, setUserInfo] = useState({});
+  console.disableYellowBox = true;
 
   return (
     <View style={styles.container}>
