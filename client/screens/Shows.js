@@ -1,51 +1,71 @@
-import React, { useContext, useState } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
+import React, { useContext, useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
   View,
   Image,
   SafeAreaView,
   MaskedViewIOS,
 } from 'react-native';
-import { 
+import {
   Card,
   ListItem,
   Button,
   Icon,
 } from 'react-native-elements'
-import { SignedInContext } from '../context/UserContext'
-import MenuButton from '../components/MenuButton'
+import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
+import { SignedInContext } from '../App'
+import MenuButton from '../components/MenuButton'
 
 export default function Shows(props) {
   ///global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
-  //state switching between single show view
-  const [singleView, setSingleView] = useState(false);
+  const [shows, setShows] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/shows')
+      .then((response) => {
+        console.log("shows response from db", response.data[0])
+        setShows(response.data);
+      })
+      .catch((err) => {
+        console.log("frontend not getting shows from db", err);
+      })
+  }, [])
+
+
+  //dummy data
+  const users = [
+    {
+      name: 'Ryan',
+      avatar: "https://lh3.googleusercontent.com/a-/AAuE7mAY3iahzehnNyuj1PJ8iiDn1zi8v7LFz7jB6dzcPw"
+    },
+  ]
 
   return (
     <SafeAreaView style={styles.container}>
-      <MenuButton navigation={props.navigation}/>
-      <ScrollView style={{marginTop:30}}>
-        <Text style={styles.headerText}>Shows</Text>
-
-        <Card
-          title='SHOW TITLE HERE'
-          style={styles.card}
-          backgroundColor='#fff'
-          borderWidth={0}
-          borderRadius={10}
-          padding={10}
-          //onPress={setSingleView(!singleView)}
-        // image={require('../images/pic2.jpg')}
-        >
-          <Text style={{ marginBottom: 10, color: '#000' }}>
-            General information about the bands or specific show can go here.
-          </Text>
-        </Card>
-
+      <MenuButton navigation={props.navigation} />
+      <ScrollView style={{ marginTop: 30 }}>
+        <Text style={styles.text}>Shows</Text>
+        {shows.map(show => {
+          return (
+            <Card
+              title={show.name}
+              style={styles.card}
+            // image={require('../images/pic2.jpg')}
+            >
+              <Text style={styles.cardText} key={show.id}>{show.time}</Text>
+              {show.bands.map(band => {
+                <Text style={styles.cardText} key={band.id}>{band.name}</Text>
+              })}
+              <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
+            </Card>
+          )
+        })}
+        {/* implemented with Text and Button as children */}
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaView >
   )
 }
 
@@ -61,7 +81,7 @@ const styles = StyleSheet.create({
     color: '#59C3D1',
     opacity: 0.9,
     fontWeight: 'bold',
-    textAlign: 'right',
+    textAlign: 'left',
     paddingRight: 20
   },
   card: {
@@ -69,11 +89,18 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   button: {
-    borderRadius: 5, 
-    marginHorizontal: 40, 
+    borderRadius: 5,
+    marginHorizontal: 40,
     backgroundColor: '#59C3D1',
   },
   cardText: {
-
+    fontSize: 20,
+    color: '#59C3D1',
+    opacity: 0.9,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
   },
 })
+
+

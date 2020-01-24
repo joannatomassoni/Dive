@@ -22,7 +22,7 @@ const {
     getSingleShow,
     getShowRSVPs,
     removeFanRSVP,
-    rsvpFanToShow
+    rsvpFanToShow,
 } = require('./Show');
 
 module.exports = {
@@ -39,6 +39,7 @@ module.exports = {
     getBandGenres,
     getFanRSVPs,
     getShowRSVPs,
+    getAllShows,
     getSingleUser,
     getSingleShow,
     getTypes,

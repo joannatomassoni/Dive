@@ -33,17 +33,28 @@ const createShow = async (req, res) => {
 // Get all upcoming shows in database
 const getAllShows = async (req, res) => {
     try {
+        //         const shows = await Show.findAll()
+        //         console.log("retrieved shows from db", shows);
+        //         res.send(shows);
+        //         // return venues;
+        //     }
+        //     catch (err) {
+        //         console.log("couldn't get shows", err);
+        //         res.send(err);
+        //     }
+        // }
         // array of shows
         const shows = await Show.findAll({
             include: [
-                { model: User, as: 'bands', attributes: ['name'] }, 
+                { model: User, as: 'bands', attributes: ['name'] },
                 { model: Venue, attributes: ['name'] }
             ],
         });
-        res.status(200).send(shows); 
+        console.log("retrieved shows from db", shows);
+        res.status(200).send(shows);
     }
-    catch(err) {
-        console.log(err);
+    catch (err) {
+        console.log("couldn't get shows", err);
         res.send(err);
     }
 }
@@ -65,7 +76,7 @@ const getSingleShow = async (req, res) => {
         })
         res.send(show);
     }
-    catch(err) {
+    catch (err) {
         console.log(err);
         res.send(400);
     }
@@ -119,17 +130,17 @@ const getFanRSVPs = async (req, res) => {
             where: {
                 id_fan: fan.id
             }
-        }) 
-        Promise.all(rsvps.map(async(rsvp) => {
-         const show = await Show.findOne({
-             where: {
-                 id: rsvp.id_show
-             }
-         })
-         return show;
-     })).then((data) => {
-         res.send(data)
-     })
+        })
+        Promise.all(rsvps.map(async (rsvp) => {
+            const show = await Show.findOne({
+                where: {
+                    id: rsvp.id_show
+                }
+            })
+            return show;
+        })).then((data) => {
+            res.send(data)
+        })
     }
     catch (err) {
         console.log(err)
@@ -148,19 +159,19 @@ const getShowRSVPs = async (req, res) => {
                 id_show: show.id
             }
         })
-        Promise.all(rsvps.map(async(rsvp) => {
-                console.log(rsvp);
-             const fan = await User.findOne({
-                 where: {
-                     id: rsvp.id_fan
-                 }
-             })
-             return fan;
-         })).then((data) => {
-             res.send(data)
-         })
+        Promise.all(rsvps.map(async (rsvp) => {
+            console.log(rsvp);
+            const fan = await User.findOne({
+                where: {
+                    id: rsvp.id_fan
+                }
+            })
+            return fan;
+        })).then((data) => {
+            res.send(data)
+        })
     }
-    catch(err) {
+    catch (err) {
         console.log(err);
         res.send(400);
     }
@@ -177,5 +188,6 @@ module.exports = {
     getSingleShow,
     getShowRSVPs,
     removeFanRSVP,
-    rsvpFanToShow
+    rsvpFanToShow,
+    getAllShows
 }

@@ -1,9 +1,3 @@
-// // import React from 'react';
-// import React, { useEffect, useState } from 'react'
-// import { StyleSheet, Text, View } from 'react-native';
-// import axios from 'axios';
-// import MenuButton from '../components/MenuButton'
-
 import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
@@ -52,7 +46,7 @@ export default function Venues(props) {
 
   // const { name, address1, city, state, zip_code } = this.state;
   return (
-    <SafeAreaView >
+    <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Venues</Text>
@@ -63,10 +57,10 @@ export default function Venues(props) {
               style={styles.card}
             // image={require('../images/pic2.jpg')}
             >
-              <Text>Address:</Text>
-              <Text>{venue.address1}</Text>
-              <Text>{venue.city}, {venue.state}</Text>
-              <Text>{venue.zip_code}</Text>
+              <Text style={styles.cardText}>Address:</Text>
+              <Text style={styles.cardText}>{venue.address1}</Text>
+              <Text style={styles.cardText}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
+              {/* <Text style={styles.cardText}>{venue.zip_code}</Text> */}
             </Card>
           )
         })}
@@ -84,8 +78,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 30,
-    color: '#fff'
-  }
+    fontSize: 50,
+    color: '#59C3D1',
+    opacity: 0.9,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
+  },
+  card: {
+    backgroundColor: '#75A4AD',
+    borderRadius: 10
+  },
+  button: {
+    borderRadius: 5,
+    marginHorizontal: 40,
+    backgroundColor: '#59C3D1',
+  },
+  cardText: {
+    fontSize: 20,
+    color: '#59C3D1',
+    opacity: 0.9,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
+  },
 })
 
