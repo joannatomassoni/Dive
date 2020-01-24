@@ -33,36 +33,33 @@ const createShow = async (req, res) => {
 // Get all upcoming shows in database
 const getAllShows = async (req, res) => {
     try {
-<<<<<<< HEAD
-        const shows = await Show.findAll()
+        //         const shows = await Show.findAll()
+        //         console.log("retrieved shows from db", shows);
+        //         res.send(shows);
+        //         // return venues;
+        //     }
+        //     catch (err) {
+        //         console.log("couldn't get shows", err);
+        //         res.send(err);
+        //     }
+        // }
+        // array of shows
+        const shows = await Show.findAll({
+            include: [
+                { model: User, as: 'bands' },
+                // { model: User, as: 'bands', through: { attributes: ['name'] } }, 
+                { model: Venue }
+                // { model: Venue, through: { attributes: ['name'] }}
+            ],
+        });
         console.log("retrieved shows from db", shows);
-        res.send(shows);
-        // return venues;
+        res.status(200).send(shows);
     }
     catch (err) {
         console.log("couldn't get shows", err);
         res.send(err);
     }
 }
-
-=======
-        // array of shows
-        const shows = await Show.findAll({
-            include: [
-                { model: User, as: 'bands' }, 
-                // { model: User, as: 'bands', through: { attributes: ['name'] } }, 
-                { model: Venue }
-                // { model: Venue, through: { attributes: ['name'] }}
-            ],
-        });
-        res.status(200).send(shows); 
-    }
-    catch(err) {
-        console.log(err);
-        res.send(err);
-    }
-}
->>>>>>> 124e523ca0d8244c2e11584c481f5f1fa527db0a
 
 // Allow fan to rsvp to a show
 const rsvpFanToShow = async (req, res) => {
