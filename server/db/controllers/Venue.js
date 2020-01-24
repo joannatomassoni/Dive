@@ -35,6 +35,26 @@ const getAllVenues = async (req, res) => {
     }
 }
 
+// get single venue
+const getSingleVenue = async (req, res) => {
+    try {
+        const { venueName } = req.params;
+        const venue = await Venue.findOne({
+            where: {
+                name: venueName,
+            },
+            include: [
+                { model: Show }
+            ]
+        })
+        res.send(venue);
+    }
+    catch(err) {
+        console.log(err);
+        res.send(400);
+    }
+}
+
 // Get shows at a given venue
 const getVenueShows = async (req, res) => {
     try {
@@ -164,6 +184,7 @@ module.exports = {
     createVenue, 
     getAllVenues,
     getFanVenues, 
+    getSingleVenue,
     getVenueFans,
     getVenueShows,
     removeVenue
