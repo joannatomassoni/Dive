@@ -48,7 +48,8 @@ export default function Shows(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.headerText}>Shows</Text>
-        {shows.map(show => {
+        {shows ? null
+        :shows.map(show => {
           return (
             <Card
               title={show.name}
