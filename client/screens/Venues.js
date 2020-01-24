@@ -28,23 +28,12 @@ export default function Venues(props) {
         console.log("venue response from db", response.data[0])
         setVenues(response.data);
         console.log("is setState working?", venues);
-        // setVenues([
-        //   {
-        //     name: response.data.name,
-        //     address1: response.data.address1,
-        //     city: response.data.city,
-        //     state: response.data.state,
-        //     zip_code: response.data.zip_code,
-        //   }
-        // ])
-        // console.log("we're outside useEffect", venues);
       })
       .catch((err) => {
         console.log("frontend not getting venues from db", err);
       })
   }, [])
 
-  // const { name, address1, city, state, zip_code } = this.state;
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
@@ -55,12 +44,15 @@ export default function Venues(props) {
             <Card
               title={venue.name}
               style={styles.card}
+              backgroundColor='#fff'
+              borderWidth={0}
+              borderRadius={10}
+              padding={10}
             // image={require('../images/pic2.jpg')}
             >
-              <Text style={styles.cardText}>Address:</Text>
-              <Text style={styles.cardText}>{venue.address1}</Text>
-              <Text style={styles.cardText}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
-              {/* <Text style={styles.cardText}>{venue.zip_code}</Text> */}
+              <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id} >Address:</Text>
+              <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id}>{venue.address}</Text>
+              <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id} >{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
             </Card>
           )
         })}
