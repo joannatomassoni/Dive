@@ -9,7 +9,7 @@ const {
         sequelize
     } = require('../sequelize');
 
-const { getRecordByName } = require('./utils');
+const { getRecordByName, getRecordByID } = require('./utils');
 
 // Create user
 const createUser = async (req, res) => {
@@ -40,8 +40,8 @@ const createUser = async (req, res) => {
 // Get single user
 const getSingleUser = async (req, res) => {
     try {
-        const { name } = req.params;
-        const user = await getRecordByName('user', name);
+        const { id } = req.params;
+        const user = await getRecordByID('user', id);
         res.status(200).send(user);
     }
     catch (err) {
@@ -53,11 +53,11 @@ const getSingleUser = async (req, res) => {
 // Update user bio
 const updateUserBio = async (req, res) => {
     try {
-        const { name } = req.params;
+        const { id } = req.params;
         const { bio } = req.body;
         await User.update(
             { bio: bio }, 
-            { where: { name: name },
+            { where: { id: id },
             returning: true,
             plain: true
             })
@@ -72,12 +72,12 @@ const updateUserBio = async (req, res) => {
 // Update band photo
 const updateBandPhoto = async (req, res) => {
     try {
-        const { name } = req.params;
+        const { id } = req.params;
         const { photo } = req.body;
         // const [ number, user ]  = await getRecordByName('user', name);
         await User.update(
             { bandPhoto: photo }, 
-            { where: { name: name },
+            { where: { id: id },
             returning: true,
             plain: true
             })
@@ -98,7 +98,7 @@ const updateBandSM = async (req, res) => {
 // Delete user
 const deleteUser = async (req, res) => {
     try {
-        const { name } = req.params;
+        const { id } = req.params;
         await User.destroy({
             where: {
                 name: name
@@ -120,7 +120,6 @@ const getAllBands = async (req, res) => {
                 id_type: 2
             }
         })
-        console.log(bands);
         res.send(bands);
     }
     catch (err) {
@@ -132,11 +131,11 @@ const getAllBands = async (req, res) => {
 // Allow bands to choose genres for themselves
 const addGenreToBand = async (req, res) => {
     try {
-        const { bandName, genreName } = req.body;
-        const band = await getRecordByName('band', bandName);
+        const { genreName } = req.body;
+        const { id } = req.params;
         const genre = await getRecordByName('genre', genreName);
         BandGenre.create({
-            id_band: band.id,
+            id_band: id,
             id_genre: genre.id
         })
         res.sendStatus(201);
@@ -151,10 +150,9 @@ const addGenreToBand = async (req, res) => {
 // get band genres
 const getBandGenres = async (req, res) => {
     try {
-        const { bandName } = req.params;
-        const band = await getRecordByName('band', bandName);
+        const { id } = req.params;
         const genres = await BandGenre.findAll({
-            where: { id_band: band.id }
+            where: { id_band: id }
         });
         Promise.all(genres.map(async(genre) => {
          const singleGenre = await Genre.findOne({
@@ -179,13 +177,13 @@ const getBandGenres = async (req, res) => {
 // delete genre from band
 const removeBandGenre = async (req, res) => {
     try {
-        const { bandName, genreName } = req.body;
-        const band = await getRecordByName('band', bandName);
+        const { id } = req.params;
+        const { genreName } = req.body;
         const genre = await getRecordByName('genre', genreName);
         await BandGenre.destroy({
             where: {
                 id_genre: genre.id,
-                id_band: band.id
+                id_band: id
             }
         })
         res.sendStatus(200);
@@ -200,11 +198,10 @@ const removeBandGenre = async (req, res) => {
 const addFanToBand = async (req, res) => {
     try {
         const sql = 'INSERT INTO fans_bands (id_band, id_fan, createdAt, updatedAt) VALUES (?, ?, ?, ?)';
-        const { bandName, fanName } = req.body;
-        const band = await getRecordByName('band', bandName);
-        const fan = await getRecordByName('fan', fanName);
+        const { id } = req.params;
+        const { id_fan } = req.body;
         await sequelize.query(sql, {
-            replacements: [band.id, fan.id, new Date(), new Date()]
+            replacements: [id, id_fan, new Date(), new Date()]
         })
         res.send(201);
     }
@@ -219,12 +216,11 @@ const addFanToBand = async (req, res) => {
 // TODO: fix this so it's not returning two copies of the fans
 const getBandFans = async (req, res) => {
     try {
-        const { bandName } = req.params;
-        const band = await getRecordByName('band', bandName);
+        const { id } = req.params;
         const sql = `SELECT * FROM users WHERE id IN (
                         SELECT id_fan FROM fans_bands WHERE id_band = ?)`;
         const fans = await sequelize.query(sql, {
-            replacements: [band.id]
+            replacements: [id]
         })
         res.status(200).send(fans[0]);
     }

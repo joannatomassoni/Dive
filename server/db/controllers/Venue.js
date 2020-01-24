@@ -7,7 +7,7 @@ const { getRecordByName, getRecordByID } = require('./utils');
 const createVenue = async (req, res) => {
     try {
         const { name, address, city, state, zip_code } = req.body;
-        Venue.create({
+        Venue.findOrCreate({
             name,
             address,
             city,
@@ -38,10 +38,10 @@ const getAllVenues = async (req, res) => {
 // get single venue
 const getSingleVenue = async (req, res) => {
     try {
-        const { venueName } = req.params;
+        const { id } = req.params;
         const venue = await Venue.findOne({
             where: {
-                name: venueName,
+                id
             },
             include: [
                 { model: Show }
@@ -58,9 +58,10 @@ const getSingleVenue = async (req, res) => {
 // Get shows at a given venue
 const getVenueShows = async (req, res) => {
     try {
+        const { id } = req.params;
         const venue = await Venue.findOne({
             where: {
-                name: req.params.venueName
+                id
             }
         })
         const venueShows = await Show.findAll({
@@ -82,13 +83,13 @@ const getVenueShows = async (req, res) => {
 
 // Allow user to follow a venue
 const addFanToVenue = async (req, res) => {
-    const { fanName, venueName } = req.body;
-    const venue = await getRecordByName('venue', venueName);
+    const { id } = req.params;
+    const { fanName } = req.body;
     const fan = await getRecordByName('fan', fanName);
     try {
         FanVenue.create({
             id_fan: fan.id,
-            id_venue: venue.id
+            id_venue: id
         })
     res.sendStatus(201);
     }
@@ -98,13 +99,33 @@ const addFanToVenue = async (req, res) => {
     }
 } 
 
+// get venues that a fan follows
+const getFanVenues = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const fanVenues = await User.findAll({
+            where: {
+                id
+            },
+            include: [
+                { model: Venue, attributes: ['name']}
+            ]
+        })
+        res.send(fanVenues);
+    }
+    catch (err) {
+        console.log(err)
+        res.sendStatus(400);
+    }
+}
+
 // Get fans who follow a given venue
 const getVenueFans = async (req, res) => {
     try {
-        const { venueName } = req.params;
+        const { id } = req.params;
         const venueFans = await Venue.findAll({
             where: {
-                name: venueName
+                id
             },
             include: [
                 { model: User, as: 'fans', attributes: ['name']}
@@ -118,25 +139,6 @@ const getVenueFans = async (req, res) => {
     }
 }
 
-// get venues that a fan follows
-const getFanVenues = async (req, res) => {
-    try {
-        const { fanName } = req.params;
-        const fanVenues = await User.findAll({
-            where: {
-                name: fanName
-            },
-            include: [
-                { model: Venue, attributes: ['name']}
-            ]
-        })
-        res.send(fanVenues);
-    }
-    catch (err) {
-        console.log(err)
-        res.sendStatus(400);
-    }
-}
 
 // Update venue
 const updateVenue = async (req, res) => {

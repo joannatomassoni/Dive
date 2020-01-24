@@ -4,11 +4,12 @@ const { getRecordByName, getRecordByID } = require('./utils')
 
 const createComment = async (req, res) => {
   try {
-    const { showName, userName, text } = req.body;
+    const { id } = req.params;
+    const { userName, text } = req.body;
     const user = await getRecordByName('user', userName)
     const show = await Show.findAll({
       where: {
-        name: showName
+        id
       }
     })
     Comment.create({
@@ -27,9 +28,10 @@ const createComment = async (req, res) => {
 
 const getAllComments = async (req, res) => {
   try {
+    const { id } = req.params;
     const comments = await Comment.findAll({
       where: {
-        id_show: req.params.id_show
+        id_show: id
       }
     });
     console.log("retrieved comments from db", comments);
