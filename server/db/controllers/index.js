@@ -22,7 +22,6 @@ const {
     getShowRSVPs,
     removeFanRSVP,
     rsvpFanToShow,
-    getAllShows
 } = require('./Show');
 
 module.exports = {
