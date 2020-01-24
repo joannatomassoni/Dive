@@ -25,8 +25,7 @@ export default function Bands(props) {
   useEffect(() => {
     axios.get('http://localhost:8080/bands')
       .then((response) => {
-        console.log('hey');
-        console.log(response);
+        console.log(response.data);
         setBands(response.data)
       })
       .catch(err => console.log(err))
@@ -36,19 +35,22 @@ export default function Bands(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Bands</Text>
-        <Card
-          title='BAND TITLE HERE'
-          style={styles.card}
-          backgroundColor='#fff'
-          borderWidth={0}
-          borderRadius={10}
-          padding={10}
-        // image={require('../images/pic2.jpg')}
-        >
-          <Text style={{ marginBottom: 10 }}>
-            General information about the band can go here.
-          </Text>
-        </Card>
+        {bands.map(band => {
+          return (
+            <Card
+              title={band.name}
+              style={styles.card}
+              backgroundColor='#fff'
+              borderWidth={0}
+              borderRadius={10}
+              padding={10}
+            // image={require('../images/pic2.jpg')}
+            >
+              <Text style={{ marginBottom: 10, color: '#000' }} key={band.id} >Bio: {band.bio}</Text>
+
+            </Card>
+          )
+        })}
       </ScrollView>
     </SafeAreaView>
   )
