@@ -14,7 +14,7 @@ import {
 } from 'react-native-elements'
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
-import { SignedInContext } from '../App'
+import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 
 export default function Bands(props) {
@@ -36,18 +36,19 @@ export default function Bands(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Bands</Text>
-
-        {/* implemented with Text and Button as children */}
         <Card
           title='BAND TITLE HERE'
           style={styles.card}
+          backgroundColor='#fff'
+          borderWidth={0}
+          borderRadius={10}
+          padding={10}
         // image={require('../images/pic2.jpg')}
         >
           <Text style={{ marginBottom: 10 }}>
             General information about the band can go here.
-        </Text>
+          </Text>
         </Card>
-
       </ScrollView>
     </SafeAreaView>
   )
