@@ -230,6 +230,22 @@ const getBandFans = async (req, res) => {
     }
 }
 
+const getFanBands = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const sql = `SELECT * FROM users WHERE id IN (
+                        SELECT id_band FROM fans_bands WHERE id_fan = ?)`;
+        const fans = await sequelize.query(sql, {
+            replacements: [id]
+        })
+        res.status(200).send(fans[0]);
+    }
+    catch (err) {
+        console.log(err)
+        res.sendStatus(400);
+    }
+}
+
 
 module.exports = {
     addFanToBand,
@@ -239,6 +255,7 @@ module.exports = {
     getAllBands,
     getBandFans,
     getBandGenres,
+    getFanBands,
     getSingleUser,
     removeBandGenre,
     updateUserBio,
