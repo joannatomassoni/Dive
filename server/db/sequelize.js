@@ -141,14 +141,13 @@ sequelize.sync()
     console.log(err);
   })
 
-
 module.exports = {
   // export sequelize for the model creation
-  sequelize, 
+  sequelize,
   // export model instances for controller functions
   BandGenre,
-  Comment, 
-  FanVenue, 
+  Comment,
+  FanVenue,
   Genre,
   RSVP, 
   Show, 
@@ -157,3 +156,5 @@ module.exports = {
   User, 
   Venue
 }
+
+
