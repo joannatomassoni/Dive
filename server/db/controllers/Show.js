@@ -26,7 +26,7 @@ const getAllShows = async (req, res) => {
     try {
         const shows = await Show.findAll()
         console.log("retrieved shows from db", shows);
-        res.status(200).send(shows);
+        res.send(shows);
         // return venues;
     }
     catch (err) {
