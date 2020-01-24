@@ -38,7 +38,6 @@ const getAllShows = async (req, res) => {
             include: [
                 { model: User, as: 'bands', attributes: ['name'] }, 
                 { model: Venue, attributes: ['name'] }
-                // { model: Venue, through: { attributes: ['name'] }}
             ],
         });
         res.status(200).send(shows); 
