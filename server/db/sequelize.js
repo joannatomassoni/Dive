@@ -61,12 +61,12 @@ User.Type = User.belongsTo(Type, { foreignKey: { name: 'id_type', allowNull: fal
 Show.belongsTo(Venue, { foreignKey: { name: 'id_venue', allowNull: false } });
 
 // join table for shows and fans (RSVPs)
-Show.hasMany(RSVP, { foreignKey: { name: 'id_show', allowNull: false } });
-User.hasMany(RSVP, { foreignKey: { name: 'id_fan', allowNull: false } });
+Show.belongsToMany(User, { as: 'rsvpFans', through: RSVP, foreignKey: { name: 'id_fan', allowNull: false }})
+User.belongsToMany(Show, { through: RSVP, foreignKey: { name: 'id_show', allowNull: false }})
 
 // join table for shows and bands
-Show.hasMany(ShowBand, { foreignKey: { name: 'id_show', allowNull: false } });
-User.hasMany(ShowBand, { foreignKey: { name: 'id_band', allowNull: false } });
+Show.belongsToMany(User, { as: 'bands', through: ShowBand, foreignKey: { name: 'id_band', allowNull: false } });
+User.belongsToMany(Show, { through: ShowBand, foreignKey: { name: 'id_show', allowNull: false } });
 
 // join table for fans and bands
 // (this is the only join table that sequelize is automating for us)
@@ -84,12 +84,12 @@ User.belongsToMany(User, {
 });
 
 // join table for venues and fans
-User.hasMany(FanVenue, { foreignKey: 'id_fan' });
-Venue.hasMany(FanVenue, { foreignKey: 'id_venue' });
+User.belongsToMany(Venue, { as: 'venues', through: FanVenue, foreignKey: { name: 'id_venue', allowNull: false }})
+Venue.belongsToMany(User, { as: 'fans', through: FanVenue, foreignKey: { name: 'id_fan', allowNull: false }})
 
 // join table for bands and genres
-User.hasMany(BandGenre, { foreignKey: 'id_band' });
-Genre.hasMany(BandGenre, { foreignKey: 'id_genre' });
+User.belongsToMany(Genre, { through: BandGenre, foreignKey: { name: 'id_genre', allowNull: false }})
+Genre.belongsToMany(User, { through: BandGenre, foreignKey: { name: 'id_band', allowNull: false }})
 
 // each comment has one user
 Comment.belongsTo(User, { foreignKey: { name: 'id_user', allowNull: false } });
