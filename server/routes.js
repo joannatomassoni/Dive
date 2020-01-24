@@ -87,7 +87,6 @@ router.get('/venues/shows/:venueName', ctrl.getVenueShows);
 // req.body = { venueName, fanName }
 router.post('/venues/fans', ctrl.addFanToVenue);
 
-// TODO:
 // get all venues that a fan follows
 router.get('/fans/:fanName/venues', ctrl.getFanVenues)
 
@@ -108,7 +107,6 @@ router.post('/shows', ctrl.createShow)
 // get all shows
 router.get('/shows', ctrl.getAllShows)
 
-// TODO:
 // get a single show
 router.get('/shows/:name', ctrl.getSingleShow)
 
