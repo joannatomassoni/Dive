@@ -1,7 +1,27 @@
-// import React from 'react';
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+// // import React from 'react';
+// import React, { useEffect, useState } from 'react'
+// import { StyleSheet, Text, View } from 'react-native';
+// import axios from 'axios';
+// import MenuButton from '../components/MenuButton'
+
+
+import React, { useContext, useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  SafeAreaView
+} from 'react-native';
+import {
+  Card,
+  ListItem,
+  Button,
+  Icon,
+} from 'react-native-elements'
 import axios from 'axios';
+import { ScrollView } from 'react-native-gesture-handler';
+import { SignedInContext } from '../App'
 import MenuButton from '../components/MenuButton'
 
 // export default class Venues extends React.Component {
@@ -44,36 +64,16 @@ export default function Venues(props) {
               style={styles.card}
             // image={require('../images/pic2.jpg')}
             >
-              <Text style={{ marginBottom: 10 }}>
-                <Text style={styles.text}>{venue.name}</Text>
-                <Text style={styles.text}>{venue.address1}</Text>
-                <Text style={styles.text}>{venue.city}</Text>
-                <Text style={styles.text}>{venue.state}</Text>
-                <Text style={styles.text}>{venue.zip_code}</Text>
-              </Text>
+              <Text>Address:</Text>
+              <Text>{venue.address1}</Text>
+              <Text>{venue.city}, {venue.state}</Text>
+              <Text>{venue.zip_code}</Text>
             </Card>
           )
         })}
         {/* implemented with Text and Button as children */}
       </ScrollView>
     </SafeAreaView >
-    // <View style={styles.container}>
-    //   <MenuButton navigation={props.navigation} />
-    //   <Text style={styles.text}>Venues</Text>
-    //   <View>
-    //     {venues.map(venue => {
-    //       return (
-    //         <View>
-    //           <Text style={styles.text}>{venue.name}</Text>
-    //           <Text style={styles.text}>{venue.address1}</Text>
-    //           <Text style={styles.text}>{venue.city}</Text>
-    //           <Text style={styles.text}>{venue.state}</Text>
-    //           <Text style={styles.text}>{venue.zip_code}</Text>
-    //         </View>
-    //       )
-    //     })}
-    //   </View>
-    // </View>
   )
 }
 
@@ -89,3 +89,4 @@ const styles = StyleSheet.create({
     color: '#fff'
   }
 })
+
