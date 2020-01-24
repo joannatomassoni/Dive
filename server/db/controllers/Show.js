@@ -36,9 +36,8 @@ const getAllShows = async (req, res) => {
         // array of shows
         const shows = await Show.findAll({
             include: [
-                { model: User, as: 'bands' }, 
-                // { model: User, as: 'bands', through: { attributes: ['name'] } }, 
-                { model: Venue }
+                { model: User, as: 'bands', attributes: ['name'] }, 
+                { model: Venue, attributes: ['name'] }
                 // { model: Venue, through: { attributes: ['name'] }}
             ],
         });
@@ -59,9 +58,9 @@ const getSingleShow = async (req, res) => {
                 name: name
             },
             include: [
-                { model: User, as: 'bands' },
-                { model: Venue },
-                { model: User, as: 'Fans' },
+                { model: User, as: 'bands', attributes: ['name'] },
+                { model: Venue, attributes: ['name'] },
+                { model: User, as: 'Fans', attributes: ['name'] },
                 { model: Comment }
             ]
         })
