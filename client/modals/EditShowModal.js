@@ -11,7 +11,7 @@ import {
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function EditBandBioModal(props) {
+export default function CreateShowModal(props) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //shwo title
@@ -19,7 +19,7 @@ export default function EditBandBioModal(props) {
   //band title
   const [bandName, setBandName] = useState('');
   //array of all bands
-  const [bandNames, addBandName] = useState('');
+  const [bandNames, addBandName] = useState([]);
   //venue name
   const [venueName, setVenueName] = useState('');
   //date
@@ -29,7 +29,7 @@ export default function EditBandBioModal(props) {
   //show description
   const [showDesc, setShowDesc] = useState('');
 
-  console.log(showTitle);
+  console.log(showDesc);
   return (
     <View>
       <Modal
@@ -49,7 +49,7 @@ export default function EditBandBioModal(props) {
           />
           <View style={styles.container}>
             <View style={styles.title}>
-              <Text style={styles.text}>New Show</Text>
+              <Text style={styles.text}>Edit Show</Text>
               {/* username text box */}
               <TextInput
                 placeholder="Show Title"
@@ -110,14 +110,21 @@ export default function EditBandBioModal(props) {
                 style={styles.loginContainer}
                 onPress={() => {
                   setModalVisible(false);
-                  axios.post('http://localhost:8080/shows', {
-                    name: showTitle,
-                    date: showDate,
-                    time: showTime,
-                    photo: null,
-                    venueName: venueName,
-                    bandName: bandNames
+                  axios.post('http://localhost:8080/venues', {
+                    name: venueName,
                   })
+                    .then(response => {
+                      console.log(response);
+                      return axios.post('http://localhost:8080/shows', {
+                        name: showTitle,
+                        date: showDate,
+                        time: showTime,
+                        photo: null,
+                        venueName: venueName,
+                        bandName: bandNames,
+                        description: showDesc
+                      })
+                    })
                     .then(response => response)
                     .catch(error => console.log('failed to create show', error));
                 }}
@@ -131,10 +138,9 @@ export default function EditBandBioModal(props) {
       </Modal>
       {/* create show button when modal is hidden */}
       <TouchableOpacity
-        style={styles.signupContainer}
         onPress={() => { setModalVisible(true); }}
       >
-        <Text style={styles.signupButtonText}>Edit Bio</Text>
+        <Text>Edit Show</Text>
       </TouchableOpacity>
     </View>
   );
@@ -165,7 +171,7 @@ const styles = StyleSheet.create({
     color: '#59C3D1',
     opacity: 0.9,
     fontWeight: 'bold',
-    marginLeft: 90,
+    marginLeft: 75,
     marginBottom: 15
   },
   loginContainer: {
