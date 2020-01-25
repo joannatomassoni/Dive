@@ -26,15 +26,17 @@ export default function SingleBandModal(props) {
   // console.log(band)
 
   useEffect(() => {
-    axios.get('http://localhost:8080/bands/:id/shows')
+    axios.get(`http://localhost:8080/bands/${band}/shows`)
       .then((response) => {
-        console.log("getting a bands shows from db", response.data)
+        // console.log("getting a bands shows from db", response.data)
         setShows(response.data);
       })
       .catch((err) => {
-        console.log("frontend not getting band shows from db", err);
+        // console.log("frontend not getting band shows from db", err);
       })
   }, [])
+
+  console.log("getting a bands all their shows", shows.shows);
 
   return (
     <View>
@@ -55,12 +57,12 @@ export default function SingleBandModal(props) {
           />
 
           <ScrollView style={{ marginTop: 30 }}>
-            <Text style={styles.headerText} key={singleBand.id}>Band Page</Text>
+            <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
 
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Name: {singleBand.name}</Text>
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
             <Text style={styles.headerText}>Shows</Text>
-            {shows.map(show => {
+            {shows.shows.map(show => {
               return (
                 <Card
                   title={show.name}
@@ -71,12 +73,8 @@ export default function SingleBandModal(props) {
                   padding={10}
                 // image={require('../images/pic2.jpg')}
                 >
-                  <Text style={styles.cardText}>{show.time}</Text>
-                  {/* {show.bands.map(band => {
-                <Text style={styles.cardText} key={band.id}>{band.name}</Text>
-              })} */}
-                  <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
-                  <SingleShowModal show={show.id} />
+
+
                 </Card>
               )
             })}
@@ -101,8 +99,8 @@ export default function SingleBandModal(props) {
         }}
       >
         <Text style={styles.signupButtonText}>Show More</Text>
-      </TouchableOpacity>
-    </View>
+      </TouchableOpacity >
+    </View >
   );
 }
 
