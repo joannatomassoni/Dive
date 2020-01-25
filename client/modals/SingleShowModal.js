@@ -42,11 +42,11 @@ export default function SingleShowModal(props) {
           />
 
           <ScrollView style={{ marginTop: 30 }}>
-            <Text style={styles.headerText}>Show Title</Text>
+            <Text style={styles.headerText} key={show.id}>Show Title</Text>
 
-            <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.name}</Text>
-            <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.time}</Text>
-            <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.venue.name}</Text>
+            <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.name}</Text>
+            <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.time}</Text>
+            {/* <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.venue.name}</Text> */}
 
 
           </ScrollView>
