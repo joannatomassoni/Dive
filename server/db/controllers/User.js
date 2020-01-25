@@ -41,8 +41,8 @@ const createUser = async (req, res) => {
 // Get single user
 const getSingleUser = async (req, res) => {
     try {
-        const { id } = req.params;
-        const user = await getRecordByID('user', id);
+        const { name } = req.params;
+        const user = await getRecordByName('user', name);
         res.status(200).send(user);
     }
     catch (err) {

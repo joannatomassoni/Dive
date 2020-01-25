@@ -28,7 +28,7 @@ const ctrl = require('./db/controllers/index')
 router.post('/users', ctrl.createUser);
 
 // Used for user login and getting a single band
-router.get('/users/:id', ctrl.getSingleUser)
+router.get('/users/:name', ctrl.getSingleUser)
 
 // Update user info
 // req.body = { bio }
