@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
-const dotenv = require('dotenv')
 // we require our models here to be instantiated after sequelize connection is made
-const { BandGenreModel,
+const { 
+  BandGenreModel,
   CommentModel,
   FanVenueModel,
   GenreModel,
@@ -10,12 +10,14 @@ const { BandGenreModel,
   ShowBandModel,
   TypeModel,
   UserModel,
-  VenueModel } = require('./models/index');
-dotenv.config();
+  VenueModel 
+} = require('./models/index');
+
+
 const { DB_USER, DB_PASS, DB_NAME, DB_HOST, CLOUD_SQL_CONNECTION_NAME } = process.env;
 
 // create a new sequelize instance
-// // DEV
+// DEV
 const sequelize = new Sequelize('dive', 'root', '', {
   host: 'localhost',
   dialect: 'mysql',
@@ -26,14 +28,19 @@ const sequelize = new Sequelize('dive', 'root', '', {
   },
 });
 
-// PROD
+// // PROD
 // const sequelize = new Sequelize('dive', 'root', 'dive', {
 //   dialect: 'mysql',
 //   host: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`,
 //   timestamps: false,
-//   dialectOptions: {
-//     socketPath: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`
-// },
+//   pool: {
+//         max: 5,
+//         min: 0,
+//         idle: 10000
+//       },
+// //   dialectOptions: {
+// //     socketPath: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`
+// // },
 // });
 
 

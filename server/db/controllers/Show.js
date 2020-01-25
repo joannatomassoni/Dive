@@ -58,9 +58,9 @@ const getSingleShow = async (req, res) => {
                 id
             },
             include: [
-                { model: User, as: 'bands', attributes: ['name'] },
+                { model: User, as: 'bands', attributes: ['id', 'name'] },
                 { model: Venue, attributes: ['name'] },
-                { model: User, as: 'Fans', attributes: ['name'] },
+                { model: User, as: 'Fans', attributes: ['id', 'name'] },
                 { model: Comment }
             ]
         })
