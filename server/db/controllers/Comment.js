@@ -30,7 +30,10 @@ const getAllComments = async (req, res) => {
     const comments = await Comment.findAll({
       where: {
         id_show: id
-      }
+      },
+      include: [
+        { model: User }
+      ]
     });
     console.log("retrieved comments from db", comments);
     res.status(200).send(comments);
