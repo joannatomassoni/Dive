@@ -24,7 +24,7 @@ export default function Shows(props) {
   const [shows, setShows] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/shows')
+    axios.get('https://dive-266016.appspot.com/shows')
       .then((response) => {
         console.log("shows response from db", response.data)
         setShows(response.data);
