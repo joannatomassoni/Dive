@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Modal,
   Text,
@@ -9,9 +9,12 @@ import {
   KeyboardAvoidingView
 } from 'react-native';
 import axios from 'axios';
+import { SignedInContext } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function EditBandBioModal(props) {
+  //global user signin info and editing function
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //new bio
@@ -50,22 +53,26 @@ export default function EditBandBioModal(props) {
                 height: 50,
                 justifyContent: 'left',
               }}>
-              <TextInput
-                placeholder="New Bio"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setNewBio}
-                style={styles.input}
-              />
-              {/* update bio button */}
-              <TouchableOpacity
-                style={styles.loginContainer}
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-              >
-                <Text style={styles.buttonText}>+</Text>
-              </TouchableOpacity>
+                <TextInput
+                  placeholder="New Bio"
+                  placeholderTextColor="#75A4AD"
+                  returnKeyType="next"
+                  onChangeText={setNewBio}
+                  style={styles.input}
+                />
+                {/* update bio button */}
+                <TouchableOpacity
+                  style={styles.loginContainer}
+                  onPress={() => {
+                    axios.patch(`http://localhost:8080/users/${userInfo.id}/bio`, {
+                      bio: newBio,
+                    })
+                      .then(response => response)
+                      .catch(error => console.log('failed to create user', error))
+                  }}
+                >
+                  <Text style={styles.buttonText}>+</Text>
+                </TouchableOpacity>
               </View>
 
               {/* spotify link */}
@@ -74,18 +81,22 @@ export default function EditBandBioModal(props) {
                 height: 50,
                 justifyContent: 'left',
               }}>
-              <TextInput
-                placeholder="Spotify Link"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setSpotifyLink}
-                style={styles.input}
-              />
+                <TextInput
+                  placeholder="Spotify Link"
+                  placeholderTextColor="#75A4AD"
+                  returnKeyType="next"
+                  onChangeText={setSpotifyLink}
+                  style={styles.input}
+                />
                 {/* update spotify button */}
                 <TouchableOpacity
                   style={styles.loginContainer}
                   onPress={() => {
-                    setModalVisible(false);
+                    axios.patch(`http://localhost:8080/bands/${userInfo.id}/spotify`, {
+                      link_spotify: spotifyLink,
+                    })
+                      .then(response => response)
+                      .catch(error => console.log('failed to create user', error))
                   }}
                 >
                   <Text style={styles.buttonText}>+</Text>
@@ -98,18 +109,22 @@ export default function EditBandBioModal(props) {
                 height: 50,
                 justifyContent: 'left',
               }}>
-              <TextInput
-                placeholder="Facebook Link"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setFacebookLink}
-                style={styles.input}
-              />
+                <TextInput
+                  placeholder="Facebook Link"
+                  placeholderTextColor="#75A4AD"
+                  returnKeyType="next"
+                  onChangeText={setFacebookLink}
+                  style={styles.input}
+                />
                 {/* update facebook button */}
                 <TouchableOpacity
                   style={styles.loginContainer}
                   onPress={() => {
-                    setModalVisible(false);
+                    axios.patch(`http://localhost:8080/bands/${userInfo.id}/fb`, {
+                      link_facebook: facebookLink,
+                    })
+                      .then(response => response)
+                      .catch(error => console.log('failed to create user', error))
                   }}
                 >
                   <Text style={styles.buttonText}>+</Text>
@@ -122,23 +137,27 @@ export default function EditBandBioModal(props) {
                 height: 50,
                 justifyContent: 'left',
               }}>
-              <TextInput
-                placeholder="Instagram Link"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setInstagramLink}
-                style={styles.input}
-              />
-              {/* update instagram button */}
-              <TouchableOpacity
-                style={styles.loginContainer}
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-              >
-                <Text style={styles.buttonText}>+</Text>
-              </TouchableOpacity>
-            </View>
+                <TextInput
+                  placeholder="Instagram Link"
+                  placeholderTextColor="#75A4AD"
+                  returnKeyType="next"
+                  onChangeText={setInstagramLink}
+                  style={styles.input}
+                />
+                {/* update instagram button */}
+                <TouchableOpacity
+                  style={styles.loginContainer}
+                  onPress={() => {
+                    axios.patch(`http://localhost:8080/bands/${userInfo.id}/insta`, {
+                      link_instagram: instagramLink,
+                    })
+                      .then(response => response)
+                      .catch(error => console.log('failed to create user', error))
+                  }}
+                >
+                  <Text style={styles.buttonText}>+</Text>
+                </TouchableOpacity>
+              </View>
 
               {/* button to complete editing */}
               <TouchableOpacity

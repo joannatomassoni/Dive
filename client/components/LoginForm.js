@@ -29,14 +29,15 @@ export default function LoginForm (props) {
       if (type === "success") {
         console.log('User Info: ', user, 'Access Token: ', accessToken);
         //key values to add to the userInfo global state
-        axios.get(`http://localhost:8080/users/${user.email}`)
+        axios.get(`https://dive-266016.appspot.com/users/${user.email}`)
           .then(res => setUserInfo(userInfo => ({
             ...userInfo,
             signedIn: true,
             name: user.name,
+            username: user.email,
             userType: res.data.id_type === 1 ? 'fan' : 'band',
             photoUrl: res.data.photo,
-            id: res.data.id
+            id: res.data.id,
           })))
           .catch(error => console.log('failed to find user', error));
       }
@@ -72,9 +73,8 @@ export default function LoginForm (props) {
             .then(res => setUserInfo(userInfo => ({
               ...userInfo,
               signedIn: true,
-              name: res.data.name,
+              username: res.data.name,
               userType: res.data.id_type === 1 ? 'fan' : 'band',
-              photoUrl: res.data.photo,
               id: res.data.id
             })))
             .catch(error => console.log('failed to find user', error));

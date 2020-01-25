@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Modal,
   Text,
@@ -21,8 +21,23 @@ export default function SingleBandModal(props) {
   //set username to text in username textInput
   const [showTitle, setShowTitle] = useState('');
   const [singleBand, setBand] = useState([]);
+  const [shows, setShows] = useState([]);
   let band = props.bandID;
-  console.log(band)
+  // console.log(band)
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/bands/${band}/shows`)
+      .then((response) => {
+        // console.log("getting a bands shows from db", response.data)
+        setShows(response.data.shows);
+      })
+      .catch((err) => {
+        // console.log("frontend not getting band shows from db", err);
+      })
+  }, [])
+
+  console.log("getting a bands all their shows", shows);
+
   return (
     <View>
       <Modal
@@ -42,11 +57,31 @@ export default function SingleBandModal(props) {
           />
 
           <ScrollView style={{ marginTop: 30 }}>
-            <Text style={styles.headerText} key={singleBand.id}>Show Title</Text>
+            <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
 
-            <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Name: {singleBand.name}</Text>
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
+            <Text style={styles.headerText}>Shows</Text>
+            {shows.map(show => {
+              return (
+                <Card
+                  title={show.name}
+                  style={styles.card}
+                  key={show.id}
+                  backgroundColor='#fff'
+                  borderWidth={0}
+                  borderRadius={10}
+                  padding={10}
+                // image={require('../images/pic2.jpg')}
+                >
+                  <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
+                  <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
+                  <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
 
+                </Card>
+              )
+            })
+
+            }
 
           </ScrollView>
         </SafeAreaView>
@@ -68,8 +103,8 @@ export default function SingleBandModal(props) {
         }}
       >
         <Text style={styles.signupButtonText}>Show More</Text>
-      </TouchableOpacity>
-    </View>
+      </TouchableOpacity >
+    </View >
   );
 }
 

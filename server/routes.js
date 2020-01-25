@@ -37,6 +37,8 @@ router.patch('/users/:id/bio', ctrl.updateUserBio)
 // Delete user
 router.delete('/users/:id', ctrl.deleteUser)
 
+router.get('/bands/:id/shows', ctrl.getBandShows)
+
 /**
  * BANDS ROUTES
  */
@@ -84,7 +86,7 @@ router.post('/venues', ctrl.createVenue)
 
 // get one venue and its upcoming shows
 router.get('/venues/:id', ctrl.getSingleVenue)
- 
+
 // get all venues
 router.get('/venues', ctrl.getAllVenues);
 
@@ -117,6 +119,8 @@ router.get('/shows', ctrl.getAllShows)
 
 // get a single show
 router.get('/shows/:id', ctrl.getSingleShow)
+
+
 
 
 /**
