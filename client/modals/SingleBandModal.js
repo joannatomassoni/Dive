@@ -55,7 +55,7 @@ export default function SingleBandModal(props) {
           />
 
           <ScrollView style={{ marginTop: 30 }}>
-            <Text style={styles.headerText} key={singleBand.id}>Show Title</Text>
+            <Text style={styles.headerText} key={singleBand.id}>Band Page</Text>
 
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Name: {singleBand.name}</Text>
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
