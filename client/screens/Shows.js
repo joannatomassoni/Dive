@@ -46,7 +46,7 @@ export default function Shows(props) {
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
-        <Text style={styles.text}>Shows</Text>
+        <Text style={styles.headerText}>Shows</Text>
         {shows.map(show => {
           return (
             <Card
