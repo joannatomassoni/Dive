@@ -65,6 +65,9 @@ router.post('/bands/:id/fans/', ctrl.addFanToBand)
 // get all fans of a given band. 
 router.get('/bands/:id/fans', ctrl.getBandFans);
 
+// get all bands that a given fan is following
+router.get('/fans/:id/bands', ctrl.getFanBands);
+
 /**
  * VENUES
  */

@@ -16,6 +16,7 @@ import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
+import SingleVenueModal from '../modals/SingleVenueModal';
 
 // export default class Venues extends React.Component {
 export default function Venues(props) {
@@ -53,6 +54,7 @@ export default function Venues(props) {
               <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id} >Address:</Text>
               <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id}>{venue.address}</Text>
               <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id} >{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
+              <SingleVenueModal venueID={venue.id} />
             </Card>
           )
         })}
