@@ -152,22 +152,32 @@ const addGenreToBand = async (req, res) => {
 const getBandGenres = async (req, res) => {
     try {
         const { id } = req.params;
-        const genres = await BandGenre.findAll({
-            where: { id_band: id }
-        });
-        Promise.all(genres.map(async(genre) => {
-         const singleGenre = await Genre.findOne({
-             where: {
-                 id: genre.id_genre
-             }
-         }) 
-         return singleGenre;
-        })).then((data) => {
-            const genreNames = data.map(genre => {
-                return genre.genreName;
-            })
-            res.send(genreNames);
+        const band = await User.findAll({
+            where: {
+                id
+            },
+            include: [
+                { model: Genre, attributes: ['genreName'] }
+            ]
         })
+        console.log(band);
+        res.send(band[0].genres);
+        // const genres = await BandGenre.findAll({
+        //     where: { id_band: id }
+        // });
+        // Promise.all(genres.map(async(genre) => {
+        //  const singleGenre = await Genre.findOne({
+        //      where: {
+        //          id: genre.id_genre
+        //      }
+        //  }) 
+        //  return singleGenre;
+        // })).then((data) => {
+        //     const genreNames = data.map(genre => {
+        //         return genre.genreName;
+        //     })
+            // res.send(genreNames);
+        // })
     }
     catch(err) {
         console.log(err);

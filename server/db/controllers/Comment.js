@@ -5,23 +5,21 @@ const { getRecordByName, getRecordByID } = require('./utils')
 const createComment = async (req, res) => {
   try {
     const { id } = req.params;
-    const { userName, text } = req.body;
-    const user = await getRecordByName('user', userName)
-    const show = await Show.findAll({
+    const { id_user, text } = req.body;
+    // const user = await getRecordByName('user', userName)
+    const show = await Show.findOne({
       where: {
         id
       }
     })
     Comment.create({
       text: text,
-      id_user: user.id,
-      id_show: show[0].id
+      id_user,
+      id_show: id
     })
-    console.log("we're saving a comment", req.body.text);
     res.sendStatus(201);
   }
   catch (err) {
-    console.log("we didn't save a comment", err);
     res.sendStatus(400);
   }
 }

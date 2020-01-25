@@ -55,33 +55,6 @@ const getSingleVenue = async (req, res) => {
     }
 }
 
-// Get shows at a given venue
-// this might not be necessary
-const getVenueShows = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const venue = await Venue.findOne({
-            where: {
-                id
-            }
-        })
-        const venueShows = await Show.findAll({
-            where: {
-                id_venue: venue.id
-            },
-            include: [
-                { model: User, as: 'bands', attributes: ['id', 'name'] }, 
-            ],
-        })
-        console.log("got shows at this venue", venueShows);
-        res.send(venueShows);
-    }
-    catch (err) {
-        console.log("error getting shows from this venue", err);
-        res.sendStatus(400);
-    }
-}
-
 // Allow user to follow a venue
 const addFanToVenue = async (req, res) => {
     const { id } = req.params;
