@@ -34,10 +34,6 @@ router.get('/users/:id', ctrl.getSingleUser)
 // req.body = { bio }
 router.patch('/users/:id/bio', ctrl.updateUserBio)
 
-// Update band photo
-// req.body = { photo }
-router.patch('/users/:id/photo', ctrl.updateBandPhoto)
-
 // Delete user
 router.delete('/users/:id', ctrl.deleteUser)
 
@@ -46,6 +42,10 @@ router.delete('/users/:id', ctrl.deleteUser)
  */
 // get all bands 
 router.get('/bands', ctrl.getAllBands)
+
+// Update band photo
+// req.body = { photo }
+router.patch('/bands/:id/photo', ctrl.updateBandPhoto)
 
 // add genre to band
 // req.body = { genreName }
@@ -90,7 +90,7 @@ router.post('/venues/:id/fans', ctrl.addFanToVenue);
 // get all venues that a fan follows
 router.get('/fans/:id/venues', ctrl.getFanVenues)
 
-// get all fans who follow a given venue
+//get all fans who follow a given venue
 router.get('/venues/:id/fans', ctrl.getVenueFans)
 
 /**
