@@ -120,7 +120,11 @@ export default function EditBandBioModal(props) {
                 <TouchableOpacity
                   style={styles.loginContainer}
                   onPress={() => {
-                    setModalVisible(false);
+                    axios.patch(`http://localhost:8080/bands/${userInfo.id}/fb`, {
+                      link_facebook: facebookLink,
+                    })
+                      .then(response => response)
+                      .catch(error => console.log('failed to create user', error))
                   }}
                 >
                   <Text style={styles.buttonText}>+</Text>
@@ -144,7 +148,11 @@ export default function EditBandBioModal(props) {
                 <TouchableOpacity
                   style={styles.loginContainer}
                   onPress={() => {
-                    setModalVisible(false);
+                    axios.patch(`http://localhost:8080/bands/${userInfo.id}/insta`, {
+                      link_instagram: instagramLink,
+                    })
+                      .then(response => response)
+                      .catch(error => console.log('failed to create user', error))
                   }}
                 >
                   <Text style={styles.buttonText}>+</Text>
