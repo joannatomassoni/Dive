@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Modal,
   Text,
@@ -21,8 +21,21 @@ export default function SingleBandModal(props) {
   //set username to text in username textInput
   const [showTitle, setShowTitle] = useState('');
   const [singleBand, setBand] = useState([]);
+  const [shows, setShows] = useState([]);
   let band = props.bandID;
-  console.log(band)
+  // console.log(band)
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/bands/:id/shows')
+      .then((response) => {
+        console.log("getting a bands shows from db", response.data)
+        setShows(response.data);
+      })
+      .catch((err) => {
+        console.log("frontend not getting band shows from db", err);
+      })
+  }, [])
+
   return (
     <View>
       <Modal
