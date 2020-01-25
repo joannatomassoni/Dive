@@ -29,12 +29,12 @@ export default function SingleVenueModal(props) {
   useEffect(() => {
     axios.get(`http://localhost:8080/venues/${venue}`)
       .then((response) => {
-        console.log("getting a bands shows from db", response.data)
+        // console.log("getting a bands shows from db", response.data)
         setShows(response.data.shows);
 
       })
       .catch((err) => {
-        console.log("frontend not getting band shows from db", err);
+        // console.log("frontend not getting band shows from db", err);
       })
 
     axios.get(`http://localhost:8080/shows/${venue}`)
@@ -49,7 +49,7 @@ export default function SingleVenueModal(props) {
 
   }, [])
 
-  // console.log("getting venue shows", shows);
+  console.log("getting venue shows", bands);
 
   return (
     <View>
@@ -98,8 +98,8 @@ export default function SingleVenueModal(props) {
                   {bands.map(band => {
                     return (
                       <Text>
-
                         <Text style={{ marginBottom: 10, color: '#000' }}>meep{band.name}</Text>
+
                       </Text>
                     )
                   })}
