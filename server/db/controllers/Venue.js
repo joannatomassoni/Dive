@@ -162,6 +162,5 @@ module.exports = {
     getFanVenues, 
     getSingleVenue,
     getVenueFans,
-    getVenueShows,
     removeVenue
 }
