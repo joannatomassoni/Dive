@@ -26,7 +26,7 @@ export default function Shows(props) {
   useEffect(() => {
     axios.get('http://localhost:8080/shows')
       .then((response) => {
-        console.log("shows response from db", response.data[0])
+        console.log("shows response from db", response.data)
         setShows(response.data);
       })
       .catch((err) => {
