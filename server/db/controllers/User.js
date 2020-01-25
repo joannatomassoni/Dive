@@ -90,6 +90,9 @@ const updateBandPhoto = async (req, res) => {
     }
 }
 
+const updateBandSM = async (req, res) => {
+
+}
 
 // TODO: function to let bands edit their social media info
 const updateBandSM = async (req, res) => {
@@ -290,5 +293,6 @@ module.exports = {
     getSingleUser,
     removeBandGenre,
     updateUserBio,
-    updateBandPhoto
+    updateBandPhoto,
+    updateBandSM
 }

@@ -47,6 +47,10 @@ router.get('/bands', ctrl.getAllBands)
 // req.body = { photo }
 router.patch('/bands/:id/photo', ctrl.updateBandPhoto)
 
+// Update band SM links
+// req.body = {  }
+router.patch('/bands/:id/SM', ctrl.updateBandSM)
+
 // add genre to band
 // req.body = { genreName }
 router.post('/bands/:id/genres', ctrl.addGenreToBand)
