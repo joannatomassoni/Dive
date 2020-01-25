@@ -90,13 +90,53 @@ const updateBandPhoto = async (req, res) => {
     }
 }
 
-const updateBandSM = async (req, res) => {
-
+// TODO: functions to let bands edit their social media info
+const updateBandFB = async (req, res) => {
+    try {
+        const { link_facebook } = req.body;
+        const { id } = req.params;
+        await User.update(
+            { link_facebook },
+            { where: { id } }
+        )
+        res.send(200);
+    }
+    catch(err) {
+        console.log(err);
+        res.send(400);
+    }
 }
 
-// TODO: function to let bands edit their social media info
-const updateBandSM = async (req, res) => {
+const updateBandInstagram = async (req, res) => {
+    try {
+        const { link_instagram } = req.body;
+        const { id } = req.params;
+        await User.update(
+            { link_instagram },
+            { where: { id } }
+        )
+        res.send(200);
+    }
+    catch(err) {
+        console.log(err);
+        res.send(400);
+    }
+}
 
+const updateBandSpotify = async (req, res) => {
+    try {
+        const { link_spotify } = req.body;
+        const { id } = req.params;
+        await User.update(
+            { link_spotify },
+            { where: { id } }
+        )
+        res.send(200);
+    }
+    catch(err) {
+        console.log(err);
+        res.send(400);
+    }
 }
 
 // Delete user
@@ -294,5 +334,7 @@ module.exports = {
     removeBandGenre,
     updateUserBio,
     updateBandPhoto,
-    updateBandSM
+    updateBandFB,
+    updateBandInstagram,
+    updateBandSpotify
 }

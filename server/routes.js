@@ -48,8 +48,12 @@ router.get('/bands', ctrl.getAllBands)
 router.patch('/bands/:id/photo', ctrl.updateBandPhoto)
 
 // Update band SM links
-// req.body = {  }
-router.patch('/bands/:id/SM', ctrl.updateBandSM)
+// req.body = { link_facebook }
+router.patch('/bands/:id/fb', ctrl.updateBandFB)
+// req.body = { link_instagram }
+router.patch('/bands/:id/insta', ctrl.updateBandInstagram)
+// req.body = { link_spotify }
+router.patch('/bands/:id/spotify', ctrl.updateBandSpotify)
 
 // add genre to band
 // req.body = { genreName }
