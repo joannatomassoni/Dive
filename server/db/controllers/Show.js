@@ -36,8 +36,8 @@ const getAllShows = async (req, res) => {
     try {
         const shows = await Show.findAll({
             include: [
-                { model: User, as: 'bands', attributes: ['name'] },
-                { model: Venue, attributes: ['name'] }
+                { model: User, as: 'bands' },
+                { model: Venue }
             ],
         });
         console.log("retrieved shows from db", shows);

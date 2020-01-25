@@ -12,7 +12,10 @@ const {
     getSingleUser,
     removeBandGenre,
     updateUserBio,
-    updateBandPhoto
+    updateBandPhoto,
+    updateBandFB,
+    updateBandInstagram,
+    updateBandSpotify
 } = require('./User');
 const { 
     getTypes 
@@ -70,6 +73,9 @@ module.exports = {
     rsvpFanToShow,
     updateUserBio,
     updateBandPhoto,
+    updateBandFB,
+    updateBandInstagram,
+    updateBandSpotify,
     createComment,
     getAllComments
 }
