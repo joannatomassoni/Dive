@@ -83,9 +83,6 @@ router.get('/venues', ctrl.getAllVenues);
 //to remove a venue
 router.delete('/venues/:id', ctrl.removeVenue);
 
-//to get all shows from a venue
-router.get('/venues/:id/shows', ctrl.getVenueShows);
-
 // add fan to venue
 // req.body = { fanName }
 router.post('/venues/:id/fans', ctrl.addFanToVenue);
