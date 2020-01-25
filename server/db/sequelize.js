@@ -17,26 +17,31 @@ const {
 const { DB_USER, DB_PASS, DB_NAME, DB_HOST, CLOUD_SQL_CONNECTION_NAME } = process.env;
 
 // create a new sequelize instance
-// // DEV
-// const sequelize = new Sequelize('dive', 'root', '', {
-//   host: 'localhost',
-//   dialect: 'mysql',
-//   pool: {
-//     max: 5,
-//     min: 0,
-//     idle: 10000
-//   },
-// });
-
-// PROD
-const sequelize = new Sequelize('dive', 'root', 'dive', {
+// DEV
+const sequelize = new Sequelize('dive', 'root', '', {
+  host: 'localhost',
   dialect: 'mysql',
-  host: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`,
-  timestamps: false,
-  dialectOptions: {
-    socketPath: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`
-},
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  },
 });
+
+// // PROD
+// const sequelize = new Sequelize('dive', 'root', 'dive', {
+//   dialect: 'mysql',
+//   host: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`,
+//   timestamps: false,
+//   pool: {
+//         max: 5,
+//         min: 0,
+//         idle: 10000
+//       },
+// //   dialectOptions: {
+// //     socketPath: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`
+// // },
+// });
 
 
 // instanstiate the models here

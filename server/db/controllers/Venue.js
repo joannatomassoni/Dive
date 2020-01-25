@@ -70,7 +70,7 @@ const getVenueShows = async (req, res) => {
                 id_venue: venue.id
             },
             include: [
-                { model: User, as: 'bands', attributes: ['name'] }, 
+                { model: User, as: 'bands', attributes: ['id', 'name'] }, 
             ],
         })
         console.log("got shows at this venue", venueShows);
