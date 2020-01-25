@@ -23,7 +23,7 @@ export default function Venues(props) {
   const [venues, setVenues] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/venues')
+    axios.get('https://dive-266016.appspot.com/venues')
       .then((response) => {
         // this.setState({
         // console.log("venue response from db", response.data[0])
