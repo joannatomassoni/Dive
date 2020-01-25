@@ -16,13 +16,14 @@ import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
+import SingleBandModal from '../modals/SingleBandModal';
 
 export default function Bands(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state to hold bands
   console.log('user info', userInfo)
-  
+
   const [bands, setBands] = useState([]);
   useEffect(() => {
     axios.get('http://localhost:8080/bands')
@@ -42,14 +43,15 @@ export default function Bands(props) {
             <Card
               title={band.name}
               style={styles.card}
+              key={band.id}
               backgroundColor='#fff'
               borderWidth={0}
               borderRadius={10}
               padding={10}
             // image={require('../images/pic2.jpg')}
             >
-              <Text style={{ marginBottom: 10, color: '#000' }} key={band.id} >Bio: {band.bio}</Text>
-
+              <Text style={{ marginBottom: 10, color: '#000' }}>Bio: {band.bio}</Text>
+              <SingleBandModal bandID={band.id} />
             </Card>
           )
         })}
