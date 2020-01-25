@@ -36,7 +36,7 @@ export default function LoginForm (props) {
             name: user.name,
             userType: res.data.id_type === 1 ? 'fan' : 'band',
             photoUrl: res.data.photo,
-            id: res.data.id
+            id: res.data.id,
           })))
           .catch(error => console.log('failed to find user', error));
       }
