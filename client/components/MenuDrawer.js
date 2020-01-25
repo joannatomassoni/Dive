@@ -153,10 +153,10 @@ const styles = StyleSheet.create({
   },
   link: {
     flex: 1,
-    fontSize: 25,
+    fontSize: 35,
     fontWeight: 'bold',
     color: 'white',
-    padding: 20,
+    paddingTop: 10,
     paddingLeft: 30,
     textAlign: 'left',
   },

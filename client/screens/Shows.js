@@ -54,7 +54,6 @@ export default function Shows(props) {
               style={styles.card}
               key={show.id}
               backgroundColor='#fff'
-              borderWidth={0}
               borderRadius={10}
               padding={10}
             // image={require('../images/pic2.jpg')}

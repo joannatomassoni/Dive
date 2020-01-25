@@ -35,9 +35,15 @@ export default function Hub(props) {
           General information about the band will go here.
         </Text>
         {/* Social Media Buttons */}
+        <View style={{
+          flexDirection: 'row',
+          height: 50,
+          justifyContent: 'left',
+        }}>
         <SpotifyButton />
         <InstagramButton />
         <FacebookButton />
+        </View>
         {/* Button to open create show modal */}
         <EditBandBioModal />
         {/* Button to open create show modal */}
