@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Modal,
   Text,
@@ -21,8 +21,23 @@ export default function SingleVenueModal(props) {
   //set username to text in username textInput
   const [showTitle, setShowTitle] = useState('');
   const [singleVenue, setVenue] = useState([]);
+  const [shows, setShows] = useState([]);
   let venue = props.venueID;
   console.log(venue)
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/venues/${venue}/shows`)
+      .then((response) => {
+        // console.log("getting a bands shows from db", response.data)
+        setShows(response.data);
+      })
+      .catch((err) => {
+        // console.log("frontend not getting band shows from db", err);
+      })
+  }, [])
+
+  console.log("getting venue shows", shows);
+
   return (
     <View>
       <Modal
@@ -47,6 +62,31 @@ export default function SingleVenueModal(props) {
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Venue: {singleVenue.name}</Text>
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Address: {singleVenue.address}</Text>
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
+
+            <Text style={styles.headerText}>Shows</Text>
+
+            {shows.map(show => {
+              return (
+
+
+                <Card
+                  title={show.name}
+                  style={styles.card}
+                  key={show.id}
+                  backgroundColor='#fff'
+                  borderWidth={0}
+                  borderRadius={10}
+                  padding={10}
+                // image={require('../images/pic2.jpg')}
+                >
+                  <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
+                  <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
+                  <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
+                </Card>
+              )
+            })
+            }
+
           </ScrollView>
         </SafeAreaView>
       </Modal>
