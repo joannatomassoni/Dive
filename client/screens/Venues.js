@@ -55,6 +55,8 @@ export default function Venues(props) {
               <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id} >{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
             </Card>
           )
+
+          //hello
         })}
         {/* implemented with Text and Button as children */}
       </ScrollView>
