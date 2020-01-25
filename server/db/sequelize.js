@@ -28,10 +28,11 @@ const sequelize = new Sequelize('dive', 'root', '', {
   },
 });
 
-// // PROD
-// const sequelize = new Sequelize('dive', 'root', 'dive', {
+// PROD
+// const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
 //   dialect: 'mysql',
-//   host: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`,
+//   // host: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`,
+//   host: DB_HOST,
 //   timestamps: false,
 //   pool: {
 //         max: 5,
@@ -41,7 +42,7 @@ const sequelize = new Sequelize('dive', 'root', '', {
 // //   dialectOptions: {
 // //     socketPath: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`
 // // },
-// });
+// }); 
 
 
 // instanstiate the models here
