@@ -4,8 +4,9 @@
 const { 
         BandGenre,
         Genre,
-        User, 
+        Show,
         Type, 
+        User, 
         sequelize
     } = require('../sequelize');
 
@@ -194,6 +195,25 @@ const removeBandGenre = async (req, res) => {
     }  
 }
 
+const getBandShows = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const shows = await User.findOne({
+            where: {
+                id
+            },
+            include: [
+                { model: Show }
+            ]
+        })
+        res.status(200).send(shows);
+    }
+    catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+}
+
 // allow a fan follow a band
 const addFanToBand = async (req, res) => {
     try {
@@ -255,6 +275,7 @@ module.exports = {
     getAllBands,
     getBandFans,
     getBandGenres,
+    getBandShows,
     getFanBands,
     getSingleUser,
     removeBandGenre,
