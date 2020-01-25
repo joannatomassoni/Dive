@@ -28,15 +28,11 @@ const ctrl = require('./db/controllers/index')
 router.post('/users', ctrl.createUser);
 
 // Used for user login and getting a single band
-router.get('/users/:id', ctrl.getSingleUser)
+router.get('/users/:name', ctrl.getSingleUser)
 
 // Update user info
 // req.body = { bio }
 router.patch('/users/:id/bio', ctrl.updateUserBio)
-
-// Update band photo
-// req.body = { photo }
-router.patch('/users/:id/photo', ctrl.updateBandPhoto)
 
 // Delete user
 router.delete('/users/:id', ctrl.deleteUser)
@@ -48,6 +44,18 @@ router.get('/bands/:id/shows', ctrl.getBandShows)
  */
 // get all bands 
 router.get('/bands', ctrl.getAllBands)
+
+// Update band photo
+// req.body = { photo }
+router.patch('/bands/:id/photo', ctrl.updateBandPhoto)
+
+// Update band SM links
+// req.body = { link_facebook }
+router.patch('/bands/:id/fb', ctrl.updateBandFB)
+// req.body = { link_instagram }
+router.patch('/bands/:id/insta', ctrl.updateBandInstagram)
+// req.body = { link_spotify }
+router.patch('/bands/:id/spotify', ctrl.updateBandSpotify)
 
 // add genre to band
 // req.body = { genreName }
@@ -85,9 +93,6 @@ router.get('/venues', ctrl.getAllVenues);
 //to remove a venue
 router.delete('/venues/:id', ctrl.removeVenue);
 
-//to get all shows from a venue
-router.get('/venues/:id/shows', ctrl.getVenueShows);
-
 // add fan to venue
 // req.body = { fanName }
 router.post('/venues/:id/fans', ctrl.addFanToVenue);
@@ -95,7 +100,7 @@ router.post('/venues/:id/fans', ctrl.addFanToVenue);
 // get all venues that a fan follows
 router.get('/fans/:id/venues', ctrl.getFanVenues)
 
-// get all fans who follow a given venue
+//get all fans who follow a given venue
 router.get('/venues/:id/fans', ctrl.getVenueFans)
 
 /**
@@ -139,13 +144,10 @@ router.get('/fans/:id/rsvps', ctrl.getFanRSVPs)
 /**
  * SHOW COMMENTS
  */
-// TODO:
 // create a comment
-// req.body = { userName, text }
+// req.body = { id_user, text }
 router.post('/shows/:id/comments', ctrl.createComment);
 
-
-// TODO: 
 // get all comments for a show
 router.get('/shows/:id/comments', ctrl.getAllComments);
 

@@ -41,8 +41,8 @@ const createUser = async (req, res) => {
 // Get single user
 const getSingleUser = async (req, res) => {
     try {
-        const { id } = req.params;
-        const user = await getRecordByID('user', id);
+        const { name } = req.params;
+        const user = await getRecordByName('user', name);
         res.status(200).send(user);
     }
     catch (err) {
@@ -90,10 +90,53 @@ const updateBandPhoto = async (req, res) => {
     }
 }
 
+// TODO: functions to let bands edit their social media info
+const updateBandFB = async (req, res) => {
+    try {
+        const { link_facebook } = req.body;
+        const { id } = req.params;
+        await User.update(
+            { link_facebook },
+            { where: { id } }
+        )
+        res.send(200);
+    }
+    catch(err) {
+        console.log(err);
+        res.send(400);
+    }
+}
 
-// TODO: function to let bands edit their social media info
-const updateBandSM = async (req, res) => {
+const updateBandInstagram = async (req, res) => {
+    try {
+        const { link_instagram } = req.body;
+        const { id } = req.params;
+        await User.update(
+            { link_instagram },
+            { where: { id } }
+        )
+        res.send(200);
+    }
+    catch(err) {
+        console.log(err);
+        res.send(400);
+    }
+}
 
+const updateBandSpotify = async (req, res) => {
+    try {
+        const { link_spotify } = req.body;
+        const { id } = req.params;
+        await User.update(
+            { link_spotify },
+            { where: { id } }
+        )
+        res.send(200);
+    }
+    catch(err) {
+        console.log(err);
+        res.send(400);
+    }
 }
 
 // Delete user
@@ -152,22 +195,32 @@ const addGenreToBand = async (req, res) => {
 const getBandGenres = async (req, res) => {
     try {
         const { id } = req.params;
-        const genres = await BandGenre.findAll({
-            where: { id_band: id }
-        });
-        Promise.all(genres.map(async(genre) => {
-         const singleGenre = await Genre.findOne({
-             where: {
-                 id: genre.id_genre
-             }
-         }) 
-         return singleGenre;
-        })).then((data) => {
-            const genreNames = data.map(genre => {
-                return genre.genreName;
-            })
-            res.send(genreNames);
+        const band = await User.findAll({
+            where: {
+                id
+            },
+            include: [
+                { model: Genre, attributes: ['genreName'] }
+            ]
         })
+        console.log(band);
+        res.send(band[0].genres);
+        // const genres = await BandGenre.findAll({
+        //     where: { id_band: id }
+        // });
+        // Promise.all(genres.map(async(genre) => {
+        //  const singleGenre = await Genre.findOne({
+        //      where: {
+        //          id: genre.id_genre
+        //      }
+        //  }) 
+        //  return singleGenre;
+        // })).then((data) => {
+        //     const genreNames = data.map(genre => {
+        //         return genre.genreName;
+        //     })
+            // res.send(genreNames);
+        // })
     }
     catch(err) {
         console.log(err);
@@ -280,5 +333,8 @@ module.exports = {
     getSingleUser,
     removeBandGenre,
     updateUserBio,
-    updateBandPhoto
+    updateBandPhoto,
+    updateBandFB,
+    updateBandInstagram,
+    updateBandSpotify
 }

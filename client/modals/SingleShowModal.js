@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Modal,
   Text,
   View,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
   SafeAreaView
 } from 'react-native';
 import { Card } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
+import { SignedInContext } from '../context/UserContext'
 import { Ionicons } from '@expo/vector-icons';
+import CreateCommentModal from './CreateCommentModal'
 import axios from 'axios';
 
 
 export default function SingleShowModal(props) {
+  ///global user signin info and editing function
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //set username to text in username textInput
@@ -47,7 +49,21 @@ export default function SingleShowModal(props) {
             <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.name}</Text>
             <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.time}</Text>
             {/* <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.venue.name}</Text> */}
-
+            {/* button to create a new comment (shows when signed in) */}
+            {userInfo.signedIn ? <CreateCommentModal /> : null}
+            {/* cards to hold comments */}
+            <Card
+              style={styles.card}
+              // key={comment.id}
+              backgroundColor='#fff'
+              borderRadius={10}
+              padding={10}
+            // image={require('../images/pic2.jpg')}
+            >
+              <Text style={styles.cardText}>Username here</Text>
+              <Text style={styles.cardText}>Comment body here</Text>
+              <Text style={styles.cardText}>Comment time here</Text>
+            </Card>
 
           </ScrollView>
         </SafeAreaView>
