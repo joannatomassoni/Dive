@@ -83,9 +83,6 @@ router.get('/venues', ctrl.getAllVenues);
 //to remove a venue
 router.delete('/venues/:id', ctrl.removeVenue);
 
-//to get all shows from a venue
-router.get('/venues/:id/shows', ctrl.getVenueShows);
-
 // add fan to venue
 // req.body = { fanName }
 router.post('/venues/:id/fans', ctrl.addFanToVenue);
@@ -135,13 +132,10 @@ router.get('/fans/:id/rsvps', ctrl.getFanRSVPs)
 /**
  * SHOW COMMENTS
  */
-// TODO:
 // create a comment
-// req.body = { userName, text }
+// req.body = { id_user, text }
 router.post('/shows/:id/comments', ctrl.createComment);
 
-
-// TODO: 
 // get all comments for a show
 router.get('/shows/:id/comments', ctrl.getAllComments);
 

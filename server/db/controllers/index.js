@@ -28,7 +28,6 @@ const {
     getFanVenues,
     getSingleVenue,
     getVenueFans,
-    getVenueShows,
     removeVenue, 
 } = require('./Venue');
 const {
@@ -64,7 +63,6 @@ module.exports = {
     getSingleVenue,
     getTypes,
     getVenueFans,
-    getVenueShows,
     createVenue,
     removeVenue,
     removeFanRSVP,
