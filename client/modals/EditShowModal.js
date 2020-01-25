@@ -110,12 +110,12 @@ export default function CreateShowModal(props) {
                 style={styles.loginContainer}
                 onPress={() => {
                   setModalVisible(false);
-                  axios.post('http://localhost:8080/venues', {
+                  axios.post('https://dive-266016.appspot.com/venues', {
                     name: venueName,
                   })
                     .then(response => {
                       console.log(response);
-                      return axios.post('http://localhost:8080/shows', {
+                      return axios.post('https://dive-266016.appspot.com/shows', {
                         name: showTitle,
                         date: showDate,
                         time: showTime,

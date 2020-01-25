@@ -9,14 +9,14 @@ import {
 } from 'react-native';
 import { Card } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
-import { SignedInContext } from '../context/UserContext'
+import { SignedInContext } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons';
 import CreateCommentModal from './CreateCommentModal'
 import axios from 'axios';
 
 
 export default function SingleShowModal(props) {
-  ///global user signin info and editing function
+  //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
@@ -74,7 +74,7 @@ export default function SingleShowModal(props) {
         onPress={() => {
           setModalVisible(true);
           //axios
-          axios.get(`http://localhost:8080/shows/${show}`)
+          axios.get(`https://dive-266016.appspot.com/shows/${show}`)
             .then((response) => {
               // this.setState({
               console.log("getting single show", response.data)
