@@ -18,7 +18,7 @@
 
 ## Connect to the database using the proxy client
 1. In a different terminal from where you started the proxy, run:
-    - `mysql -u <USERNAME> -p --host 127.0.0.1 --port <WHATEVER PORT YOU USED TO CONNECT>`
+    - `mysql -u root -p --host 127.0.0.1 --port <WHATEVER PORT YOU USED TO CONNECT>`
     - Enter password when prompted (find it in your .env)
     - This should shell you into the proxy db.
 
