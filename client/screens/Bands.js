@@ -22,6 +22,8 @@ export default function Bands(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state to hold bands
+  console.log('user info', userInfo)
+  
   const [bands, setBands] = useState([]);
   useEffect(() => {
     axios.get('http://localhost:8080/bands')

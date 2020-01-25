@@ -5,7 +5,7 @@ const { getRecordByName, getRecordByID } = require('./utils')
 // Create show
 const createShow = async (req, res) => {
     try {
-        const { name, date, time, photo, venueName, bandNames } = req.body;
+        const { name, date, time, photo, venueName, bandNames, description } = req.body;
         const venue = await getRecordByName('venue', venueName);
         // add bands and venue to ShowBand join tables
         const show = await Show.create({
@@ -23,28 +23,17 @@ const createShow = async (req, res) => {
                 id_band: band.id
             })
         })
-        res.send(201);
+        res.sendStatus(201);
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
 // Get all upcoming shows in database
 const getAllShows = async (req, res) => {
     try {
-        //         const shows = await Show.findAll()
-        //         console.log("retrieved shows from db", shows);
-        //         res.send(shows);
-        //         // return venues;
-        //     }
-        //     catch (err) {
-        //         console.log("couldn't get shows", err);
-        //         res.send(err);
-        //     }
-        // }
-        // array of shows
         const shows = await Show.findAll({
             include: [
                 { model: User, as: 'bands', attributes: ['name'] },
@@ -63,10 +52,10 @@ const getAllShows = async (req, res) => {
 // get detailed info for single show
 const getSingleShow = async (req, res) => {
     try {
-        const { name } = req.params;
+        const { id } = req.params;
         const show = await Show.findOne({
             where: {
-                name: name
+                id
             },
             include: [
                 { model: User, as: 'bands', attributes: ['name'] },
@@ -79,38 +68,34 @@ const getSingleShow = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
 // Allow fan to rsvp to a show
 const rsvpFanToShow = async (req, res) => {
     try {
-        const { showName, fanName } = req.body;
-        const show = await getRecordByName('show', showName);
-        const fan = await getRecordByName('fan', fanName);
+        const { id_fan, id_show } = req.body;
         await RSVP.create({
-            id_show: show.id,
-            id_fan: fan.id
+            id_show,
+            id_fan
         })
         res.sendStatus(201);
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
 // Allow fan to remove their rsvp
 const removeFanRSVP = async (req, res) => {
     try {
-        const { fanName, showName } = req.body;
-        const show = await getRecordByName('show', showName);
-        const fan = await getRecordByName('fan', fanName);
+        const { id_fan, id_show } = req.body;
         await RSVP.destroy({
             where: {
-                id_fan: fan.id,
-                id_show: show.id
+                id_fan,
+                id_show
             }
         })
         res.sendStatus(200);
@@ -125,11 +110,10 @@ const removeFanRSVP = async (req, res) => {
 // Get all shows that a given user has rsvpd to
 const getFanRSVPs = async (req, res) => {
     try {
-        const { fanName } = req.params;
-        const fan = await getRecordByName('fan', fanName);
+        const { id } = req.params;
         const rsvps = await RSVP.findAll({
             where: {
-                id_fan: fan.id
+                id_fan: id
             }
         })
         Promise.all(rsvps.map(async (rsvp) => {
@@ -145,7 +129,7 @@ const getFanRSVPs = async (req, res) => {
     }
     catch (err) {
         console.log(err)
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
@@ -153,11 +137,10 @@ const getFanRSVPs = async (req, res) => {
 // Get all fans who have rsvpd to a show
 const getShowRSVPs = async (req, res) => {
     try {
-        const { showName } = req.params;
-        const show = await getRecordByName('show', showName);
+        const { id } = req.params;
         const rsvps = await RSVP.findAll({
             where: {
-                id_show: show.id
+                id_show: id
             }
         })
         Promise.all(rsvps.map(async (rsvp) => {
@@ -174,7 +157,7 @@ const getShowRSVPs = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.send(400);
+        res.sendStatus(400);
     }
 }
 
