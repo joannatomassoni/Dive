@@ -92,7 +92,7 @@ export default function SingleBandModal(props) {
         onPress={() => {
           setModalVisible(true);
           //axios
-          axios.get(`https://dive-266016.appspot.com/users/${band}`)
+          axios.get(`http://localhost:8080/users/${band}`)
             .then((response) => {
               console.log("getting single band", response)
               setBand(response.data);

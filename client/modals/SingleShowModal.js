@@ -74,7 +74,7 @@ export default function SingleShowModal(props) {
         onPress={() => {
           setModalVisible(true);
           //axios
-          axios.get(`https://dive-266016.appspot.com/shows/${show}`)
+          axios.get(`http://localhost:8080/shows/${show}`)
             .then((response) => {
               // this.setState({
               console.log("getting single show", response.data)

@@ -27,7 +27,7 @@ export default function Hub(props) {
 
   //load all user info when brought to hub
   useEffect(() => {
-    axios.get(`https://dive-266016.appspot.com/users/${userInfo.username}`)
+    axios.get(`http://localhost:8080/users/${userInfo.username}`)
       .then((response) => {
         setHubInfo(response.data);
       })

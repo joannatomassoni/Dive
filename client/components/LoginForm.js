@@ -69,7 +69,7 @@ export default function LoginForm (props) {
       <TouchableOpacity 
         style={styles.loginContainer}
         onPress={() => {
-          axios.get(`https://dive-266016.appspot.com/users/${usernameValue}`)
+          axios.get(`http://localhost:8080/users/${usernameValue}`)
             .then(res => setUserInfo(userInfo => ({
               ...userInfo,
               signedIn: true,

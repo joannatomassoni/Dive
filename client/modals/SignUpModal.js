@@ -48,7 +48,7 @@ export default function ModalExample(props) {
             photoUrl: user.photoUrl
           }))
       }
-      axios.post('https://dive-266016.appspot.com/users', {
+      axios.post('http://localhost:8080/users', {
         name: user.email,
         typeName: userType,
         photo: user.photoUrl
@@ -114,7 +114,7 @@ export default function ModalExample(props) {
               style={styles.loginContainer}
               onPress={() => {
                 setModalVisible(false);
-                axios.post('https://dive-266016.appspot.com/users', {
+                axios.post('http://localhost:8080/users', {
                   name: usernameValue,
                   typeName: userType,
                 })
