@@ -43,7 +43,13 @@ export default function EditBandBioModal(props) {
           <View style={styles.container}>
             <View style={styles.title}>
               <Text style={styles.text}>Edit Bio</Text>
+
               {/* new bio text box */}
+              <View style={{
+                flexDirection: 'row',
+                height: 50,
+                justifyContent: 'left',
+              }}>
               <TextInput
                 placeholder="New Bio"
                 placeholderTextColor="#75A4AD"
@@ -51,7 +57,23 @@ export default function EditBandBioModal(props) {
                 onChangeText={setNewBio}
                 style={styles.input}
               />
+              {/* update bio button */}
+              <TouchableOpacity
+                style={styles.loginContainer}
+                onPress={() => {
+                  setModalVisible(false);
+                }}
+              >
+                <Text style={styles.buttonText}>+</Text>
+              </TouchableOpacity>
+              </View>
+
               {/* spotify link */}
+              <View style={{
+                flexDirection: 'row',
+                height: 50,
+                justifyContent: 'left',
+              }}>
               <TextInput
                 placeholder="Spotify Link"
                 placeholderTextColor="#75A4AD"
@@ -59,7 +81,23 @@ export default function EditBandBioModal(props) {
                 onChangeText={setSpotifyLink}
                 style={styles.input}
               />
+                {/* update spotify button */}
+                <TouchableOpacity
+                  style={styles.loginContainer}
+                  onPress={() => {
+                    setModalVisible(false);
+                  }}
+                >
+                  <Text style={styles.buttonText}>+</Text>
+                </TouchableOpacity>
+              </View>
+
               {/* facebook link */}
+              <View style={{
+                flexDirection: 'row',
+                height: 50,
+                justifyContent: 'left',
+              }}>
               <TextInput
                 placeholder="Facebook Link"
                 placeholderTextColor="#75A4AD"
@@ -67,7 +105,23 @@ export default function EditBandBioModal(props) {
                 onChangeText={setFacebookLink}
                 style={styles.input}
               />
+                {/* update facebook button */}
+                <TouchableOpacity
+                  style={styles.loginContainer}
+                  onPress={() => {
+                    setModalVisible(false);
+                  }}
+                >
+                  <Text style={styles.buttonText}>+</Text>
+                </TouchableOpacity>
+              </View>
+
               {/* instagram link */}
+              <View style={{
+                flexDirection: 'row',
+                height: 50,
+                justifyContent: 'left',
+              }}>
               <TextInput
                 placeholder="Instagram Link"
                 placeholderTextColor="#75A4AD"
@@ -75,21 +129,30 @@ export default function EditBandBioModal(props) {
                 onChangeText={setInstagramLink}
                 style={styles.input}
               />
-              {/* edit bio button when modal is showing */}
+              {/* update instagram button */}
               <TouchableOpacity
                 style={styles.loginContainer}
                 onPress={() => {
                   setModalVisible(false);
                 }}
               >
-                <Text style={styles.buttonText}>Edit Bio</Text>
+                <Text style={styles.buttonText}>+</Text>
+              </TouchableOpacity>
+            </View>
+
+              {/* button to complete editing */}
+              <TouchableOpacity
+                style={styles.signupContainer}
+                onPress={() => { setModalVisible(true); }}
+              >
+                <Text style={styles.signupButtonText}>Return</Text>
               </TouchableOpacity>
 
             </View>
           </View>
         </KeyboardAvoidingView>
       </Modal>
-      {/* cedit bio button when modal is hidden */}
+      {/* edit bio button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
         onPress={() => { setModalVisible(true); }}
@@ -112,7 +175,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 15,
     borderRadius: 5,
-    marginHorizontal: 40,
+    width: 300,
     fontWeight: 'bold'
   },
   title: {
@@ -132,7 +195,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#59C3D1',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
+    width: 40,
     marginBottom: 15
   },
   signupContainer: {
