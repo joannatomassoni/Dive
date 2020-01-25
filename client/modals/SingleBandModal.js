@@ -21,8 +21,8 @@ export default function SingleBandModal(props) {
   //set username to text in username textInput
   const [showTitle, setShowTitle] = useState('');
   const [singleBand, setBand] = useState([]);
-  console.log("getting props", props)
-  let band = props.band;
+  let band = props.bandID;
+  console.log(band)
   return (
     <View>
       <Modal
@@ -57,9 +57,9 @@ export default function SingleBandModal(props) {
         onPress={() => {
           setModalVisible(true);
           //axios
-          axios.get(`http://localhost:8080/users/${props.band}`)
+          axios.get(`http://localhost:8080/users/${band}`)
             .then((response) => {
-              console.log("getting single band", response.data)
+              console.log("getting single band", response)
               setBand(response.data);
             })
             .catch((err) => {
