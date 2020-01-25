@@ -25,18 +25,18 @@ export default function Hub(props) {
   //hub info to display
   const [hubInfo, setHubInfo] = useState({});
 
+  //load all user info when brought to hub
   useEffect(() => {
-    axios.get(`http://localhost:8080/users/${userInfo.name}`)
+    axios.get(`http://localhost:8080/users/${userInfo.username}`)
       .then((response) => {
-        console.log("hub info", response)
         setHubInfo(response.data);
       })
       .catch((err) => {
         console.log("eere getting hub info", err);
       })
-  }, [])
+  }, [userInfo])
 
-  //console.log(hubInfo);
+  console.log(hubInfo);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -52,9 +52,9 @@ export default function Hub(props) {
           height: 50,
           justifyContent: 'left',
         }}>
-        <SpotifyButton />
-        <InstagramButton />
-        <FacebookButton />
+          <SpotifyButton link={hubInfo.link_spotify} />
+          <InstagramButton link={hubInfo.link_instagram} />
+          <FacebookButton link={hubInfo.link_facebook} />
         </View>
         {/* Button to open create show modal */}
         <EditBandBioModal />
@@ -103,5 +103,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 40,
     backgroundColor: '#59C3D1',
-  }
+  }, 
 })
