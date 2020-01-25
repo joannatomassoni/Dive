@@ -12,7 +12,10 @@ const createVenue = async (req, res) => {
             address,
             city,
             state,
-            zip_code
+            zip_code,
+            where: {
+                name,
+            }
         })
         res.sendStatus(201);
     }
