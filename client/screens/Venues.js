@@ -26,12 +26,11 @@ export default function Venues(props) {
     axios.get('http://localhost:8080/venues')
       .then((response) => {
         // this.setState({
-        console.log("venue response from db", response.data[0])
+        // console.log("venue response from db", response.data[0])
         setVenues(response.data);
-        console.log("is setState working?", venues);
       })
       .catch((err) => {
-        console.log("frontend not getting venues from db", err);
+        // console.log("frontend not getting venues from db", err);
       })
   }, [])
 
