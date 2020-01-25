@@ -3,12 +3,12 @@
 const { Type } = require('../sequelize');
 
 // Read types
-const getTypes = (req, res, next) => {
+const getTypes = (req, res) => {
     return Type.findAll({
         attributes: ['name']
     })
     .then((data) => res.send(data))
-    .catch(err => res.sendStatus(400));
+    .catch(() => res.sendStatus(400));
 }
 
 module.exports = {

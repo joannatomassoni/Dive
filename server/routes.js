@@ -28,18 +28,18 @@ const ctrl = require('./db/controllers/index')
 router.post('/users', ctrl.createUser);
 
 // Used for user login and getting a single band
-router.get('/users/:name', ctrl.getSingleUser)
+router.get('/users/:id', ctrl.getSingleUser)
 
 // Update user info
 // req.body = { bio }
-router.patch('/users/:name/bio', ctrl.updateUserBio)
+router.patch('/users/:id/bio', ctrl.updateUserBio)
 
-// Update user photo
+// Update band photo
 // req.body = { photo }
-router.patch('/users/:name/photo', ctrl.updateBandPhoto)
+router.patch('/users/:id/photo', ctrl.updateBandPhoto)
 
 // Delete user
-router.delete('/users/:name', ctrl.deleteUser)
+router.delete('/users/:id', ctrl.deleteUser)
 
 /**
  * BANDS ROUTES
@@ -48,22 +48,25 @@ router.delete('/users/:name', ctrl.deleteUser)
 router.get('/bands', ctrl.getAllBands)
 
 // add genre to band
-// req.body = { bandName, genreName }
-router.post('/bands/genres', ctrl.addGenreToBand)
+// req.body = { genreName }
+router.post('/bands/:id/genres', ctrl.addGenreToBand)
 
 // get a given band's genres. 
-router.get('/bands/:bandName/genres', ctrl.getBandGenres);
+router.get('/bands/:id/genres', ctrl.getBandGenres);
 
 // delete a genre from a band
-// req.body = { bandName, genreName }
-router.delete('/bands/genres', ctrl.removeBandGenre)
+// req.body = { genreName }
+router.delete('/bands/:id/genres', ctrl.removeBandGenre)
 
 // add fan for band
-// req.body = { bandName, fanName }
-router.post('/bands/fans', ctrl.addFanToBand)
+// req.body = { id_fan }
+router.post('/bands/:id/fans/', ctrl.addFanToBand)
 
 // get all fans of a given band. 
-router.get('/bands/:bandName/fans', ctrl.getBandFans);
+router.get('/bands/:id/fans', ctrl.getBandFans);
+
+// get all bands that a given fan is following
+router.get('/fans/:id/bands', ctrl.getFanBands);
 
 /**
  * VENUES
@@ -71,27 +74,27 @@ router.get('/bands/:bandName/fans', ctrl.getBandFans);
 // create a venue
 router.post('/venues', ctrl.createVenue)
 
-// TODO:
-// get one venue
+// get one venue and its upcoming shows
+router.get('/venues/:id', ctrl.getSingleVenue)
  
 // get all venues
 router.get('/venues', ctrl.getAllVenues);
 
 //to remove a venue
-router.delete('/venues', ctrl.removeVenue);
+router.delete('/venues/:id', ctrl.removeVenue);
 
 //to get all shows from a venue
-router.get('/venues/shows/:venueName', ctrl.getVenueShows);
+router.get('/venues/:id/shows', ctrl.getVenueShows);
 
 // add fan to venue
-// req.body = { venueName, fanName }
-router.post('/venues/fans', ctrl.addFanToVenue);
+// req.body = { fanName }
+router.post('/venues/:id/fans', ctrl.addFanToVenue);
 
 // get all venues that a fan follows
-router.get('/fans/:fanName/venues', ctrl.getFanVenues)
+router.get('/fans/:id/venues', ctrl.getFanVenues)
 
 // get all fans who follow a given venue
-router.get('/venues/fans/:venueName', ctrl.getVenueFans)
+router.get('/venues/:id/fans', ctrl.getVenueFans)
 
 /**
  * SHOWS
@@ -108,25 +111,25 @@ router.post('/shows', ctrl.createShow)
 router.get('/shows', ctrl.getAllShows)
 
 // get a single show
-router.get('/shows/:name', ctrl.getSingleShow)
+router.get('/shows/:id', ctrl.getSingleShow)
 
 
 /**
  * RSVPs (shows/fans)
  */
 // fan rsvps to a show
-// req.body = { showName, fanName }
+// req.body = { id_show, id_fan }
 router.post('/shows/rsvps', ctrl.rsvpFanToShow)
 
 // remove a fan rsvp from a show
-// req.body = { showName, fanName }
+// req.body = { id_show, id_fan }
 router.delete('/shows/rsvps', ctrl.removeFanRSVP)
 
 // get fans who have rsvpd to a given show. 
-router.get('/shows/rsvps/:showName', ctrl.getShowRSVPs)
+router.get('/shows/:id/rsvps', ctrl.getShowRSVPs)
 
 // get shows that a given fan has rsvpd to. 
-router.get('/fans/rsvps/:fanName', ctrl.getFanRSVPs)
+router.get('/fans/:id/rsvps', ctrl.getFanRSVPs)
 
 
 /**
@@ -134,12 +137,13 @@ router.get('/fans/rsvps/:fanName', ctrl.getFanRSVPs)
  */
 // TODO:
 // create a comment
-router.post('/comments/:id_user', ctrl.createComment);
+// req.body = { userName, text }
+router.post('/shows/:id/comments', ctrl.createComment);
 
 
 // TODO: 
 // get all comments for a show
-router.get('/comments/:id_show', ctrl.getAllComments);
+router.get('/shows/:id/comments', ctrl.getAllComments);
 
 
 /**

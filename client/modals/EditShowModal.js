@@ -49,7 +49,7 @@ export default function CreateShowModal(props) {
           />
           <View style={styles.container}>
             <View style={styles.title}>
-              <Text style={styles.text}>New Show</Text>
+              <Text style={styles.text}>Edit Show</Text>
               {/* username text box */}
               <TextInput
                 placeholder="Show Title"
@@ -116,17 +116,18 @@ export default function CreateShowModal(props) {
                     .then(response => {
                       console.log(response);
                       return axios.post('http://localhost:8080/shows', {
-                      name: showTitle,
-                      date: showDate,
-                      time: showTime,
-                      photo: null,
-                      venueName: venueName,
-                      bandName: bandNames,
-                      description: showDesc
-                    })})
+                        name: showTitle,
+                        date: showDate,
+                        time: showTime,
+                        photo: null,
+                        venueName: venueName,
+                        bandName: bandNames,
+                        description: showDesc
+                      })
+                    })
                     .then(response => response)
                     .catch(error => console.log('failed to create show', error));
-              }}
+                }}
               >
                 <Text style={styles.buttonText}>Create Show</Text>
               </TouchableOpacity>
@@ -137,10 +138,9 @@ export default function CreateShowModal(props) {
       </Modal>
       {/* create show button when modal is hidden */}
       <TouchableOpacity
-        style={styles.signupContainer}
         onPress={() => { setModalVisible(true); }}
       >
-        <Text style={styles.signupButtonText}>Create a show</Text>
+        <Text>Edit Show</Text>
       </TouchableOpacity>
     </View>
   );

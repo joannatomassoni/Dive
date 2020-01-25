@@ -5,7 +5,6 @@ import {
   View,
   Image,
   SafeAreaView,
-  MaskedViewIOS,
 } from 'react-native';
 import {
   Card,
@@ -17,6 +16,7 @@ import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
+import SingleShowModal from '../modals/SingleShowModal'
 
 export default function Shows(props) {
   ///global user signin info and editing function
@@ -26,14 +26,13 @@ export default function Shows(props) {
   useEffect(() => {
     axios.get('http://localhost:8080/shows')
       .then((response) => {
-        console.log("shows response from db", response.data[0])
+        console.log("shows response from db", response.data)
         setShows(response.data);
       })
       .catch((err) => {
         console.log("frontend not getting shows from db", err);
       })
   }, [])
-
 
   //dummy data
   const users = [
@@ -54,21 +53,21 @@ export default function Shows(props) {
             <Card
               title={show.name}
               style={styles.card}
+              key={show.id}
               backgroundColor='#fff'
-              borderWidth={0}
               borderRadius={10}
               padding={10}
             // image={require('../images/pic2.jpg')}
             >
-              <Text style={styles.cardText} key={show.id}>{show.time}</Text>
+              <Text style={styles.cardText}>{show.time}</Text>
               {show.bands.map(band => {
                 <Text style={styles.cardText} key={band.id}>{band.name}</Text>
               })}
               <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
+              <SingleShowModal show={show.id} />
             </Card>
           )
         })}
-        {/* implemented with Text and Button as children */}
       </ScrollView>
     </SafeAreaView >
   )
