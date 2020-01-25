@@ -135,13 +135,10 @@ router.get('/fans/:id/rsvps', ctrl.getFanRSVPs)
 /**
  * SHOW COMMENTS
  */
-// TODO:
 // create a comment
-// req.body = { userName, text }
+// req.body = { id_user, text }
 router.post('/shows/:id/comments', ctrl.createComment);
 
-
-// TODO: 
 // get all comments for a show
 router.get('/shows/:id/comments', ctrl.getAllComments);
 
