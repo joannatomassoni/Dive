@@ -47,23 +47,24 @@ export default function Shows(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Shows</Text>
-        {shows ? null
-        :shows.map(show => {
+        {shows.map(show => {
           return (
             <Card
               title={show.name}
               style={styles.card}
+              key={show.id}
               backgroundColor='#fff'
               borderWidth={0}
               borderRadius={10}
               padding={10}
             // image={require('../images/pic2.jpg')}
             >
-              <Text style={styles.cardText} key={show.id}>{show.time}</Text>
+              <Text style={styles.cardText}>{show.time}</Text>
               {show.bands.map(band => {
                 <Text style={styles.cardText} key={band.id}>{band.name}</Text>
               })}
               <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
+              {/* <SingleShowModal show={show.id} /> */}
             </Card>
           )
         })}

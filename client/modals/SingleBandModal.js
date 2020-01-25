@@ -15,14 +15,14 @@ import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
 
-export default function SingleShowModal(props) {
+export default function SingleBandModal(props) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //set username to text in username textInput
   const [showTitle, setShowTitle] = useState('');
-  const [singleShow, setSingleShow] = useState([]);
-  // console.log(props);
-  let show = props.show;
+  const [singleBand, setBand] = useState([]);
+  let band = props.bandID;
+  console.log(band)
   return (
     <View>
       <Modal
@@ -42,11 +42,10 @@ export default function SingleShowModal(props) {
           />
 
           <ScrollView style={{ marginTop: 30 }}>
-            <Text style={styles.headerText}>Show Title</Text>
+            <Text style={styles.headerText} key={singleBand.id}>Show Title</Text>
 
-            <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.name}</Text>
-            <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.time}</Text>
-            <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.venue.name}</Text>
+            <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Name: {singleBand.name}</Text>
+            <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
 
 
           </ScrollView>
@@ -58,14 +57,13 @@ export default function SingleShowModal(props) {
         onPress={() => {
           setModalVisible(true);
           //axios
-          axios.get(`http://localhost:8080/shows/${show}`)
+          axios.get(`http://localhost:8080/users/${band}`)
             .then((response) => {
-              // this.setState({
-              console.log("getting single show", response.data)
-              setSingleShow(response.data);
+              console.log("getting single band", response)
+              setBand(response.data);
             })
             .catch((err) => {
-              console.log("frontend not getting single show from db", err);
+              console.log("frontend not getting single band from db", err);
             })
         }}
       >
@@ -100,7 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#59C3D1',
   },
   cardText: {
-
+    fontSize: 30,
   },
   menuIcon: {
     zIndex: 9,
