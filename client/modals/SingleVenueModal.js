@@ -67,8 +67,6 @@ export default function SingleVenueModal(props) {
 
             {shows.map(show => {
               return (
-
-
                 <Card
                   title={show.name}
                   style={styles.card}
@@ -79,21 +77,23 @@ export default function SingleVenueModal(props) {
                   padding={10}
                 // image={require('../images/pic2.jpg')}
                 >
+
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>Bands:</Text>
+
                   {show.bands.map(band => {
                     return (
+                      <Text>
 
-                      <Text style={{ marginBottom: 10, color: '#000' }}>{band.name}</Text>
+                        <Text style={{ marginBottom: 10, color: '#000' }}>{band.name}</Text>
+                      </Text>
                     )
-
                   })}
                 </Card>
               )
-            })
-            }
+            })}
 
           </ScrollView>
         </SafeAreaView>
