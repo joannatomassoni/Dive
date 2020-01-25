@@ -26,11 +26,11 @@ export default function Shows(props) {
   useEffect(() => {
     axios.get('http://localhost:8080/shows')
       .then((response) => {
-        console.log("shows response from db", response.data)
+        // console.log("shows response from db", response.data)
         setShows(response.data);
       })
       .catch((err) => {
-        console.log("frontend not getting shows from db", err);
+        // console.log("frontend not getting shows from db", err);
       })
   }, [])
 
@@ -60,7 +60,9 @@ export default function Shows(props) {
             >
               <Text style={styles.cardText}>{show.time}</Text>
               {show.bands.map(band => {
-                <Text style={styles.cardText} key={band.id}>{band.name}</Text>
+                return (
+                  <Text style={styles.cardText} key={band.id}>{band.name}</Text>
+                )
               })}
               <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
               <SingleShowModal show={show.id} />

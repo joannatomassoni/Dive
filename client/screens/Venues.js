@@ -26,12 +26,11 @@ export default function Venues(props) {
     axios.get('http://localhost:8080/venues')
       .then((response) => {
         // this.setState({
-        console.log("venue response from db", response.data[0])
+        // console.log("venue response from db", response.data[0])
         setVenues(response.data);
-        console.log("is setState working?", venues);
       })
       .catch((err) => {
-        console.log("frontend not getting venues from db", err);
+        // console.log("frontend not getting venues from db", err);
       })
   }, [])
 
@@ -45,15 +44,16 @@ export default function Venues(props) {
             <Card
               title={venue.name}
               style={styles.card}
+              key={venue.id}
               backgroundColor='#fff'
               borderWidth={0}
               borderRadius={10}
               padding={10}
             // image={require('../images/pic2.jpg')}
             >
-              <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id} >Address:</Text>
-              <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id}>{venue.address}</Text>
-              <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id} >{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
+              <Text style={{ marginBottom: 10, color: '#000' }}>Address:</Text>
+              <Text style={{ marginBottom: 10, color: '#000' }}>{venue.address}</Text>
+              <Text style={{ marginBottom: 10, color: '#000' }}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
               <SingleVenueModal venueID={venue.id} />
             </Card>
           )
