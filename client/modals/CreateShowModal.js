@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     color: '#59C3D1',
     opacity: 0.9,
     fontWeight: 'bold',
-    marginLeft: 90,
+    marginLeft: 75,
     marginBottom: 15
   },
   loginContainer: {
