@@ -1,4 +1,4 @@
-[Google's instructions, here,](https://cloud.google.com/sql/docs/mysql/quickstart-proxy-test) are pretty clear, but let Joanna know if you have any questions. The text below is 
+[Google's instructions, here,](https://cloud.google.com/sql/docs/mysql/quickstart-proxy-test) are pretty clear, but let Joanna know if you have any questions.
 
 ## Install and log into the gcloud CLI
 1. Install gcloud CLI: https://cloud.google.com/sdk/docs/#install_the_latest_cloud_sdk_version
