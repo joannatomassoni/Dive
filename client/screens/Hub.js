@@ -3,10 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  SafeAreaView, 
-  Row, 
-  Col
+  SafeAreaView,
 } from 'react-native';
 import {
   Card
@@ -25,6 +22,21 @@ import EditShowModal from '../modals/EditShowModal';
 export default function Hub(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
+  //hub info to display
+  const [hubInfo, setHubInfo] = useState({});
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/users/${userInfo.name}`)
+      .then((response) => {
+        console.log("hub info", response)
+        setHubInfo(response.data);
+      })
+      .catch((err) => {
+        console.log("eere getting hub info", err);
+      })
+  }, [])
+
+  //console.log(hubInfo);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -91,8 +103,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 40,
     backgroundColor: '#59C3D1',
-  },
-  cardText: {
-
-  },
+  }
 })

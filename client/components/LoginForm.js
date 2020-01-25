@@ -34,6 +34,7 @@ export default function LoginForm (props) {
             ...userInfo,
             signedIn: true,
             name: user.name,
+            username: user.email,
             userType: res.data.id_type === 1 ? 'fan' : 'band',
             photoUrl: res.data.photo,
             id: res.data.id,
@@ -72,7 +73,7 @@ export default function LoginForm (props) {
             .then(res => setUserInfo(userInfo => ({
               ...userInfo,
               signedIn: true,
-              name: res.data.name,
+              username: res.data.name,
               userType: res.data.id_type === 1 ? 'fan' : 'band',
               photoUrl: res.data.photo,
               id: res.data.id
