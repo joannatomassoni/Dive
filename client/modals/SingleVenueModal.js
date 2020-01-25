@@ -22,21 +22,34 @@ export default function SingleVenueModal(props) {
   const [showTitle, setShowTitle] = useState('');
   const [singleVenue, setVenue] = useState([]);
   const [shows, setShows] = useState([]);
+  const [bands, setBands] = useState([]);
   let venue = props.venueID;
   console.log(venue)
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/venues/${venue}/shows`)
+    axios.get(`http://localhost:8080/venues/${venue}`)
       .then((response) => {
-        // console.log("getting a bands shows from db", response.data)
-        setShows(response.data);
+        console.log("getting a bands shows from db", response.data)
+        setShows(response.data.shows);
+
       })
       .catch((err) => {
-        // console.log("frontend not getting band shows from db", err);
+        console.log("frontend not getting band shows from db", err);
       })
+
+    axios.get(`http://localhost:8080/shows/${venue}`)
+      .then((response) => {
+        // this.setState({
+        console.log("getting band", response.data)
+        setBands(response.data.bands);
+      })
+      .catch((err) => {
+        console.log("frontend not getting single show from db", err);
+      });
+
   }, [])
 
-  console.log("getting venue shows", shows);
+  // console.log("getting venue shows", shows);
 
   return (
     <View>
@@ -82,15 +95,15 @@ export default function SingleVenueModal(props) {
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>Bands:</Text>
-
-                  {show.bands.map(band => {
+                  {bands.map(band => {
                     return (
                       <Text>
 
-                        <Text style={{ marginBottom: 10, color: '#000' }}>{band.name}</Text>
+                        <Text style={{ marginBottom: 10, color: '#000' }}>meep{band.name}</Text>
                       </Text>
                     )
                   })}
+
                 </Card>
               )
             })}
@@ -106,11 +119,11 @@ export default function SingleVenueModal(props) {
           //axios
           axios.get(`http://localhost:8080/venues/${venue}`)
             .then((response) => {
-              console.log("getting single venue", response.data)
+              // console.log("getting single venue", response.data)
               setVenue(response.data);
             })
             .catch((err) => {
-              console.log("frontend not getting single venue from db", err);
+              // console.log("frontend not getting single venue from db", err);
             })
         }}
       >
