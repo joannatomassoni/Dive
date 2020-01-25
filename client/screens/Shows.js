@@ -46,7 +46,7 @@ export default function Shows(props) {
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
-        <Text style={styles.text}>Shows</Text>
+        <Text style={styles.headerText}>Shows</Text>
         {shows.map(show => {
           return (
             <Card
@@ -54,7 +54,6 @@ export default function Shows(props) {
               style={styles.card}
               key={show.id}
               backgroundColor='#fff'
-              borderWidth={0}
               borderRadius={10}
               padding={10}
             // image={require('../images/pic2.jpg')}
