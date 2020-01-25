@@ -52,13 +52,14 @@ export default function Shows(props) {
             <Card
               title={show.name}
               style={styles.card}
+              key={show.id}
               backgroundColor='#fff'
               borderWidth={0}
               borderRadius={10}
               padding={10}
             // image={require('../images/pic2.jpg')}
             >
-              <Text style={styles.cardText} key={show.id}>{show.time}</Text>
+              <Text style={styles.cardText}>{show.time}</Text>
               {show.bands.map(band => {
                 <Text style={styles.cardText} key={band.id}>{band.name}</Text>
               })}
