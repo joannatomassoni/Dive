@@ -82,6 +82,14 @@ export default function SingleVenueModal(props) {
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
+                  <Text style={{ marginBottom: 10, color: '#000' }}>Bands:</Text>
+                  {show.bands.map(band => {
+                    return (
+
+                      <Text style={{ marginBottom: 10, color: '#000' }}>{band.name}</Text>
+                    )
+
+                  })}
                 </Card>
               )
             })
