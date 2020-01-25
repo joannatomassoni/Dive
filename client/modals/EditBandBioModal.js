@@ -64,7 +64,7 @@ export default function EditBandBioModal(props) {
                 <TouchableOpacity
                   style={styles.loginContainer}
                   onPress={() => {
-                    axios.patch(`https://dive-266016.appspot.com/users/${userInfo.id}/bio`, {
+                    axios.patch(`http://localhost:8080/users/${userInfo.id}/bio`, {
                       bio: newBio,
                     })
                       .then(response => response)
@@ -92,7 +92,7 @@ export default function EditBandBioModal(props) {
                 <TouchableOpacity
                   style={styles.loginContainer}
                   onPress={() => {
-                    axios.patch(`https://dive-266016.appspot.com/bands/${userInfo.id}/spotify`, {
+                    axios.patch(`http://localhost:8080/bands/${userInfo.id}/spotify`, {
                       link_spotify: spotifyLink,
                     })
                       .then(response => response)
@@ -120,7 +120,7 @@ export default function EditBandBioModal(props) {
                 <TouchableOpacity
                   style={styles.loginContainer}
                   onPress={() => {
-                    axios.patch(`https://dive-266016.appspot.com/bands/${userInfo.id}/fb`, {
+                    axios.patch(`http://localhost:8080/bands/${userInfo.id}/fb`, {
                       link_facebook: facebookLink,
                     })
                       .then(response => response)
@@ -148,7 +148,7 @@ export default function EditBandBioModal(props) {
                 <TouchableOpacity
                   style={styles.loginContainer}
                   onPress={() => {
-                    axios.patch(`https://dive-266016.appspot.com/bands/${userInfo.id}/insta`, {
+                    axios.patch(`http://localhost:8080/bands/${userInfo.id}/insta`, {
                       link_instagram: instagramLink,
                     })
                       .then(response => response)

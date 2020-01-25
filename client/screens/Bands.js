@@ -26,7 +26,7 @@ export default function Bands(props) {
 
   const [bands, setBands] = useState([]);
   useEffect(() => {
-    axios.get('https://dive-266016.appspot.com/bands')
+    axios.get('http://localhost:8080/bands')
       .then((response) => {
         // console.log(response.data);
         setBands(response.data)

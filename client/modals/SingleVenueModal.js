@@ -117,7 +117,7 @@ export default function SingleVenueModal(props) {
         onPress={() => {
           setModalVisible(true);
           //axios
-          axios.get(`https://dive-266016.appspot.com/venues/${venue}`)
+          axios.get(`http://localhost:8080/venues/${venue}`)
             .then((response) => {
               // console.log("getting single venue", response.data)
               setVenue(response.data);
