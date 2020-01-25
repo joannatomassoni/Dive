@@ -60,7 +60,9 @@ export default function Shows(props) {
             >
               <Text style={styles.cardText}>{show.time}</Text>
               {show.bands.map(band => {
-                <Text style={styles.cardText} key={band.id}>{band.name}</Text>
+                return (
+                  <Text style={styles.cardText} key={band.id}>{band.name}</Text>
+                )
               })}
               <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
               <SingleShowModal show={show.id} />
