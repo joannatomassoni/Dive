@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Modal,
   Text,
@@ -10,8 +10,11 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
+import { SignedInContext } from '../context/UserContext';
 
 export default function CreateShowModal(props) {
+  //global user signin info and editing function
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //shwo title
@@ -19,9 +22,17 @@ export default function CreateShowModal(props) {
   //band title
   const [bandName, setBandName] = useState('');
   //array of all bands
-  const [bandNames, addBandName] = useState([]);
+  const [bandNames, addBandName] = useState([userInfo.username]);
   //venue name
   const [venueName, setVenueName] = useState('');
+  //venue address
+  const [venueAddress, setvenueAddress] = useState('');
+  //venue city
+  const [venueCity, setVenueCity] = useState('');
+  //venue state
+  const [venueState, setvenueState] = useState('');
+  //venue zip
+  const [venueZip, setVenueZip] = useState('');
   //date
   const [showDate, setShowDate] = useState('');
   //time
@@ -73,6 +84,7 @@ export default function CreateShowModal(props) {
               >
                 <Text style={styles.buttonText}>Add Band</Text>
               </TouchableOpacity>
+
               {/* Venue input */}
               <TextInput
                 placeholder="Show Venue"
@@ -81,6 +93,40 @@ export default function CreateShowModal(props) {
                 onChangeText={setVenueName}
                 style={styles.input}
               />
+              {/* Address input */}
+              <TextInput
+                placeholder="Address"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                onChangeText={setvenueAddress}
+                style={styles.input}
+              />
+              {/* City input */}
+              <TextInput
+                placeholder="City"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                onChangeText={setVenueCity}
+                style={styles.input}
+              />
+              {/* State input */}
+              <TextInput
+                placeholder="State"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                onChangeText={setvenueState}
+                style={styles.input}
+              />
+              {/* Zip input */}
+              <TextInput
+                placeholder="Zip Code"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="next"
+                onChangeText={setVenueZip}
+                style={styles.input}
+              />
+
+
               {/* Date input */}
               <TextInput
                 placeholder="Date"
@@ -112,6 +158,10 @@ export default function CreateShowModal(props) {
                   setModalVisible(false);
                   axios.post('https://dive-266016.appspot.com/venues', {
                     name: venueName,
+                    address: venueAddress,
+                    city: venueCity,
+                    state: venueState,
+                    zip_code: venueZip
                   })
                     .then(response => {
                       console.log(response);
