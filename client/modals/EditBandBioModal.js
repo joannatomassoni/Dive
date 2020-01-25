@@ -11,25 +11,18 @@ import {
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function CreateShowModal(props) {
+export default function EditBandBioModal(props) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
-  //shwo title
-  const [showTitle, setShowTitle] = useState('');
-  //band title
-  const [bandName, setBandName] = useState('');
-  //array of all bands
-  const [bandNames, addBandName] = useState([]);
-  //venue name
-  const [venueName, setVenueName] = useState('');
-  //date
-  const [showDate, setShowDate] = useState('');
-  //time
-  const [showTime, setShowTime] = useState('');
-  //show description
-  const [showDesc, setShowDesc] = useState('');
+  //new bio
+  const [newBio, setNewBio] = useState('');
+  //new spotify link
+  const [spotifyLink, setSpotifyLink] = useState('');
+  //new facebook link
+  const [facebookLink, setFacebookLink] = useState('');
+  //new instagram link
+  const [instagramLink, setInstagramLink] = useState('');
 
-  console.log(showDesc);
   return (
     <View>
       <Modal
@@ -49,98 +42,59 @@ export default function CreateShowModal(props) {
           />
           <View style={styles.container}>
             <View style={styles.title}>
-              <Text style={styles.text}>New Show</Text>
-              {/* username text box */}
+              <Text style={styles.text}>Edit Bio</Text>
+              {/* new bio text box */}
               <TextInput
-                placeholder="Show Title"
+                placeholder="New Bio"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
-                onChangeText={setShowTitle}
+                onChangeText={setNewBio}
                 style={styles.input}
               />
-              {/* Bands input */}
+              {/* spotify link */}
               <TextInput
-                placeholder="Add Band"
+                placeholder="Spotify Link"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
-                onChangeText={setBandName}
+                onChangeText={setSpotifyLink}
                 style={styles.input}
               />
-              {/* create show button when modal is showing */}
-              <TouchableOpacity
-                style={styles.loginContainer}
-                onPress={() => addBandName([...bandNames, bandName])}
-              >
-                <Text style={styles.buttonText}>Add Band</Text>
-              </TouchableOpacity>
-              {/* Venue input */}
+              {/* facebook link */}
               <TextInput
-                placeholder="Show Venue"
+                placeholder="Facebook Link"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
-                onChangeText={setVenueName}
+                onChangeText={setFacebookLink}
                 style={styles.input}
               />
-              {/* Date input */}
+              {/* instagram link */}
               <TextInput
-                placeholder="Date"
+                placeholder="Instagram Link"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
-                onChangeText={setShowDate}
+                onChangeText={setInstagramLink}
                 style={styles.input}
               />
-              {/* Time input */}
-              <TextInput
-                placeholder="Time"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setShowTime}
-                style={styles.input}
-              />
-              {/* Description input */}
-              <TextInput
-                placeholder="Show Description"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setShowDesc}
-                style={styles.input}
-              />
-              {/* create show button when modal is showing */}
+              {/* edit bio button when modal is showing */}
               <TouchableOpacity
                 style={styles.loginContainer}
                 onPress={() => {
                   setModalVisible(false);
-                  axios.post('http://localhost:8080/venues', {
-                    name: venueName,
-                  })
-                    .then(response => {
-                      console.log(response);
-                      return axios.post('http://localhost:8080/shows', {
-                      name: showTitle,
-                      date: showDate,
-                      time: showTime,
-                      photo: null,
-                      venueName: venueName,
-                      bandName: bandNames,
-                      description: showDesc
-                    })})
-                    .then(response => response)
-                    .catch(error => console.log('failed to create show', error));
-              }}
+                }}
               >
-                <Text style={styles.buttonText}>Create Show</Text>
+                <Text style={styles.buttonText}>Edit Bio</Text>
               </TouchableOpacity>
 
             </View>
           </View>
         </KeyboardAvoidingView>
       </Modal>
-      {/* create show button when modal is hidden */}
+      {/* cedit bio button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
         onPress={() => { setModalVisible(true); }}
       >
-        <Text style={styles.signupButtonText}>Create a show</Text>
+        <Text style={styles.signupButtonText}>Edit Bio</Text>
       </TouchableOpacity>
     </View>
   );
@@ -171,7 +125,7 @@ const styles = StyleSheet.create({
     color: '#59C3D1',
     opacity: 0.9,
     fontWeight: 'bold',
-    marginLeft: 75,
+    marginLeft: 90,
     marginBottom: 15
   },
   loginContainer: {

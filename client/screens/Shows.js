@@ -26,7 +26,7 @@ export default function Shows(props) {
   useEffect(() => {
     axios.get('http://localhost:8080/shows')
       .then((response) => {
-        console.log("shows response from db", response.data[0])
+        console.log("shows response from db", response.data)
         setShows(response.data);
       })
       .catch((err) => {
@@ -46,7 +46,7 @@ export default function Shows(props) {
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
-        <Text style={styles.text}>Shows</Text>
+        <Text style={styles.headerText}>Shows</Text>
         {shows.map(show => {
           return (
             <Card
@@ -54,7 +54,6 @@ export default function Shows(props) {
               style={styles.card}
               key={show.id}
               backgroundColor='#fff'
-              borderWidth={0}
               borderRadius={10}
               padding={10}
             // image={require('../images/pic2.jpg')}
@@ -64,7 +63,7 @@ export default function Shows(props) {
                 <Text style={styles.cardText} key={band.id}>{band.name}</Text>
               })}
               <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
-              {/* <SingleShowModal show={show.id} /> */}
+              <SingleShowModal show={show.id} />
             </Card>
           )
         })}
