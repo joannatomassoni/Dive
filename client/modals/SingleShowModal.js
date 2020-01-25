@@ -85,7 +85,6 @@ export default function SingleShowModal(props) {
             {/* cards to hold comments */}
             {comments.map(comment => {
               return (
-
                 <Card
                   style={styles.card}
                   key={comment.id}
@@ -94,11 +93,10 @@ export default function SingleShowModal(props) {
                   padding={10}
                 // image={require('../images/pic2.jpg')}
                 >
-                  <Text style={styles.cardText}>Username here</Text>
+                  <Text style={styles.cardText} key={comment.user.id}>Username: {comment.user.name}</Text>
                   <Text style={styles.cardText}>{comment.text}</Text>
-                  <Text style={styles.cardText}>Comment time here</Text>
+                  <Text style={styles.cardText}>{comment.createdAt}</Text>
                 </Card>
-
               )
             })}
           </ScrollView>
