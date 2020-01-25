@@ -1,13 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 // const path = require('path');
 const bodyParser = require('body-parser');
 const router = require('./routes');
 const db = require('./db/sequelize');
-
-if (process.env.NODE_ENV !== 'production') {
-  const dotenv = require('dotenv').config();
-}
-console.log(process.env);
 
 const app = express();
 

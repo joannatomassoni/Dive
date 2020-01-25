@@ -56,6 +56,7 @@ const getSingleVenue = async (req, res) => {
 }
 
 // Get shows at a given venue
+// this might not be necessary
 const getVenueShows = async (req, res) => {
     try {
         const { id } = req.params;
