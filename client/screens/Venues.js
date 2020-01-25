@@ -45,15 +45,16 @@ export default function Venues(props) {
             <Card
               title={venue.name}
               style={styles.card}
+              key={venue.id}
               backgroundColor='#fff'
               borderWidth={0}
               borderRadius={10}
               padding={10}
             // image={require('../images/pic2.jpg')}
             >
-              <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id} >Address:</Text>
-              <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id}>{venue.address}</Text>
-              <Text style={{ marginBottom: 10, color: '#000' }} key={venue.id} >{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
+              <Text style={{ marginBottom: 10, color: '#000' }}>Address:</Text>
+              <Text style={{ marginBottom: 10, color: '#000' }}>{venue.address}</Text>
+              <Text style={{ marginBottom: 10, color: '#000' }}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
               <SingleVenueModal venueID={venue.id} />
             </Card>
           )
