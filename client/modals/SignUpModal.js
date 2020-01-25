@@ -114,18 +114,18 @@ export default function ModalExample(props) {
               style={styles.loginContainer}
               onPress={() => {
                 setModalVisible(false);
+                axios.post('http://localhost:8080/users', {
+                  name: usernameValue,
+                  typeName: userType,
+                })
+                .then(response => response)
+                .catch(error => console.log('failed to create user', error));
                 setUserInfo(userInfo => ({
                   ...userInfo,
                   signedIn: true,
                   name: usernameValue,
                   userType: userType
                 }));
-                axios.post('http://localhost:8080/users', {
-                  name: usernameValue,
-                  typeName: userType,
-                })
-                .then(response => response)
-                .catch(error => console.log('failed to create user', error))
               }}
             >
               <Text style={styles.buttonText}>Signup</Text>

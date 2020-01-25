@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Modal,
   Text,
@@ -9,9 +9,12 @@ import {
   KeyboardAvoidingView
 } from 'react-native';
 import axios from 'axios';
+import { SignedInContext } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function EditBandBioModal(props) {
+  //global user signin info and editing function
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //new bio
@@ -43,53 +46,121 @@ export default function EditBandBioModal(props) {
           <View style={styles.container}>
             <View style={styles.title}>
               <Text style={styles.text}>Edit Bio</Text>
+
               {/* new bio text box */}
-              <TextInput
-                placeholder="New Bio"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setNewBio}
-                style={styles.input}
-              />
+              <View style={{
+                flexDirection: 'row',
+                height: 50,
+                justifyContent: 'left',
+              }}>
+                <TextInput
+                  placeholder="New Bio"
+                  placeholderTextColor="#75A4AD"
+                  returnKeyType="next"
+                  onChangeText={setNewBio}
+                  style={styles.input}
+                />
+                {/* update bio button */}
+                <TouchableOpacity
+                  style={styles.loginContainer}
+                  onPress={() => {
+                    setModalVisible(false);
+                  }}
+                >
+                  <Text style={styles.buttonText}>+</Text>
+                </TouchableOpacity>
+              </View>
+
               {/* spotify link */}
-              <TextInput
-                placeholder="Spotify Link"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setSpotifyLink}
-                style={styles.input}
-              />
+              <View style={{
+                flexDirection: 'row',
+                height: 50,
+                justifyContent: 'left',
+              }}>
+                <TextInput
+                  placeholder="Spotify Link"
+                  placeholderTextColor="#75A4AD"
+                  returnKeyType="next"
+                  onChangeText={setSpotifyLink}
+                  style={styles.input}
+                />
+                {/* update spotify button */}
+                {/* <TouchableOpacity
+                  style={styles.loginContainer}
+                  onPress={() => {
+                    axios.patch(`http://localhost:8080/users/${}/bio`, {
+                      name: usernameValue,
+                      typeName: userType,
+                    })
+                      .then(response => response)
+                      .catch(error => console.log('failed to create user', error))
+                  }}
+                >
+                  <Text style={styles.buttonText}>+</Text>
+                </TouchableOpacity> */}
+              </View>
+
               {/* facebook link */}
-              <TextInput
-                placeholder="Facebook Link"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setFacebookLink}
-                style={styles.input}
-              />
+              <View style={{
+                flexDirection: 'row',
+                height: 50,
+                justifyContent: 'left',
+              }}>
+                <TextInput
+                  placeholder="Facebook Link"
+                  placeholderTextColor="#75A4AD"
+                  returnKeyType="next"
+                  onChangeText={setFacebookLink}
+                  style={styles.input}
+                />
+                {/* update facebook button */}
+                <TouchableOpacity
+                  style={styles.loginContainer}
+                  onPress={() => {
+                    setModalVisible(false);
+                  }}
+                >
+                  <Text style={styles.buttonText}>+</Text>
+                </TouchableOpacity>
+              </View>
+
               {/* instagram link */}
-              <TextInput
-                placeholder="Instagram Link"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setInstagramLink}
-                style={styles.input}
-              />
-              {/* edit bio button when modal is showing */}
+              <View style={{
+                flexDirection: 'row',
+                height: 50,
+                justifyContent: 'left',
+              }}>
+                <TextInput
+                  placeholder="Instagram Link"
+                  placeholderTextColor="#75A4AD"
+                  returnKeyType="next"
+                  onChangeText={setInstagramLink}
+                  style={styles.input}
+                />
+                {/* update instagram button */}
+                <TouchableOpacity
+                  style={styles.loginContainer}
+                  onPress={() => {
+                    setModalVisible(false);
+                  }}
+                >
+                  <Text style={styles.buttonText}>+</Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* button to complete editing */}
               <TouchableOpacity
-                style={styles.loginContainer}
-                onPress={() => {
-                  setModalVisible(false);
-                }}
+                style={styles.signupContainer}
+                onPress={() => { setModalVisible(true); }}
               >
-                <Text style={styles.buttonText}>Edit Bio</Text>
+                <Text style={styles.signupButtonText}>Return</Text>
               </TouchableOpacity>
 
             </View>
           </View>
         </KeyboardAvoidingView>
       </Modal>
-      {/* cedit bio button when modal is hidden */}
+      {/* edit bio button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
         onPress={() => { setModalVisible(true); }}
@@ -112,7 +183,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 15,
     borderRadius: 5,
-    marginHorizontal: 40,
+    width: 300,
     fontWeight: 'bold'
   },
   title: {
@@ -132,7 +203,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#59C3D1',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
+    width: 40,
     marginBottom: 15
   },
   signupContainer: {
