@@ -26,6 +26,8 @@ export default function SingleShowModal(props) {
   const [bands, setBands] = useState([]);
   //array of all comments
   const [comments, setComments] = useState([]);
+  //user's rsvp status
+  const [rsvp, setRsvp] = useState(false);
   //info required for axios calls
   let show = props.show;
 
@@ -47,8 +49,8 @@ export default function SingleShowModal(props) {
         console.log("error getting comments for show", err);
       })
   }, [])
-
-  console.log('userInfo', userInfo.id, 'singleShow', singleShow.id)
+  
+  console.log(userInfo.id);
 
   return (
     <View>
@@ -71,6 +73,7 @@ export default function SingleShowModal(props) {
           <ScrollView style={{ marginTop: 30 }}>
             {/* header */}
             <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
+            {/* additional text */}
             <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.date}</Text>
             <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.time}</Text>
             <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.description}</Text>
@@ -79,21 +82,38 @@ export default function SingleShowModal(props) {
               return <Text style={{ marginBottom: 10, color: '#fff' }}>{band.name}</Text>
             })}
             {/* button to rsvp to specific (shows when signed in) */}
-            {userInfo.signedIn 
-              ? <TouchableOpacity
-                style={styles.signupContainer}
+            {userInfo.signedIn ? 
+              //if already rsvp'd, show button to cancel rvp
+              (rsvp ? <TouchableOpacity
+                style={styles.cancelButtonContainer}
                 onPress={() => {
-                  setModalVisible(true);
+                  console.log(userInfo.id);
+                  axios.delete('http://localhost:8080/shows/rsvps', {
+                    data: {
+                      id_fan: userInfo.id,
+                      id_show: singleShow.id,
+                    }
+                  })
+                    .then(response => setRsvp(false))
+                    .catch(error => console.log('failed to rsvp', error));
+                }}
+              >
+                <Text style={styles.signupButtonText}>Cancel RSVP</Text>
+              </TouchableOpacity>
+              //if not rsvp'd, show rsvp button
+              : <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={() => {
                   axios.post('http://localhost:8080/shows/rsvps', {
                     id_fan: userInfo.id,
                     id_show: singleShow.id,
                   })
-                    .then(response => console.log(response))
+                    .then(response => setRsvp(true))
                     .catch(error => console.log('failed to rsvp', error));
                 }}
               >
                 <Text style={styles.signupButtonText}>RSVP</Text>
-              </TouchableOpacity>
+              </TouchableOpacity>)
               : null}
             {/* button to create a new comment (shows when signed in) */}
             {userInfo.signedIn ? <CreateCommentModal userId={userInfo.id} showId={singleShow.id} /> : null}
@@ -127,7 +147,20 @@ export default function SingleShowModal(props) {
             })
             .catch((err) => {
               console.log("error getting single show info", err);
+            });
+          //request to get user's rsvp info
+          axios.get(`http://localhost:8080/fans/${userInfo.id}/rsvps`)
+            .then((response) => {
+              response.data.map(show => {
+                if (show.id === singleShow.id){
+                  setRsvp(true);
+                }
+              })
             })
+            .catch((err) => {
+              console.log("error getting rsvp info", err);
+            });
+          
         }}
       >
         <Text>Show More</Text>
@@ -155,8 +188,15 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#000'
   },
-  signupContainer: {
+  buttonContainer: {
     backgroundColor: '#75A4AD',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginHorizontal: 90,
+    marginBottom: 15
+  },
+  cancelButtonContainer: {
+    backgroundColor: '#C70039',
     paddingVertical: 10,
     borderRadius: 5,
     marginHorizontal: 90,
