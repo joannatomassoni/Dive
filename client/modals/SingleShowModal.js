@@ -23,8 +23,8 @@ export default function SingleShowModal(props) {
   //set username to text in username textInput
   const [showTitle, setShowTitle] = useState('');
   const [singleShow, setSingleShow] = useState([]);
-  // console.log(props);
   let show = props.show;
+  console.log(singleShow);
   return (
     <View>
       <Modal
@@ -44,10 +44,13 @@ export default function SingleShowModal(props) {
           />
 
           <ScrollView style={{ marginTop: 30 }}>
-            <Text style={styles.headerText} key={show.id}>Show Title</Text>
+            {/* header */}
+            <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
 
-            <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.name}</Text>
-            <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.time}</Text>
+            <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.venue.name}</Text>
+            <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.date}</Text>
+            <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.time}</Text>
+            <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.description}</Text>
             {/* button to create a new comment (shows when signed in) */}
             {userInfo.signedIn ? <CreateCommentModal /> : null}
             {/* cards to hold comments */}

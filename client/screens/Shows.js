@@ -34,6 +34,8 @@ export default function Shows(props) {
       })
   }, [])
 
+  console.log(userInfo);
+
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />

@@ -27,7 +27,7 @@ export default function Bands(props) {
   useEffect(() => {
     axios.get('http://localhost:8080/bands')
       .then((response) => {
-        // console.log(response.data);
+        console.log(bands);
         setBands(response.data);
       })
       .catch(err => console.log(err))
@@ -38,6 +38,7 @@ export default function Bands(props) {
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Bands</Text>
         {bands.map(band => {
+          console.log(band);
           return (
             <Card
               title={band.name}
