@@ -10,13 +10,12 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
-
-export default function CreateCommentModal(props) {
+export default function CreateCommentModal({ showId, userId }) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
-  //new bio
+  //comment text
   const [comment, setComment] = useState('');
-
+  console.log(comment);
   return (
     <View>
       <Modal
@@ -54,7 +53,6 @@ export default function CreateCommentModal(props) {
               >
                 <Text style={styles.buttonText}>Post Comment</Text>
               </TouchableOpacity>
-
             </View>
           </View>
         </KeyboardAvoidingView>
@@ -62,14 +60,21 @@ export default function CreateCommentModal(props) {
       {/* cedit bio button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
-        onPress={() => { setModalVisible(true); }}
+        onPress={() => {
+          setModalVisible(true);
+          axios.post(`http://localhost:8080/shows/${showId}/comments`, {
+            id_user: userId,
+            text: comment
+          })
+            .then(response => console.log(response))
+            .catch(error => console.log('failed to create show', error));
+        }}
       >
         <Text style={styles.signupButtonText}>Comment</Text>
       </TouchableOpacity>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
