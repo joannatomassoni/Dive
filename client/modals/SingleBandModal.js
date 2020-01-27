@@ -13,8 +13,6 @@ import { Card } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
-
-
 export default function SingleBandModal(props) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
@@ -24,21 +22,18 @@ export default function SingleBandModal(props) {
   const [shows, setShows] = useState([]);
   let band = props.name;
   let bandId = props.bandId;
-  console.log("getting props", band)
 
   useEffect(() => {
     axios.get(`http://localhost:8080/bands/${bandId}/shows`)
       .then((response) => {
-        // console.log("getting a bands shows from db", response.data)
+        console.log("getting a bands shows from db", response.data)
         setShows(response.data.shows);
       })
       .catch((err) => {
-        // console.log("frontend not getting band shows from db", err);
+        console.log("frontend not getting band shows from db", err);
       })
   }, [])
-
-  console.log("getting a bands all their shows", shows);
-
+  
   return (
     <View>
       <Modal
@@ -56,16 +51,13 @@ export default function SingleBandModal(props) {
             style={styles.menuIcon}
             onPress={() => { setModalVisible(false) }}
           />
-
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
-
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
             <Text style={styles.headerText}>Shows</Text>
             {shows.map(show => {
               return (
                 <View>
-
                   <Card
                     title={show.name}
                     style={styles.card}
@@ -83,7 +75,6 @@ export default function SingleBandModal(props) {
                 </View>
               )
             })}
-
           </ScrollView>
         </SafeAreaView>
       </Modal>
@@ -108,7 +99,6 @@ export default function SingleBandModal(props) {
     </View >
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
