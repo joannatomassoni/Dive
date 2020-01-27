@@ -28,6 +28,7 @@ export default function SingleBandModal(props) {
   const [showTitle, setShowTitle] = useState('');
   const [singleBand, setBand] = useState([]);
   const [shows, setShows] = useState([]);
+  const [isFollowing, toggleFollowing] = useState(false);
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   let band = props.name;
   let bandId = props.bandId;
@@ -39,6 +40,12 @@ export default function SingleBandModal(props) {
         // console.log("getting a bands shows from db", response.data)
         setBand(response.data);
         setShows(response.data.shows);
+      })
+      .then(() => {
+        // axios request to see if user is following band
+        console.log(userInfo)
+        axios.get(`fans/${userInfo.id}/rsvps`)
+        .then((response) => console.log(response));
       })
       .catch((err) => {
         console.log(err);
@@ -74,19 +81,42 @@ export default function SingleBandModal(props) {
               <InstagramButton link={singleBand.link_instagram} />
               <FacebookButton link={singleBand.link_facebook} />
             </View>
+            
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
-            <TouchableOpacity
-                  style={styles.followButtonContainer}
-                  onPress={() => {
-                    axios.post(`http://localhost:8080/bands/${bandId}/fans`, {
-                      id_fan: userInfo.id
-                    })
-                      .then(response => console.log(response))
-                      .catch(error => console.log('failed to follow band', error))
-                  }}
-                >
-                  <Text style={styles.followButtonText}>Follow</Text>
-                </TouchableOpacity>
+            {
+              isFollowing ? 
+              <TouchableOpacity
+                    style={styles.followButtonContainer}
+                    onPress={() => {
+                      axios.delete(`http://localhost:8080/bands/${bandId}/fans`, {
+                        id_fan: userInfo.id
+                      })
+                        .then(response => console.log(response))
+                        .then(() => {
+                          toggleFollowing(false)
+                        })
+                        .catch(error => console.log('failed to unfollow band', error))
+                    }}
+                  >
+                    <Text style={styles.followButtonText}>Unfollow</Text>
+                  </TouchableOpacity>
+              :
+              <TouchableOpacity
+                    style={styles.followButtonContainer}
+                    onPress={() => {
+                      axios.post(`http://localhost:8080/bands/${bandId}/fans`, {
+                        id_fan: userInfo.id
+                      })
+                        .then(response => console.log(response))
+                        .then(() => {
+                          toggleFollowing(true)
+                        })
+                        .catch(error => console.log('failed to follow band', error))
+                    }}
+                  >
+                    <Text style={styles.followButtonText}>Follow</Text>
+                  </TouchableOpacity>
+            }
             <Text style={styles.headerText}>Shows</Text>
             {shows.map(show => {
               return (
