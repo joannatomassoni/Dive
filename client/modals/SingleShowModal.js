@@ -81,7 +81,7 @@ export default function SingleShowModal(props) {
             })}
             {/* <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.venue.name}</Text> */}
             {/* button to create a new comment (shows when signed in) */}
-            {userInfo.signedIn ? <CreateCommentModal /> : null}
+            {userInfo.signedIn ? <CreateCommentModal userId={userInfo.id} showId={singleShow.id} /> : null}
             {/* cards to hold comments */}
             {comments.map(comment => {
               return (
