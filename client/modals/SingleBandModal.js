@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2D323A',
-    alignItems: 'center',
     justifyContent: 'center',
   },
   headerText: {
