@@ -32,7 +32,7 @@ export default function Hub(props) {
         setHubInfo(response.data);
       })
       .catch((err) => {
-        console.log("eere getting hub info", err);
+        console.log("were getting hub info", err);
       })
   }, [userInfo])
 
@@ -44,7 +44,7 @@ export default function Hub(props) {
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Hub</Text>
         <Text style={{ marginBottom: 10, color: '#fff' }}>
-          General information about the band will go here.
+          {hubInfo.bio}
         </Text>
         {/* Social Media Buttons */}
         <View style={{
