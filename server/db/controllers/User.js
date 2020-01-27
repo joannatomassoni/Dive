@@ -7,6 +7,7 @@ const {
         Show,
         Type, 
         User, 
+        Venue,
         sequelize
     } = require('../sequelize');
 
@@ -256,7 +257,10 @@ const getBandShows = async (req, res) => {
                 id
             },
             include: [
-                { model: Show }
+                { model: Show, 
+                    include: [
+                        { model: Venue }
+                    ]}
             ]
         })
         res.status(200).send(shows);
