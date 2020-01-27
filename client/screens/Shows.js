@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2D323A',
-    alignItems: 'center',
     justifyContent: 'center',
   },
   headerText: {
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
     color: '#59C3D1',
     opacity: 0.9,
     fontWeight: 'bold',
-    textAlign: 'left',
+    textAlign: 'right',
     paddingRight: 20
   },
   card: {
