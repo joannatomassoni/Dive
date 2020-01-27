@@ -16,7 +16,7 @@ const createShow = async (req, res) => {
             description: description,
             id_venue: venue.id
         })
-        bandNames.forEach(async (bandName) => {
+        await bandNames.forEach(async (bandName) => {
             const band = await getRecordByName('band', bandName);
             await ShowBand.create({
                 id_show: show.id,
@@ -58,8 +58,8 @@ const getSingleShow = async (req, res) => {
                 id
             },
             include: [
-                { model: User, as: 'bands', attributes: ['id', 'name'] },
-                { model: Venue, attributes: ['name'] },
+                { model: User, through: ShowBand, as: 'bands', attributes: ['id', 'name'] },
+                { model: Venue, attributes: ['id', 'name'] },
                 { model: User, as: 'Fans', attributes: ['id', 'name'] },
                 { model: Comment }
             ]
