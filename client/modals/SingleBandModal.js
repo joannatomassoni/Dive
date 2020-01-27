@@ -22,18 +22,18 @@ export default function SingleBandModal(props) {
   const [shows, setShows] = useState([]);
   let band = props.name;
   let bandId = props.bandId;
-  console.log("getting props", band)
+
   useEffect(() => {
     axios.get(`http://localhost:8080/bands/${bandId}/shows`)
       .then((response) => {
-        // console.log("getting a bands shows from db", response.data)
+        console.log("getting a bands shows from db", response.data)
         setShows(response.data.shows);
       })
       .catch((err) => {
-        // console.log("frontend not getting band shows from db", err);
+        console.log("frontend not getting band shows from db", err);
       })
   }, [])
-  console.log("getting a bands all their shows", shows);
+  
   return (
     <View>
       <Modal

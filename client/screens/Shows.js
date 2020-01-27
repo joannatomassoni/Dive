@@ -21,6 +21,7 @@ export default function Shows(props) {
   ///global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
+  
   useEffect(() => {
     axios.get('http://localhost:8080/shows')
       .then((response) => {
