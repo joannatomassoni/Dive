@@ -13,8 +13,6 @@ import { Card } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
-
-
 export default function SingleBandModal(props) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
@@ -22,12 +20,11 @@ export default function SingleBandModal(props) {
   const [showTitle, setShowTitle] = useState('');
   const [singleBand, setBand] = useState([]);
   const [shows, setShows] = useState([]);
-  console.log(props);
-  let band = props.bandID;
-  // console.log(band)
-
+  let band = props.name;
+  let bandId = props.bandId;
+  console.log("getting props", band)
   useEffect(() => {
-    axios.get(`http://localhost:8080/bands/${band}/shows`)
+    axios.get(`http://localhost:8080/bands/${bandId}/shows`)
       .then((response) => {
         // console.log("getting a bands shows from db", response.data)
         setShows(response.data.shows);
@@ -36,9 +33,7 @@ export default function SingleBandModal(props) {
         // console.log("frontend not getting band shows from db", err);
       })
   }, [])
-
   console.log("getting a bands all their shows", shows);
-
   return (
     <View>
       <Modal
@@ -56,16 +51,13 @@ export default function SingleBandModal(props) {
             style={styles.menuIcon}
             onPress={() => { setModalVisible(false) }}
           />
-
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
-
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
             <Text style={styles.headerText}>Shows</Text>
             {shows.map(show => {
               return (
                 <View>
-
                   <Card
                     title={show.name}
                     style={styles.card}
@@ -83,7 +75,6 @@ export default function SingleBandModal(props) {
                 </View>
               )
             })}
-
           </ScrollView>
         </SafeAreaView>
       </Modal>
@@ -95,7 +86,7 @@ export default function SingleBandModal(props) {
           //axios
           axios.get(`http://localhost:8080/users/${band}`)
             .then((response) => {
-              console.log("getting single band", response)
+              console.log("getting single band", response.data)
               setBand(response.data);
             })
             .catch((err) => {
@@ -108,7 +99,6 @@ export default function SingleBandModal(props) {
     </View >
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
