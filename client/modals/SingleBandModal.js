@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Modal,
   Text,
@@ -13,6 +13,7 @@ import { Card } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
+import { SignedInContext } from '../context/UserContext'
 
 
 export default function SingleBandModal(props) {
@@ -22,9 +23,11 @@ export default function SingleBandModal(props) {
   const [showTitle, setShowTitle] = useState('');
   const [singleBand, setBand] = useState([]);
   const [shows, setShows] = useState([]);
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
   let band = props.name;
   let bandId = props.bandId;
   console.log("getting props", band)
+  console.log(userInfo);
 
   useEffect(() => {
     axios.get(`http://localhost:8080/bands/${bandId}/shows`)
@@ -59,8 +62,19 @@ export default function SingleBandModal(props) {
 
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
-
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
+            <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    axios.post(`http://localhost:8080/bands/${bandId}/fans`, {
+                      id_fan: userInfo.id
+                    })
+                      .then(response => console.log(response))
+                      .catch(error => console.log('failed to follow band', error))
+                  }}
+                >
+                  <Text style={styles.buttonText}>Follow</Text>
+                </TouchableOpacity>
             <Text style={styles.headerText}>Shows</Text>
             {shows.map(show => {
               return (
