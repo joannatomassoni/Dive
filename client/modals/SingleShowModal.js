@@ -52,7 +52,7 @@ export default function SingleShowModal(props) {
             <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.time}</Text>
             <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.description}</Text>
             {/* button to create a new comment (shows when signed in) */}
-            {userInfo.signedIn ? <CreateCommentModal /> : null}
+            {userInfo.signedIn ? <CreateCommentModal userId={userInfo.id} showId={singleShow.id} /> : null}
             {/* cards to hold comments */}
             <Card
               style={styles.card}
