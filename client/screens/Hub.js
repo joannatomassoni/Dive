@@ -21,6 +21,7 @@ import CreateShowModal from '../modals/CreateShowModal';
 import EditBandBioModal from '../modals/EditBandBioModal';
 import EditShowModal from '../modals/EditShowModal';
 import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
 import * as ImagePicker from 'expo-image-picker';
 
 export default function Hub(props) {
@@ -34,8 +35,30 @@ export default function Hub(props) {
 
   // let showList = shows.show;
 
+  const getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    }
+  };
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    });
+    setImage(result);
+  }
 
+  //   if (!result.cancelled) {
+  //     this.setState({ image: result.uri });
+  //   }
+  // };
+  console.log("image link", image);
   //load all user info when brought to hub
   useEffect(() => {
     axios.get(`http://localhost:8080/users/${userInfo.username}`)
@@ -49,49 +72,27 @@ export default function Hub(props) {
 
     axios.get(`http://localhost:8080/bands/${userInfo.id}/shows`)
       .then((response) => {
-        console.log("getting a bands shows  in hubfrom db", response.data)
+        // console.log("is userInfo id working?", userInfo);
+        // console.log("getting a bands shows  in hub from db", response.data)
         setShows(response.data.shows);
       })
       .catch((err) => {
-        console.log("frontend not getting band shows from db", err);
+        // console.log("frontend not getting band shows from db", err);
       })
-    // this.getPermissionAsync();
+
+    getPermissionAsync();
+
+    // axios.get(`http://localhost:8080/venues/${shows.id_venue}`)
+    //   .then((response) => {
+    //     console.log("getting a venue from db", response.data)
+    //     setVenue(response.data.shows);
+
+    //   })
+    //   .catch((err) => {
+    //     console.log("frontend not getting band shows from db", err);
+    //   })
   }, [userInfo])
 
-  // axios.get(`http://localhost:8080/venues/${shows.id_venue}`)
-  //   .then((response) => {
-  //     console.log("getting a venue from db", response.data)
-  //     setVenue(response.data.shows);
-
-  //   })
-  //   .catch((err) => {
-  //     console.log("frontend not getting band shows from db", err);
-  //   })
-
-  // console.log(hubInfo);
-
-  // getPermissionAsync = async () => {
-  //   if (Constants.platform.ios) {
-  //     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-  //     if (status !== 'granted') {
-  //       alert('Sorry, we need camera roll permissions to make this work!');
-  //     }
-  //   }
-  // }
-
-  // _pickImage = async () => {
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     allowsEditing: true,
-  //     aspect: [4, 3],
-  //     quality: 1
-  //   });
-
-
-  //   if (!result.cancelled) {
-  //     this.setState({ image: result.uri });
-  //   }
-  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -115,6 +116,16 @@ export default function Hub(props) {
         <EditBandBioModal />
         {/* Button to open create show modal */}
         <CreateShowModal />
+
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Button
+            title="Pick an image from camera roll"
+            onPress={pickImage}
+          />
+          {image.uri &&
+            <Image source={{ uri: image.uri }} style={{ width: 200, height: 200 }} />}
+        </View>
+
         {/* Cards for all upcoming shows */}
         {shows.map(show => {
           return (
@@ -133,9 +144,6 @@ export default function Hub(props) {
             </Card>
           )
         })}
-
-
-
       </ScrollView>
     </SafeAreaView>
   )
