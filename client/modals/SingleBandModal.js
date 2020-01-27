@@ -29,12 +29,12 @@ export default function SingleBandModal(props) {
   let band = props.name;
   let bandId = props.bandId;
   console.log("getting props", band)
-  console.log(shows);
 
   useEffect(() => {
     axios.get(`http://localhost:8080/bands/${bandId}/shows`)
       .then((response) => {
         // console.log("getting a bands shows from db", response.data)
+        setBand(response.data);
         setShows(response.data.shows);
       })
       .catch((err) => {
