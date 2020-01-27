@@ -27,7 +27,7 @@ export default function SingleBandModal(props) {
   let band = props.name;
   let bandId = props.bandId;
   console.log("getting props", band)
-  console.log(userInfo);
+  console.log(shows);
 
   useEffect(() => {
     axios.get(`http://localhost:8080/bands/${bandId}/shows`)
@@ -92,6 +92,7 @@ export default function SingleBandModal(props) {
                   >
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
+                    <Text style={{ marginBottom: 10, color: '#000' }}>{show.venue.name}</Text>
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
                   </Card>
                 </View>
