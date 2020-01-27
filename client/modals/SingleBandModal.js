@@ -14,6 +14,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import { SignedInContext } from '../context/UserContext'
+import SingleShowModal from '../modals/SingleShowModal'
+
 
 
 export default function SingleBandModal(props) {
@@ -94,6 +96,8 @@ export default function SingleBandModal(props) {
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.venue.name}</Text>
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
+                    <SingleShowModal show={show.id} />
+
                   </Card>
                 </View>
               )
