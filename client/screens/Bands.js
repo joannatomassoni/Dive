@@ -22,14 +22,13 @@ export default function Bands(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state to hold bands
-  console.log('user info', userInfo)
-
   const [bands, setBands] = useState([]);
+
   useEffect(() => {
     axios.get('http://localhost:8080/bands')
       .then((response) => {
-        // console.log(response.data);
-        setBands(response.data)
+        console.log(bands);
+        setBands(response.data);
       })
       .catch(err => console.log(err))
   }, [])
@@ -39,6 +38,7 @@ export default function Bands(props) {
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Bands</Text>
         {bands.map(band => {
+          console.log(band);
           return (
             <Card
               title={band.name}

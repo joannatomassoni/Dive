@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import DrawerNavigator from './navigation/DrawerNavigator'
-import { SignedInContext } from './context/UserContext'
+import DrawerNavigator from './navigation/DrawerNavigator';
+import { SignedInContext } from './context/UserContext';
 
 export default function App (props) {
   //initial login state of app

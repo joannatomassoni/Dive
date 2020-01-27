@@ -70,7 +70,8 @@ export default function SingleShowModal(props) {
           />
 
           <ScrollView style={{ marginTop: 30 }}>
-            <Text style={styles.headerText} key={show.id}>Show Title</Text>
+            {/* header */}
+            <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
 
             <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.name}</Text>
             <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.time}</Text>
@@ -102,7 +103,7 @@ export default function SingleShowModal(props) {
           </ScrollView>
         </SafeAreaView>
       </Modal>
-      {/* create show button when modal is hidden */}
+      {/* create comment button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
         onPress={() => {
@@ -115,7 +116,7 @@ export default function SingleShowModal(props) {
               setSingleShow(response.data);
             })
             .catch((err) => {
-              console.log("frontend not getting single show from db", err);
+              console.log("error getting single show from db", err);
             })
         }}
       >
