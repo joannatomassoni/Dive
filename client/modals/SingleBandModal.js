@@ -64,7 +64,7 @@ export default function SingleBandModal(props) {
             <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
             <TouchableOpacity
-                  style={styles.button}
+                  style={styles.followButtonContainer}
                   onPress={() => {
                     axios.post(`http://localhost:8080/bands/${bandId}/fans`, {
                       id_fan: userInfo.id
@@ -73,7 +73,7 @@ export default function SingleBandModal(props) {
                       .catch(error => console.log('failed to follow band', error))
                   }}
                 >
-                  <Text style={styles.buttonText}>Follow</Text>
+                  <Text style={styles.followButtonText}>Follow</Text>
                 </TouchableOpacity>
             <Text style={styles.headerText}>Shows</Text>
             {shows.map(show => {
@@ -145,6 +145,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 40,
     backgroundColor: '#59C3D1',
+  },
+  followButtonText: {
+    textAlign: 'center',
+    fontWeight: '700',
+    color: '#000'
+  },
+  followButtonContainer: {
+    backgroundColor: '#75A4AD',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginHorizontal: 90,
+    marginBottom: 15
   },
   cardText: {
     fontSize: 30,
