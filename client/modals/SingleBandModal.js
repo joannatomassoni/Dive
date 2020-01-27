@@ -22,11 +22,12 @@ export default function SingleBandModal(props) {
   const [showTitle, setShowTitle] = useState('');
   const [singleBand, setBand] = useState([]);
   const [shows, setShows] = useState([]);
-  let band = props.bandID;
-  // console.log(band)
+  let band = props.name;
+  let bandId = props.bandId;
+  console.log("getting props", band)
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/bands/${band}/shows`)
+    axios.get(`http://localhost:8080/bands/${bandId}/shows`)
       .then((response) => {
         // console.log("getting a bands shows from db", response.data)
         setShows(response.data.shows);
@@ -94,7 +95,7 @@ export default function SingleBandModal(props) {
           //axios
           axios.get(`http://localhost:8080/users/${band}`)
             .then((response) => {
-              console.log("getting single band", response)
+              console.log("getting single band", response.data)
               setBand(response.data);
             })
             .catch((err) => {
