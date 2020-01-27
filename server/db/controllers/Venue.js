@@ -7,21 +7,21 @@ const { getRecordByName, getRecordByID } = require('./utils');
 const createVenue = async (req, res) => {
     try {
         const { name, address, city, state, zip_code } = req.body;
-        Venue.findOrCreate({
+        Venue.create({
+            where: {
+                name,
+            },
             name,
             address,
             city,
             state,
             zip_code,
-            where: {
-                name,
-            }
         })
         res.sendStatus(201);
     }
     catch (err) {
         console.log(err);
-        res.send(err);
+        res.sendStatus(400);
     }
 }
 
@@ -47,7 +47,7 @@ const getSingleVenue = async (req, res) => {
                 id
             },
             include: [
-                { model: Show }
+                { model: Show, include: [{ model: User, as: 'bands', attributes: ['id', 'name'] }] }
             ]
         })
         res.send(venue);
