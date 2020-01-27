@@ -4,6 +4,8 @@ import {
   Text,
   View,
   SafeAreaView,
+  Button,
+  Image,
 } from 'react-native';
 import {
   Card
@@ -18,31 +20,84 @@ import InstagramButton from '../components/InstagramButton';
 import CreateShowModal from '../modals/CreateShowModal';
 import EditBandBioModal from '../modals/EditBandBioModal';
 import EditShowModal from '../modals/EditShowModal';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function Hub(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   //hub info to display
   const [hubInfo, setHubInfo] = useState({});
+  const [image, setImage] = useState({});
+  const [shows, setShows] = useState([]);
+  const [venue, setVenue] = useState([]);
+
+  // let showList = shows.show;
+
+
 
   //load all user info when brought to hub
   useEffect(() => {
     axios.get(`http://localhost:8080/users/${userInfo.username}`)
       .then((response) => {
+        // console.log("getting band info", response.data);
         setHubInfo(response.data);
       })
       .catch((err) => {
-        console.log("were getting hub info", err);
+        // console.log("were not getting hub info", err);
       })
+
+    axios.get(`http://localhost:8080/bands/${userInfo.id}/shows`)
+      .then((response) => {
+        console.log("getting a bands shows  in hubfrom db", response.data)
+        setShows(response.data.shows);
+      })
+      .catch((err) => {
+        console.log("frontend not getting band shows from db", err);
+      })
+    // this.getPermissionAsync();
   }, [userInfo])
 
-  console.log(hubInfo);
+  // axios.get(`http://localhost:8080/venues/${shows.id_venue}`)
+  //   .then((response) => {
+  //     console.log("getting a venue from db", response.data)
+  //     setVenue(response.data.shows);
+
+  //   })
+  //   .catch((err) => {
+  //     console.log("frontend not getting band shows from db", err);
+  //   })
+
+  // console.log(hubInfo);
+
+  // getPermissionAsync = async () => {
+  //   if (Constants.platform.ios) {
+  //     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+  //     if (status !== 'granted') {
+  //       alert('Sorry, we need camera roll permissions to make this work!');
+  //     }
+  //   }
+  // }
+
+  // _pickImage = async () => {
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 3],
+  //     quality: 1
+  //   });
+
+
+  //   if (!result.cancelled) {
+  //     this.setState({ image: result.uri });
+  //   }
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
-        <Text style={styles.text}>Hub</Text>
+        <Text style={styles.text}>Band Hub</Text>
         <Text style={{ marginBottom: 10, color: '#fff' }}>
           {hubInfo.bio}
         </Text>
@@ -61,20 +116,26 @@ export default function Hub(props) {
         {/* Button to open create show modal */}
         <CreateShowModal />
         {/* Cards for all upcoming shows */}
-        <Card
-          title='Show Title Here'
-          style={styles.card}
-          backgroundColor='#fff'
-          borderWidth={0}
-          borderRadius={10}
-          padding={10}
-        // image={require('../images/pic2.jpg')}
-        >
-          <Text style={{ marginBottom: 10 }}>
-            General information about the band can go here.
-        </Text>
-        <EditShowModal />
-        </Card>
+        {shows.map(show => {
+          return (
+            <Card
+              title={show.name}
+              style={styles.card}
+              backgroundColor='#fff'
+              borderWidth={0}
+              borderRadius={10}
+              padding={10}
+            // image={require('../images/pic2.jpg')}
+            >
+              <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+              <Text style={{ marginBottom: 10 }}>{show.description}</Text>
+              <EditShowModal />
+            </Card>
+          )
+        })}
+
+
+
       </ScrollView>
     </SafeAreaView>
   )
@@ -103,5 +164,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 40,
     backgroundColor: '#59C3D1',
-  }, 
+  },
 })
