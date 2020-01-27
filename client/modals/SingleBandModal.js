@@ -20,7 +20,6 @@ import FacebookButton from '../components/FacebookButton';
 import InstagramButton from '../components/InstagramButton';
 
 
-
 export default function SingleBandModal(props) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
@@ -42,9 +41,14 @@ export default function SingleBandModal(props) {
       })
       .then(() => {
         // axios request to see if user is following band
-        console.log(userInfo)
         axios.get(`http://localhost:8080/fans/${userInfo.id}/bands`)
-        .then((response) => console.log(response));
+        .then((response) => {
+          response.data.map(band => {
+            if (band.id === singleBand.id) {
+              toggleFollowing(true);
+            }
+          })
+        })
       })
       .catch((err) => {
         console.log(err);
@@ -86,10 +90,11 @@ export default function SingleBandModal(props) {
               <TouchableOpacity
                     style={styles.unfollowButtonContainer}
                     onPress={() => {
-                      axios.delete(`http://localhost:8080/bands/${bandId}/fans`, {
-                        id_fan: userInfo.id
+                      axios.delete(`http://localhost:8080/bands/${singleBand.id}/fans`, {
+                        data: {
+                          id_fan: userInfo.id,
+                        }
                       })
-                        .then(response => console.log(response))
                         .then(() => {
                           toggleFollowing(false)
                         })
