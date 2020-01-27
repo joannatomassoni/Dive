@@ -28,11 +28,10 @@ export default function SingleBandModal(props) {
   const [showTitle, setShowTitle] = useState('');
   const [singleBand, setBand] = useState([]);
   const [shows, setShows] = useState([]);
-  const [isFollowing, toggleFollowing] = useState(true);
+  const [isFollowing, toggleFollowing] = useState(false);
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   let band = props.name;
   let bandId = props.bandId;
-  console.log("getting props", band)
 
   useEffect(() => {
     axios.get(`http://localhost:8080/bands/${bandId}/shows`)
@@ -44,7 +43,7 @@ export default function SingleBandModal(props) {
       .then(() => {
         // axios request to see if user is following band
         console.log(userInfo)
-        axios.get(`fans/${userInfo.id}/rsvps`)
+        axios.get(`http://localhost:8080/fans/${userInfo.id}/bands`)
         .then((response) => console.log(response));
       })
       .catch((err) => {
