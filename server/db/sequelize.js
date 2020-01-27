@@ -45,6 +45,17 @@ const sequelize = new Sequelize('dive', 'root', '', {
 // }); 
 
 
+// const sequelize = new Sequelize('dive', 'root', 'dive', {
+//   dialect: 'mysql',
+//   host: '35.224.191.68',
+//   timestamps: false,
+//   pool: {
+//         max: 5,
+//         min: 0,
+//         idle: 10000
+//       },
+// });
+
 // instanstiate the models here
 const Type = TypeModel(sequelize, Sequelize);
 const BandGenre = BandGenreModel(sequelize, Sequelize);

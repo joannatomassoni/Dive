@@ -2,7 +2,8 @@ module.exports = (sequelize, type) => {
     return sequelize.define('venue', {
         name: {
             type: type.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         address: {
             type: type.STRING,
