@@ -28,7 +28,7 @@ export default function SingleBandModal(props) {
   const [showTitle, setShowTitle] = useState('');
   const [singleBand, setBand] = useState([]);
   const [shows, setShows] = useState([]);
-  const [isFollowing, toggleFollowing] = useState(false);
+  const [isFollowing, toggleFollowing] = useState(true);
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   let band = props.name;
   let bandId = props.bandId;
@@ -86,7 +86,7 @@ export default function SingleBandModal(props) {
             {
               isFollowing ? 
               <TouchableOpacity
-                    style={styles.followButtonContainer}
+                    style={styles.unfollowButtonContainer}
                     onPress={() => {
                       axios.delete(`http://localhost:8080/bands/${bandId}/fans`, {
                         id_fan: userInfo.id
@@ -195,6 +195,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '700',
     color: '#000'
+  },
+  unfollowButtonContainer: {
+    backgroundColor: '#C70039',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginHorizontal: 90,
+    marginBottom: 15
   },
   followButtonContainer: {
     backgroundColor: '#75A4AD',
