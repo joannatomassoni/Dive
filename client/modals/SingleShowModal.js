@@ -49,8 +49,6 @@ export default function SingleShowModal(props) {
         console.log("error getting comments for show", err);
       })
   }, [])
-  
-  console.log(userInfo.id);
 
   return (
     <View>
@@ -87,7 +85,6 @@ export default function SingleShowModal(props) {
               (rsvp ? <TouchableOpacity
                 style={styles.cancelButtonContainer}
                 onPress={() => {
-                  console.log(userInfo.id);
                   axios.delete('http://localhost:8080/shows/rsvps', {
                     data: {
                       id_fan: userInfo.id,
