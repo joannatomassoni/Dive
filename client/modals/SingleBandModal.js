@@ -9,12 +9,15 @@ import {
   KeyboardAvoidingView,
   SafeAreaView
 } from 'react-native';
-import { Card } from 'react-native-elements'
+import { Card } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
-import { SignedInContext } from '../context/UserContext'
-import SingleShowModal from '../modals/SingleShowModal'
+import { SignedInContext } from '../context/UserContext';
+import SingleShowModal from '../modals/SingleShowModal';
+import SpotifyButton from '../components/SpotifyButton';
+import FacebookButton from '../components/FacebookButton';
+import InstagramButton from '../components/InstagramButton';
 
 
 
@@ -38,11 +41,9 @@ export default function SingleBandModal(props) {
         setShows(response.data.shows);
       })
       .catch((err) => {
-        // console.log("frontend not getting band shows from db", err);
+        console.log(err);
       })
   }, [])
-
-  console.log("getting a bands all their shows", shows);
 
   return (
     <View>
@@ -64,6 +65,15 @@ export default function SingleBandModal(props) {
 
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
+            <View style={{
+              flexDirection: 'row',
+              height: 50,
+              justifyContent: 'left',
+            }}>
+              <SpotifyButton link={singleBand.link_spotify} />
+              <InstagramButton link={singleBand.link_instagram} />
+              <FacebookButton link={singleBand.link_facebook} />
+            </View>
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
             <TouchableOpacity
                   style={styles.followButtonContainer}
