@@ -56,6 +56,8 @@ export default function Venues(props) {
               <SingleVenueModal venueID={venue.id} />
             </Card>
           )
+
+          //hello
         })}
         {/* implemented with Text and Button as children */}
       </ScrollView>

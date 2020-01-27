@@ -68,7 +68,6 @@ export default function SingleBandModal(props) {
             style={styles.menuIcon}
             onPress={() => { setModalVisible(false) }}
           />
-
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
             <View style={{
@@ -120,7 +119,6 @@ export default function SingleBandModal(props) {
             {shows.map(show => {
               return (
                 <View>
-
                   <Card
                     title={show.name}
                     style={styles.card}
@@ -141,7 +139,6 @@ export default function SingleBandModal(props) {
                 </View>
               )
             })}
-
           </ScrollView>
         </SafeAreaView>
       </Modal>
@@ -166,7 +163,6 @@ export default function SingleBandModal(props) {
     </View >
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
