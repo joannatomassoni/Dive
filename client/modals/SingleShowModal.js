@@ -73,12 +73,6 @@ export default function SingleShowModal(props) {
             {/* header */}
             <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
 
-<<<<<<< HEAD
-            <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.venue.name}</Text>
-            <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.date}</Text>
-            <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.time}</Text>
-            <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.description}</Text>
-=======
             <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.name}</Text>
             <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.time}</Text>
             {bands.map(band => {
@@ -87,24 +81,9 @@ export default function SingleShowModal(props) {
               )
             })}
             {/* <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.venue.name}</Text> */}
->>>>>>> 6ae54b8345c9c1dac852e9a3f75dbe362765e03a
             {/* button to create a new comment (shows when signed in) */}
             {userInfo.signedIn ? <CreateCommentModal userId={userInfo.id} showId={singleShow.id} /> : null}
             {/* cards to hold comments */}
-<<<<<<< HEAD
-            <Card
-              style={styles.card}
-              // key={comment.id}
-              backgroundColor='#fff'
-              borderRadius={10}
-              padding={10}
-            >
-              <Text style={styles.cardText}>Username</Text>
-              <Text style={styles.cardText}>Comment body</Text>
-              <Text style={styles.cardText}>Comment time</Text>
-            </Card>
-
-=======
             {comments.map(comment => {
               return (
                 <Card
@@ -121,7 +100,6 @@ export default function SingleShowModal(props) {
                 </Card>
               )
             })}
->>>>>>> 6ae54b8345c9c1dac852e9a3f75dbe362765e03a
           </ScrollView>
         </SafeAreaView>
       </Modal>
