@@ -34,13 +34,7 @@ export default function Shows(props) {
       })
   }, [])
 
-  //dummy data
-  const users = [
-    {
-      name: 'Ryan',
-      avatar: "https://lh3.googleusercontent.com/a-/AAuE7mAY3iahzehnNyuj1PJ8iiDn1zi8v7LFz7jB6dzcPw"
-    },
-  ]
+  console.log(userInfo);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -88,10 +82,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20
-  },
-  card: {
-    backgroundColor: '#75A4AD',
-    borderRadius: 10
   },
   button: {
     borderRadius: 5,

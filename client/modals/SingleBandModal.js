@@ -22,6 +22,7 @@ export default function SingleBandModal(props) {
   const [showTitle, setShowTitle] = useState('');
   const [singleBand, setBand] = useState([]);
   const [shows, setShows] = useState([]);
+  console.log(props);
   let band = props.bandID;
   // console.log(band)
 

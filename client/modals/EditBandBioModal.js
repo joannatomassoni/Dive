@@ -162,7 +162,7 @@ export default function EditBandBioModal(props) {
               {/* button to complete editing */}
               <TouchableOpacity
                 style={styles.signupContainer}
-                onPress={() => { setModalVisible(true); }}
+                onPress={() => { setModalVisible(false); }}
               >
                 <Text style={styles.signupButtonText}>Return</Text>
               </TouchableOpacity>
