@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Modal,
   Text,
@@ -23,8 +23,34 @@ export default function SingleShowModal(props) {
   //set username to text in username textInput
   const [showTitle, setShowTitle] = useState('');
   const [singleShow, setSingleShow] = useState([]);
+  const [bands, setBands] = useState([]);
+  const [comments, setComments] = useState([]);
+  // console.log(props);
   let show = props.show;
-  console.log(singleShow);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/shows/${show}`)
+      .then((response) => {
+        // this.setState({
+        console.log("getting band", response.data)
+        setBands(response.data.bands);
+      })
+      .catch((err) => {
+        console.log("frontend not getting single show from db", err);
+      });
+
+    axios.get(`http://localhost:8080/shows/${show}/comments`)
+      .then((response) => {
+        // this.setState({
+        console.log("getting band", response.data)
+        setComments(response.data)
+      })
+      .catch((err) => {
+        console.log("frontend not getting single show from db", err);
+      })
+  }, [])
+
+
   return (
     <View>
       <Modal
@@ -47,13 +73,25 @@ export default function SingleShowModal(props) {
             {/* header */}
             <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
 
+<<<<<<< HEAD
             <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.venue.name}</Text>
             <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.date}</Text>
             <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.time}</Text>
             <Text style={{ marginBottom: 5, color: '#fff' }}>{singleShow.description}</Text>
+=======
+            <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.name}</Text>
+            <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.time}</Text>
+            {bands.map(band => {
+              return (
+                <Text style={{ marginBottom: 10, color: '#fff' }}>{band.name}</Text>
+              )
+            })}
+            {/* <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.venue.name}</Text> */}
+>>>>>>> 6ae54b8345c9c1dac852e9a3f75dbe362765e03a
             {/* button to create a new comment (shows when signed in) */}
             {userInfo.signedIn ? <CreateCommentModal userId={userInfo.id} showId={singleShow.id} /> : null}
             {/* cards to hold comments */}
+<<<<<<< HEAD
             <Card
               style={styles.card}
               // key={comment.id}
@@ -66,6 +104,24 @@ export default function SingleShowModal(props) {
               <Text style={styles.cardText}>Comment time</Text>
             </Card>
 
+=======
+            {comments.map(comment => {
+              return (
+                <Card
+                  style={styles.card}
+                  key={comment.id}
+                  backgroundColor='#fff'
+                  borderRadius={10}
+                  padding={10}
+                // image={require('../images/pic2.jpg')}
+                >
+                  <Text style={styles.cardText} key={comment.user.id}>Username: {comment.user.name}</Text>
+                  <Text style={styles.cardText}>{comment.text}</Text>
+                  <Text style={styles.cardText}>{comment.createdAt}</Text>
+                </Card>
+              )
+            })}
+>>>>>>> 6ae54b8345c9c1dac852e9a3f75dbe362765e03a
           </ScrollView>
         </SafeAreaView>
       </Modal>
@@ -96,7 +152,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2D323A',
-    alignItems: 'center',
     justifyContent: 'center',
   },
   headerText: {
@@ -126,3 +181,5 @@ const styles = StyleSheet.create({
     left: 20,
   }
 })
+
+
