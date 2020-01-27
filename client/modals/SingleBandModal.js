@@ -63,25 +63,25 @@ export default function SingleBandModal(props) {
             <Text style={styles.headerText}>Shows</Text>
             {shows.map(show => {
               return (
-                <Card
-                  title={show.name}
-                  style={styles.card}
-                  key={show.id}
-                  backgroundColor='#fff'
-                  borderWidth={0}
-                  borderRadius={10}
-                  padding={10}
-                // image={require('../images/pic2.jpg')}
-                >
-                  <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
-                  <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
-                  <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
+                <View>
 
-                </Card>
+                  <Card
+                    title={show.name}
+                    style={styles.card}
+                    key={show.id}
+                    backgroundColor='#fff'
+                    borderWidth={0}
+                    borderRadius={10}
+                    padding={10}
+                  // image={require('../images/pic2.jpg')}
+                  >
+                    <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
+                    <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
+                    <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
+                  </Card>
+                </View>
               )
-            })
-
-            }
+            })}
 
           </ScrollView>
         </SafeAreaView>
@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2D323A',
-    alignItems: 'center',
     justifyContent: 'center',
   },
   headerText: {
