@@ -22,14 +22,13 @@ export default function Bands(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state to hold bands
-  console.log('user info', userInfo)
-
   const [bands, setBands] = useState([]);
+
   useEffect(() => {
     axios.get('http://localhost:8080/bands')
       .then((response) => {
         // console.log(response.data);
-        setBands(response.data)
+        setBands(response.data);
       })
       .catch(err => console.log(err))
   }, [])
@@ -51,7 +50,7 @@ export default function Bands(props) {
             // image={require('../images/pic2.jpg')}
             >
               <Text style={{ marginBottom: 10, color: '#000' }}>Bio: {band.bio}</Text>
-              <SingleBandModal bandID={band.id} />
+              <SingleBandModal band={band} />
             </Card>
           )
         })}

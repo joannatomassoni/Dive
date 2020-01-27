@@ -48,7 +48,6 @@ export default function SingleShowModal(props) {
 
             <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.name}</Text>
             <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.time}</Text>
-            {/* <Text style={{ marginBottom: 10, color: '#fff' }} key={show.id}>{singleShow.venue.name}</Text> */}
             {/* button to create a new comment (shows when signed in) */}
             {userInfo.signedIn ? <CreateCommentModal /> : null}
             {/* cards to hold comments */}
@@ -58,17 +57,16 @@ export default function SingleShowModal(props) {
               backgroundColor='#fff'
               borderRadius={10}
               padding={10}
-            // image={require('../images/pic2.jpg')}
             >
-              <Text style={styles.cardText}>Username here</Text>
-              <Text style={styles.cardText}>Comment body here</Text>
-              <Text style={styles.cardText}>Comment time here</Text>
+              <Text style={styles.cardText}>Username</Text>
+              <Text style={styles.cardText}>Comment body</Text>
+              <Text style={styles.cardText}>Comment time</Text>
             </Card>
 
           </ScrollView>
         </SafeAreaView>
       </Modal>
-      {/* create show button when modal is hidden */}
+      {/* create comment button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
         onPress={() => {
@@ -81,7 +79,7 @@ export default function SingleShowModal(props) {
               setSingleShow(response.data);
             })
             .catch((err) => {
-              console.log("frontend not getting single show from db", err);
+              console.log("error getting single show from db", err);
             })
         }}
       >

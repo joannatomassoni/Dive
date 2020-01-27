@@ -22,7 +22,7 @@ export default function SingleBandModal(props) {
   const [showTitle, setShowTitle] = useState('');
   const [singleBand, setBand] = useState([]);
   const [shows, setShows] = useState([]);
-  let band = props.bandID;
+  let band = props.band.name;
   // console.log(band)
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function SingleBandModal(props) {
       })
   }, [])
 
-  console.log("getting a bands all their shows", shows);
+  console.log(props.band, shows);
 
   return (
     <View>
