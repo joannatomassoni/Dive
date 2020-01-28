@@ -5,8 +5,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
   SafeAreaView
 } from 'react-native';
 import { Card } from 'react-native-elements'
@@ -20,36 +18,32 @@ export default function SingleVenueModal(props) {
   const [modalVisible, setModalVisible] = useState(false);
   //set username to text in username textInput
   const [showTitle, setShowTitle] = useState('');
+  //all info for signle venue
   const [singleVenue, setVenue] = useState([]);
+  //array of shows at venue
   const [shows, setShows] = useState([]);
+  //array of bands to list for each show
   const [bands, setBands] = useState([]);
   let venue = props.venueID;
   console.log(venue)
 
   useEffect(() => {
+    //request to get all shows at specific venue
     axios.get(`http://localhost:8080/venues/${venue}`)
       .then((response) => {
-        // console.log("getting a bands shows from db", response.data)
         setShows(response.data.shows);
-
       })
       .catch((err) => {
-        // console.log("frontend not getting band shows from db", err);
-      })
-
+      });
+    //request to get all bands from each specific show
     axios.get(`http://localhost:8080/shows/${venue}`)
       .then((response) => {
-        // this.setState({
-        console.log("getting band", response.data)
         setBands(response.data.bands);
       })
       .catch((err) => {
-        console.log("frontend not getting single show from db", err);
+        console.log("error getting bands for single show", err);
       });
-
   }, [])
-
-  console.log("getting venue shows", bands);
 
   return (
     <View>
@@ -71,13 +65,11 @@ export default function SingleVenueModal(props) {
 
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleVenue.id}>Venue</Text>
-
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Venue: {singleVenue.name}</Text>
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Address: {singleVenue.address}</Text>
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
-
             <Text style={styles.headerText}>Shows</Text>
-
+            {/* cards for each upcoming show at the venue */}
             {shows.map(show => {
               return (
                 <Card
@@ -88,26 +80,18 @@ export default function SingleVenueModal(props) {
                   borderWidth={0}
                   borderRadius={10}
                   padding={10}
-                // image={require('../images/pic2.jpg')}
                 >
-
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>Bands:</Text>
+                  {/* list for each additional band in each show */}
                   {bands.map(band => {
-                    return (
-                      <Text>
-                        <Text style={{ marginBottom: 10, color: '#000' }}>meep{band.name}</Text>
-
-                      </Text>
-                    )
+                    return <Text style={{ marginBottom: 10, color: '#000' }}>{band.name}</Text>
                   })}
-
                 </Card>
               )
             })}
-
           </ScrollView>
         </SafeAreaView>
       </Modal>
@@ -116,14 +100,12 @@ export default function SingleVenueModal(props) {
         style={styles.signupContainer}
         onPress={() => {
           setModalVisible(true);
-          //axios
           axios.get(`http://localhost:8080/venues/${venue}`)
             .then((response) => {
-              // console.log("getting single venue", response.data)
               setVenue(response.data);
             })
             .catch((err) => {
-              // console.log("frontend not getting single venue from db", err);
+              console.log("error getting single venue", err);
             })
         }}
       >
