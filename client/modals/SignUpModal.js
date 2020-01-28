@@ -13,6 +13,7 @@ import { SignedInContext } from '../context/UserContext';
 import RadioForm from 'react-native-simple-radio-button';
 import { Ionicons } from '@expo/vector-icons';
 import * as Google from "expo-google-app-auth";
+import { IOS_AUTH_KEY, ANDROID_AUTH_KEY } from 'react-native-dotenv';
 
 export default function ModalExample(props) {
   //state for modal visibility
@@ -33,8 +34,8 @@ export default function ModalExample(props) {
   const googleSignIn = async () => {
     try {
       const { type, user, accessToken } = await Google.logInAsync({
-        iosClientId: '453096591840-naqf4nslt86oor0avi1t97717v3c3bld.apps.googleusercontent.com',
-        androidClioentId: '453096591840-s4924si2rd6moneqt77laoss6q28o1kp.apps.googleusercontent.com',
+        iosClientId: IOS_AUTH_KEY,
+        androidClioentId: ANDROID_AUTH_KEY,
         scopes: ["profile", "email"]
       })
       if (type === "success") {
