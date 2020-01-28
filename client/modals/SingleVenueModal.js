@@ -69,7 +69,15 @@ export default function SingleVenueModal(props) {
             <Text style={styles.infoText}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
             {/* map view for current venue */}
             <View style={{padding: 10}}>
-            <MapView style={styles.mapStyle} />
+            <MapView 
+            style={styles.mapStyle}
+            initialRegion={{
+              latitude: 29.9511,
+              longitude: -90.0715,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421
+            }}
+            />
             </View>
             {/* shows header */}
             <Text style={styles.headerText}>Shows</Text>
