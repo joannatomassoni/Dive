@@ -1,17 +1,30 @@
+// require moment for date formatting for 
+const moment = require('moment');
 // Requiring the models we need for our queries
-const { Show, RSVP, User, ShowBand, Venue, Comment } = require('../sequelize');
-const { getRecordByName, getRecordByID } = require('./utils')
+const { Show, RSVP, User, ShowBand, Venue, Comment, Sequelize } = require('../sequelize');
+const { getRecordByName, getRecordByID, timeConversion } = require('./utils');
+
+const exampleDateTime = moment([20, 6, 20, 21])
+console.log(exampleDateTime.format());
+
+// import the Sequelize operators
+const Op = Sequelize.Op;
 
 // Create show
 const createShow = async (req, res) => {
     try {
         const { name, date, time, photo, venueName, bandNames, description } = req.body;
         const venue = await getRecordByName('venue', venueName);
+        const separatedDateTime = timeConversion(date, time);
+        const { year, month, day, hour, minutes } = separatedDateTime;
+        console.log(year);
+        let dateTime = moment([year, month, day, hour, minutes]);
         // add bands and venue to ShowBand join tables
         const show = await Show.create({
             name: name,
             date: date,
             time: time,
+            dateTime: dateTime,
             photo: photo,
             description: description,
             id_venue: venue.id
@@ -35,16 +48,19 @@ const createShow = async (req, res) => {
 const getAllShows = async (req, res) => {
     try {
         const shows = await Show.findAll({
+            where: {
+                date: {
+                    [Op.gte]: new Date()
+                }
+            },
             include: [
                 { model: User, as: 'bands' },
                 { model: Venue }
             ],
         });
-        console.log("retrieved shows from db", shows);
         res.status(200).send(shows);
     }
     catch (err) {
-        console.log("couldn't get shows", err);
         res.send(err);
     }
 }
