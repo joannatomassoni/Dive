@@ -52,7 +52,6 @@ module.exports = {
     deleteUser,
     followBand,
     getAllBands,
-    getAllShows,
     getAllVenues,
     getBandFans,
     getBandGenres,
