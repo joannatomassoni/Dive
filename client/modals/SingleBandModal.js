@@ -85,8 +85,10 @@ export default function SingleBandModal(props) {
             </View>
             
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
-            {
-              isFollowing ? 
+            {/* if user is signed in show button to follor band */}
+            {userInfo.signedIn ? 
+              (isFollowing ? 
+              // if following, show unfollow button
               <TouchableOpacity
                     style={styles.unfollowButtonContainer}
                     onPress={() => {
@@ -104,21 +106,23 @@ export default function SingleBandModal(props) {
                     <Text style={styles.followButtonText}>Unfollow</Text>
                   </TouchableOpacity>
               :
+              // if not following, show follow button
               <TouchableOpacity
-                    style={styles.followButtonContainer}
-                    onPress={() => {
-                      axios.post(`http://localhost:8080/bands/${bandId}/fans`, {
-                        id_fan: userInfo.id
-                      })
-                        .then(response => console.log(response))
-                        .then(() => {
-                          toggleFollowing(true)
-                        })
-                        .catch(error => console.log('failed to follow band', error))
-                    }}
-                  >
-                    <Text style={styles.followButtonText}>Follow</Text>
-                  </TouchableOpacity>
+                style={styles.followButtonContainer}
+                onPress={() => {
+                  axios.post(`http://localhost:8080/bands/${bandId}/fans`, {
+                    id_fan: userInfo.id
+                  })
+                  .then(response => console.log(response))
+                  .then(() => {
+                  toggleFollowing(true)
+                  })
+                  .catch(error => console.log('failed to follow band', error))
+                }}
+              >
+                <Text style={styles.followButtonText}>Follow</Text>
+              </TouchableOpacity>)
+              : null
             }
             <Text style={styles.headerText}>Shows</Text>
             {shows.map(show => {
