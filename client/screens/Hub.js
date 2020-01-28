@@ -23,6 +23,8 @@ import EditShowModal from '../modals/EditShowModal';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import * as ImagePicker from 'expo-image-picker';
+// import { Video, Transformation, CloudinaryContext, couldinary } from 'cloudinary-react';
+// const cloudinary = require('cloudinary').v2
 
 export default function Hub(props) {
   //global user signin info and editing function
@@ -34,6 +36,11 @@ export default function Hub(props) {
   const [venue, setVenue] = useState([]);
 
   // let showList = shows.show;
+  // cloudinaryContext.config({
+  //   cloud_name: 'da4ry89ct',
+  //   api_key: '442181727587311',
+  //   api_secret: 'IaNyIKaWkAB2HUyJjJKRQT93dqI'
+  // })
 
   const getPermissionAsync = async () => {
     if (Constants.platform.ios) {
@@ -68,20 +75,30 @@ export default function Hub(props) {
       })
       .catch((err) => {
         // console.log("were not getting hub info", err);
-      })
+      }),
 
-    axios.get(`http://localhost:8080/bands/${userInfo.id}/shows`)
-      .then((response) => {
-        // console.log("is userInfo id working?", userInfo);
-        // console.log("getting a bands shows  in hub from db", response.data)
-        setShows(response.data.shows);
-      })
-      .catch((err) => {
-        // console.log("frontend not getting band shows from db", err);
-      })
+      axios.get(`http://localhost:8080/bands/${userInfo.id}/shows`)
+        .then((response) => {
+          // console.log("is userInfo id working?", userInfo);
+          // console.log("getting a bands shows  in hub from db", response.data)
+          setShows(response.data.shows);
+        })
+        .catch((err) => {
+          // console.log("frontend not getting band shows from db", err);
+        }),
 
-    getPermissionAsync();
+      // axios.patch(`http://localhost:8080/bands/$userInfo.id/photo`, {
+      //   photo: image
+      // })
+      //   .then(response => {
+      //     console.log("we're saving a photo", response);
+      //   })
+      //   .catch(err => {
+      //     console.log("trouble saving photo");
+      //   }),
 
+
+      getPermissionAsync()
     // axios.get(`http://localhost:8080/venues/${shows.id_venue}`)
     //   .then((response) => {
     //     console.log("getting a venue from db", response.data)
@@ -117,15 +134,28 @@ export default function Hub(props) {
         {/* Button to open create show modal */}
         <CreateShowModal />
 
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={styles.button} >
           <Button
             title="Pick an image from camera roll"
             onPress={pickImage}
+
           />
           {image.uri &&
             <Image source={{ uri: image.uri }} style={{ width: 200, height: 200 }} />}
         </View>
 
+        <View style={styles.button} >
+          <Button
+            title="Save photo"
+          // onPress={
+          //   cloudinaryContext.v2.uploader.upload(image.uri, function (err, result) {
+          //     console.log("error", err);
+          //     console.log("we're sending cloudinary photo", result);
+          //   })
+          // }
+
+          />
+        </View>
         {/* Cards for all upcoming shows */}
         {shows.map(show => {
           return (
@@ -172,5 +202,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 40,
     backgroundColor: '#59C3D1',
+    textAlign: 'center',
+    fontWeight: '700',
+    color: '#fff'
   },
 })
