@@ -41,20 +41,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D323A'
   },
   title: {
-    marginTop: 150,
     alignItems: 'center',
+    
   },
   welcome: {
     fontSize: 70,
     color: '#59C3D1',
     opacity: 0.9,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginTop: 350,
   },
   text: {
     fontSize: 110,
     color: '#59C3D1',
     opacity: 0.9,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginTop: 150,
   },
   formContainer: {
     flex: 1
