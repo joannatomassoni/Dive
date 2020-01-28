@@ -12,7 +12,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Card } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
-import { MAP_KEY } from 'react-native-dotenv'
+import { MAP_KEY } from 'react-native-dotenv';
 import axios from 'axios';
 
 

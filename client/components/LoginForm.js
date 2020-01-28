@@ -10,7 +10,8 @@ import {
 import axios from 'axios';
 import { SignedInContext } from '../context/UserContext';
 import * as Google from "expo-google-app-auth";
-import SignUpModal from '../modals/SignUpModal'
+import SignUpModal from '../modals/SignUpModal';
+import { IOS_AUTH_KEY, ANDROID_AUTH_KEY } from 'react-native-dotenv';
 
 export default function LoginForm (props) {
   //pull signedin boolean from glabal context
@@ -22,8 +23,8 @@ export default function LoginForm (props) {
   const googleSignIn = async () => {
     try {
       const { type, user, accessToken } = await Google.logInAsync({
-        iosClientId: '453096591840-naqf4nslt86oor0avi1t97717v3c3bld.apps.googleusercontent.com',
-        androidClioentId: '453096591840-s4924si2rd6moneqt77laoss6q28o1kp.apps.googleusercontent.com',
+        iosClientId: IOS_AUTH_KEY,
+        androidClioentId: ANDROID_AUTH_KEY,
         scopes: ["profile", "email"]
       })
       if (type === "success") {
