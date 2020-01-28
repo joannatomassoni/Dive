@@ -17,3 +17,6 @@ apiKkeys.js
 # API keys
 config/keys.js
 
+# dotenv environment variables file
+.env
+

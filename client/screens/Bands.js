@@ -2,15 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
-  View,
-  Image,
   SafeAreaView
 } from 'react-native';
 import {
   Card,
-  ListItem,
-  Button,
-  Icon,
 } from 'react-native-elements'
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';

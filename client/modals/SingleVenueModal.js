@@ -83,7 +83,7 @@ export default function SingleVenueModal(props) {
             <View style={{padding: 10}}>
             <MapView 
             style={styles.mapStyle}
-            // provider={PROVIDER_GOOGLE}
+            provider={PROVIDER_GOOGLE}
             initialRegion={{
               latitude: 29.9511,
               longitude: -90.0715,
