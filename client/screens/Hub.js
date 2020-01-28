@@ -36,8 +36,6 @@ export default function Hub(props) {
       })
   }, [userInfo])
 
-  console.log(hubInfo);
-
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />

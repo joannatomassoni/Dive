@@ -5,10 +5,10 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
-  SafeAreaView
+  SafeAreaView,
+  Dimensions
 } from 'react-native';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Card } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,36 +20,43 @@ export default function SingleVenueModal(props) {
   const [modalVisible, setModalVisible] = useState(false);
   //set username to text in username textInput
   const [showTitle, setShowTitle] = useState('');
+  //all info for signle venue
   const [singleVenue, setVenue] = useState([]);
+  //array of shows at venue
   const [shows, setShows] = useState([]);
+  //array of bands to list for each show
   const [bands, setBands] = useState([]);
+  const [currentLocation, setCurrentLocation] = useState({});
+  //venue id for axios call
   let venue = props.venueID;
-  console.log(venue)
 
   useEffect(() => {
+    //request to get all shows at specific venue
     axios.get(`http://localhost:8080/venues/${venue}`)
       .then((response) => {
-        // console.log("getting a bands shows from db", response.data)
         setShows(response.data.shows);
-
       })
       .catch((err) => {
-        // console.log("frontend not getting band shows from db", err);
-      })
-
+      });
+    //request to get all bands from each specific show
     axios.get(`http://localhost:8080/shows/${venue}`)
       .then((response) => {
-        // this.setState({
-        console.log("getting band", response.data)
         setBands(response.data.bands);
       })
       .catch((err) => {
-        console.log("frontend not getting single show from db", err);
+        console.log("error getting bands for single show", err);
       });
 
+      navigator.geolocation.getCurrentPosition(position => {
+        setCurrentLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        })
+      }, error => setCurrentLocation({error: error.message}),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 2000 }
+      )
   }, [])
-
-  console.log("getting venue shows", bands);
 
   return (
     <View>
@@ -68,16 +75,28 @@ export default function SingleVenueModal(props) {
             style={styles.menuIcon}
             onPress={() => { setModalVisible(false) }}
           />
-
           <ScrollView style={{ marginTop: 30 }}>
-            <Text style={styles.headerText} key={singleVenue.id}>Venue</Text>
-
-            <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Venue: {singleVenue.name}</Text>
-            <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Address: {singleVenue.address}</Text>
-            <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
-
+            <Text style={styles.headerText} key={singleVenue.id}>{singleVenue.name}</Text>
+            <Text style={styles.infoText}>{singleVenue.address}</Text>
+            <Text style={styles.infoText}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
+            {/* map view for current venue */}
+            <View style={{padding: 10}}>
+            <MapView 
+            style={styles.mapStyle}
+            provider={PROVIDER_GOOGLE}
+            initialRegion={{
+              latitude: 29.9511,
+              longitude: -90.0715,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421
+            }}
+            >
+              <Marker coordinate={currentLocation}/>
+            </MapView>
+            </View>
+            {/* shows header */}
             <Text style={styles.headerText}>Shows</Text>
-
+            {/* cards for each upcoming show at the venue */}
             {shows.map(show => {
               return (
                 <Card
@@ -88,26 +107,18 @@ export default function SingleVenueModal(props) {
                   borderWidth={0}
                   borderRadius={10}
                   padding={10}
-                // image={require('../images/pic2.jpg')}
                 >
-
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>Bands:</Text>
+                  {/* list for each additional band in each show */}
                   {bands.map(band => {
-                    return (
-                      <Text>
-                        <Text style={{ marginBottom: 10, color: '#000' }}>meep{band.name}</Text>
-
-                      </Text>
-                    )
+                    return <Text style={{ marginBottom: 10, color: '#000' }}>{band.name}</Text>
                   })}
-
                 </Card>
               )
             })}
-
           </ScrollView>
         </SafeAreaView>
       </Modal>
@@ -116,14 +127,12 @@ export default function SingleVenueModal(props) {
         style={styles.signupContainer}
         onPress={() => {
           setModalVisible(true);
-          //axios
           axios.get(`http://localhost:8080/venues/${venue}`)
             .then((response) => {
-              // console.log("getting single venue", response.data)
               setVenue(response.data);
             })
             .catch((err) => {
-              // console.log("frontend not getting single venue from db", err);
+              console.log("error getting single venue", err);
             })
         }}
       >
@@ -137,15 +146,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2D323A',
-    justifyContent: 'center',
+    padding: 5
   },
   headerText: {
     fontSize: 50,
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20
+  },
+  infoText: {
+    fontSize: 20,
+    color: '#fff',
+    textAlign: 'right',
+    paddingRight: 20,
   },
   card: {
     backgroundColor: '#75A4AD',
@@ -158,6 +172,10 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 30,
+  },
+  mapStyle: {
+    width: 395,
+    height: 250,
   },
   menuIcon: {
     zIndex: 9,

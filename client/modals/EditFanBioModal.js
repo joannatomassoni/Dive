@@ -21,7 +21,6 @@ export default function EditBandBioModal(props) {
   //new instgram link
   const [instagramLink, setInstagramLink] = useState('');
 
-  console.log(showTitle);
   return (
     <View>
       <Modal

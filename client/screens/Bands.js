@@ -2,15 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
-  View,
-  Image,
   SafeAreaView
 } from 'react-native';
 import {
   Card,
-  ListItem,
-  Button,
-  Icon,
 } from 'react-native-elements'
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -27,7 +22,6 @@ export default function Bands(props) {
   useEffect(() => {
     axios.get('http://localhost:8080/bands')
       .then((response) => {
-        console.log(bands);
         setBands(response.data);
       })
       .catch(err => console.log(err))
@@ -38,7 +32,6 @@ export default function Bands(props) {
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Bands</Text>
         {bands.map(band => {
-          console.log(band);
           return (
             <Card
               title={band.name}

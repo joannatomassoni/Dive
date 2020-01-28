@@ -9,6 +9,14 @@ npm-debug.*
 *.orig.*
 web-build/
 web-report/
+apiKkeys.js
 
 # macOS
 .DS_Store
+
+# API keys
+config/keys.js
+
+# dotenv environment variables file
+.env
+

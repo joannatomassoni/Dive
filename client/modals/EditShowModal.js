@@ -29,7 +29,6 @@ export default function CreateShowModal(props) {
   //show description
   const [showDesc, setShowDesc] = useState('');
 
-  console.log(showDesc);
   return (
     <View>
       <Modal
@@ -114,7 +113,6 @@ export default function CreateShowModal(props) {
                     name: venueName,
                   })
                     .then(response => {
-                      console.log(response);
                       return axios.post('http://localhost:8080/shows', {
                         name: showTitle,
                         date: showDate,

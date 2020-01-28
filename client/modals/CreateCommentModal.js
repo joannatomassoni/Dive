@@ -57,7 +57,7 @@ export default function CreateCommentModal({ showId, userId }) {
           </View>
         </KeyboardAvoidingView>
       </Modal>
-      {/* cedit bio button when modal is hidden */}
+      {/* edit bio button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
         onPress={() => {
@@ -66,7 +66,7 @@ export default function CreateCommentModal({ showId, userId }) {
             id_user: userId,
             text: comment
           })
-            .then(response => console.log(response))
+            .then(response => console.log('success', response))
             .catch(error => console.log('failed to create show', error));
         }}
       >
