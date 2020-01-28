@@ -97,22 +97,27 @@ export default function ModalExample(props) {
               style={styles.input}
             />
             {/* radio button to select user type */}
-              <RadioForm
-                style={styles.modal}
-                buttonInnerColor={'#59C3D1'}
-                radio_props={radio_props}
-                initial={null}
-                formHorizontal={true}
-                labelHorizontal={false}
-                buttonColor={'#59C3D1'}
-                animation={true}
-                labelColor={'#fff'}
-                onPress={(value) => {setUserType(value)}}
-              />
-
+            <RadioForm
+              style={styles.modal}
+              buttonInnerColor={'#59C3D1'}
+              radio_props={radio_props}
+              initial={null}
+              formHorizontal={true}
+              labelHorizontal={false}
+              buttonColor={'#59C3D1'}
+              animation={true}
+              labelColor={'#fff'}
+              onPress={(value) => {setUserType(value)}}
+            />
+            {/* horizontal button div */}
+            <View style={{
+              flexDirection: 'row',
+              height: 50,
+              justifyContent: 'center',
+            }}>
             {/* sign in button when modal is showing */}
             <TouchableOpacity
-              style={styles.loginContainer}
+              style={styles.brightSignupContainer}
               onPress={() => {
                 setModalVisible(false);
                 axios.post('http://localhost:8080/users', {
@@ -141,6 +146,7 @@ export default function ModalExample(props) {
             >
               <Text style={styles.buttonText}>Signup w/ GOOGLE </Text>
             </TouchableOpacity>
+            </View>
           </View>
         </View>
         </KeyboardAvoidingView>
@@ -166,9 +172,9 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: 'rgba(255, 255, 255, 1)',
     marginBottom: 15,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     borderRadius: 5,
-    marginHorizontal: 40,
+    marginHorizontal: 10,
     fontWeight: 'bold'
   },
   title: {
@@ -184,25 +190,28 @@ const styles = StyleSheet.create({
     marginLeft: 90,
     marginBottom: 15
   },
-  loginContainer: {
+  brightSignupContainer: {
     backgroundColor: '#59C3D1',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    marginBottom: 15,
+    width: 140,
+    marginHorizontal: 7
   },
   googleSignupContainer: {
     backgroundColor: '#C70039',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    marginBottom: 15,
+    width: 140,
+    marginHorizontal: 7
   },
   signupContainer: {
     backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
+    alignSelf: 'center',
+    width: 140,
     marginBottom: 15
   },
   modal: {

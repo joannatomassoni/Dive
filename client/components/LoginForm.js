@@ -66,6 +66,11 @@ export default function LoginForm (props) {
       secureTextEntry
       style={styles.input}
       />
+      <View style={{
+        flexDirection: 'row',
+        height: 50,
+        justifyContent: 'center',
+      }}>
       {/* login button */}
       <TouchableOpacity 
         style={styles.loginContainer}
@@ -90,6 +95,7 @@ export default function LoginForm (props) {
       >
         <Text style={styles.buttonText}>Login w/ GOOGLE </Text>
       </TouchableOpacity>
+      </View>
       {/* button to open modal */}
       <SignUpModal />
     </View>
@@ -105,7 +111,7 @@ const styles = StyleSheet.create({
     height: 40, 
     backgroundColor: 'rgba(255, 255, 255, 1)',
     marginBottom: 15,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     borderRadius: 5,
     marginHorizontal: 40,
     fontWeight: 'bold'
@@ -114,20 +120,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#59C3D1',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    marginBottom: 15,
+    width: 140,
+    marginHorizontal: 7
   },
   googleLoginContainer: {
     backgroundColor: '#C70039',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    marginBottom: 15,
+    width: 140,
+    marginHorizontal: 7
   },
   buttonText: {
     textAlign: 'center',
