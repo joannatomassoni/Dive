@@ -49,8 +49,8 @@ const getAllShows = async (req, res) => {
     try {
         const shows = await Show.findAll({
             where: {
-                date: {
-                    [Op.gte]: new Date()
+                dateTime: {
+                    [Op.gte]: moment().subtract(7, 'days').toDate()
                 }
             },
             include: [
