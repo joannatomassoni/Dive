@@ -20,7 +20,7 @@ export default function Login (props) {
         // welcome screen when user logs in
         <View style={styles.title}>
           <MenuButton navigation={props.navigation} />
-          <Text style= {styles.text}>WELCOME</Text>
+          <Text style={styles.welcome}>WELCOME</Text>
         </View>
         //login screen if user is not logged in
         :<View style={styles.container}>
@@ -41,12 +41,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D323A'
   },
   title: {
-    flex: 1,
+    marginTop: 150,
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  welcome: {
+    fontSize: 70,
+    color: '#59C3D1',
+    opacity: 0.9,
+    fontWeight: 'bold'
   },
   text: {
-    fontSize: 70,
+    fontSize: 110,
     color: '#59C3D1',
     opacity: 0.9,
     fontWeight: 'bold'
