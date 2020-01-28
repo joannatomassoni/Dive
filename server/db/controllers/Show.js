@@ -40,6 +40,7 @@ const getAllShows = async (req, res) => {
                 { model: Venue }
             ],
         });
+        console.log("retrieved shows from db", shows);
         res.status(200).send(shows);
     }
     catch (err) {
