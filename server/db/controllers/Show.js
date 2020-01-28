@@ -45,7 +45,7 @@ const createShow = async (req, res) => {
 }
 
 // Get all upcoming shows in database
-const getAllShows = async (req, res) => {
+const getAllUpcomingShows = async (req, res) => {
     try {
         const shows = await Show.findAll({
             where: {
@@ -183,7 +183,7 @@ const getShowRSVPs = async (req, res) => {
 
 module.exports = {
     createShow,
-    getAllShows,
+    getAllUpcomingShows,
     getFanRSVPs,
     getSingleShow,
     getShowRSVPs,
