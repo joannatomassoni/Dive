@@ -105,10 +105,10 @@ export default function SingleVenueModal(props) {
             // use line below for google maps
             //provider={PROVIDER_GOOGLE}
             initialRegion={{
-              latitude: venueLocation.latitude,
-              longitude: venueLocation.longitude,
-              latitudeDelta: 0.0032,
-              longitudeDelta: 0.0021
+              latitude: (venueLocation ? venueLocation.latitude : 29.9511),
+              longitude: (venueLocation ? venueLocation.longitude : -90.0715),
+              latitudeDelta: 0.0012,
+              longitudeDelta: 0.011
             }}
             >
               <Marker coordinate={venueLocation}/>
