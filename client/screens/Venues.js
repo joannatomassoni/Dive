@@ -2,15 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
-  View,
-  Image,
   SafeAreaView
 } from 'react-native';
 import {
   Card,
-  ListItem,
-  Button,
-  Icon,
 } from 'react-native-elements'
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -38,7 +33,7 @@ export default function Venues(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Venues</Text>
-        {venues.map(venue => {
+        {venues.reverse().map(venue => {
           return (
             <Card
               title={venue.name}
@@ -56,8 +51,6 @@ export default function Venues(props) {
               <SingleVenueModal venueID={venue.id} />
             </Card>
           )
-
-          //hello
         })}
         {/* implemented with Text and Button as children */}
       </ScrollView>
@@ -74,7 +67,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 50,
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20

@@ -64,12 +64,13 @@ export default function SingleVenueModal(props) {
             onPress={() => { setModalVisible(false) }}
           />
           <ScrollView style={{ marginTop: 30 }}>
-            <Text style={styles.headerText} key={singleVenue.id}>Venue</Text>
-            <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Venue: {singleVenue.name}</Text>
-            <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Address: {singleVenue.address}</Text>
-            <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
+            <Text style={styles.headerText} key={singleVenue.id}>{singleVenue.name}</Text>
+            <Text style={styles.infoText}>{singleVenue.address}</Text>
+            <Text style={styles.infoText}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
             {/* map view for current venue */}
+            <View style={{padding: 10}}>
             <MapView style={styles.mapStyle} />
+            </View>
             {/* shows header */}
             <Text style={styles.headerText}>Shows</Text>
             {/* cards for each upcoming show at the venue */}
@@ -122,16 +123,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2D323A',
-    justifyContent: 'center',
     padding: 5
   },
   headerText: {
     fontSize: 50,
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20
+  },
+  infoText: {
+    fontSize: 20,
+    color: '#fff',
+    textAlign: 'right',
+    paddingRight: 20,
   },
   card: {
     backgroundColor: '#75A4AD',
@@ -146,8 +151,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   mapStyle: {
-    paddingHorizontal: 5,
-    width: 500,
+    width: 395,
     height: 250,
   },
   menuIcon: {
