@@ -23,7 +23,7 @@ import EditShowModal from '../modals/EditShowModal';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import * as ImagePicker from 'expo-image-picker';
-// import { Video, Transformation, CloudinaryContext, couldinary } from 'cloudinary-react';
+import { Video, Transformation, CloudinaryContext } from 'cloudinary-react';
 // const cloudinary = require('cloudinary').v2
 
 export default function Hub(props) {
@@ -31,41 +31,69 @@ export default function Hub(props) {
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   //hub info to display
   const [hubInfo, setHubInfo] = useState({});
-  const [image, setImage] = useState({});
+  // const [image, setImage] = useState({});
+  // const [imageName, setImageName] = useState("");
   const [shows, setShows] = useState([]);
-  const [venue, setVenue] = useState([]);
+  // const [venue, setVenue] = useState([]);
+  let [selectedImage, setSelectedImage] = useState({});
+  let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/da4ry89ct/upload';
 
-  // let showList = shows.show;
-  // cloudinaryContext.config({
-  //   cloud_name: 'da4ry89ct',
-  //   api_key: '442181727587311',
-  //   api_secret: 'IaNyIKaWkAB2HUyJjJKRQT93dqI'
-  // })
 
-  const getPermissionAsync = async () => {
-    if (Constants.platform.ios) {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions to make this work!');
-      }
+
+
+  let openImagePickerAsync = async () => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
     }
-  };
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1
+      base64: true
     });
-    setImage(result);
-  }
 
-  //   if (!result.cancelled) {
-  //     this.setState({ image: result.uri });
-  //   }
-  // };
-  console.log("image link", image);
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+
+    setSelectedImage({ localUri: pickerResult.uri });
+    let base64Img = `data:image/jpg;base64,${pickerResult.base64}`;
+
+    console.log("the image selected is:", base64Img)
+
+    // if (selectedImage !== null) {
+    //   return (
+    //     <View style={styles.container}>
+    //       <Image
+    //         source={{ uri: selectedImage.localUri }}
+    //         style={styles.thumbnail}
+    //       />
+    //     </View>
+    //   );
+    // }
+    let data = {
+      "file": base64Img,
+      "upload_preset": "oecwb18t",
+    }
+
+    fetch(CLOUDINARY_URL, {
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+    }).then(async r => {
+      let data = await r.json()
+      console.log("sending data to cloudinary", data);
+      // return data.secure_url
+    }).catch(err => console.log(err))
+
+
+  };
+
   //load all user info when brought to hub
   useEffect(() => {
     axios.get(`http://localhost:8080/users/${userInfo.username}`)
@@ -85,20 +113,19 @@ export default function Hub(props) {
         })
         .catch((err) => {
           // console.log("frontend not getting band shows from db", err);
-        }),
+        })
 
-      // axios.patch(`http://localhost:8080/bands/$userInfo.id/photo`, {
-      //   photo: image
-      // })
-      //   .then(response => {
-      //     console.log("we're saving a photo", response);
-      //   })
-      //   .catch(err => {
-      //     console.log("trouble saving photo");
-      //   }),
+    // axios.patch(`http://localhost:8080/bands/$userInfo.id/photo`, {
+    //   photo: image
+    // })
+    //   .then(response => {
+    //     console.log("we're saving a photo", response);
+    //   })
+    //   .catch(err => {
+    //     console.log("trouble saving photo");
+    //   }),
 
 
-      getPermissionAsync()
     // axios.get(`http://localhost:8080/venues/${shows.id_venue}`)
     //   .then((response) => {
     //     console.log("getting a venue from db", response.data)
@@ -137,43 +164,40 @@ export default function Hub(props) {
         <View style={styles.button} >
           <Button
             title="Pick an image from camera roll"
-            onPress={pickImage}
+            onPress={openImagePickerAsync}
 
           />
-          {image.uri &&
-            <Image source={{ uri: image.uri }} style={{ width: 200, height: 200 }} />}
+          {/* {image.uri &&
+            <Image source={{ uri: image.uri }} style={{ width: 150, height: 150 }} />} */}
         </View>
-
-        <View style={styles.button} >
-          <Button
-            title="Save photo"
-          // onPress={
-          //   cloudinaryContext.v2.uploader.upload(image.uri, function (err, result) {
-          //     console.log("error", err);
-          //     console.log("we're sending cloudinary photo", result);
-          //   })
-          // }
-
+        <View style={styles.container}>
+          <Image
+            source={{ uri: selectedImage.localUri }}
+            style={styles.thumbnail}
           />
         </View>
+
+
         {/* Cards for all upcoming shows */}
-        {shows.map(show => {
-          return (
-            <Card
-              title={show.name}
-              style={styles.card}
-              backgroundColor='#fff'
-              borderWidth={0}
-              borderRadius={10}
-              padding={10}
-            // image={require('../images/pic2.jpg')}
-            >
-              <Text style={{ marginBottom: 10 }}>{show.time}</Text>
-              <Text style={{ marginBottom: 10 }}>{show.description}</Text>
-              <EditShowModal />
-            </Card>
-          )
-        })}
+        {
+          shows.map(show => {
+            return (
+              <Card
+                title={show.name}
+                style={styles.card}
+                backgroundColor='#fff'
+                borderWidth={0}
+                borderRadius={10}
+                padding={10}
+              // image={require('../images/pic2.jpg')}
+              >
+                <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+                <Text style={{ marginBottom: 10 }}>{show.description}</Text>
+                <EditShowModal />
+              </Card>
+            )
+          })
+        }
       </ScrollView>
     </SafeAreaView>
   )
@@ -206,4 +230,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#fff'
   },
+  thumbnail: {
+    width: 300,
+    height: 300,
+    resizeMode: "contain"
+  }
 })
+
+
+
