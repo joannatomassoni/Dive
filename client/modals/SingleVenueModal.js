@@ -5,8 +5,10 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
+  Dimensions
 } from 'react-native';
+import MapView from 'react-native-maps';
 import { Card } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
@@ -25,7 +27,6 @@ export default function SingleVenueModal(props) {
   //array of bands to list for each show
   const [bands, setBands] = useState([]);
   let venue = props.venueID;
-  console.log(venue)
 
   useEffect(() => {
     //request to get all shows at specific venue
@@ -62,12 +63,14 @@ export default function SingleVenueModal(props) {
             style={styles.menuIcon}
             onPress={() => { setModalVisible(false) }}
           />
-
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleVenue.id}>Venue</Text>
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Venue: {singleVenue.name}</Text>
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Address: {singleVenue.address}</Text>
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
+            {/* map view for current venue */}
+            <MapView style={styles.mapStyle} />
+            {/* shows header */}
             <Text style={styles.headerText}>Shows</Text>
             {/* cards for each upcoming show at the venue */}
             {shows.map(show => {
@@ -120,6 +123,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#2D323A',
     justifyContent: 'center',
+    padding: 5
   },
   headerText: {
     fontSize: 50,
@@ -140,6 +144,11 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 30,
+  },
+  mapStyle: {
+    paddingHorizontal: 5,
+    width: 500,
+    height: 250,
   },
   menuIcon: {
     zIndex: 9,

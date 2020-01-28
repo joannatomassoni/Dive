@@ -113,7 +113,6 @@ export default function SingleBandModal(props) {
                   axios.post(`http://localhost:8080/bands/${bandId}/fans`, {
                     id_fan: userInfo.id
                   })
-                  .then(response => console.log(response))
                   .then(() => {
                   toggleFollowing(true)
                   })
@@ -136,14 +135,12 @@ export default function SingleBandModal(props) {
                     borderWidth={0}
                     borderRadius={10}
                     padding={10}
-                  // image={require('../images/pic2.jpg')}
                   >
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.venue.name}</Text>
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
                     <SingleShowModal show={show.id} />
-
                   </Card>
                 </View>
               )
@@ -159,11 +156,10 @@ export default function SingleBandModal(props) {
           //axios
           axios.get(`http://localhost:8080/users/${band}`)
             .then((response) => {
-              console.log("getting single band", response.data)
               setBand(response.data);
             })
             .catch((err) => {
-              console.log("frontend not getting single band from db", err);
+              console.log("error getting single band from db", err);
             })
         }}
       >
@@ -172,6 +168,7 @@ export default function SingleBandModal(props) {
     </View >
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

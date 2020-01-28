@@ -32,7 +32,7 @@ export default function Shows(props) {
         // console.log("frontend not getting shows from db", err);
       })
   }, [])
-  console.log(userInfo);
+  
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />

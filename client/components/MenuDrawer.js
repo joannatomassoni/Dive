@@ -17,7 +17,7 @@ const HEIGHT = Dimensions.get('window').height
 export default function MenuDrawer(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
-
+  //navigator function
   const navLink = (nav, text) => {
     return (
       <TouchableOpacity style={{height: 50}} onPress={() => props.navigation.navigate(nav)}>
@@ -25,7 +25,6 @@ export default function MenuDrawer(props) {
       </TouchableOpacity>
     )
   }
-  console.log(userInfo);
   return( 
     <View style ={styles.container}>
       {/* Change menu options for when user is signed in */}

@@ -38,7 +38,7 @@ export default function ModalExample(props) {
         scopes: ["profile", "email"]
       })
       if (type === "success") {
-        console.log('User Info: ', user, 'Access Token: ', accessToken);
+        //console.log('User Info: ', user, 'Access Token: ', accessToken);
         //key values to add to the userInfo global state
         setUserInfo(userInfo =>
           ({
