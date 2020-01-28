@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   Dimensions
 } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Card } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
@@ -26,6 +26,8 @@ export default function SingleVenueModal(props) {
   const [shows, setShows] = useState([]);
   //array of bands to list for each show
   const [bands, setBands] = useState([]);
+  const [currentLocation, setCurrentLocation] = useState({});
+  //venue id for axios call
   let venue = props.venueID;
 
   useEffect(() => {
@@ -44,6 +46,16 @@ export default function SingleVenueModal(props) {
       .catch((err) => {
         console.log("error getting bands for single show", err);
       });
+
+      navigator.geolocation.getCurrentPosition(position => {
+        setCurrentLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        })
+      }, error => setCurrentLocation({error: error.message}),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 2000 }
+      )
   }, [])
 
   return (
@@ -71,13 +83,16 @@ export default function SingleVenueModal(props) {
             <View style={{padding: 10}}>
             <MapView 
             style={styles.mapStyle}
+            // provider={PROVIDER_GOOGLE}
             initialRegion={{
               latitude: 29.9511,
               longitude: -90.0715,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421
             }}
-            />
+            >
+              <Marker coordinate={currentLocation}/>
+            </MapView>
             </View>
             {/* shows header */}
             <Text style={styles.headerText}>Shows</Text>
