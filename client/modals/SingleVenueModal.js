@@ -12,6 +12,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Card } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
+import { MAP_KEY } from 'react-native-dotenv'
 import axios from 'axios';
 
 
@@ -26,7 +27,7 @@ export default function SingleVenueModal(props) {
   const [shows, setShows] = useState([]);
   //array of bands to list for each show
   const [bands, setBands] = useState([]);
-  const [currentLocation, setCurrentLocation] = useState({});
+  const [venueLocation, setVenueLocation] = useState({});
   //venue id for axios call
   let venue = props.venueID;
 
@@ -47,15 +48,33 @@ export default function SingleVenueModal(props) {
         console.log("error getting bands for single show", err);
       });
 
-      navigator.geolocation.getCurrentPosition(position => {
-        setCurrentLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null,
-        })
-      }, error => setCurrentLocation({error: error.message}),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 2000 }
-      )
+      //request to get geolocation of address
+    axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
+      params: {
+        key: `${MAP_KEY}`,
+        location: `${singleVenue.address}${singleVenue.city}${singleVenue.state}${singleVenue.zip_code}`
+      }
+    })
+      .then((response) => {
+        setVenueLocation({
+          latitude: response.data.results[0].locations[0].displayLatLng.lat,
+          longitude: response.data.results[0].locations[0].displayLatLng.lng
+        });
+      })
+      .catch((err) => {
+        console.log(`error getting geolocation`, err);
+      });
+
+      //CURRENT GEOLOCATION
+      // navigator.geolocation.getCurrentPosition(position => {
+      //   setCurrentLocation({
+      //     latitude: position.coords.latitude,
+      //     longitude: position.coords.longitude,
+      //     error: null,
+      //   })
+      // }, error => setCurrentLocation({error: error.message}),
+      // { enableHighAccuracy: true, timeout: 20000, maximumAge: 2000 }
+      // )
   }, [])
 
   return (
@@ -85,13 +104,13 @@ export default function SingleVenueModal(props) {
             style={styles.mapStyle}
             provider={PROVIDER_GOOGLE}
             initialRegion={{
-              latitude: 29.9511,
-              longitude: -90.0715,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421
+              latitude: venueLocation.latitude,
+              longitude: venueLocation.longitude,
+              latitudeDelta: 0.0032,
+              longitudeDelta: 0.0021
             }}
             >
-              <Marker coordinate={currentLocation}/>
+              <Marker coordinate={venueLocation}/>
             </MapView>
             </View>
             {/* shows header */}
