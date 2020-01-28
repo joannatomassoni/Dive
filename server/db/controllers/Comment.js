@@ -35,7 +35,6 @@ const getAllComments = async (req, res) => {
         { model: User }
       ]
     });
-    console.log("retrieved comments from db", comments);
     res.status(200).send(comments);
     // return venues;
   }

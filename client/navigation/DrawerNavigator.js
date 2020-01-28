@@ -21,6 +21,9 @@ const DrawerConfig = {
 //all possiblke links for menu nav
 const DrawerNavigator = createDrawerNavigator(
   {
+    Login: {
+      screen: Login
+    },
     Shows: {
       screen: Shows
     },
@@ -32,9 +35,6 @@ const DrawerNavigator = createDrawerNavigator(
     },
     Hub: {
       screen: Hub
-    },
-    Login: {
-      screen: Login
     },
   },
   DrawerConfig

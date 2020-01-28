@@ -10,7 +10,8 @@ import {
 import axios from 'axios';
 import { SignedInContext } from '../context/UserContext';
 import * as Google from "expo-google-app-auth";
-import SignUpModal from '../modals/SignUpModal'
+import SignUpModal from '../modals/SignUpModal';
+import { IOS_AUTH_KEY, ANDROID_AUTH_KEY } from 'react-native-dotenv';
 
 export default function LoginForm (props) {
   //pull signedin boolean from glabal context
@@ -22,12 +23,12 @@ export default function LoginForm (props) {
   const googleSignIn = async () => {
     try {
       const { type, user, accessToken } = await Google.logInAsync({
-        iosClientId: '453096591840-naqf4nslt86oor0avi1t97717v3c3bld.apps.googleusercontent.com',
-        androidClioentId: '453096591840-s4924si2rd6moneqt77laoss6q28o1kp.apps.googleusercontent.com',
+        iosClientId: IOS_AUTH_KEY,
+        androidClioentId: ANDROID_AUTH_KEY,
         scopes: ["profile", "email"]
       })
       if (type === "success") {
-        console.log('User Info: ', user, 'Access Token: ', accessToken);
+        //console.log('User Info: ', user, 'Access Token: ', accessToken);
         //key values to add to the userInfo global state
         axios.get(`http://localhost:8080/users/${user.email}`)
           .then(res => setUserInfo(userInfo => ({
@@ -65,6 +66,11 @@ export default function LoginForm (props) {
       secureTextEntry
       style={styles.input}
       />
+      <View style={{
+        flexDirection: 'row',
+        height: 50,
+        justifyContent: 'center',
+      }}>
       {/* login button */}
       <TouchableOpacity 
         style={styles.loginContainer}
@@ -89,6 +95,7 @@ export default function LoginForm (props) {
       >
         <Text style={styles.buttonText}>Login w/ GOOGLE </Text>
       </TouchableOpacity>
+      </View>
       {/* button to open modal */}
       <SignUpModal />
     </View>
@@ -104,7 +111,7 @@ const styles = StyleSheet.create({
     height: 40, 
     backgroundColor: 'rgba(255, 255, 255, 1)',
     marginBottom: 15,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     borderRadius: 5,
     marginHorizontal: 40,
     fontWeight: 'bold'
@@ -113,20 +120,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#59C3D1',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    marginBottom: 15,
+    width: 140,
+    marginHorizontal: 7
   },
   googleLoginContainer: {
     backgroundColor: '#C70039',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    marginBottom: 15,
+    width: 140,
+    marginHorizontal: 7
   },
   buttonText: {
     textAlign: 'center',

@@ -6,6 +6,7 @@ import { SignedInContext } from './context/UserContext';
 export default function App (props) {
   //initial login state of app
   const [userInfo, setUserInfo] = useState({});
+  //disable yellow error boxes
   console.disableYellowBox = true;
 
   return (

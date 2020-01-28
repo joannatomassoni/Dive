@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Modal,
   Text,
@@ -9,10 +9,15 @@ import {
   KeyboardAvoidingView,
   SafeAreaView
 } from 'react-native';
-import { Card } from 'react-native-elements'
+import { Card } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
+import { SignedInContext } from '../context/UserContext';
+import SingleShowModal from '../modals/SingleShowModal';
+import SpotifyButton from '../components/SpotifyButton';
+import FacebookButton from '../components/FacebookButton';
+import InstagramButton from '../components/InstagramButton';
 
 
 export default function SingleBandModal(props) {
@@ -22,22 +27,33 @@ export default function SingleBandModal(props) {
   const [showTitle, setShowTitle] = useState('');
   const [singleBand, setBand] = useState([]);
   const [shows, setShows] = useState([]);
+  const [isFollowing, toggleFollowing] = useState(false);
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
   let band = props.name;
   let bandId = props.bandId;
-  console.log("getting props", band)
 
   useEffect(() => {
     axios.get(`http://localhost:8080/bands/${bandId}/shows`)
       .then((response) => {
         // console.log("getting a bands shows from db", response.data)
+        setBand(response.data);
         setShows(response.data.shows);
       })
+      .then(() => {
+        // axios request to see if user is following band
+        axios.get(`http://localhost:8080/fans/${userInfo.id}/bands`)
+        .then((response) => {
+          response.data.map(band => {
+            if (band.id === singleBand.id) {
+              toggleFollowing(true);
+            }
+          })
+        })
+      })
       .catch((err) => {
-        // console.log("frontend not getting band shows from db", err);
+        console.log(err);
       })
   }, [])
-
-  console.log("getting a bands all their shows", shows);
 
   return (
     <View>
@@ -56,16 +72,61 @@ export default function SingleBandModal(props) {
             style={styles.menuIcon}
             onPress={() => { setModalVisible(false) }}
           />
-
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
-
+            <View style={{
+              flexDirection: 'row',
+              height: 50,
+              justifyContent: 'left',
+            }}>
+              <SpotifyButton link={singleBand.link_spotify} />
+              <InstagramButton link={singleBand.link_instagram} />
+              <FacebookButton link={singleBand.link_facebook} />
+            </View>
+            
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
+            {/* if user is signed in show button to follor band */}
+            {userInfo.signedIn ? 
+              (isFollowing ? 
+              // if following, show unfollow button
+              <TouchableOpacity
+                    style={styles.unfollowButtonContainer}
+                    onPress={() => {
+                      axios.delete(`http://localhost:8080/bands/${singleBand.id}/fans`, {
+                        data: {
+                          id_fan: userInfo.id,
+                        }
+                      })
+                        .then(() => {
+                          toggleFollowing(false)
+                        })
+                        .catch(error => console.log('failed to unfollow band', error))
+                    }}
+                  >
+                    <Text style={styles.followButtonText}>Unfollow</Text>
+                  </TouchableOpacity>
+              :
+              // if not following, show follow button
+              <TouchableOpacity
+                style={styles.followButtonContainer}
+                onPress={() => {
+                  axios.post(`http://localhost:8080/bands/${bandId}/fans`, {
+                    id_fan: userInfo.id
+                  })
+                  .then(() => {
+                  toggleFollowing(true)
+                  })
+                  .catch(error => console.log('failed to follow band', error))
+                }}
+              >
+                <Text style={styles.followButtonText}>Follow</Text>
+              </TouchableOpacity>)
+              : null
+            }
             <Text style={styles.headerText}>Shows</Text>
             {shows.map(show => {
               return (
                 <View>
-
                   <Card
                     title={show.name}
                     style={styles.card}
@@ -74,16 +135,16 @@ export default function SingleBandModal(props) {
                     borderWidth={0}
                     borderRadius={10}
                     padding={10}
-                  // image={require('../images/pic2.jpg')}
                   >
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
+                    <Text style={{ marginBottom: 10, color: '#000' }}>{show.venue.name}</Text>
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
+                    <SingleShowModal show={show.id} />
                   </Card>
                 </View>
               )
             })}
-
           </ScrollView>
         </SafeAreaView>
       </Modal>
@@ -95,11 +156,10 @@ export default function SingleBandModal(props) {
           //axios
           axios.get(`http://localhost:8080/users/${band}`)
             .then((response) => {
-              console.log("getting single band", response.data)
               setBand(response.data);
             })
             .catch((err) => {
-              console.log("frontend not getting single band from db", err);
+              console.log("error getting single band from db", err);
             })
         }}
       >
@@ -131,6 +191,25 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 40,
     backgroundColor: '#59C3D1',
+  },
+  followButtonText: {
+    textAlign: 'center',
+    fontWeight: '700',
+    color: '#000'
+  },
+  unfollowButtonContainer: {
+    backgroundColor: '#C70039',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginHorizontal: 90,
+    marginBottom: 15
+  },
+  followButtonContainer: {
+    backgroundColor: '#75A4AD',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginHorizontal: 90,
+    marginBottom: 15
   },
   cardText: {
     fontSize: 30,

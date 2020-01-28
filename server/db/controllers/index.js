@@ -1,9 +1,9 @@
 // compile all controllers and export to router from here
 const { 
-    addFanToBand,
     addGenreToBand,
     createUser,
     deleteUser,
+    followBand,
     getAllBands,
     getBandFans,
     getBandGenres,
@@ -11,6 +11,7 @@ const {
     getFanBands,
     getSingleUser,
     removeBandGenre,
+    unfollowBand,
     updateUserBio,
     updateBandPhoto,
     updateBandFB,
@@ -44,12 +45,12 @@ const {
 } = require('./Show');
 
 module.exports = {
-    addFanToBand,
     addFanToVenue,
     addGenreToBand,
     createUser,
     createShow,
     deleteUser,
+    followBand,
     getAllBands,
     getAllShows,
     getAllVenues,
@@ -71,6 +72,7 @@ module.exports = {
     removeFanRSVP,
     removeBandGenre,
     rsvpFanToShow,
+    unfollowBand,
     updateUserBio,
     updateBandPhoto,
     updateBandFB,

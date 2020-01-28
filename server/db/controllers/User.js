@@ -7,6 +7,7 @@ const {
         Show,
         Type, 
         User, 
+        Venue,
         sequelize
     } = require('../sequelize');
 
@@ -256,7 +257,10 @@ const getBandShows = async (req, res) => {
                 id
             },
             include: [
-                { model: Show }
+                { model: Show, 
+                    include: [
+                        { model: Venue }
+                    ]}
             ]
         })
         res.status(200).send(shows);
@@ -268,7 +272,7 @@ const getBandShows = async (req, res) => {
 }
 
 // allow a fan follow a band
-const addFanToBand = async (req, res) => {
+const followBand = async (req, res) => {
     try {
         const sql = 'INSERT INTO fans_bands (id_band, id_fan, createdAt, updatedAt) VALUES (?, ?, ?, ?)';
         const { id } = req.params;
@@ -277,6 +281,23 @@ const addFanToBand = async (req, res) => {
             replacements: [id, id_fan, new Date(), new Date()]
         })
         res.send(201);
+    }
+    catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+}
+
+// allow a fan unfollow a band
+const unfollowBand = async (req, res) => {
+    try {
+        const sql = 'DELETE FROM fans_bands WHERE (id_band = ? AND id_fan = ?)';
+        const { id } = req.params;
+        const { id_fan } = req.body;
+        await sequelize.query(sql, {
+            replacements: [id, id_fan]
+        })
+        res.sendStatus(200);
     }
     catch (err) {
         console.log(err);
@@ -321,10 +342,10 @@ const getFanBands = async (req, res) => {
 
 
 module.exports = {
-    addFanToBand,
     addGenreToBand,
     createUser,
     deleteUser,
+    followBand,
     getAllBands,
     getBandFans,
     getBandGenres,
@@ -332,6 +353,7 @@ module.exports = {
     getFanBands,
     getSingleUser,
     removeBandGenre,
+    unfollowBand,
     updateUserBio,
     updateBandPhoto,
     updateBandFB,

@@ -70,7 +70,11 @@ router.delete('/bands/:id/genres', ctrl.removeBandGenre)
 
 // add fan for band
 // req.body = { id_fan }
-router.post('/bands/:id/fans/', ctrl.addFanToBand)
+router.post('/bands/:id/fans/', ctrl.followBand)
+
+// allow user to unfollow a band
+// req.body = { id_fan }
+router.delete('/bands/:id/fans', ctrl.unfollowBand)
 
 // get all fans of a given band. 
 router.get('/bands/:id/fans', ctrl.getBandFans);

@@ -17,24 +17,20 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 import SingleShowModal from '../modals/SingleShowModal'
-
 export default function Shows(props) {
   ///global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
-
+  
   useEffect(() => {
     axios.get('http://localhost:8080/shows')
       .then((response) => {
-        // console.log("shows response from db", response.data)
         setShows(response.data);
       })
       .catch((err) => {
-        // console.log("frontend not getting shows from db", err);
+        console.log("error getting shows from db", err);
       })
   }, [])
-
-  console.log(userInfo);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -67,7 +63,6 @@ export default function Shows(props) {
     </SafeAreaView >
   )
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -96,5 +91,3 @@ const styles = StyleSheet.create({
     paddingRight: 20
   },
 })
-
-
