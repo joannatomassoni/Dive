@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Modal,
   Text,
@@ -9,10 +9,17 @@ import {
   KeyboardAvoidingView,
   SafeAreaView
 } from 'react-native';
-import { Card } from 'react-native-elements'
+import { Card } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
+import { SignedInContext } from '../context/UserContext';
+import SingleShowModal from '../modals/SingleShowModal';
+import SpotifyButton from '../components/SpotifyButton';
+import FacebookButton from '../components/FacebookButton';
+import InstagramButton from '../components/InstagramButton';
+
+
 export default function SingleBandModal(props) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
@@ -20,20 +27,34 @@ export default function SingleBandModal(props) {
   const [showTitle, setShowTitle] = useState('');
   const [singleBand, setBand] = useState([]);
   const [shows, setShows] = useState([]);
+  const [isFollowing, toggleFollowing] = useState(false);
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
   let band = props.name;
   let bandId = props.bandId;
 
   useEffect(() => {
     axios.get(`http://localhost:8080/bands/${bandId}/shows`)
       .then((response) => {
-        console.log("getting a bands shows from db", response.data)
+        // console.log("getting a bands shows from db", response.data)
+        setBand(response.data);
         setShows(response.data.shows);
       })
+      .then(() => {
+        // axios request to see if user is following band
+        axios.get(`http://localhost:8080/fans/${userInfo.id}/bands`)
+        .then((response) => {
+          response.data.map(band => {
+            if (band.id === singleBand.id) {
+              toggleFollowing(true);
+            }
+          })
+        })
+      })
       .catch((err) => {
-        console.log("frontend not getting band shows from db", err);
+        console.log(err);
       })
   }, [])
-  
+
   return (
     <View>
       <Modal
@@ -53,7 +74,52 @@ export default function SingleBandModal(props) {
           />
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
+            <View style={{
+              flexDirection: 'row',
+              height: 50,
+              justifyContent: 'left',
+            }}>
+              <SpotifyButton link={singleBand.link_spotify} />
+              <InstagramButton link={singleBand.link_instagram} />
+              <FacebookButton link={singleBand.link_facebook} />
+            </View>
+            
             <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
+            {
+              isFollowing ? 
+              <TouchableOpacity
+                    style={styles.unfollowButtonContainer}
+                    onPress={() => {
+                      axios.delete(`http://localhost:8080/bands/${singleBand.id}/fans`, {
+                        data: {
+                          id_fan: userInfo.id,
+                        }
+                      })
+                        .then(() => {
+                          toggleFollowing(false)
+                        })
+                        .catch(error => console.log('failed to unfollow band', error))
+                    }}
+                  >
+                    <Text style={styles.followButtonText}>Unfollow</Text>
+                  </TouchableOpacity>
+              :
+              <TouchableOpacity
+                    style={styles.followButtonContainer}
+                    onPress={() => {
+                      axios.post(`http://localhost:8080/bands/${bandId}/fans`, {
+                        id_fan: userInfo.id
+                      })
+                        .then(response => console.log(response))
+                        .then(() => {
+                          toggleFollowing(true)
+                        })
+                        .catch(error => console.log('failed to follow band', error))
+                    }}
+                  >
+                    <Text style={styles.followButtonText}>Follow</Text>
+                  </TouchableOpacity>
+            }
             <Text style={styles.headerText}>Shows</Text>
             {shows.map(show => {
               return (
@@ -70,7 +136,10 @@ export default function SingleBandModal(props) {
                   >
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
+                    <Text style={{ marginBottom: 10, color: '#000' }}>{show.venue.name}</Text>
                     <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
+                    <SingleShowModal show={show.id} />
+
                   </Card>
                 </View>
               )
@@ -121,6 +190,25 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 40,
     backgroundColor: '#59C3D1',
+  },
+  followButtonText: {
+    textAlign: 'center',
+    fontWeight: '700',
+    color: '#000'
+  },
+  unfollowButtonContainer: {
+    backgroundColor: '#C70039',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginHorizontal: 90,
+    marginBottom: 15
+  },
+  followButtonContainer: {
+    backgroundColor: '#75A4AD',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginHorizontal: 90,
+    marginBottom: 15
   },
   cardText: {
     fontSize: 30,
