@@ -162,8 +162,9 @@ sequelize.sync()
   })
 
 module.exports = {
-  // export sequelize for the model creation
+  // export sequelize for the model creation and Sequelize for operators
   sequelize,
+  Sequelize,
   // export model instances for controller functions
   BandGenre,
   Comment,
