@@ -223,7 +223,7 @@ export default function EditBandBioModal(props) {
               {/*  button to upload photo */}
               <View style={styles.button} >
                 <TouchableOpacity
-                  style={styles.signupContainer}
+                  style={styles.returnButtonContainer}
                   onPress={openImagePickerAsync}
                 >
                   <Text style={styles.signupButtonText}>Select Photo</Text>
@@ -232,13 +232,14 @@ export default function EditBandBioModal(props) {
                 {/* {image.uri && */}
                 {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
               </View>
-
-              <TouchableOpacity
-                style={styles.signupContainer}
-                onPress={savePhoto}
-              >
-                <Text style={styles.signupButtonText}>Save Photo</Text>
-              </TouchableOpacity>
+              <View style={styles.button} >
+                <TouchableOpacity
+                  style={styles.returnButtonContainer}
+                  onPress={savePhoto}
+                >
+                  <Text style={styles.signupButtonText}>Save Photo</Text>
+                </TouchableOpacity>
+              </View>
 
               {/* {image.uri && */}
               {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
