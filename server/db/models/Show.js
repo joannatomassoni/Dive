@@ -16,7 +16,7 @@ module.exports = (sequelize, type) => {
       type: type.DATE,
       allowNull: false
     },
-    photo: {
+    flyer: {
       type: type.STRING,
       allowNull: true
     },
