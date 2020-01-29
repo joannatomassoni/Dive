@@ -49,6 +49,53 @@ export default function CreateShowModal(props) {
   //sets band photo
   let [bandPhoto, setBandPhoto] = useState('');
 
+
+  //allows user to upload a photo
+  let openImagePickerAsync = async () => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      base64: true
+    });
+
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+
+
+    setSelectedImage({ localUri: pickerResult.uri });
+
+    let base64Img = `data:image/jpg;base64,${pickerResult.base64}`;
+
+    let data = {
+      "file": base64Img,
+      "upload_preset": "oecwb18t",
+    }
+    //sends photo to cloudinary
+    fetch(CLOUDINARY_URL, {
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+    }).then(async r => {
+      let data = await r.json()
+      // console.log("sending data to cloudinary", data.url);
+      setBandPhoto(data.url);
+      console.log("data from cloudinary", data.url);
+    }).catch(err => console.log(err))
+
+    console.log("are we getting user id?", userInfo.id)
+    console.log("bandPhoto has been set to state", bandPhoto);
+  };
+
   return (
     <View>
       <Modal
@@ -144,6 +191,20 @@ export default function CreateShowModal(props) {
                 onChangeText={setShowDesc}
                 style={styles.input}
               />
+
+              {/*  button to upload photo */}
+              <View style={styles.button} >
+                <TouchableOpacity
+                  style={styles.buttonContainer}
+                  onPress={openImagePickerAsync}
+                >
+                  <Text style={styles.buttonText}>Upload Show Flyer</Text>
+                </TouchableOpacity>
+
+                {/* {image.uri && */}
+                {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
+              </View>
+
               {/* create show button when modal is showing */}
               <TouchableOpacity
                 style={styles.buttonContainer}
