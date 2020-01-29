@@ -18,31 +18,31 @@ const { DB_USER, DB_PASS, DB_NAME, DB_HOST, CLOUD_SQL_CONNECTION_NAME } = proces
 
 // create a new sequelize instance
 // DEV
-const sequelize = new Sequelize('dive', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql',
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  },
-});
+// const sequelize = new Sequelize('dive', 'root', '', {
+//   host: 'localhost',
+//   dialect: 'mysql',
+//   pool: {
+//     max: 5,
+//     min: 0,
+//     idle: 10000
+//   },
+// });
 
 // PROD
-// const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
-//   dialect: 'mysql',
-//   // host: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`,
-//   host: DB_HOST,
-//   timestamps: false,
-//   pool: {
-//         max: 5,
-//         min: 0,
-//         idle: 10000
-//       },
-// //   dialectOptions: {
-// //     socketPath: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`
-// // },
-// }); 
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+  dialect: 'mysql',
+  // host: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`,
+  host: DB_HOST,
+  timestamps: false,
+  pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
+      },
+//   dialectOptions: {
+//     socketPath: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`
+// },
+}); 
 
 
 // const sequelize = new Sequelize('dive', 'root', 'dive', {
