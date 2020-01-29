@@ -6,11 +6,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ScrollView
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 import { SignedInContext } from '../context/UserContext';
+import DateTimePicker from '../components/DateTimePicker'
 
 export default function CreateShowModal(props) {
   //global user signin info and editing function
@@ -33,10 +35,8 @@ export default function CreateShowModal(props) {
   const [venueState, setvenueState] = useState('');
   //venue zip
   const [venueZip, setVenueZip] = useState('');
-  //date
-  const [showDate, setShowDate] = useState('');
-  //time
-  const [showTime, setShowTime] = useState('');
+  //show date
+  const [dateTime, setDateTime] = useState('');
   //show description
   const [showDesc, setShowDesc] = useState('');
 
@@ -58,7 +58,7 @@ export default function CreateShowModal(props) {
             onPress={() => { setModalVisible(false) }}
           />
           <View style={styles.container}>
-            <View style={styles.title}>
+            <ScrollView style={styles.title}>
               <Text style={styles.text}>New Show</Text>
               {/* username text box */}
               <TextInput
@@ -104,7 +104,7 @@ export default function CreateShowModal(props) {
               <TextInput
                 placeholder="City"
                 placeholderTextColor="#75A4AD"
-                returnKeyType="next"
+                returnKeyType='next'
                 onChangeText={setVenueCity}
                 style={styles.input}
               />
@@ -125,23 +125,25 @@ export default function CreateShowModal(props) {
                 style={styles.input}
               />
 
+              {/* date time picker */}
+              <DateTimePicker setDateTime={setDateTime}/>
 
               {/* Date input */}
-              <TextInput
+              {/* <TextInput
                 placeholder="Date"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
                 onChangeText={setShowDate}
                 style={styles.input}
-              />
+              /> */}
               {/* Time input */}
-              <TextInput
+              {/* <TextInput
                 placeholder="Time"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
                 onChangeText={setShowTime}
                 style={styles.input}
-              />
+              /> */}
               {/* Description input */}
               <TextInput
                 placeholder="Show Description"
@@ -165,8 +167,7 @@ export default function CreateShowModal(props) {
                     .then(response => {
                       return axios.post('http://localhost:8080/shows', {
                       name: showTitle,
-                      date: showDate,
-                      time: showTime,
+                      dateTime: dateTime,
                       photo: null,
                       venueName: venueName,
                       bandName: bandNames,
@@ -179,7 +180,7 @@ export default function CreateShowModal(props) {
                 <Text style={styles.buttonText}>Create Show</Text>
               </TouchableOpacity>
 
-            </View>
+            </ScrollView>
           </View>
         </KeyboardAvoidingView>
       </Modal>
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
-    justifyContent: 'center',
+    paddingTop: 30
   },
   text: {
     fontSize: 40,
@@ -250,7 +251,7 @@ const styles = StyleSheet.create({
     color: '#000'
   },
   menuIcon: {
-    zIndex: 9,
+    zIndex: 15,
     position: 'absolute',
     top: 40,
     left: 20,
