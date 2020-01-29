@@ -46,7 +46,6 @@ export default function EditBandBioModal(props) {
           <View style={styles.container}>
             <View style={styles.title}>
               <Text style={styles.text}>Edit Bio</Text>
-
               {/* new bio text box */}
               <View style={{
                 flexDirection: 'row',
@@ -74,7 +73,6 @@ export default function EditBandBioModal(props) {
                   <Text style={styles.buttonText}>+</Text>
                 </TouchableOpacity>
               </View>
-
               {/* spotify link */}
               <View style={{
                 flexDirection: 'row',
@@ -102,7 +100,6 @@ export default function EditBandBioModal(props) {
                   <Text style={styles.buttonText}>+</Text>
                 </TouchableOpacity>
               </View>
-
               {/* facebook link */}
               <View style={{
                 flexDirection: 'row',
@@ -130,7 +127,6 @@ export default function EditBandBioModal(props) {
                   <Text style={styles.buttonText}>+</Text>
                 </TouchableOpacity>
               </View>
-
               {/* instagram link */}
               <View style={{
                 flexDirection: 'row',
@@ -158,22 +154,20 @@ export default function EditBandBioModal(props) {
                   <Text style={styles.buttonText}>+</Text>
                 </TouchableOpacity>
               </View>
-
               {/* button to complete editing */}
               <TouchableOpacity
-                style={styles.signupContainer}
+                style={styles.returnButtonContainer}
                 onPress={() => { setModalVisible(false); }}
               >
                 <Text style={styles.signupButtonText}>Return</Text>
               </TouchableOpacity>
-
             </View>
           </View>
         </KeyboardAvoidingView>
       </Modal>
       {/* edit bio button when modal is hidden */}
       <TouchableOpacity
-        style={styles.signupContainer}
+        style={styles.editBioContainer}
         onPress={() => { setModalVisible(true); }}
       >
         <Text style={styles.signupButtonText}>Edit Bio</Text>
@@ -217,12 +211,20 @@ const styles = StyleSheet.create({
     width: 40,
     marginBottom: 15
   },
-  signupContainer: {
+  returnButtonContainer: {
     backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
     marginHorizontal: 90,
     marginBottom: 15
+  },
+  editBioContainer: {
+    backgroundColor: '#75A4AD',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginBottom: 15,
+    width: 140,
+    marginHorizontal: 7
   },
   modal: {
     marginLeft: 120

@@ -50,10 +50,16 @@ export default function Hub(props) {
           <InstagramButton link={hubInfo.link_instagram} />
           <FacebookButton link={hubInfo.link_facebook} />
         </View>
-        {/* Button to open create show modal */}
-        <EditBandBioModal />
-        {/* Button to open create show modal */}
-        <CreateShowModal />
+        <View style={{
+          flexDirection: 'row',
+          height: 50,
+          justifyContent: 'center',
+        }}>
+          {/* Button to open create show modal */}
+          <EditBandBioModal />
+          {/* Button to open create show modal */}
+          <CreateShowModal />
+        </View>
         {/* Cards for all upcoming shows */}
         <Card
           title='Show Title Here'

@@ -179,15 +179,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     paddingRight: 20
   },
-  card: {
-    backgroundColor: '#75A4AD',
-    borderRadius: 10
-  },
-  button: {
-    borderRadius: 5,
-    marginHorizontal: 40,
-    backgroundColor: '#59C3D1',
-  },
   infoText: {
     fontSize: 20,
     color: '#fff',
@@ -214,9 +205,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 90,
     marginBottom: 15
   },
-  cardText: {
-    fontSize: 30,
-  },
   flexRowRight: {
     flexDirection: 'row',
     paddingBottom: 5,
@@ -224,7 +212,6 @@ const styles = StyleSheet.create({
     paddingRight: 20
   },
   menuIcon: {
-    zIndex: 9,
     position: 'absolute',
     top: 40,
     left: 20,

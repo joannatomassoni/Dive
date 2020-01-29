@@ -127,23 +127,6 @@ export default function CreateShowModal(props) {
 
               {/* date time picker */}
               <DateTimePicker setDateTime={setDateTime}/>
-
-              {/* Date input */}
-              {/* <TextInput
-                placeholder="Date"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setShowDate}
-                style={styles.input}
-              /> */}
-              {/* Time input */}
-              {/* <TextInput
-                placeholder="Time"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setShowTime}
-                style={styles.input}
-              /> */}
               {/* Description input */}
               <TextInput
                 placeholder="Show Description"
@@ -186,7 +169,7 @@ export default function CreateShowModal(props) {
       </Modal>
       {/* create show button when modal is hidden */}
       <TouchableOpacity
-        style={styles.signupContainer}
+        style={styles.createShowContainer}
         onPress={() => { setModalVisible(true); }}
       >
         <Text style={styles.signupButtonText}>Create a show</Text>
@@ -223,12 +206,13 @@ const styles = StyleSheet.create({
     marginLeft: 75,
     marginBottom: 15
   },
-  loginContainer: {
-    backgroundColor: '#59C3D1',
+  createShowContainer: {
+    backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    marginBottom: 15,
+    width: 140,
+    marginHorizontal: 7
   },
   signupContainer: {
     backgroundColor: '#75A4AD',
