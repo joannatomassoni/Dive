@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 import { SignedInContext } from '../context/UserContext';
-import DateTimePicker from '../components/DateTimePicker';
 import { AXIOS_URL } from 'react-native-dotenv';
+import ActionSheet from '../components/VenuePicker'
+import DateTimePicker from '../components/DateTimePicker';
 
 
 export default function CreateShowModal(props) {
@@ -41,6 +42,8 @@ export default function CreateShowModal(props) {
   const [dateTime, setDateTime] = useState('');
   //show description
   const [showDesc, setShowDesc] = useState('');
+  //venue for venue picker
+  const [venue, setVenue] = useState('java');
 
   return (
     <View>
@@ -62,7 +65,7 @@ export default function CreateShowModal(props) {
           <View style={styles.container}>
             <ScrollView style={styles.title}>
               <Text style={styles.text}>New Show</Text>
-              {/* username text box */}
+              {/* Title text box */}
               <TextInput
                 placeholder="Show Title"
                 placeholderTextColor="#75A4AD"
@@ -70,6 +73,7 @@ export default function CreateShowModal(props) {
                 onChangeText={setShowTitle}
                 style={styles.input}
               />
+              <ActionSheet />
               {/* Bands input */}
               <TextInput
                 placeholder="Add Band"
@@ -241,5 +245,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 40,
     left: 20,
-  }
+  },
 })

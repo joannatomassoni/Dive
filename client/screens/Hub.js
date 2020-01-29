@@ -5,9 +5,7 @@ import {
   View,
   SafeAreaView,
 } from 'react-native';
-import {
-  Card
-} from 'react-native-elements';
+import { Card } from 'react-native-elements';
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext';
@@ -18,8 +16,8 @@ import InstagramButton from '../components/InstagramButton';
 import CreateShowModal from '../modals/CreateShowModal';
 import EditBandBioModal from '../modals/EditBandBioModal';
 import EditShowModal from '../modals/EditShowModal';
+import CalendarView from '../components/Calendar.js';
 import { AXIOS_URL } from 'react-native-dotenv';
-
 
 export default function Hub(props) {
   //global user signin info and editing function
@@ -37,8 +35,6 @@ export default function Hub(props) {
         console.log("were getting hub info", err);
       })
   }, [userInfo])
-
-  console.log(userInfo);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -65,6 +61,9 @@ export default function Hub(props) {
           {userInfo.userType === 'band' ? <CreateShowModal /> : null}
         </View>
         {/* Cards for all upcoming shows */}
+
+        <CalendarView />
+
         <Card
           title='Show Title Here'
           style={styles.card}

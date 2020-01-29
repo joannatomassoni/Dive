@@ -36,6 +36,7 @@ export default class DatePicker extends Component {
     });
   }
 
+  
   render() {
     const { show, date, mode } = this.state;
     return (

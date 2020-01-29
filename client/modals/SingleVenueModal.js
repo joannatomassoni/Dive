@@ -68,6 +68,7 @@ export default function SingleVenueModal(props) {
         transparent={false}
         visible={modalVisible}
       >
+        
         {/* start of modal when showing */}
         <SafeAreaView behavior="padding" style={styles.container}>
           {/* back button */}
