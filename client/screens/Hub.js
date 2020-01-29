@@ -36,6 +36,8 @@ export default function Hub(props) {
       })
   }, [userInfo])
 
+  console.log(userInfo);
+
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
@@ -58,7 +60,7 @@ export default function Hub(props) {
           {/* Button to open create show modal */}
           <EditBandBioModal />
           {/* Button to open create show modal */}
-          <CreateShowModal />
+          {userInfo.userType === 'band' ? <CreateShowModal /> : null}
         </View>
         {/* Cards for all upcoming shows */}
         <Card
