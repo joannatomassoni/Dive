@@ -92,9 +92,31 @@ export default function CreateShowModal(props) {
       console.log("data from cloudinary", data.url);
     }).catch(err => console.log(err))
 
-    console.log("are we getting user id?", userInfo.id)
-    console.log("bandPhoto has been set to state", bandPhoto);
+    // Axios request to save band photo to DB
+    // axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
+    //   bandPhoto: bandPhoto
+    // })
+    //   .then(response => {
+    //     console.log("saving photo to db", bandPhoto)
+    //   })
+    //   .catch(err => {
+    //     console.log("not saving to db", err)
+    //   })
   };
+
+  const savePhoto = async () => {
+    await axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
+      bandPhoto: bandPhoto
+    })
+      .then(response => {
+        console.log("saving photo to db", bandPhoto)
+      })
+      .catch(err => {
+        console.log("not saving to db", err)
+      })
+  }
+
+  console.log("bandPhoto has been set to state", bandPhoto);
 
   return (
     <View>
@@ -204,6 +226,12 @@ export default function CreateShowModal(props) {
                 {/* {image.uri && */}
                 {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
               </View>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={savePhoto}
+              >
+                <Text style={styles.buttonText}>Save Photo</Text>
+              </TouchableOpacity>
 
               {/* create show button when modal is showing */}
               <TouchableOpacity
