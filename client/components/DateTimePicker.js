@@ -59,7 +59,7 @@ export default class DatePicker extends Component {
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => {
-                this.hide;
+                this.hide();
                 this.props.setDateTime(date);
               }}
             >
