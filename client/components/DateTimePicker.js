@@ -18,7 +18,7 @@ export default class DatePicker extends Component {
       show: false,
     }
   }
-
+  //set date on each selector change
   setDate = (event, date) => {
     date = date || this.state.date;
     this.setState({
