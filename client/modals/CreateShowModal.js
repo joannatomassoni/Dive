@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SignedInContext } from '../context/UserContext';
 import DateTimePicker from '../components/DateTimePicker';
 import { AXIOS_URL } from 'react-native-dotenv';
+import * as ImagePicker from 'expo-image-picker';
 
 
 export default function CreateShowModal(props) {
@@ -128,7 +129,7 @@ export default function CreateShowModal(props) {
               />
 
               {/* date time picker */}
-              <DateTimePicker setDateTime={setDateTime}/>
+              <DateTimePicker setDateTime={setDateTime} />
               {/* Description input */}
               <TextInput
                 placeholder="Show Description"
@@ -151,16 +152,17 @@ export default function CreateShowModal(props) {
                   })
                     .then(response => {
                       return axios.post(`${AXIOS_URL}/shows`, {
-                      name: showTitle,
-                      dateTime: dateTime,
-                      photo: null,
-                      venueName: venueName,
-                      bandName: bandNames,
-                      description: showDesc
-                    })})
+                        name: showTitle,
+                        dateTime: dateTime,
+                        photo: null,
+                        venueName: venueName,
+                        bandName: bandNames,
+                        description: showDesc
+                      })
+                    })
                     .then(response => response)
                     .catch(error => console.log('failed to create show', error));
-              }}
+                }}
               >
                 <Text style={styles.buttonText}>Create Show</Text>
               </TouchableOpacity>
