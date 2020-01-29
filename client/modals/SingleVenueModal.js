@@ -48,7 +48,7 @@ export default function SingleVenueModal(props) {
         console.log("error getting bands for single show", err);
       });
 
-      //request to get geolocation of address
+    //request to get geolocation of address
     axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
       params: {
         key: `${MAP_KEY}`,
@@ -133,7 +133,7 @@ export default function SingleVenueModal(props) {
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>Bands:</Text>
                   {/* list for each additional band in each show */}
-                  {bands.map(band => {
+                  {bands && bands.map(band => {
                     return <Text style={{ marginBottom: 10, color: '#000' }}>{band.name}</Text>
                   })}
                 </Card>
