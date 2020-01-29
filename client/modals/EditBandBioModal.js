@@ -6,7 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  KeyboardAvoidingView
+  KeyboardAvoidingView, 
+  Alert
 } from 'react-native';
 import axios from 'axios';
 import { SignedInContext } from '../context/UserContext';
@@ -65,7 +66,8 @@ export default function EditBandBioModal(props) {
                       bio: newBio,
                     })
                       .then(response => response)
-                      .catch(error => console.log('failed to create user', error))
+                      .catch(error => console.log('failed to create user', error));
+                    Alert.alert('Bio Updated');
                   }}
                 />
               </View>
@@ -88,7 +90,8 @@ export default function EditBandBioModal(props) {
                       link_spotify: spotifyLink,
                     })
                       .then(response => response)
-                      .catch(error => console.log('failed to create user', error))
+                      .catch(error => console.log('failed to create user', error));
+                    Alert.alert('Spotify Updated');
                   }}
                 />
               </View>
@@ -111,7 +114,8 @@ export default function EditBandBioModal(props) {
                       link_facebook: facebookLink,
                     })
                       .then(response => response)
-                      .catch(error => console.log('failed to create user', error))
+                      .catch(error => console.log('failed to create user', error));
+                    Alert.alert('Facebook Updated');
                   }}
                 />
               </View>
@@ -134,7 +138,8 @@ export default function EditBandBioModal(props) {
                       link_instagram: instagramLink,
                     })
                       .then(response => response)
-                      .catch(error => console.log('failed to create user', error))
+                      .catch(error => console.log('failed to create user', error));
+                    Alert.alert('Instagram Updated');
                   }}
                 />
               </View>
