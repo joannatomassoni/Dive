@@ -6,17 +6,13 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
-import {
-  Card,
-  ListItem,
-  Button,
-  Icon,
-} from 'react-native-elements'
+import { Card } from 'react-native-elements'
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 import SingleShowModal from '../modals/SingleShowModal'
+
 export default function Shows(props) {
   ///global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
@@ -83,7 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#59C3D1',
   },
   cardText: {
-    fontSize: 20,
+    fontSize: 15,
     color: '#59C3D1',
     opacity: 0.9,
     fontWeight: 'bold',

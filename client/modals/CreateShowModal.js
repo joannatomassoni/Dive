@@ -78,7 +78,7 @@ export default function CreateShowModal(props) {
               />
               {/* create show button when modal is showing */}
               <TouchableOpacity
-                style={styles.loginContainer}
+                style={styles.buttonContainer}
                 onPress={() => addBandName([...bandNames, bandName])}
               >
                 <Text style={styles.buttonText}>Add Band</Text>
@@ -131,13 +131,13 @@ export default function CreateShowModal(props) {
               <TextInput
                 placeholder="Show Description"
                 placeholderTextColor="#75A4AD"
-                returnKeyType="next"
+                returnKeyType="send"
                 onChangeText={setShowDesc}
                 style={styles.input}
               />
               {/* create show button when modal is showing */}
               <TouchableOpacity
-                style={styles.loginContainer}
+                style={styles.buttonContainer}
                 onPress={() => {
                   setModalVisible(false);
                   axios.post('http://localhost:8080/venues', {
@@ -214,8 +214,8 @@ const styles = StyleSheet.create({
     width: 140,
     marginHorizontal: 7
   },
-  signupContainer: {
-    backgroundColor: '#75A4AD',
+  buttonContainer: {
+    backgroundColor: '#59C3D1',
     paddingVertical: 10,
     borderRadius: 5,
     marginHorizontal: 90,
