@@ -23,7 +23,7 @@ import EditShowModal from '../modals/EditShowModal';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import * as ImagePicker from 'expo-image-picker';
-import { Video, Transformation, CloudinaryContext } from 'cloudinary-react';
+// import { Video, Transformation, CloudinaryContext } from 'cloudinary-react';
 // const cloudinary = require('cloudinary').v2
 
 export default function Hub(props) {
@@ -37,6 +37,7 @@ export default function Hub(props) {
   // const [venue, setVenue] = useState([]);
   let [selectedImage, setSelectedImage] = useState({});
   let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/da4ry89ct/upload';
+  let [bandPhoto, setBandPhoto] = useState('');
 
 
 
@@ -62,7 +63,7 @@ export default function Hub(props) {
     setSelectedImage({ localUri: pickerResult.uri });
     let base64Img = `data:image/jpg;base64,${pickerResult.base64}`;
 
-    console.log("the image selected is:", base64Img)
+    // console.log("the image selected is:", base64Img)
 
     // if (selectedImage !== null) {
     //   return (
@@ -87,11 +88,21 @@ export default function Hub(props) {
       method: 'POST',
     }).then(async r => {
       let data = await r.json()
-      console.log("sending data to cloudinary", data);
+      // console.log("sending data to cloudinary", data.url);
+      setBandPhoto(data.url);
+      console.log("bandPhoto has been set to state", bandPhoto);
       // return data.secure_url
     }).catch(err => console.log(err))
 
-
+    axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
+      photo: bandPhoto
+    })
+      .then(response => {
+        console.log("saving photo to db", bandPhoto)
+      })
+      .catch(err => {
+        console.log("not saving to db", err)
+      })
   };
 
   //load all user info when brought to hub
@@ -114,7 +125,18 @@ export default function Hub(props) {
         .catch((err) => {
           // console.log("frontend not getting band shows from db", err);
         })
-
+    // const savePhoto = async () => {
+    //   await
+    //   axios.patch(`http://localhost:8080/bands/:id/photo`, {
+    //     photo: bandPhoto
+    //   })
+    //     .then(response => {
+    //       console.log("saving photo do db", bandPhoto)
+    //     })
+    //     .catch(err => {
+    //       console.log("not saving to db", err)
+    //     })
+    // }
     // axios.patch(`http://localhost:8080/bands/$userInfo.id/photo`, {
     //   photo: image
     // })
