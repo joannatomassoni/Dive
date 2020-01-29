@@ -47,7 +47,7 @@ export default function CreateShowModal(props) {
   //cloudinary url to send photo to
   let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/da4ry89ct/upload';
   //sets band photo
-  let [bandPhoto, setBandPhoto] = useState('');
+  let [flyer, setFlyerPhoto] = useState('');
 
 
   //allows user to upload a photo
@@ -88,35 +88,35 @@ export default function CreateShowModal(props) {
     }).then(async r => {
       let data = await r.json()
       // console.log("sending data to cloudinary", data.url);
-      setBandPhoto(data.url);
+      setFlyerPhoto(data.url);
       console.log("data from cloudinary", data.url);
     }).catch(err => console.log(err))
 
-    // Axios request to save band photo to DB
-    // axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
-    //   bandPhoto: bandPhoto
-    // })
-    //   .then(response => {
-    //     console.log("saving photo to db", bandPhoto)
+    // Axios request to save flyer photo to DB
+    //   axios.patch(`${AXIOS_URL}/shows`, {
+    //     flyer: flyer
     //   })
-    //   .catch(err => {
-    //     console.log("not saving to db", err)
-    //   })
-  };
+    //     .then(response => {
+    //       console.log("saving flyer to db", flyer)
+    //     })
+    //     .catch(err => {
+    //       console.log("not saving to db", err)
+    //     })
+    // };
 
-  const savePhoto = async () => {
-    await axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
-      bandPhoto: bandPhoto
-    })
-      .then(response => {
-        console.log("saving photo to db", bandPhoto)
-      })
-      .catch(err => {
-        console.log("not saving to db", err)
-      })
+    // const savePhoto = async () => {
+    //   await axios.patch(`${AXIOS_URL}/shows`, {
+    //     bandPhoto: bandPhoto
+    //   })
+    //     .then(response => {
+    //       console.log("saving photo to db", bandPhoto)
+    //     })
+    //     .catch(err => {
+    //       console.log("not saving to db", err)
+    //     })
   }
 
-  console.log("bandPhoto has been set to state", bandPhoto);
+  console.log("flyer has been set to state", flyer);
 
   return (
     <View>
@@ -226,12 +226,12 @@ export default function CreateShowModal(props) {
                 {/* {image.uri && */}
                 {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
               </View>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={savePhoto}
               >
                 <Text style={styles.buttonText}>Save Photo</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               {/* create show button when modal is showing */}
               <TouchableOpacity
@@ -249,9 +249,9 @@ export default function CreateShowModal(props) {
                       return axios.post(`${AXIOS_URL}/shows`, {
                         name: showTitle,
                         dateTime: dateTime,
-                        photo: null,
                         venueName: venueName,
                         bandName: bandNames,
+                        flyer: flyer,
                         description: showDesc
                       })
                     })
