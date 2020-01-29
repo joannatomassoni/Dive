@@ -25,6 +25,8 @@ import Constants from 'expo-constants';
 import * as ImagePicker from 'expo-image-picker';
 // import { Video, Transformation, CloudinaryContext } from 'cloudinary-react';
 // const cloudinary = require('cloudinary').v2
+import { AXIOS_URL } from 'react-native-dotenv';
+
 
 export default function Hub(props) {
   //global user signin info and editing function
@@ -107,7 +109,7 @@ export default function Hub(props) {
 
   //load all user info when brought to hub
   useEffect(() => {
-    axios.get(`http://localhost:8080/users/${userInfo.username}`)
+    axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
       .then((response) => {
         // console.log("getting band info", response.data);
         setHubInfo(response.data);

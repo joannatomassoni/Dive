@@ -2,6 +2,7 @@ import React, { createContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import DrawerNavigator from './navigation/DrawerNavigator';
 import { SignedInContext } from './context/UserContext';
+import { IOS_AUTH_KEY, ANDROID_AUTH_KEY, AXIOS_URL, MAP_KEY } from 'react-native-dotenv';
 
 export default function App (props) {
   //initial login state of app

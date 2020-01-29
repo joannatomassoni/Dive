@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
+import { AXIOS_URL } from 'react-native-dotenv';
+
 
 export default function CreateShowModal(props) {
   //state for modal visibility
@@ -109,11 +111,11 @@ export default function CreateShowModal(props) {
                 style={styles.loginContainer}
                 onPress={() => {
                   setModalVisible(false);
-                  axios.post('http://localhost:8080/venues', {
+                  axios.post(`${AXIOS_URL}/venues`, {
                     name: venueName,
                   })
                     .then(response => {
-                      return axios.post('http://localhost:8080/shows', {
+                      return axios.post(`${AXIOS_URL}/shows`, {
                         name: showTitle,
                         date: showDate,
                         time: showTime,
