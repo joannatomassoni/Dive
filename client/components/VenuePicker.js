@@ -18,10 +18,13 @@ let VENUES = [
 
 let CANCEL_INDEX = 5;
 
-export default class ActionSheet extends React.Component {
-  state = {
-    venue: 'none',
-  };
+export default class VenuePicker extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      venue: 'none selected',
+    }
+  }
 
   render() {
     return (
@@ -31,10 +34,10 @@ export default class ActionSheet extends React.Component {
           style={styles.createShowContainer}
           onPress={this.showActionSheet}
         >
-          <Text style={styles.selectButtonText}>Select a Venue</Text>
+          <Text style={styles.selectButtonText}>Select Venue</Text>
         </TouchableOpacity>
         <Text style={styles.text}>
-          Selected: {this.state.venue}
+          {this.state.venue}
         </Text>
       </View>
     );
@@ -47,6 +50,7 @@ export default class ActionSheet extends React.Component {
     },
       (buttonIndex) => {
         this.setState({ venue: VENUES[buttonIndex] });
+        this.props.setVenueName(this.state.venue);
       });
   };
 }
@@ -57,7 +61,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   createShowContainer: {
-    backgroundColor: '#75A4AD',
+    backgroundColor: '#59C3D1',
     paddingVertical: 10,
     borderRadius: 5,
     marginBottom: 15,
@@ -67,12 +71,13 @@ const styles = StyleSheet.create({
   selectButtonText: {
     textAlign: 'center',
     fontWeight: '700',
-    color: '#000'
+    color: '#fff'
   },
   text: {
     fontWeight: 'bold',
     color: '#fff',
-    fontSize: 20
+    fontSize: 20,
+    paddingTop: 5
   },
   flexRow: {
     flexDirection: 'row',

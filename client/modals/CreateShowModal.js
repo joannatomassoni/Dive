@@ -13,7 +13,7 @@ import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 import { SignedInContext } from '../context/UserContext';
 import { AXIOS_URL } from 'react-native-dotenv';
-import ActionSheet from '../components/VenuePicker'
+import VenuePicker from '../components/VenuePicker'
 import DateTimePicker from '../components/DateTimePicker';
 
 
@@ -42,8 +42,8 @@ export default function CreateShowModal(props) {
   const [dateTime, setDateTime] = useState('');
   //show description
   const [showDesc, setShowDesc] = useState('');
-  //venue for venue picker
-  const [venue, setVenue] = useState('java');
+  //list of venues
+  const [allVenues, setAllVenues] = useState([]);
 
   return (
     <View>
@@ -73,7 +73,7 @@ export default function CreateShowModal(props) {
                 onChangeText={setShowTitle}
                 style={styles.input}
               />
-              <ActionSheet />
+              <VenuePicker setVenueName={setVenueName} />
               {/* Bands input */}
               <TextInput
                 placeholder="Add Band"
@@ -82,14 +82,13 @@ export default function CreateShowModal(props) {
                 onChangeText={setBandName}
                 style={styles.input}
               />
-              {/* create show button when modal is showing */}
+              {/* add band button */}
               <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={() => addBandName([...bandNames, bandName])}
               >
                 <Text style={styles.buttonText}>Add Band</Text>
               </TouchableOpacity>
-
               {/* Venue input */}
               <TextInput
                 placeholder="Show Venue"
@@ -176,7 +175,14 @@ export default function CreateShowModal(props) {
       {/* create show button when modal is hidden */}
       <TouchableOpacity
         style={styles.createShowContainer}
-        onPress={() => { setModalVisible(true); }}
+        onPress={() => { 
+          setModalVisible(true);
+          axios.get(`${AXIOS_URL}/venues`)
+          .then(response => response.data.map(venue => {
+            setAllVenues([...allVenues, venue.name])
+          }))
+          .catch(error => console.log('failed to get all venues', error))
+        }}
       >
         <Text style={styles.signupButtonText}>Create a show</Text>
       </TouchableOpacity>
@@ -196,7 +202,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 15,
     borderRadius: 5,
-    marginHorizontal: 40,
+    marginHorizontal: 20,
     fontWeight: 'bold'
   },
   title: {
@@ -226,9 +232,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 90,
     marginBottom: 15
-  },
-  modal: {
-    marginLeft: 120
   },
   buttonText: {
     textAlign: 'center',
