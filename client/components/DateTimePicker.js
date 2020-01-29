@@ -1,9 +1,7 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { 
-  View, 
-  Button, 
-  StyleSheet, 
-  Platform,
+  View,
+  StyleSheet,
   TouchableOpacity,
   Text
 } from 'react-native';

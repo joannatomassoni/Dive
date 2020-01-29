@@ -48,23 +48,6 @@ export default function SingleVenueModal(props) {
         console.log("error getting bands for single show", err);
       });
 
-    //request to get geolocation of address
-    axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
-      params: {
-        key: `${MAP_KEY}`,
-        location: `${singleVenue.address}${singleVenue.city}${singleVenue.state}${singleVenue.zip_code}`
-      }
-    })
-      .then((response) => {
-        setVenueLocation({
-          latitude: response.data.results[0].locations[0].displayLatLng.lat,
-          longitude: response.data.results[0].locations[0].displayLatLng.lng
-        });
-      })
-      .catch((err) => {
-        console.log(`error getting geolocation`, err);
-      });
-
       //CURRENT GEOLOCATION
       // navigator.geolocation.getCurrentPosition(position => {
       //   setCurrentLocation({
@@ -153,7 +136,23 @@ export default function SingleVenueModal(props) {
             })
             .catch((err) => {
               console.log("error getting single venue", err);
+            });
+          //request to get geolocation of address
+          axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
+            params: {
+              key: `${MAP_KEY}`,
+              location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
+            }
+          })
+            .then((response) => {
+              setVenueLocation({
+                latitude: response.data.results[0].locations[0].displayLatLng.lat,
+                longitude: response.data.results[0].locations[0].displayLatLng.lng
+              });
             })
+            .catch((err) => {
+              console.log(`error getting geolocation`, err);
+            });
         }}
       >
         <Text style={styles.signupButtonText}>Show More</Text>
