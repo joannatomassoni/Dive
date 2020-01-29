@@ -96,12 +96,13 @@ export default function Hub(props) {
             <Image source={{ uri: image.uri }} style={{ width: 150, height: 150 }} />}
         </View> */}
         <View style={styles.container}>
-          <Image
-            style={{ width: 50, height: 50 }}
-            source={{ uri: dbPhoto }}
+          {dbPhoto &&
+            <Image
+              style={{ width: 50, height: 50 }}
+              source={{ uri: dbPhoto }}
 
-          // source={{ uri: "http://res.cloudinary.com/da4ry89ct/image/upload/v1580262805/nekvjgf3slxuvp9xv5iv.jpg" }}
-          />
+            // source={{ uri: "http://res.cloudinary.com/da4ry89ct/image/upload/v1580262805/nekvjgf3slxuvp9xv5iv.jpg" }}
+            />}
 
         </View>
 
