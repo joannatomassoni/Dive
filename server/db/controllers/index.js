@@ -36,7 +36,7 @@ const {
 } = require('./Venue');
 const {
     createShow,
-    getAllShows,
+    getAllUpcomingShows,
     getFanRSVPs,
     getSingleShow,
     getShowRSVPs,
@@ -61,7 +61,7 @@ module.exports = {
     getFanRSVPs,
     getFanVenues,
     getShowRSVPs,
-    getAllShows,
+    getAllUpcomingShows,
     getSingleShow,
     getSingleUser,
     getSingleVenue,
