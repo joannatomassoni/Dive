@@ -40,7 +40,7 @@ export default function SingleShowModal(props) {
         setBands(response.data.bands);
       })
       .catch((err) => {
-        console.log("error getting shingle show info", err);
+        console.log(err);
       });
     //request to get all comments for specific show
     axios.get(`${AXIOS_URL}/shows/${show}/comments`)
@@ -48,7 +48,7 @@ export default function SingleShowModal(props) {
         setComments(response.data)
       })
       .catch((err) => {
-        console.log("error getting comments for show", err);
+        console.log(err);
       })
   }, [])
 

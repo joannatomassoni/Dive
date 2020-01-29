@@ -31,7 +31,7 @@ export default function Shows(props) {
         setShows(response.data);
       })
       .catch((err) => {
-        console.log("error getting shows from db", err);
+        console.log(err);
       })
   }, [])
 
