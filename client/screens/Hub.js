@@ -18,6 +18,8 @@ import InstagramButton from '../components/InstagramButton';
 import CreateShowModal from '../modals/CreateShowModal';
 import EditBandBioModal from '../modals/EditBandBioModal';
 import EditShowModal from '../modals/EditShowModal';
+import { AXIOS_URL } from 'react-native-dotenv';
+
 
 export default function Hub(props) {
   //global user signin info and editing function
@@ -27,7 +29,7 @@ export default function Hub(props) {
 
   //load all user info when brought to hub
   useEffect(() => {
-    axios.get(`http://localhost:8080/users/${userInfo.username}`)
+    axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
       .then((response) => {
         setHubInfo(response.data);
       })

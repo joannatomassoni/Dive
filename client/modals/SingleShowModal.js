@@ -14,6 +14,8 @@ import { Ionicons } from '@expo/vector-icons';
 import CreateCommentModal from './CreateCommentModal';
 import Moment from 'moment';
 import axios from 'axios';
+import { AXIOS_URL } from 'react-native-dotenv';
+
 
 export default function SingleShowModal(props) {
   //global user signin info and editing function
@@ -33,7 +35,7 @@ export default function SingleShowModal(props) {
 
   useEffect(() => {
     //request to get all additional bands for specific show
-    axios.get(`http://localhost:8080/shows/${show}`)
+    axios.get(`${AXIOS_URL}/shows/${show}`)
       .then((response) => {
         setBands(response.data.bands);
       })
@@ -41,7 +43,7 @@ export default function SingleShowModal(props) {
         console.log("error getting shingle show info", err);
       });
     //request to get all comments for specific show
-    axios.get(`http://localhost:8080/shows/${show}/comments`)
+    axios.get(`${AXIOS_URL}/shows/${show}/comments`)
       .then((response) => {
         setComments(response.data)
       })
@@ -85,7 +87,7 @@ export default function SingleShowModal(props) {
               (rsvp ? <TouchableOpacity
                 style={styles.cancelButtonContainer}
                 onPress={() => {
-                  axios.delete('http://localhost:8080/shows/rsvps', {
+                  axios.delete(`${AXIOS_URL}/shows/rsvps`, {
                     data: {
                       id_fan: userInfo.id,
                       id_show: singleShow.id,
@@ -101,7 +103,7 @@ export default function SingleShowModal(props) {
               : <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={() => {
-                  axios.post('http://localhost:8080/shows/rsvps', {
+                  axios.post(`${AXIOS_URL}/shows/rsvps`, {
                     id_fan: userInfo.id,
                     id_show: singleShow.id,
                   })
@@ -138,7 +140,7 @@ export default function SingleShowModal(props) {
         onPress={() => {
           setModalVisible(true);
           //request to get all info for current show
-          axios.get(`http://localhost:8080/shows/${show}`)
+          axios.get(`${AXIOS_URL}/shows/${show}`)
             .then((response) => {
               setSingleShow(response.data);
             })
@@ -146,7 +148,7 @@ export default function SingleShowModal(props) {
               console.log("error getting single show info", err);
             });
           //request to get user's rsvp info
-          axios.get(`http://localhost:8080/fans/${userInfo.id}/rsvps`)
+          axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
             .then((response) => {
               response.data.map(show => {
                 if (show.id === singleShow.id){

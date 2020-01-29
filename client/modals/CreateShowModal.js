@@ -12,7 +12,9 @@ import {
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 import { SignedInContext } from '../context/UserContext';
-import DateTimePicker from '../components/DateTimePicker'
+import DateTimePicker from '../components/DateTimePicker';
+import { AXIOS_URL } from 'react-native-dotenv';
+
 
 export default function CreateShowModal(props) {
   //global user signin info and editing function
@@ -157,7 +159,7 @@ export default function CreateShowModal(props) {
                 style={styles.loginContainer}
                 onPress={() => {
                   setModalVisible(false);
-                  axios.post('http://localhost:8080/venues', {
+                  axios.post(`${AXIOS_URL}/venues`, {
                     name: venueName,
                     address: venueAddress,
                     city: venueCity,
@@ -165,7 +167,7 @@ export default function CreateShowModal(props) {
                     zip_code: venueZip
                   })
                     .then(response => {
-                      return axios.post('http://localhost:8080/shows', {
+                      return axios.post(`${AXIOS_URL}/shows`, {
                       name: showTitle,
                       dateTime: dateTime,
                       photo: null,

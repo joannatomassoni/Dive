@@ -17,13 +17,16 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 import SingleShowModal from '../modals/SingleShowModal'
+import { AXIOS_URL } from 'react-native-dotenv';
+
+
 export default function Shows(props) {
   ///global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
   
   useEffect(() => {
-    axios.get('http://localhost:8080/shows')
+    axios.get(`${AXIOS_URL}/shows`)
       .then((response) => {
         setShows(response.data);
       })
