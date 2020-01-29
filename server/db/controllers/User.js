@@ -39,6 +39,21 @@ const createUser = async (req, res) => {
     }
 }
 
+// add push token
+const addPushToken = async (req, res) => {
+    try {
+        const { name } = req.params;
+        await User.update(
+            { pushToken },
+            { where: { id } }
+        )
+    }
+    catch(err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+}
+
 // Get single user
 const getSingleUser = async (req, res) => {
     try {
@@ -343,6 +358,7 @@ const getFanBands = async (req, res) => {
 
 module.exports = {
     addGenreToBand,
+    addPushToken,
     createUser,
     deleteUser,
     followBand,

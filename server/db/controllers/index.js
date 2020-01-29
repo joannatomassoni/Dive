@@ -1,6 +1,7 @@
 // compile all controllers and export to router from here
 const { 
     addGenreToBand,
+    addPushToken,
     createUser,
     deleteUser,
     followBand,
@@ -49,6 +50,7 @@ const {
 module.exports = {
     addFanToVenue,
     addGenreToBand,
+    addPushToken,
     createUser,
     createShow,
     deleteShow,

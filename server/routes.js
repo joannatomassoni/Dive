@@ -27,6 +27,9 @@ const ctrl = require('./db/controllers/index')
 // creates fans and bands
 router.post('/users', ctrl.createUser);
 
+// add push token to user record
+router.patch('users/:name/push', ctrl.addPushToken)
+
 // Used for user login and getting a single band
 router.get('/users/:name', ctrl.getSingleUser)
 
