@@ -42,6 +42,12 @@ export default function CreateShowModal(props) {
   const [dateTime, setDateTime] = useState('');
   //show description
   const [showDesc, setShowDesc] = useState('');
+  //sets photo uploaded from phone
+  let [selectedImage, setSelectedImage] = useState({});
+  //cloudinary url to send photo to
+  let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/da4ry89ct/upload';
+  //sets band photo
+  let [bandPhoto, setBandPhoto] = useState('');
 
   return (
     <View>
