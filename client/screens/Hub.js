@@ -38,7 +38,7 @@ export default function Hub(props) {
   let [selectedImage, setSelectedImage] = useState({});
   let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/da4ry89ct/upload';
   let [bandPhoto, setBandPhoto] = useState('');
-
+  let [dbPhoto, setDbPhoto] = useState('');
 
 
 
@@ -95,7 +95,7 @@ export default function Hub(props) {
     }).catch(err => console.log(err))
 
     axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
-      photo: bandPhoto
+      bandPhoto: bandPhoto
     })
       .then(response => {
         console.log("saving photo to db", bandPhoto)
@@ -148,17 +148,17 @@ export default function Hub(props) {
     //   }),
 
 
-    // axios.get(`http://localhost:8080/venues/${shows.id_venue}`)
-    //   .then((response) => {
-    //     console.log("getting a venue from db", response.data)
-    //     setVenue(response.data.shows);
-
-    //   })
-    //   .catch((err) => {
-    //     console.log("frontend not getting band shows from db", err);
-    //   })
+    axios.get(`http://localhost:8080/users/${userInfo.username}`)
+      .then((response) => {
+        console.log("getting a photo from db", response.data.bandPhoto)
+        setDbPhoto(response.data.bandPhoto);
+      })
+      .catch((err) => {
+        console.log("front end not getting band photo from db", err);
+      })
   }, [userInfo])
 
+  console.log("are we setting a photo???", dbPhoto);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -193,10 +193,13 @@ export default function Hub(props) {
             <Image source={{ uri: image.uri }} style={{ width: 150, height: 150 }} />} */}
         </View>
         <View style={styles.container}>
+          {/* <Image source="http://res.cloudinary.com/da4ry89ct/image/upload/v1580262805/nekvjgf3slxuvp9xv5iv.jpg" /> */}
+
           <Image
-            source={{ uri: selectedImage.localUri }}
-            style={styles.thumbnail}
+            style={{ width: 50, height: 50 }}
+            source={{ uri: "http://res.cloudinary.com/da4ry89ct/image/upload/v1580262805/nekvjgf3slxuvp9xv5iv.jpg" }}
           />
+
         </View>
 
 
@@ -220,6 +223,12 @@ export default function Hub(props) {
             )
           })
         }
+        <View style={styles.container}>
+          <Image
+            source={dbPhoto}
+            style={styles.thumbnail}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   )
