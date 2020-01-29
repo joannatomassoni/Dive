@@ -6,12 +6,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Button,
+  Image
 } from 'react-native';
 import axios from 'axios';
 import { SignedInContext } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons';
 import { AXIOS_URL } from 'react-native-dotenv';
+import * as ImagePicker from 'expo-image-picker';
 
 
 export default function EditBandBioModal(props) {
@@ -27,6 +30,62 @@ export default function EditBandBioModal(props) {
   const [facebookLink, setFacebookLink] = useState('');
   //new instagram link
   const [instagramLink, setInstagramLink] = useState('');
+
+  const [image, setImage] = useState({});
+  let [selectedImage, setSelectedImage] = useState({});
+  let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/da4ry89ct/upload';
+  let [bandPhoto, setBandPhoto] = useState('');
+
+
+  let openImagePickerAsync = async () => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      base64: true
+    });
+
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+
+    setSelectedImage({ localUri: pickerResult.uri });
+    let base64Img = `data:image/jpg;base64,${pickerResult.base64}`;
+
+    let data = {
+      "file": base64Img,
+      "upload_preset": "oecwb18t",
+    }
+
+    fetch(CLOUDINARY_URL, {
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+    }).then(async r => {
+      let data = await r.json()
+      // console.log("sending data to cloudinary", data.url);
+      setBandPhoto(data.url);
+      console.log("bandPhoto has been set to state", bandPhoto);
+    }).catch(err => console.log(err))
+
+    axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
+      bandPhoto: bandPhoto
+    })
+      .then(response => {
+        console.log("saving photo to db", bandPhoto)
+      })
+      .catch(err => {
+        console.log("not saving to db", err)
+      })
+  };
 
   return (
     <View>
@@ -159,6 +218,18 @@ export default function EditBandBioModal(props) {
                 >
                   <Text style={styles.buttonText}>+</Text>
                 </TouchableOpacity>
+              </View>
+              {/*  button to upload photo */}
+              <View style={styles.button} >
+                <TouchableOpacity
+                  style={styles.signupContainer}
+                  onPress={openImagePickerAsync}
+                >
+                  <Text style={styles.signupButtonText}>Select Photo</Text>
+                </TouchableOpacity>
+
+                {/* {image.uri && */}
+                {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
               </View>
 
               {/* button to complete editing */}
