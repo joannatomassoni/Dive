@@ -44,7 +44,6 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
 // },
 }); 
 
-
 // const sequelize = new Sequelize('dive', 'root', 'dive', {
 //   dialect: 'mysql',
 //   host: '35.224.191.68',
