@@ -36,7 +36,7 @@ export default function EditBandBioModal(props) {
   let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/da4ry89ct/upload';
   let [bandPhoto, setBandPhoto] = useState('');
 
-
+  //allows user to upload a photo
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
@@ -62,7 +62,7 @@ export default function EditBandBioModal(props) {
       "file": base64Img,
       "upload_preset": "oecwb18t",
     }
-
+    //sends photo to cloudinary
     fetch(CLOUDINARY_URL, {
       body: JSON.stringify(data),
       headers: {
@@ -76,6 +76,7 @@ export default function EditBandBioModal(props) {
       console.log("bandPhoto has been set to state", bandPhoto);
     }).catch(err => console.log(err))
 
+    //Axios request to save band photo to DB
     axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
       bandPhoto: bandPhoto
     })
