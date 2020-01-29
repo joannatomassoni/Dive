@@ -22,11 +22,10 @@ export default function Venues(props) {
   useEffect(() => {
     axios.get(`${AXIOS_URL}/venues`)
       .then((response) => {
-        // console.log("venue response from db", response.data[0])
         setVenues(response.data);
       })
       .catch((err) => {
-        // console.log("frontend not getting venues from db", err);
+        console.log("error getting venues", err);
       })
   }, [])
 
@@ -45,11 +44,9 @@ export default function Venues(props) {
               borderWidth={0}
               borderRadius={10}
               padding={10}
-            // image={require('../images/pic2.jpg')}
             >
-              <Text style={{ marginBottom: 10, color: '#000' }}>Address:</Text>
-              <Text style={{ marginBottom: 10, color: '#000' }}>{venue.address}</Text>
-              <Text style={{ marginBottom: 10, color: '#000' }}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
+              <Text style={{color: '#000' }}>{venue.address}</Text>
+              <Text style={{color: '#000' }}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
               <SingleVenueModal venueID={venue.id} />
             </Card>
           )

@@ -1,9 +1,7 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { 
-  View, 
-  Button, 
-  StyleSheet, 
-  Platform,
+  View,
+  StyleSheet,
   TouchableOpacity,
   Text
 } from 'react-native';
@@ -59,7 +57,7 @@ export default class DatePicker extends Component {
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => {
-                this.hide;
+                this.hide();
                 this.props.setDateTime(date);
               }}
             >

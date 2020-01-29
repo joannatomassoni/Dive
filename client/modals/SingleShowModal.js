@@ -74,12 +74,12 @@ export default function SingleShowModal(props) {
             {/* header */}
             <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
             {/* additional text */}
-            <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.date}</Text>
-            <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.time}</Text>
-            <Text style={{ marginBottom: 10, color: '#fff' }}>{singleShow.description}</Text>
+            <Text style={styles.infoText}>{singleShow.date}</Text>
+            <Text style={styles.infoText}>{singleShow.time}</Text>
+            <Text style={styles.infoText}>{singleShow.description}</Text>
             {/* list of all additional bands playing in current show */}
             {bands.map(band => {
-              return <Text style={{ marginBottom: 10, color: '#fff' }}>{band.name}</Text>
+              return <Text style={styles.infoText}>{band.name}</Text>
             })}
             {/* button to rsvp to specific (shows when signed in) */}
             {userInfo.signedIn ? 
@@ -204,8 +204,14 @@ const styles = StyleSheet.create({
   cardTextUsername: {
     fontWeight: 'bold'
   },
+  infoText: {
+    fontSize: 20,
+    color: '#fff',
+    textAlign: 'right',
+    paddingRight: 20,
+    paddingBottom: 5
+  },
   menuIcon: {
-    zIndex: 9,
     position: 'absolute',
     top: 40,
     left: 20,

@@ -36,12 +36,14 @@ const {
 } = require('./Venue');
 const {
     createShow,
+    deleteShow,
     getAllUpcomingShows,
     getFanRSVPs,
     getSingleShow,
     getShowRSVPs,
     removeFanRSVP,
     rsvpFanToShow,
+    updateShow
 } = require('./Show');
 
 module.exports = {
@@ -49,6 +51,7 @@ module.exports = {
     addGenreToBand,
     createUser,
     createShow,
+    deleteShow,
     deleteUser,
     followBand,
     getAllBands,
@@ -77,6 +80,7 @@ module.exports = {
     updateBandFB,
     updateBandInstagram,
     updateBandSpotify,
+    updateShow,
     createComment,
     getAllComments
 }

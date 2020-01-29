@@ -119,11 +119,12 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   loginContainer: {
-    backgroundColor: '#59C3D1',
+    backgroundColor: '#C70039',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    marginBottom: 15,
+    width: 140,
+    marginHorizontal: 7
   },
   signupContainer: {
     backgroundColor: '#75A4AD',

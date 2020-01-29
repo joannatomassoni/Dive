@@ -128,13 +128,8 @@ export default function EditBandBioModal(props) {
           <View style={styles.container}>
             <View style={styles.title}>
               <Text style={styles.text}>Edit Bio</Text>
-
               {/* new bio text box */}
-              <View style={{
-                flexDirection: 'row',
-                height: 50,
-                justifyContent: 'left',
-              }}>
+              <View style={styles.linkRow}>
                 <TextInput
                   placeholder="New Bio"
                   placeholderTextColor="#75A4AD"
@@ -143,8 +138,10 @@ export default function EditBandBioModal(props) {
                   style={styles.input}
                 />
                 {/* update bio button */}
-                <TouchableOpacity
-                  style={styles.loginContainer}
+                <Ionicons
+                  name='md-add-circle-outline'
+                  color='#59C3D1'
+                  size={37}
                   onPress={() => {
                     axios.patch(`${AXIOS_URL}/users/${userInfo.id}/bio`, {
                       bio: newBio,
@@ -152,17 +149,10 @@ export default function EditBandBioModal(props) {
                       .then(response => response)
                       .catch(error => console.log('failed to create user', error))
                   }}
-                >
-                  <Text style={styles.buttonText}>+</Text>
-                </TouchableOpacity>
+                />
               </View>
-
               {/* spotify link */}
-              <View style={{
-                flexDirection: 'row',
-                height: 50,
-                justifyContent: 'left',
-              }}>
+              <View style={styles.linkRow}>
                 <TextInput
                   placeholder="Spotify Link"
                   placeholderTextColor="#75A4AD"
@@ -171,8 +161,10 @@ export default function EditBandBioModal(props) {
                   style={styles.input}
                 />
                 {/* update spotify button */}
-                <TouchableOpacity
-                  style={styles.loginContainer}
+                <Ionicons
+                  name='md-add-circle-outline'
+                  color='#59C3D1'
+                  size={37}
                   onPress={() => {
                     axios.patch(`${AXIOS_URL}/bands/${userInfo.id}/spotify`, {
                       link_spotify: spotifyLink,
@@ -180,17 +172,10 @@ export default function EditBandBioModal(props) {
                       .then(response => response)
                       .catch(error => console.log('failed to create user', error))
                   }}
-                >
-                  <Text style={styles.buttonText}>+</Text>
-                </TouchableOpacity>
+                />
               </View>
-
               {/* facebook link */}
-              <View style={{
-                flexDirection: 'row',
-                height: 50,
-                justifyContent: 'left',
-              }}>
+              <View style={styles.linkRow}>
                 <TextInput
                   placeholder="Facebook Link"
                   placeholderTextColor="#75A4AD"
@@ -199,8 +184,10 @@ export default function EditBandBioModal(props) {
                   style={styles.input}
                 />
                 {/* update facebook button */}
-                <TouchableOpacity
-                  style={styles.loginContainer}
+                <Ionicons
+                  name='md-add-circle-outline'
+                  color='#59C3D1'
+                  size={37}
                   onPress={() => {
                     axios.patch(`${AXIOS_URL}/bands/${userInfo.id}/fb`, {
                       link_facebook: facebookLink,
@@ -208,17 +195,10 @@ export default function EditBandBioModal(props) {
                       .then(response => response)
                       .catch(error => console.log('failed to create user', error))
                   }}
-                >
-                  <Text style={styles.buttonText}>+</Text>
-                </TouchableOpacity>
+                />
               </View>
-
               {/* instagram link */}
-              <View style={{
-                flexDirection: 'row',
-                height: 50,
-                justifyContent: 'left',
-              }}>
+              <View style={styles.linkRow}>
                 <TextInput
                   placeholder="Instagram Link"
                   placeholderTextColor="#75A4AD"
@@ -227,8 +207,10 @@ export default function EditBandBioModal(props) {
                   style={styles.input}
                 />
                 {/* update instagram button */}
-                <TouchableOpacity
-                  style={styles.loginContainer}
+                <Ionicons
+                  name='md-add-circle-outline'
+                  color='#59C3D1'
+                  size={37}
                   onPress={() => {
                     axios.patch(`${AXIOS_URL}/bands/${userInfo.id}/insta`, {
                       link_instagram: instagramLink,
@@ -236,9 +218,7 @@ export default function EditBandBioModal(props) {
                       .then(response => response)
                       .catch(error => console.log('failed to create user', error))
                   }}
-                >
-                  <Text style={styles.buttonText}>+</Text>
-                </TouchableOpacity>
+                />
               </View>
               {/*  button to upload photo */}
               <View style={styles.button} >
@@ -265,22 +245,21 @@ export default function EditBandBioModal(props) {
 
               {/* button to complete editing */}
               <TouchableOpacity
-                style={styles.signupContainer}
+                style={styles.returnButtonContainer}
                 onPress={() => { setModalVisible(false); }}
               >
                 <Text style={styles.signupButtonText}>Return</Text>
               </TouchableOpacity>
-
             </View>
           </View>
         </KeyboardAvoidingView>
       </Modal>
       {/* edit bio button when modal is hidden */}
       <TouchableOpacity
-        style={styles.signupContainer}
+        style={styles.editBioContainer}
         onPress={() => { setModalVisible(true); }}
       >
-        <Text style={styles.signupButtonText}>Edit Bio</Text>
+        <Text style={styles.signupButtonText}>Edit Profile</Text>
       </TouchableOpacity>
     </View >
   );
@@ -295,51 +274,46 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     backgroundColor: 'rgba(255, 255, 255, 1)',
-    marginBottom: 15,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     borderRadius: 5,
     width: 300,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginRight: 10
   },
   title: {
     flex: 1,
     justifyContent: 'center',
   },
   text: {
-    fontSize: 40,
+    fontSize: 50,
     alignItems: 'center',
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
-    marginLeft: 90,
+    alignSelf: 'center',
     marginBottom: 15
   },
-  loginContainer: {
-    backgroundColor: '#59C3D1',
-    paddingVertical: 10,
-    borderRadius: 5,
-    width: 40,
-    marginBottom: 15
-  },
-  signupContainer: {
+  returnButtonContainer: {
     backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
     marginHorizontal: 90,
-    marginBottom: 15
   },
-  modal: {
-    marginLeft: 120
-  },
-  buttonText: {
-    textAlign: 'center',
-    fontWeight: '700',
-    color: '#fff'
+  editBioContainer: {
+    backgroundColor: '#75A4AD',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+    width: 140,
+    marginHorizontal: 7
   },
   signupButtonText: {
     textAlign: 'center',
     fontWeight: '700',
     color: '#000'
+  },
+  linkRow: {
+    flexDirection: 'row',
+    height: 50,
   },
   menuIcon: {
     zIndex: 9,

@@ -69,16 +69,16 @@ export default function Hub(props) {
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Band Hub</Text>
         <View style={styles.container}>
-          <Text>
+          {/* <Text> */}
 
-            {dbPhoto &&
-              <Image
-                style={{ width: 100, height: 70 }}
-                source={{ uri: dbPhoto }}
-              />
+          {dbPhoto &&
+            <Image
+              style={{ width: 100, height: 70 }}
+              source={{ uri: dbPhoto }}
+            />
 
-            }
-          </Text>
+          }
+          {/* </Text> */}
 
         </View>
 
