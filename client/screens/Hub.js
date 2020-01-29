@@ -69,16 +69,16 @@ export default function Hub(props) {
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Band Hub</Text>
         <View style={styles.container}>
-          {/* <Text> */}
+          <Text>
 
-          {dbPhoto &&
-            <Image
-              style={{ width: 100, height: 70 }}
-              source={{ uri: dbPhoto }}
-            />
+            {dbPhoto &&
+              <Image
+                style={{ width: 100, height: 70 }}
+                source={{ uri: dbPhoto }}
+              />
 
-          }
-          {/* </Text> */}
+            }
+          </Text>
 
         </View>
 
@@ -99,19 +99,6 @@ export default function Hub(props) {
         <EditBandBioModal />
         {/* Button to open create show modal */}
         <CreateShowModal />
-
-        {/* <View style={styles.button} >
-          <Button
-            title="Pick an image from camera roll"
-            onPress={openImagePickerAsync}
-
-          />
-          {image.uri &&
-            <Image source={{ uri: image.uri }} style={{ width: 150, height: 150 }} />}
-        </View> */}
-
-
-
         {/* Cards for all upcoming shows */}
         {shows &&
           shows.map(show => {
