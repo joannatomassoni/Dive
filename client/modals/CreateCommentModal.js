@@ -18,7 +18,6 @@ export default function CreateCommentModal({ showId, userId }) {
   const [modalVisible, setModalVisible] = useState(false);
   //comment text
   const [comment, setComment] = useState('');
-  console.log(comment);
   return (
     <View>
       <Modal
@@ -70,7 +69,7 @@ export default function CreateCommentModal({ showId, userId }) {
             text: comment
           })
             .then(response => console.log('success', response))
-            .catch(error => console.log('failed to create show', error));
+            .catch(error => console.log('failed to create comment', error));
         }}
       >
         <Text style={styles.signupButtonText}>Comment</Text>
