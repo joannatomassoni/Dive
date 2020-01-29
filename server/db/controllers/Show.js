@@ -18,9 +18,8 @@ const createShow = async (req, res) => {
         let { name, dateTime, photo, venueName, bandNames, description } = req.body;
         const venue = await getRecordByName('venue', venueName);
         // format dateTime to be used for sorting and to be passed back as human-friendly strings
-        dateTime = moment(dateTime).format('llll');
-        console.log(dateTime);
-        const time = moment(dateTime).format('LT');
+        // dateTime = moment(dateTime).format('llll');
+        const time = moment.utc(dateTime).format('LT');
         const date = moment(dateTime).format('ll');
 
         // add bands and venue to ShowBand join tables
