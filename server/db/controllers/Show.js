@@ -1,17 +1,33 @@
+// require moment for date formatting for 
+const moment = require('moment');
 // Requiring the models we need for our queries
-const { Show, RSVP, User, ShowBand, Venue, Comment } = require('../sequelize');
-const { getRecordByName, getRecordByID } = require('./utils')
+const { Show, RSVP, User, ShowBand, Venue, Comment, Sequelize } = require('../sequelize');
+const { getRecordByName, getRecordByID } = require('./utils');
+
+// import the Sequelize operators
+const Op = Sequelize.Op;
+
+// // 2020-06-12T14:42:42.000Z
+// const dateTime = moment('2020-06-12T14:42:42.000Z').format('llll');
+// const time = moment('2020-06-12T14:42:42.000Z').format('LT');
+// const date = moment('2020-06-12T14:42:42.000Z').format('ll');
 
 // Create show
 const createShow = async (req, res) => {
     try {
-        const { name, date, time, photo, venueName, bandNames, description } = req.body;
+        let { name, dateTime, photo, venueName, bandNames, description } = req.body;
         const venue = await getRecordByName('venue', venueName);
+        // format dateTime to be used for sorting and to be passed back as human-friendly strings
+        dateTime = moment(dateTime).local().format('llll');
+        const time = moment(dateTime).local().format('LT');
+        const date = moment(dateTime).local().format('ll');
+
         // add bands and venue to ShowBand join tables
         const show = await Show.create({
             name: name,
             date: date,
             time: time,
+            dateTime: dateTime,
             photo: photo,
             description: description,
             id_venue: venue.id
@@ -32,19 +48,22 @@ const createShow = async (req, res) => {
 }
 
 // Get all upcoming shows in database
-const getAllShows = async (req, res) => {
+const getAllUpcomingShows = async (req, res) => {
     try {
         const shows = await Show.findAll({
+            where: {
+                dateTime: {
+                    [Op.gte]: moment().subtract(7, 'days').toDate()
+                }
+            },
             include: [
                 { model: User, as: 'bands' },
                 { model: Venue }
             ],
         });
-        console.log("retrieved shows from db", shows);
         res.status(200).send(shows);
     }
     catch (err) {
-        console.log("couldn't get shows", err);
         res.send(err);
     }
 }
@@ -167,11 +186,10 @@ const getShowRSVPs = async (req, res) => {
 
 module.exports = {
     createShow,
-    getAllShows,
+    getAllUpcomingShows,
     getFanRSVPs,
     getSingleShow,
     getShowRSVPs,
     removeFanRSVP,
     rsvpFanToShow,
-    getAllShows
 }

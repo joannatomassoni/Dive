@@ -91,7 +91,41 @@ const getRecordByID = async (type, id) => {
     }
 }
 
+const timeConversion = (date, time) => {
+    let year = 2020;
+    let month;
+    let day;
+    let hour;
+    let minutes;
+
+    day = (date[date.length - 2] + date[date.length - 1]) - 1;
+    if (date.length = 4) {
+        month = Number(date[0]) - 1;
+    } else {
+        month = Number(date[0] + date[1]) - 1;
+    }
+    
+    if (time.length === 6) {
+        hour = time[0];
+        minutes = Number((time[2] + time[3])) + 1;
+    } else {
+        hour = time[0] + time[1];
+        minutes = Number(time[3] + time[4]) + 1;
+    }
+    if (time.includes('P')) {
+        hour = Number(hour) + 12;
+    }
+    return {
+        year,
+        month,
+        day,
+        hour,
+        minutes,
+    }
+}
+
 module.exports = {
     getRecordByName,
-    getRecordByID
+    getRecordByID,
+    timeConversion
 }

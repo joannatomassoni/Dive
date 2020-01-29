@@ -12,6 +12,10 @@ module.exports = (sequelize, type) => {
       type: type.STRING,
       allowNull: false
     },
+    dateTime: {
+      type: type.DATE,
+      allowNull: false
+    },
     photo: {
       type: type.STRING,
       allowNull: true

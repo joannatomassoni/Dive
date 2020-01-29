@@ -119,7 +119,7 @@ router.get('/venues/:id/fans', ctrl.getVenueFans)
 router.post('/shows', ctrl.createShow)
 
 // get all shows
-router.get('/shows', ctrl.getAllShows)
+router.get('/shows', ctrl.getAllUpcomingShows)
 
 // get a single show
 router.get('/shows/:id', ctrl.getSingleShow)
