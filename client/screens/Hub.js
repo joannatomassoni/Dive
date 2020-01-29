@@ -68,6 +68,20 @@ export default function Hub(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Band Hub</Text>
+        <View style={styles.container}>
+          <Text>
+
+            {dbPhoto &&
+              <Image
+                style={{ width: 100, height: 70 }}
+                source={{ uri: dbPhoto }}
+              />
+
+            }
+          </Text>
+
+        </View>
+
         <Text style={{ marginBottom: 10, color: '#fff' }}>
           {hubInfo.bio}
         </Text>
@@ -95,16 +109,7 @@ export default function Hub(props) {
           {image.uri &&
             <Image source={{ uri: image.uri }} style={{ width: 150, height: 150 }} />}
         </View> */}
-        <View style={styles.container}>
-          {dbPhoto &&
-            <Image
-              style={{ width: 50, height: 50 }}
-              source={{ uri: dbPhoto }}
 
-            // source={{ uri: "http://res.cloudinary.com/da4ry89ct/image/upload/v1580262805/nekvjgf3slxuvp9xv5iv.jpg" }}
-            />}
-
-        </View>
 
 
         {/* Cards for all upcoming shows */}
