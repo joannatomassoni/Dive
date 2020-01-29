@@ -18,6 +18,8 @@ import SingleShowModal from '../modals/SingleShowModal';
 import SpotifyButton from '../components/SpotifyButton';
 import FacebookButton from '../components/FacebookButton';
 import InstagramButton from '../components/InstagramButton';
+import { AXIOS_URL } from 'react-native-dotenv';
+
 
 
 export default function SingleBandModal(props) {
@@ -33,7 +35,7 @@ export default function SingleBandModal(props) {
   let bandId = props.bandId;
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/bands/${bandId}/shows`)
+    axios.get(`${AXIOS_URL}/bands/${bandId}/shows`)
       .then((response) => {
         // console.log("getting a bands shows from db", response.data)
         setBand(response.data);
@@ -41,7 +43,7 @@ export default function SingleBandModal(props) {
       })
       .then(() => {
         // axios request to see if user is following band
-        axios.get(`http://localhost:8080/fans/${userInfo.id}/bands`)
+        axios.get(`${AXIOS_URL}/fans/${userInfo.id}/bands`)
         .then((response) => {
           response.data.map(band => {
             if (band.id === singleBand.id) {

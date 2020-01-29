@@ -11,7 +11,7 @@ import axios from 'axios';
 import { SignedInContext } from '../context/UserContext';
 import * as Google from "expo-google-app-auth";
 import SignUpModal from '../modals/SignUpModal';
-import { IOS_AUTH_KEY, ANDROID_AUTH_KEY } from 'react-native-dotenv';
+import { IOS_AUTH_KEY, ANDROID_AUTH_KEY, AXIOS_URL } from 'react-native-dotenv';
 
 export default function LoginForm (props) {
   //pull signedin boolean from glabal context
@@ -30,7 +30,7 @@ export default function LoginForm (props) {
       if (type === "success") {
         //console.log('User Info: ', user, 'Access Token: ', accessToken);
         //key values to add to the userInfo global state
-        axios.get(`http://localhost:8080/users/${user.email}`)
+        axios.get(`${AXIOS_URL}/users/${user.email}`)
           .then(res => setUserInfo(userInfo => ({
             ...userInfo,
             signedIn: true,
@@ -75,7 +75,7 @@ export default function LoginForm (props) {
       <TouchableOpacity 
         style={styles.loginContainer}
         onPress={() => {
-          axios.get(`http://localhost:8080/users/${usernameValue}`)
+          axios.get(`${AXIOS_URL}/users/${usernameValue}`)
             .then(res => setUserInfo(userInfo => ({
               ...userInfo,
               signedIn: true,

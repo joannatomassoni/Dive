@@ -12,6 +12,8 @@ import {
 import axios from 'axios';
 import { SignedInContext } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons';
+import { AXIOS_URL } from 'react-native-dotenv';
+
 
 export default function EditBandBioModal(props) {
   //global user signin info and editing function
@@ -62,7 +64,7 @@ export default function EditBandBioModal(props) {
                   color='#59C3D1'
                   size={37}
                   onPress={() => {
-                    axios.patch(`http://localhost:8080/users/${userInfo.id}/bio`, {
+                    axios.patch(`${AXIOS_URL}/users/${userInfo.id}/bio`, {
                       bio: newBio,
                     })
                       .then(response => response)
@@ -86,7 +88,7 @@ export default function EditBandBioModal(props) {
                   color='#59C3D1'
                   size={37}
                   onPress={() => {
-                    axios.patch(`http://localhost:8080/bands/${userInfo.id}/spotify`, {
+                    axios.patch(`${AXIOS_URL}/bands/${userInfo.id}/spotify`, {
                       link_spotify: spotifyLink,
                     })
                       .then(response => response)
@@ -110,7 +112,7 @@ export default function EditBandBioModal(props) {
                   color='#59C3D1'
                   size={37}
                   onPress={() => {
-                    axios.patch(`http://localhost:8080/bands/${userInfo.id}/fb`, {
+                    axios.patch(`${AXIOS_URL}/bands/${userInfo.id}/fb`, {
                       link_facebook: facebookLink,
                     })
                       .then(response => response)
@@ -134,7 +136,7 @@ export default function EditBandBioModal(props) {
                   color='#59C3D1'
                   size={37}
                   onPress={() => {
-                    axios.patch(`http://localhost:8080/bands/${userInfo.id}/insta`, {
+                    axios.patch(`${AXIOS_URL}/bands/${userInfo.id}/insta`, {
                       link_instagram: instagramLink,
                     })
                       .then(response => response)

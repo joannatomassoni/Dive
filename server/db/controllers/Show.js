@@ -18,9 +18,10 @@ const createShow = async (req, res) => {
         let { name, dateTime, photo, venueName, bandNames, description } = req.body;
         const venue = await getRecordByName('venue', venueName);
         // format dateTime to be used for sorting and to be passed back as human-friendly strings
-        dateTime = moment(dateTime).local().format('llll');
-        const time = moment(dateTime).local().format('LT');
-        const date = moment(dateTime).local().format('ll');
+        dateTime = moment(dateTime).format('llll');
+        console.log(dateTime);
+        const time = moment(dateTime).format('LT');
+        const date = moment(dateTime).format('ll');
 
         // add bands and venue to ShowBand join tables
         const show = await Show.create({
@@ -44,6 +45,33 @@ const createShow = async (req, res) => {
     catch (err) {
         console.log(err);
         res.sendStatus(400);
+    }
+}
+
+// Update a show
+const updateShow = async (req, res) => {
+    try {
+        const { id } = req.params;
+    }
+    catch {
+
+    }
+}
+
+// Delete a show
+const deleteShow = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Show.destroy({
+            where: {
+                id
+            }
+        });
+        res.sendStatus(200)
+    }
+    catch (err) {
+        console.log(err);
+        res.send(400);
     }
 }
 
@@ -180,16 +208,15 @@ const getShowRSVPs = async (req, res) => {
     }
 }
 
-// Update show
-
-// Delete show
 
 module.exports = {
     createShow,
+    deleteShow,
     getAllUpcomingShows,
     getFanRSVPs,
     getSingleShow,
     getShowRSVPs,
     removeFanRSVP,
     rsvpFanToShow,
+    updateShow,
 }

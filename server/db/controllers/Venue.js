@@ -7,17 +7,19 @@ const { getRecordByName, getRecordByID } = require('./utils');
 const createVenue = async (req, res) => {
     try {
         const { name, address, city, state, zip_code } = req.body;
-        Venue.create({
+        const venue = await Venue.findOrCreate({
             where: {
                 name,
             },
-            name,
-            address,
-            city,
-            state,
-            zip_code,
+            defaults: {
+                name,
+                address,
+                city,
+                state,
+                zip_code,
+            }
         })
-        res.sendStatus(201);
+        res.status(200).send(venue);
     }
     catch (err) {
         console.log(err);

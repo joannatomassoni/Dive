@@ -13,7 +13,8 @@ import { SignedInContext } from '../context/UserContext';
 import RadioForm from 'react-native-simple-radio-button';
 import { Ionicons } from '@expo/vector-icons';
 import * as Google from "expo-google-app-auth";
-import { IOS_AUTH_KEY, ANDROID_AUTH_KEY } from 'react-native-dotenv';
+import { IOS_AUTH_KEY, ANDROID_AUTH_KEY, AXIOS_URL } from 'react-native-dotenv';
+console.log(AXIOS_URL);
 
 export default function ModalExample(props) {
   //state for modal visibility
@@ -49,7 +50,7 @@ export default function ModalExample(props) {
             photoUrl: user.photoUrl
           }))
       }
-      axios.post('http://localhost:8080/users', {
+      axios.post(`${AXIOS_URL}/users`, {
         name: user.email,
         typeName: userType,
         photo: user.photoUrl
@@ -120,7 +121,7 @@ export default function ModalExample(props) {
               style={styles.brightSignupContainer}
               onPress={() => {
                 setModalVisible(false);
-                axios.post('http://localhost:8080/users', {
+                axios.post(`${AXIOS_URL}/users`, {
                   name: usernameValue,
                   typeName: userType,
                 })

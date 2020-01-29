@@ -118,6 +118,10 @@ router.get('/venues/:id/fans', ctrl.getVenueFans)
 // photo is optional
 router.post('/shows', ctrl.createShow)
 
+router.patch('/shows/:id', ctrl.updateShow)
+
+router.delete('/shows/:id', ctrl.deleteShow)
+
 // get all shows
 router.get('/shows', ctrl.getAllUpcomingShows)
 
