@@ -74,17 +74,13 @@ export default function SingleBandModal(props) {
           />
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
-            <View style={{
-              flexDirection: 'row',
-              height: 50,
-              justifyContent: 'left',
-            }}>
+            <View style={styles.flexRowRight}>
               <SpotifyButton link={singleBand.link_spotify} />
               <InstagramButton link={singleBand.link_instagram} />
               <FacebookButton link={singleBand.link_facebook} />
             </View>
             
-            <Text style={{ marginBottom: 10, color: '#fff', fontSize: 30 }}>Bio: {singleBand.bio}</Text>
+            <Text style={styles.infoText}>{singleBand.bio}</Text>
             {/* if user is signed in show button to follor band */}
             {userInfo.signedIn ? 
               (isFollowing ? 
@@ -136,10 +132,10 @@ export default function SingleBandModal(props) {
                     borderRadius={10}
                     padding={10}
                   >
-                    <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
-                    <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
-                    <Text style={{ marginBottom: 10, color: '#000' }}>{show.venue.name}</Text>
-                    <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
+                    <Text style={{ color: '#000' }}>{show.date}</Text>
+                    <Text style={{ color: '#000' }}>{show.time}</Text>
+                    <Text style={{ color: '#000' }}>{show.venue.name}</Text>
+                    <Text style={{ color: '#000' }}>{show.description}</Text>
                     <SingleShowModal show={show.id} />
                   </Card>
                 </View>
@@ -192,6 +188,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     backgroundColor: '#59C3D1',
   },
+  infoText: {
+    fontSize: 20,
+    color: '#fff',
+    textAlign: 'right',
+    paddingRight: 20,
+    paddingBottom: 5
+  },
   followButtonText: {
     textAlign: 'center',
     fontWeight: '700',
@@ -213,6 +216,12 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 30,
+  },
+  flexRowRight: {
+    flexDirection: 'row',
+    paddingBottom: 5,
+    justifyContent: 'flex-end',
+    paddingRight: 20
   },
   menuIcon: {
     zIndex: 9,

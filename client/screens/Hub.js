@@ -41,15 +41,11 @@ export default function Hub(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Hub</Text>
-        <Text style={{ marginBottom: 10, color: '#fff' }}>
+        <Text style={styles.infoText}>
           {hubInfo.bio}
         </Text>
         {/* Social Media Buttons */}
-        <View style={{
-          flexDirection: 'row',
-          height: 50,
-          justifyContent: 'left',
-        }}>
+        <View style={styles.flexRowRight}>
           <SpotifyButton link={hubInfo.link_spotify} />
           <InstagramButton link={hubInfo.link_instagram} />
           <FacebookButton link={hubInfo.link_facebook} />
@@ -82,7 +78,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2D323A',
-    alignItems: 'center',
     justifyContent: 'center',
   },
   text: {
@@ -97,9 +92,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#75A4AD',
     borderRadius: 10
   },
+  infoText: {
+    fontSize: 20,
+    color: '#fff',
+    textAlign: 'right',
+    paddingRight: 20,
+    paddingBottom: 5
+  },
   button: {
     borderRadius: 5,
     marginHorizontal: 40,
     backgroundColor: '#59C3D1',
-  }, 
+  },
+  flexRowRight: {
+    flexDirection: 'row',
+    paddingBottom: 5,
+    justifyContent: 'flex-end',
+    paddingRight: 20
+  }
 })
