@@ -48,6 +48,33 @@ const createShow = async (req, res) => {
     }
 }
 
+// Update a show
+const updateShow = async (req, res) => {
+    try {
+        const { id } = req.params;
+    }
+    catch {
+
+    }
+}
+
+// Delete a show
+const deleteShow = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Show.destroy({
+            where: {
+                id
+            }
+        });
+        res.sendStatus(200)
+    }
+    catch (err) {
+        console.log(err);
+        res.send(400);
+    }
+}
+
 // Get all upcoming shows in database
 const getAllUpcomingShows = async (req, res) => {
     try {
@@ -181,16 +208,15 @@ const getShowRSVPs = async (req, res) => {
     }
 }
 
-// Update show
-
-// Delete show
 
 module.exports = {
     createShow,
+    deleteShow,
     getAllUpcomingShows,
     getFanRSVPs,
     getSingleShow,
     getShowRSVPs,
     removeFanRSVP,
     rsvpFanToShow,
+    updateShow,
 }
