@@ -58,7 +58,9 @@ export default function EditBandBioModal(props) {
       return;
     }
 
+
     setSelectedImage({ localUri: pickerResult.uri });
+
     let base64Img = `data:image/jpg;base64,${pickerResult.base64}`;
 
     let data = {
@@ -76,11 +78,26 @@ export default function EditBandBioModal(props) {
       let data = await r.json()
       // console.log("sending data to cloudinary", data.url);
       setBandPhoto(data.url);
-      console.log("bandPhoto has been set to state", bandPhoto);
+      console.log("data from cloudinary", data.url);
     }).catch(err => console.log(err))
 
+    console.log("are we getting user id?", userInfo.id)
+    console.log("bandPhoto has been set to state", bandPhoto);
+
     //Axios request to save band photo to DB
-    axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
+    // axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
+    //   bandPhoto: bandPhoto
+    // })
+    //   .then(response => {
+    //     console.log("saving photo to db", bandPhoto)
+    //   })
+    //   .catch(err => {
+    //     console.log("not saving to db", err)
+    //   })
+  };
+
+  const savePhoto = async () => {
+    await axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
       bandPhoto: bandPhoto
     })
       .then(response => {
@@ -89,7 +106,7 @@ export default function EditBandBioModal(props) {
       .catch(err => {
         console.log("not saving to db", err)
       })
-  };
+  }
 
   return (
     <View>
@@ -236,6 +253,16 @@ export default function EditBandBioModal(props) {
                 {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
               </View>
 
+              <TouchableOpacity
+                style={styles.signupContainer}
+                onPress={savePhoto}
+              >
+                <Text style={styles.signupButtonText}>Save Photo</Text>
+              </TouchableOpacity>
+
+              {/* {image.uri && */}
+              {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
+
               {/* button to complete editing */}
               <TouchableOpacity
                 style={styles.signupContainer}
@@ -255,7 +282,7 @@ export default function EditBandBioModal(props) {
       >
         <Text style={styles.signupButtonText}>Edit Bio</Text>
       </TouchableOpacity>
-    </View>
+    </View >
   );
 }
 
