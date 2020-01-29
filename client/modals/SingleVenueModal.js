@@ -12,8 +12,9 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Card } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
-import { MAP_KEY } from 'react-native-dotenv';
+import { MAP_KEY, AXIOS_URL } from 'react-native-dotenv';
 import axios from 'axios';
+
 
 
 export default function SingleVenueModal(props) {
@@ -33,14 +34,14 @@ export default function SingleVenueModal(props) {
 
   useEffect(() => {
     //request to get all shows at specific venue
-    axios.get(`http://localhost:8080/venues/${venue}`)
+    axios.get(`${AXIOS_URL}/venues/${venue}`)
       .then((response) => {
         setShows(response.data.shows);
       })
       .catch((err) => {
       });
     //request to get all bands from each specific show
-    axios.get(`http://localhost:8080/shows/${venue}`)
+    axios.get(`${AXIOS_URL}/shows/${venue}`)
       .then((response) => {
         setBands(response.data.bands);
       })

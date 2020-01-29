@@ -12,13 +12,15 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 import SingleVenueModal from '../modals/SingleVenueModal';
+import { AXIOS_URL } from 'react-native-dotenv';
+
 
 // export default class Venues extends React.Component {
 export default function Venues(props) {
   const [venues, setVenues] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/venues')
+    axios.get(`${AXIOS_URL}/venues`)
       .then((response) => {
         setVenues(response.data);
       })
