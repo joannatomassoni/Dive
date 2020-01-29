@@ -127,13 +127,13 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 20,
-    paddingBottom: 5,
+    paddingLeft: 20,
     color: 'white',
     textAlign: 'left',
   },
   img: {
-    height: 70,
-    width: 70,
+    height: 80,
+    width: 80,
     borderRadius: 50,
   },
   imgView: {
