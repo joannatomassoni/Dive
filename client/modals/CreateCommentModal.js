@@ -10,12 +10,14 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
+import { AXIOS_URL } from 'react-native-dotenv';
+
+
 export default function CreateCommentModal({ showId, userId }) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //comment text
   const [comment, setComment] = useState('');
-  console.log(comment);
   return (
     <View>
       <Modal
@@ -62,12 +64,12 @@ export default function CreateCommentModal({ showId, userId }) {
         style={styles.signupContainer}
         onPress={() => {
           setModalVisible(true);
-          axios.post(`http://localhost:8080/shows/${showId}/comments`, {
+          axios.post(`${AXIOS_URL}/shows/${showId}/comments`, {
             id_user: userId,
             text: comment
           })
             .then(response => console.log('success', response))
-            .catch(error => console.log('failed to create show', error));
+            .catch(error => console.log('failed to create comment', error));
         }}
       >
         <Text style={styles.signupButtonText}>Comment</Text>
