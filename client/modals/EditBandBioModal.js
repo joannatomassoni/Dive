@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  KeyboardAvoidingView, 
+  KeyboardAvoidingView,
   Alert
 } from 'react-native';
 import axios from 'axios';
@@ -39,6 +39,7 @@ export default function EditBandBioModal(props) {
   let [bandPhoto, setBandPhoto] = useState('');
 
   //allows user to upload a photo
+  //asks phone for permission to access photos
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
@@ -47,6 +48,7 @@ export default function EditBandBioModal(props) {
       return;
     }
 
+    //gets image from phone
     let pickerResult = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
@@ -57,9 +59,10 @@ export default function EditBandBioModal(props) {
       return;
     }
 
-
+    //sets image from imagePicker to SelectedImage
     setSelectedImage({ localUri: pickerResult.uri });
 
+    //converts image into a form that cloudinary requires
     let base64Img = `data:image/jpg;base64,${pickerResult.base64}`;
 
     let data = {
@@ -83,6 +86,7 @@ export default function EditBandBioModal(props) {
     console.log("are we getting user id?", userInfo.id)
     console.log("bandPhoto has been set to state", bandPhoto);
 
+    savePhoto();
     //Axios request to save band photo to DB
     // axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
     //   bandPhoto: bandPhoto
@@ -235,14 +239,14 @@ export default function EditBandBioModal(props) {
                 {/* {image.uri && */}
                 {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
               </View>
-              <View style={styles.button} >
+              {/* <View style={styles.button} >
                 <TouchableOpacity
                   style={styles.returnButtonContainer}
                   onPress={savePhoto}
                 >
                   <Text style={styles.signupButtonText}>Save Photo</Text>
                 </TouchableOpacity>
-              </View>
+              </View> */}
 
               {/* {image.uri && */}
               {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
