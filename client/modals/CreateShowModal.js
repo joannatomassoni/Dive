@@ -45,6 +45,10 @@ export default function CreateShowModal(props) {
   //list of venues
   const [allVenues, setAllVenues] = useState([]);
 
+  const venues = [];
+
+  console.log(allVenues);
+
   return (
     <View>
       <Modal
@@ -73,7 +77,7 @@ export default function CreateShowModal(props) {
                 onChangeText={setShowTitle}
                 style={styles.input}
               />
-              <VenuePicker setVenueName={setVenueName} />
+              <VenuePicker setVenueName={setVenueName} allVenues={allVenues}/>
               {/* Bands input */}
               <TextInput
                 placeholder="Add Band"
@@ -179,9 +183,13 @@ export default function CreateShowModal(props) {
           setModalVisible(true);
           axios.get(`${AXIOS_URL}/venues`)
           .then(response => response.data.map(venue => {
-            setAllVenues([...allVenues, venue.name])
+            if (!venues.includes(venue.name)) {
+              venues.push(venue.name);
+            }
           }))
-          .catch(error => console.log('failed to get all venues', error))
+          .catch(error => console.log('failed to get all venues', error));
+          venues.push('Cancel');
+          setAllVenues(venues);
         }}
       >
         <Text style={styles.signupButtonText}>Create a show</Text>

@@ -1,22 +1,11 @@
 import React from 'react';
-import ReactNative from 'react-native';
-var {
+import {
   ActionSheetIOS,
   StyleSheet,
   Text,
   View,
   TouchableOpacity
-} = ReactNative;
-
-let VENUES = [
-  'Venue 1',
-  'Venue 2',
-  'Venue 3',
-  'Venue 4',
-  'Cancel'
-];
-
-let CANCEL_INDEX = 5;
+} from 'react-native';
 
 export default class VenuePicker extends React.Component {
   constructor(props){
@@ -25,8 +14,9 @@ export default class VenuePicker extends React.Component {
       venue: 'none selected',
     }
   }
-
+  
   render() {
+    
     return (
       <View style={styles.flexRow}>
         {/* button to select a venue  */}
@@ -45,11 +35,11 @@ export default class VenuePicker extends React.Component {
 
   showActionSheet = () => {
     ActionSheetIOS.showActionSheetWithOptions({
-      options: VENUES,
-      cancelButtonIndex: CANCEL_INDEX,
+      options: this.props.allVenues,
+      cancelButtonIndex: 0
     },
       (buttonIndex) => {
-        this.setState({ venue: VENUES[buttonIndex] });
+        this.setState({ venue: this.props.allVenues[buttonIndex] });
         this.props.setVenueName(this.state.venue);
       });
   };
