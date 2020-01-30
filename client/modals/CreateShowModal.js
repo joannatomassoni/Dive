@@ -45,7 +45,6 @@ export default function CreateShowModal(props) {
   //sets band photo
   let [flyer, setFlyerPhoto] = useState('');
 
-
   //allows user to upload a photo
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -64,7 +63,6 @@ export default function CreateShowModal(props) {
     if (pickerResult.cancelled === true) {
       return;
     }
-
 
     setSelectedImage({ localUri: pickerResult.uri });
 
