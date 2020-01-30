@@ -10,7 +10,7 @@ const {
     Venue,
     sequelize
 } = require('../sequelize');
-
+const { expo, sendNotifications } = require('../../pushNotifications/pushNotifications')
 const { getRecordByName, getRecordByID } = require('./utils');
 
 // Create user
@@ -22,7 +22,7 @@ const createUser = async (req, res) => {
                 typeName: typeName
             }
         });
-        const newUser = await User.create({
+        await User.create({
             name,
             id_type: type.id,
             bio,
@@ -32,8 +32,7 @@ const createUser = async (req, res) => {
             link_spotify,
             photo
         });
-        console.log(newUser);
-        res.status(201).send('success');
+        res.sendStatus(201);
     }
     catch (err) {
         console.log(err);
@@ -54,6 +53,24 @@ const addPushToken = async (req, res) => {
     }
     catch(err) {
         console.log(err);
+        res.sendStatus(400);
+    }
+}
+
+const sendNotification = async (req, res) => {
+    try {
+        const message = {
+            to: 'ExponentPushToken[SbSTKdCGXiVYnXq8bfKdoj]',
+            sound: 'default',
+            title: 'Test title',
+            body: 'Test body',
+          };
+      
+        const receipt = await sendNotifications(message);
+        res.send(receipt);
+    }
+    catch (err) {
+        console.log("err, ", err);
         res.sendStatus(400);
     }
 }
@@ -298,13 +315,13 @@ const getBandShows = async (req, res) => {
 // allow a fan follow a band
 const followBand = async (req, res) => {
     try {
-        const sql = 'INSERT INTO fans_bands (id_band, id_fan, createdAt, updatedAt) VALUES (?, ?, ?, ?)';
+        const sql = 'INSERT INTO fans_bands (id_band, id_fan) VALUES (?, ?)';
         const { id } = req.params;
         const { id_fan } = req.body;
         await sequelize.query(sql, {
             replacements: [id, id_fan, new Date(), new Date()]
         })
-        res.send(201);
+        res.sendStatus(201);
     }
     catch (err) {
         console.log(err);
@@ -378,6 +395,7 @@ module.exports = {
     getFanBands,
     getSingleUser,
     removeBandGenre,
+    sendNotification,
     unfollowBand,
     updateUserBio,
     updateBandPhoto,
