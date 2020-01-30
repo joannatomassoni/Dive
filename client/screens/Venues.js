@@ -4,9 +4,7 @@ import {
   Text,
   SafeAreaView
 } from 'react-native';
-import {
-  Card,
-} from 'react-native-elements';
+import { Card } from 'react-native-elements';
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext';
@@ -14,7 +12,6 @@ import MenuButton from '../components/MenuButton';
 import AddVenueModal from '../modals/AddVenueModal';
 import SingleVenueModal from '../modals/SingleVenueModal';
 import { AXIOS_URL } from 'react-native-dotenv';
-
 
 // export default class Venues extends React.Component {
 export default function Venues(props) {
