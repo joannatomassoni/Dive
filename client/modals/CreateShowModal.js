@@ -47,6 +47,7 @@ export default function CreateShowModal(props) {
 
 
   //allows user to upload a photo
+  //this gets permission from phone to access images
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
@@ -55,6 +56,7 @@ export default function CreateShowModal(props) {
       return;
     }
 
+    //this gets image from phone
     let pickerResult = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
@@ -65,15 +67,15 @@ export default function CreateShowModal(props) {
       return;
     }
 
-
+    //this sets "selectedImage" in state
     setSelectedImage({ localUri: pickerResult.uri });
-
     let base64Img = `data:image/jpg;base64,${pickerResult.base64}`;
 
     let data = {
       "file": base64Img,
       "upload_preset": "oecwb18t",
     }
+
     //sends photo to cloudinary
     fetch(CLOUDINARY_URL, {
       body: JSON.stringify(data),
@@ -87,32 +89,9 @@ export default function CreateShowModal(props) {
       setFlyerPhoto(data.url);
       console.log("data from cloudinary", data.url);
     }).catch(err => console.log(err))
+  };
 
-    // Axios request to save flyer photo to DB
-    //   axios.patch(`${AXIOS_URL}/shows`, {
-    //     flyer: flyer
-    //   })
-    //     .then(response => {
-    //       console.log("saving flyer to db", flyer)
-    //     })
-    //     .catch(err => {
-    //       console.log("not saving to db", err)
-    //     })
-    // };
-
-    // const savePhoto = async () => {
-    //   await axios.patch(`${AXIOS_URL}/shows`, {
-    //     bandPhoto: bandPhoto
-    //   })
-    //     .then(response => {
-    //       console.log("saving photo to db", bandPhoto)
-    //     })
-    //     .catch(err => {
-    //       console.log("not saving to db", err)
-    //     })
-  }
-
-  console.log("flyer has been set to state", flyer);
+  // console.log("flyer has been set to state", flyer);
 
   return (
     <View>
@@ -151,15 +130,15 @@ export default function CreateShowModal(props) {
                 style={styles.input}
               />
               <View style={styles.linkRow}>
-              {/* Bands input */}
-              <TextInput
-                placeholder="Add Band"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setBandName}
-                style={styles.bandInput}
-              />
-              {/* add band button */}
+                {/* Bands input */}
+                <TextInput
+                  placeholder="Add Band"
+                  placeholderTextColor="#75A4AD"
+                  returnKeyType="next"
+                  onChangeText={setBandName}
+                  style={styles.bandInput}
+                />
+                {/* add band button */}
                 <Ionicons
                   name='md-add-circle-outline'
                   color='#59C3D1'
@@ -171,7 +150,7 @@ export default function CreateShowModal(props) {
                 />
               </View>
               {/* dropdown to select venue */}
-              <VenuePicker setVenueName={setVenueName} allVenues={allVenues}/>
+              <VenuePicker setVenueName={setVenueName} allVenues={allVenues} />
               {/* date time picker */}
               <DateTimePicker setDateTime={setDateTime} />
               {/* Description input */}
@@ -210,14 +189,14 @@ export default function CreateShowModal(props) {
                   axios.post(`${AXIOS_URL}/shows`, {
                     name: showTitle,
                     dateTime: dateTime,
-                    photo: null,
+                    flyer: flyer,
                     venueName: venueName,
                     bandNames: bandNames,
                     description: showDesc
                   })
-                  .then(response => response)
-                  .catch(error => console.log('failed to create show', error));
-              }}
+                    .then(response => response)
+                    .catch(error => console.log('failed to create show', error));
+                }}
               >
                 <Text style={styles.buttonText}>Create Show</Text>
               </TouchableOpacity>
@@ -228,16 +207,16 @@ export default function CreateShowModal(props) {
       {/* create show button when modal is hidden */}
       <TouchableOpacity
         style={styles.createShowContainer}
-        onPress={() => { 
+        onPress={() => {
           setModalVisible(true);
           //request to get all venues for venue selector
           axios.get(`${AXIOS_URL}/venues`)
-          .then(response => response.data.map(venue => {
-            if (!venues.includes(venue.name)) {
-              venues.push(venue.name);
-            }
-          }))
-          .catch(error => console.log('failed to get all venues', error));
+            .then(response => response.data.map(venue => {
+              if (!venues.includes(venue.name)) {
+                venues.push(venue.name);
+              }
+            }))
+            .catch(error => console.log('failed to get all venues', error));
           venues.push('Cancel');
           setAllVenues(venues);
         }}
