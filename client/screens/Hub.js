@@ -45,7 +45,7 @@ export default function Hub(props) {
         // console.log("were not getting hub info", err);
       }),
 
-      axios.get(`http://localhost:8080/bands/${userInfo.id}/shows`)
+      axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
         .then((response) => {
           // console.log("getting a bands shows  in hub from db", response.data)
           setShows(response.data.shows);
@@ -53,7 +53,7 @@ export default function Hub(props) {
         .catch((err) => {
           // console.log("frontend not getting band shows from db", err);
         })
-    axios.get(`http://localhost:8080/users/${userInfo.username}`)
+    axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
       .then((response) => {
         console.log("getting a photo from db", response.data.bandPhoto)
         setDbPhoto(response.data.bandPhoto);

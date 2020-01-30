@@ -97,7 +97,7 @@ export default function EditBandBioModal(props) {
   };
 
   const savePhoto = async () => {
-    await axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
+    await axios.patch(`${AXIOS_URL}/bands/${userInfo.id}/photo`, {
       bandPhoto: bandPhoto
     })
       .then(response => {
