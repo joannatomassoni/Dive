@@ -349,15 +349,15 @@ const unfollowBand = async (req, res) => {
 // TODO: refactor to use eager loading
 // Get all fans of a given band
 // TODO: fix this so it's not returning two copies of the fans
-const getBandFans = async (req, res) => {
+const getBandFollowers = async (req, res) => {
     try {
         const { id } = req.params;
         const sql = `SELECT * FROM users WHERE id IN (
                         SELECT id_fan FROM fans_bands WHERE id_band = ?)`;
-        const fans = await sequelize.query(sql, {
+        const followers = await sequelize.query(sql, {
             replacements: [id]
         })
-        res.status(200).send(fans[0]);
+        res.status(200).send(followers[0]);
     }
     catch (err) {
         console.log(err)
@@ -370,10 +370,10 @@ const getFanBands = async (req, res) => {
         const { id } = req.params;
         const sql = `SELECT * FROM users WHERE id IN (
                         SELECT id_band FROM fans_bands WHERE id_fan = ?)`;
-        const fans = await sequelize.query(sql, {
+        const bands = await sequelize.query(sql, {
             replacements: [id]
         })
-        res.status(200).send(fans[0]);
+        res.status(200).send(bands[0]);
     }
     catch (err) {
         console.log(err)
@@ -389,7 +389,7 @@ module.exports = {
     deleteUser,
     followBand,
     getAllBands,
-    getBandFans,
+    getBandFollowers,
     getBandGenres,
     getBandShows,
     getFanBands,
