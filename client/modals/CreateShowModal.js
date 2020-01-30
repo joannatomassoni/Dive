@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 import { SignedInContext } from '../context/UserContext';
-import DateTimePicker from '../components/DateTimePicker';
 import { AXIOS_URL } from 'react-native-dotenv';
+import VenuePicker from '../components/VenuePicker'
+import DateTimePicker from '../components/DateTimePicker';
 import * as ImagePicker from 'expo-image-picker';
 
 
@@ -30,18 +31,13 @@ export default function CreateShowModal(props) {
   const [bandNames, addBandName] = useState([userInfo.username]);
   //venue name
   const [venueName, setVenueName] = useState('');
-  //venue address
-  const [venueAddress, setvenueAddress] = useState('');
-  //venue city
-  const [venueCity, setVenueCity] = useState('');
-  //venue state
-  const [venueState, setvenueState] = useState('');
-  //venue zip
-  const [venueZip, setVenueZip] = useState('');
   //show date
   const [dateTime, setDateTime] = useState('');
   //show description
   const [showDesc, setShowDesc] = useState('');
+  //list of venues
+  const [allVenues, setAllVenues] = useState([]);
+  const venues = [];
   //sets photo uploaded from phone
   let [selectedImage, setSelectedImage] = useState({});
   //cloudinary url to send photo to
@@ -138,7 +134,7 @@ export default function CreateShowModal(props) {
           <View style={styles.container}>
             <ScrollView style={styles.title}>
               <Text style={styles.text}>New Show</Text>
-              {/* username text box */}
+              {/* Title text box */}
               <TextInput
                 placeholder="Show Title"
                 placeholderTextColor="#75A4AD"
@@ -146,63 +142,36 @@ export default function CreateShowModal(props) {
                 onChangeText={setShowTitle}
                 style={styles.input}
               />
+              {/* Description input */}
+              <TextInput
+                placeholder="Show Description"
+                placeholderTextColor="#75A4AD"
+                returnKeyType="send"
+                onChangeText={setShowDesc}
+                style={styles.input}
+              />
+              <View style={styles.linkRow}>
               {/* Bands input */}
               <TextInput
                 placeholder="Add Band"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
                 onChangeText={setBandName}
-                style={styles.input}
+                style={styles.bandInput}
               />
-              {/* create show button when modal is showing */}
-              <TouchableOpacity
-                style={styles.buttonContainer}
-                onPress={() => addBandName([...bandNames, bandName])}
-              >
-                <Text style={styles.buttonText}>Add Band</Text>
-              </TouchableOpacity>
-
-              {/* Venue input */}
-              <TextInput
-                placeholder="Show Venue"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setVenueName}
-                style={styles.input}
-              />
-              {/* Address input */}
-              <TextInput
-                placeholder="Address"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setvenueAddress}
-                style={styles.input}
-              />
-              {/* City input */}
-              <TextInput
-                placeholder="City"
-                placeholderTextColor="#75A4AD"
-                returnKeyType='next'
-                onChangeText={setVenueCity}
-                style={styles.input}
-              />
-              {/* State input */}
-              <TextInput
-                placeholder="State"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setvenueState}
-                style={styles.input}
-              />
-              {/* Zip input */}
-              <TextInput
-                placeholder="Zip Code"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setVenueZip}
-                style={styles.input}
-              />
-
+              {/* add band button */}
+                <Ionicons
+                  name='md-add-circle-outline'
+                  color='#59C3D1'
+                  size={37}
+                  onPress={() => {
+                    addBandName([...bandNames, bandName])
+                    Alert.alert('Band Added');
+                  }}
+                />
+              </View>
+              {/* dropdown to select venue */}
+              <VenuePicker setVenueName={setVenueName} allVenues={allVenues}/>
               {/* date time picker */}
               <DateTimePicker setDateTime={setDateTime} />
               {/* Description input */}
@@ -238,30 +207,20 @@ export default function CreateShowModal(props) {
                 style={styles.buttonContainer}
                 onPress={() => {
                   setModalVisible(false);
-                  axios.post(`${AXIOS_URL}/venues`, {
-                    name: venueName,
-                    address: venueAddress,
-                    city: venueCity,
-                    state: venueState,
-                    zip_code: venueZip
+                  axios.post(`${AXIOS_URL}/shows`, {
+                    name: showTitle,
+                    dateTime: dateTime,
+                    photo: null,
+                    venueName: venueName,
+                    bandNames: bandNames,
+                    description: showDesc
                   })
-                    .then(response => {
-                      return axios.post(`${AXIOS_URL}/shows`, {
-                        name: showTitle,
-                        dateTime: dateTime,
-                        venueName: venueName,
-                        bandName: bandNames,
-                        flyer: flyer,
-                        description: showDesc
-                      })
-                    })
-                    .then(response => response)
-                    .catch(error => console.log('failed to create show', error));
-                }}
+                  .then(response => response)
+                  .catch(error => console.log('failed to create show', error));
+              }}
               >
                 <Text style={styles.buttonText}>Create Show</Text>
               </TouchableOpacity>
-
             </ScrollView>
           </View>
         </KeyboardAvoidingView>
@@ -269,7 +228,19 @@ export default function CreateShowModal(props) {
       {/* create show button when modal is hidden */}
       <TouchableOpacity
         style={styles.createShowContainer}
-        onPress={() => { setModalVisible(true); }}
+        onPress={() => { 
+          setModalVisible(true);
+          //request to get all venues for venue selector
+          axios.get(`${AXIOS_URL}/venues`)
+          .then(response => response.data.map(venue => {
+            if (!venues.includes(venue.name)) {
+              venues.push(venue.name);
+            }
+          }))
+          .catch(error => console.log('failed to get all venues', error));
+          venues.push('Cancel');
+          setAllVenues(venues);
+        }}
       >
         <Text style={styles.signupButtonText}>Create a show</Text>
       </TouchableOpacity>
@@ -281,7 +252,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2D323A',
-    padding: 20
+    padding: 20,
+    paddingTop: 100
   },
   input: {
     height: 40,
@@ -289,7 +261,17 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 15,
     borderRadius: 5,
-    marginHorizontal: 40,
+    width: 334,
+    fontWeight: 'bold'
+  },
+  bandInput: {
+    height: 40,
+    backgroundColor: 'rgba(255, 255, 255, 1)',
+    marginBottom: 15,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    width: 295,
+    marginRight: 5,
     fontWeight: 'bold'
   },
   title: {
@@ -309,7 +291,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
-    marginBottom: 15,
+    marginBottom: 10,
     width: 140,
     marginHorizontal: 7
   },
@@ -317,16 +299,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#59C3D1',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
-  },
-  modal: {
-    marginLeft: 120
+    marginBottom: 15,
+    width: 200,
+    alignSelf: 'center',
+    marginHorizontal: 7
   },
   buttonText: {
     textAlign: 'center',
     fontWeight: '700',
-    color: '#fff'
   },
   signupButtonText: {
     textAlign: 'center',
@@ -338,5 +318,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 40,
     left: 20,
-  }
+  },
+  linkRow: {
+    flexDirection: 'row',
+    height: 50,
+  },
 })

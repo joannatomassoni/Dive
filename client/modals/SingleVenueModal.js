@@ -48,18 +48,36 @@ export default function SingleVenueModal(props) {
       .catch((err) => {
         console.log("error getting bands for single show", err);
       });
+    //request to get geolocation of address
+    axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
+      params: {
+        key: `${MAP_KEY}`,
+        location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
+      }
+    })
+      .then((response) => {
+        setVenueLocation({
+          latitude: response.data.results[0].locations[0].displayLatLng.lat,
+          longitude: response.data.results[0].locations[0].displayLatLng.lng,
+          latitudeDelta: 0.0012,
+          longitudeDelta: 0.011
+        });
+      })
+      .catch((err) => {
+        console.log(`error getting geolocation`, err);
+      });
 
-    //CURRENT GEOLOCATION
-    // navigator.geolocation.getCurrentPosition(position => {
-    //   setCurrentLocation({
-    //     latitude: position.coords.latitude,
-    //     longitude: position.coords.longitude,
-    //     error: null,
-    //   })
-    // }, error => setCurrentLocation({error: error.message}),
-    // { enableHighAccuracy: true, timeout: 20000, maximumAge: 2000 }
-    // )
-  }, [])
+      //CURRENT GEOLOCATION
+      // navigator.geolocation.getCurrentPosition(position => {
+      //   setCurrentLocation({
+      //     latitude: position.coords.latitude,
+      //     longitude: position.coords.longitude,
+      //     error: null,
+      //   })
+      // }, error => setCurrentLocation({error: error.message}),
+      // { enableHighAccuracy: true, timeout: 20000, maximumAge: 2000 }
+      // )
+  }, [venueLocation])
 
   return (
     <View>
@@ -68,6 +86,7 @@ export default function SingleVenueModal(props) {
         transparent={false}
         visible={modalVisible}
       >
+        
         {/* start of modal when showing */}
         <SafeAreaView behavior="padding" style={styles.container}>
           {/* back button */}
@@ -83,20 +102,15 @@ export default function SingleVenueModal(props) {
             <Text style={styles.infoText}>{singleVenue.address}</Text>
             <Text style={styles.infoText}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
             {/* map view for current venue */}
-            <View style={{ padding: 10 }}>
-              <MapView
-                style={styles.mapStyle}
-                // use line below for google maps
-                //provider={PROVIDER_GOOGLE}
-                initialRegion={{
-                  latitude: (venueLocation ? venueLocation.latitude : 29.9511),
-                  longitude: (venueLocation ? venueLocation.longitude : -90.0715),
-                  latitudeDelta: 0.0012,
-                  longitudeDelta: 0.011
-                }}
-              >
-                <Marker coordinate={venueLocation} />
-              </MapView>
+            <View style={{padding: 10}}>
+            <MapView 
+            style={styles.mapStyle}
+            // use line below for google maps
+            //provider={PROVIDER_GOOGLE}
+            region={venueLocation}
+            >
+              <Marker coordinate={venueLocation}/>
+            </MapView>
             </View>
             {/* shows header */}
             <Text style={styles.headerText}>Shows</Text>
@@ -137,22 +151,6 @@ export default function SingleVenueModal(props) {
             })
             .catch((err) => {
               console.log("error getting single venue", err);
-            });
-          //request to get geolocation of address
-          axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
-            params: {
-              key: `${MAP_KEY}`,
-              location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
-            }
-          })
-            .then((response) => {
-              setVenueLocation({
-                latitude: response.data.results[0].locations[0].displayLatLng.lat,
-                longitude: response.data.results[0].locations[0].displayLatLng.lng
-              });
-            })
-            .catch((err) => {
-              console.log(`error getting geolocation`, err);
             });
         }}
       >
