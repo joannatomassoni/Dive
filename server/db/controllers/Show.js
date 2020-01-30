@@ -34,28 +34,52 @@ const createShow = async (req, res) => {
             description: description,
             id_venue: venue.id
         })
-        const pushTokens = [];
+
+        // Sending push notifications and adding to shows_bands join table
+        // Create push tokens array
         await bandNames.forEach(async (bandName) => {
+            let bandTokens = [];
             const band = await getRecordByName('band', bandName);
             await ShowBand.create({
                 id_show: show.id,
                 id_band: band.id
             })
+
+            // Notify band followers
             // get all followers of a given band, push their tokens to the pushTokens array
             const sql = `SELECT * FROM users WHERE id IN (
                 SELECT id_fan FROM fans_bands WHERE id_band = ?)`;
             const followers = await sequelize.query(sql, {
                 replacements: [band.id]
             })
-            console.log(followers);
+            console.log('followers: ', followers);
             followers[0].forEach((follower) => {
-                pushTokens.push(follower.expoPushToken)
+                bandTokens.push(follower.expoPushToken)
             })
             // Construct title and body to send in push notification message to each group of followers for each band
-            const title = `${band.name} just announced a new show!`;
-            const body = 'Swipe to see more.';
-            sendNotifications(pushTokens, title, body);
+            const title = `New show from ${band.name}!`;
+            const body = 'Swipe for more';
+            await sendNotifications(bandTokens, title, body);
         })
+
+
+        // Notifications for venue followers
+        let venueTokens = [];
+        // Get followers of the venue
+        const sql = `SELECT * FROM users WHERE id IN (
+            SELECT id_fan FROM fans_venues WHERE id_venue = ?)`;
+        const followers = await sequelize.query(sql, {
+            replacements: [venue.id]
+        })
+        
+        // Add expoPushTokens for each follower to the pushTokens array
+        followers[0].forEach((follower) => {
+            venueTokens.push(follower.expoPushToken)
+        })
+        const title = `New show at ${venue.name}!`;
+        const body = 'Swipe for more.';
+        await sendNotifications(venueTokens, title, body);
+
 
         res.sendStatus(201);
     }
