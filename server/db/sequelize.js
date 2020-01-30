@@ -31,29 +31,14 @@ const { DB_USER, DB_PASS, DB_NAME, DB_HOST, CLOUD_SQL_CONNECTION_NAME } = proces
 // PROD
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
   dialect: 'mysql',
-  // host: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`,
   host: DB_HOST,
   timestamps: false,
   pool: {
-        max: 5,
+        max: 10,
         min: 0,
         idle: 10000
       },
-//   dialectOptions: {
-//     socketPath: `/cloudsql/${CLOUD_SQL_CONNECTION_NAME}`
-// },
 }); 
-
-// const sequelize = new Sequelize('dive', 'root', 'dive', {
-//   dialect: 'mysql',
-//   host: '35.224.191.68',
-//   timestamps: false,
-//   pool: {
-//         max: 5,
-//         min: 0,
-//         idle: 10000
-//       },
-// });
 
 // instanstiate the models here
 const Type = TypeModel(sequelize, Sequelize);
