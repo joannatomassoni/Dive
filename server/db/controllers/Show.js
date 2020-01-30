@@ -1,8 +1,10 @@
 // require moment for date formatting for 
 const moment = require('moment');
 // Requiring the models we need for our queries
-const { Show, RSVP, User, ShowBand, Venue, Comment, Sequelize } = require('../sequelize');
+const { Show, RSVP, User, ShowBand, Venue, Comment, Sequelize, sequelize } = require('../sequelize');
 const { getRecordByName, getRecordByID } = require('./utils');
+const { sendNotifications } = require('../../pushNotifications/pushNotifications')
+
 
 // import the Sequelize operators
 const Op = Sequelize.Op;
@@ -32,13 +34,29 @@ const createShow = async (req, res) => {
             description: description,
             id_venue: venue.id
         })
+        const pushTokens = [];
         await bandNames.forEach(async (bandName) => {
             const band = await getRecordByName('band', bandName);
             await ShowBand.create({
                 id_show: show.id,
                 id_band: band.id
             })
+            // get all followers of a given band, push their tokens to the pushTokens array
+            const sql = `SELECT * FROM users WHERE id IN (
+                SELECT id_fan FROM fans_bands WHERE id_band = ?)`;
+            const followers = await sequelize.query(sql, {
+                replacements: [band.id]
+            })
+            console.log(followers);
+            followers[0].forEach((follower) => {
+                pushTokens.push(follower.expoPushToken)
+            })
+            // Construct title and body to send in push notification message to each group of followers for each band
+            const title = `${band.name} just announced a new show!`;
+            const body = 'Swipe to see more.';
+            sendNotifications(pushTokens, title, body);
         })
+
         res.sendStatus(201);
     }
     catch (err) {
