@@ -18,16 +18,19 @@ export default function Shows(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
-  
+  // const [flyer, setFlyer] = useState("");
+
   useEffect(() => {
     axios.get(`${AXIOS_URL}/shows`)
       .then((response) => {
         setShows(response.data);
+
       })
       .catch((err) => {
         console.log(err);
       })
   }, [])
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -53,6 +56,16 @@ export default function Shows(props) {
               })}
               <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
               <SingleShowModal show={show.id} />
+              <Text>
+
+                {show.flyer &&
+                  <Image
+                    style={{ width: 50, height: 50 }}
+                    source={{ uri: show.flyer }}
+                  />
+
+                }
+              </Text>
             </Card>
           )
         })}

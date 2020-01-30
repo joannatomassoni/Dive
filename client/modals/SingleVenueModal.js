@@ -145,7 +145,7 @@ export default function SingleVenueModal(props) {
         style={styles.signupContainer}
         onPress={() => {
           setModalVisible(true);
-          axios.get(`http://localhost:8080/venues/${venue}`)
+          axios.get(`${AXIOS_URL}/venues/${venue}`)
             .then((response) => {
               setVenue(response.data);
             })
