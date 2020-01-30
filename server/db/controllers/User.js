@@ -16,21 +16,23 @@ const { getRecordByName, getRecordByID } = require('./utils');
 // Create user
 const createUser = async (req, res) => {
     try {
-        const { name, typeName, bio, link_facebook, link_spotify, link_instagram, photo } = req.body;
+        const { name, typeName, expoPushToken, bio, link_facebook, link_spotify, link_instagram, photo } = req.body;
         const type = await Type.findOne({
             where: {
                 typeName: typeName
             }
         });
-        await User.create({
+        const newUser = await User.create({
             name,
             id_type: type.id,
             bio,
+            expoPushToken,
             link_facebook,
             link_instagram,
             link_spotify,
             photo
         });
+        console.log(newUser);
         res.status(201).send('success');
     }
     catch (err) {
@@ -43,9 +45,11 @@ const createUser = async (req, res) => {
 const addPushToken = async (req, res) => {
     try {
         const { name } = req.params;
+        const { expoPushToken } = req.body;
+        console.log(expoPushToken);
         await User.update(
-            { pushToken },
-            { where: { id } }
+            { expoPushToken },
+            { where: { name } }
         )
     }
     catch(err) {
