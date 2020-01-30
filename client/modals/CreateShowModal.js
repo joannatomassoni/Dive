@@ -48,7 +48,6 @@ export default function CreateShowModal(props) {
   //allows user to upload a photo
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
-
     if (permissionResult.granted === false) {
       alert('Permission to access camera roll is required!');
       return;
@@ -72,6 +71,7 @@ export default function CreateShowModal(props) {
       "file": base64Img,
       "upload_preset": "oecwb18t",
     }
+
     //sends photo to cloudinary
     fetch(CLOUDINARY_URL, {
       body: JSON.stringify(data),
@@ -85,29 +85,6 @@ export default function CreateShowModal(props) {
       setFlyerPhoto(data.url);
       console.log("data from cloudinary", data.url);
     }).catch(err => console.log(err))
-
-    // Axios request to save flyer photo to DB
-    //   axios.patch(`${AXIOS_URL}/shows`, {
-    //     flyer: flyer
-    //   })
-    //     .then(response => {
-    //       console.log("saving flyer to db", flyer)
-    //     })
-    //     .catch(err => {
-    //       console.log("not saving to db", err)
-    //     })
-    // };
-
-    // const savePhoto = async () => {
-    //   await axios.patch(`${AXIOS_URL}/shows`, {
-    //     bandPhoto: bandPhoto
-    //   })
-    //     .then(response => {
-    //       console.log("saving photo to db", bandPhoto)
-    //     })
-    //     .catch(err => {
-    //       console.log("not saving to db", err)
-    //     })
   }
 
   console.log("flyer has been set to state", flyer);
@@ -172,14 +149,6 @@ export default function CreateShowModal(props) {
               <VenuePicker setVenueName={setVenueName} allVenues={allVenues}/>
               {/* date time picker */}
               <DateTimePicker setDateTime={setDateTime} />
-              {/* Description input */}
-              <TextInput
-                placeholder="Show Description"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="send"
-                onChangeText={setShowDesc}
-                style={styles.input}
-              />
 
               {/*  button to upload photo */}
               <View style={styles.button} >
@@ -208,7 +177,7 @@ export default function CreateShowModal(props) {
                   axios.post(`${AXIOS_URL}/shows`, {
                     name: showTitle,
                     dateTime: dateTime,
-                    photo: null,
+                    flyer: flyer,
                     venueName: venueName,
                     bandNames: bandNames,
                     description: showDesc
