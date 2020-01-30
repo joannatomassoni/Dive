@@ -5,8 +5,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
   SafeAreaView,
   Image
 } from 'react-native';
@@ -20,8 +18,6 @@ import SpotifyButton from '../components/SpotifyButton';
 import FacebookButton from '../components/FacebookButton';
 import InstagramButton from '../components/InstagramButton';
 import { AXIOS_URL } from 'react-native-dotenv';
-
-
 
 export default function SingleBandModal(props) {
   //state for modal visibility
@@ -78,10 +74,11 @@ export default function SingleBandModal(props) {
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
 
-            <Image
+            {/* tag for band photo */}
+            {/* <Image
               style={{ width: 420, height: 200 }}
               source={{ uri: singleBand.bandPhoto }}
-            />
+            /> */}
 
             <View style={styles.flexRowRight}>
               <SpotifyButton link={singleBand.link_spotify} />
