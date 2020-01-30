@@ -15,7 +15,6 @@ import { SignedInContext } from '../context/UserContext';
 import { AXIOS_URL } from 'react-native-dotenv';
 import VenuePicker from '../components/VenuePicker'
 import DateTimePicker from '../components/DateTimePicker';
-import AddVenueModal from '../modals/AddVenueModal';
 
 
 export default function CreateShowModal(props) {
@@ -31,14 +30,6 @@ export default function CreateShowModal(props) {
   const [bandNames, addBandName] = useState([userInfo.username]);
   //venue name
   const [venueName, setVenueName] = useState('');
-  //venue address
-  const [venueAddress, setvenueAddress] = useState('');
-  //venue city
-  const [venueCity, setVenueCity] = useState('');
-  //venue state
-  const [venueState, setvenueState] = useState('');
-  //venue zip
-  const [venueZip, setVenueZip] = useState('');
   //show date
   const [dateTime, setDateTime] = useState('');
   //show description
@@ -111,12 +102,13 @@ export default function CreateShowModal(props) {
               <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={() => {
-                  setModalVisible(false);axios.post(`${AXIOS_URL}/shows`, {
+                  setModalVisible(false);
+                  axios.post(`${AXIOS_URL}/shows`, {
                     name: showTitle,
                     dateTime: dateTime,
                     photo: null,
                     venueName: venueName,
-                    bandName: bandNames,
+                    bandNames: bandNames,
                     description: showDesc
                   })
                   .then(response => response)
@@ -134,6 +126,7 @@ export default function CreateShowModal(props) {
         style={styles.createShowContainer}
         onPress={() => { 
           setModalVisible(true);
+          //request to get all venues for venue selector
           axios.get(`${AXIOS_URL}/venues`)
           .then(response => response.data.map(venue => {
             if (!venues.includes(venue.name)) {

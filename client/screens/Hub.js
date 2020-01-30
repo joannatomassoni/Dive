@@ -34,7 +34,7 @@ export default function Hub(props) {
       .catch((err) => {
         console.log("were getting hub info", err);
       })
-  }, [userInfo])
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,7 +61,7 @@ export default function Hub(props) {
           {userInfo.userType === 'band' ? <CreateShowModal /> : null}
         </View>
         {/* Cards for all upcoming shows */}
-        
+
         <CalendarView />
 
         <Card
