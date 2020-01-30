@@ -49,16 +49,16 @@ export default function SingleVenueModal(props) {
         console.log("error getting bands for single show", err);
       });
 
-      //CURRENT GEOLOCATION
-      // navigator.geolocation.getCurrentPosition(position => {
-      //   setCurrentLocation({
-      //     latitude: position.coords.latitude,
-      //     longitude: position.coords.longitude,
-      //     error: null,
-      //   })
-      // }, error => setCurrentLocation({error: error.message}),
-      // { enableHighAccuracy: true, timeout: 20000, maximumAge: 2000 }
-      // )
+    //CURRENT GEOLOCATION
+    // navigator.geolocation.getCurrentPosition(position => {
+    //   setCurrentLocation({
+    //     latitude: position.coords.latitude,
+    //     longitude: position.coords.longitude,
+    //     error: null,
+    //   })
+    // }, error => setCurrentLocation({error: error.message}),
+    // { enableHighAccuracy: true, timeout: 20000, maximumAge: 2000 }
+    // )
   }, [])
 
   return (
@@ -83,20 +83,20 @@ export default function SingleVenueModal(props) {
             <Text style={styles.infoText}>{singleVenue.address}</Text>
             <Text style={styles.infoText}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
             {/* map view for current venue */}
-            <View style={{padding: 10}}>
-            <MapView 
-            style={styles.mapStyle}
-            // use line below for google maps
-            //provider={PROVIDER_GOOGLE}
-            initialRegion={{
-              latitude: (venueLocation ? venueLocation.latitude : 29.9511),
-              longitude: (venueLocation ? venueLocation.longitude : -90.0715),
-              latitudeDelta: 0.0012,
-              longitudeDelta: 0.011
-            }}
-            >
-              <Marker coordinate={venueLocation}/>
-            </MapView>
+            <View style={{ padding: 10 }}>
+              <MapView
+                style={styles.mapStyle}
+                // use line below for google maps
+                //provider={PROVIDER_GOOGLE}
+                initialRegion={{
+                  latitude: (venueLocation ? venueLocation.latitude : 29.9511),
+                  longitude: (venueLocation ? venueLocation.longitude : -90.0715),
+                  latitudeDelta: 0.0012,
+                  longitudeDelta: 0.011
+                }}
+              >
+                <Marker coordinate={venueLocation} />
+              </MapView>
             </View>
             {/* shows header */}
             <Text style={styles.headerText}>Shows</Text>
@@ -131,7 +131,7 @@ export default function SingleVenueModal(props) {
         style={styles.signupContainer}
         onPress={() => {
           setModalVisible(true);
-          axios.get(`http://localhost:8080/venues/${venue}`)
+          axios.get(`${AXIOS_URL}/venues/${venue}`)
             .then((response) => {
               setVenue(response.data);
             })

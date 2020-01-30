@@ -6,12 +6,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Button,
+  Image
 } from 'react-native';
 import axios from 'axios';
 import { SignedInContext } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons';
 import { AXIOS_URL } from 'react-native-dotenv';
+import * as ImagePicker from 'expo-image-picker';
 
 
 export default function EditBandBioModal(props) {
@@ -27,6 +30,83 @@ export default function EditBandBioModal(props) {
   const [facebookLink, setFacebookLink] = useState('');
   //new instagram link
   const [instagramLink, setInstagramLink] = useState('');
+
+  // const [image, setImage] = useState({});
+  //sets photo uploaded from phone
+  let [selectedImage, setSelectedImage] = useState({});
+  //cloudinary url to send photo to
+  let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/da4ry89ct/upload';
+  //sets band photo
+  let [bandPhoto, setBandPhoto] = useState('');
+
+  //allows user to upload a photo
+  let openImagePickerAsync = async () => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      base64: true
+    });
+
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+
+
+    setSelectedImage({ localUri: pickerResult.uri });
+
+    let base64Img = `data:image/jpg;base64,${pickerResult.base64}`;
+
+    let data = {
+      "file": base64Img,
+      "upload_preset": "oecwb18t",
+    }
+    //sends photo to cloudinary
+    fetch(CLOUDINARY_URL, {
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+    }).then(async r => {
+      let data = await r.json()
+      // console.log("sending data to cloudinary", data.url);
+      setBandPhoto(data.url);
+      console.log("data from cloudinary", data.url);
+    }).catch(err => console.log(err))
+
+    console.log("are we getting user id?", userInfo.id)
+    console.log("bandPhoto has been set to state", bandPhoto);
+
+    //Axios request to save band photo to DB
+    // axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
+    //   bandPhoto: bandPhoto
+    // })
+    //   .then(response => {
+    //     console.log("saving photo to db", bandPhoto)
+    //   })
+    //   .catch(err => {
+    //     console.log("not saving to db", err)
+    //   })
+  };
+
+  const savePhoto = async () => {
+    await axios.patch(`${AXIOS_URL}/bands/${userInfo.id}/photo`, {
+      bandPhoto: bandPhoto
+    })
+      .then(response => {
+        console.log("saving photo to db", bandPhoto)
+      })
+      .catch(err => {
+        console.log("not saving to db", err)
+      })
+  }
 
   return (
     <View>
@@ -140,6 +220,30 @@ export default function EditBandBioModal(props) {
                   }}
                 />
               </View>
+              {/*  button to upload photo */}
+              <View style={styles.button} >
+                <TouchableOpacity
+                  style={styles.returnButtonContainer}
+                  onPress={openImagePickerAsync}
+                >
+                  <Text style={styles.signupButtonText}>Select Photo</Text>
+                </TouchableOpacity>
+
+                {/* {image.uri && */}
+                {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
+              </View>
+              <View style={styles.button} >
+                <TouchableOpacity
+                  style={styles.returnButtonContainer}
+                  onPress={savePhoto}
+                >
+                  <Text style={styles.signupButtonText}>Save Photo</Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* {image.uri && */}
+              {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
+
               {/* button to complete editing */}
               <TouchableOpacity
                 style={styles.returnButtonContainer}
@@ -158,7 +262,7 @@ export default function EditBandBioModal(props) {
       >
         <Text style={styles.signupButtonText}>Edit Profile</Text>
       </TouchableOpacity>
-    </View>
+    </View >
   );
 }
 
@@ -208,7 +312,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#000'
   },
-  linkRow:{
+  linkRow: {
     flexDirection: 'row',
     height: 50,
   },
