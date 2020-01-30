@@ -16,7 +16,8 @@ import CreateCommentModal from './CreateCommentModal';
 import Moment from 'moment';
 import axios from 'axios';
 import { AXIOS_URL } from 'react-native-dotenv';
-
+import * as AddCalendarEvent from 'react-native-add-calendar-event';
+import * as Calendar from 'expo-calendar';
 
 export default function SingleShowModal(props) {
   //global user signin info and editing function
@@ -50,8 +51,32 @@ export default function SingleShowModal(props) {
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
+    //request to access users calendar
+    (async () => {
+      const { status } = await Calendar.requestCalendarPermissionsAsync();
+      if (status === 'granted') {
+        const calendars = await Calendar.getCalendarsAsync();
+        console.log(singleShow);
+        console.log({ calendars });
+      }
+    })();
   }, [])
+
+  console.log(singleShow.dateTime);
+  // event details for calendar integration
+  const details = {
+    title: singleShow.name,
+    startDate: singleShow.dateTime,
+    endDate: singleShow.dateTime,
+    notes: singleShow.description,
+    navigationBarIOS: {
+      tintColor: 'orange',
+      backgroundColor: 'green',
+      titleColor: 'blue',
+    },
+  };
+
 
   return (
     <View>
@@ -87,6 +112,27 @@ export default function SingleShowModal(props) {
             {bands.map(band => {
               return <Text style={styles.infoText}>{band.name}</Text>
             })}
+
+
+            {/* calendar test button */}
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPress={ async () => {
+                try {
+                  console.log('Adding Event');
+                  const eventId = await Calendar.createEventAsync("D5A65218-29C5-466C-A2CE-D54DF9D4260A", details);
+                  console.log("Event Id", id);
+                }
+                catch (error) {
+                  console.log('Error', error);
+                }
+              }}
+            >
+              <Text style={styles.signupButtonText}>Add To Calendar</Text>
+            </TouchableOpacity>
+
+
+
             {/* button to rsvp to specific (shows when signed in) */}
             {userInfo.signedIn ?
               //if already rsvp'd, show button to cancel rvp

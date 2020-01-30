@@ -21,7 +21,7 @@ export default function CalendarView() {
         alignItems: 'center',
         justifyContent: 'space-around',
       }}>
-      <Button title="Create a new calendar" onPress={createCalendar} />
+      <Button title="Add an event" onPress={createCalendar} />
     </View>
   );
 }

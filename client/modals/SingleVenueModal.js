@@ -48,25 +48,6 @@ export default function SingleVenueModal(props) {
       .catch((err) => {
         console.log("error getting bands for single show", err);
       });
-    //request to get geolocation of address
-    axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
-      params: {
-        key: `${MAP_KEY}`,
-        location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
-      }
-    })
-      .then((response) => {
-        setVenueLocation({
-          latitude: response.data.results[0].locations[0].displayLatLng.lat,
-          longitude: response.data.results[0].locations[0].displayLatLng.lng,
-          latitudeDelta: 0.0012,
-          longitudeDelta: 0.011
-        });
-      })
-      .catch((err) => {
-        console.log(`error getting geolocation`, err);
-      });
-
       //CURRENT GEOLOCATION
       // navigator.geolocation.getCurrentPosition(position => {
       //   setCurrentLocation({
@@ -77,7 +58,8 @@ export default function SingleVenueModal(props) {
       // }, error => setCurrentLocation({error: error.message}),
       // { enableHighAccuracy: true, timeout: 20000, maximumAge: 2000 }
       // )
-  }, [venueLocation])
+  }, [])
+
 
   return (
     <View>
@@ -104,12 +86,16 @@ export default function SingleVenueModal(props) {
             {/* map view for current venue */}
             <View style={{padding: 10}}>
             <MapView 
-            style={styles.mapStyle}
             // use line below for google maps
             //provider={PROVIDER_GOOGLE}
+            style={styles.mapStyle}
             region={venueLocation}
             >
-              <Marker coordinate={venueLocation}/>
+              <Marker 
+              coordinate={venueLocation}
+                pinColor={'#59C3D1'}
+                title={`${singleVenue.name}`}
+              />
             </MapView>
             </View>
             {/* shows header */}
@@ -146,11 +132,29 @@ export default function SingleVenueModal(props) {
         onPress={() => {
           setModalVisible(true);
           axios.get(`${AXIOS_URL}/venues/${venue}`)
+          .then((response) => {
+            setVenue(response.data);
+          })
+          .catch((err) => {
+            console.log("error getting single venue", err);
+          });
+          //request to get geolocation of address
+          axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
+            params: {
+              key: `${MAP_KEY}`,
+              location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
+            }
+          })
             .then((response) => {
-              setVenue(response.data);
+              setVenueLocation({
+                latitude: response.data.results[0].locations[0].displayLatLng.lat,
+                longitude: response.data.results[0].locations[0].displayLatLng.lng,
+                latitudeDelta: 0.0012,
+                longitudeDelta: 0.011
+              });
             })
             .catch((err) => {
-              console.log("error getting single venue", err);
+              console.log(`error getting geolocation`, err);
             });
         }}
       >

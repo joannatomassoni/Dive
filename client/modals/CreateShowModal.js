@@ -149,7 +149,6 @@ export default function CreateShowModal(props) {
               <VenuePicker setVenueName={setVenueName} allVenues={allVenues}/>
               {/* date time picker */}
               <DateTimePicker setDateTime={setDateTime} />
-
               {/*  button to upload photo */}
               <View style={styles.button} >
                 <TouchableOpacity
@@ -158,7 +157,6 @@ export default function CreateShowModal(props) {
                 >
                   <Text style={styles.buttonText}>Upload Show Flyer</Text>
                 </TouchableOpacity>
-
                 {/* {image.uri && */}
                 {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
               </View>
