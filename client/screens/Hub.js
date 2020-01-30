@@ -7,9 +7,7 @@ import {
   Button,
   Image,
 } from 'react-native';
-import {
-  Card
-} from 'react-native-elements';
+import { Card } from 'react-native-elements';
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext';
@@ -20,10 +18,10 @@ import InstagramButton from '../components/InstagramButton';
 import CreateShowModal from '../modals/CreateShowModal';
 import EditBandBioModal from '../modals/EditBandBioModal';
 import EditShowModal from '../modals/EditShowModal';
+import CalendarView from '../components/Calendar.js';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { AXIOS_URL } from 'react-native-dotenv';
-
 
 export default function Hub(props) {
   //global user signin info and editing function
@@ -61,7 +59,7 @@ export default function Hub(props) {
       .catch((err) => {
         console.log("front end not getting band photo from db", err);
       })
-  }, [userInfo])
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -91,6 +89,10 @@ export default function Hub(props) {
           height: 50,
           justifyContent: 'left',
         }}>
+          {/* Button to open create show modal */}
+          <EditBandBioModal />
+          {/* Button to open create show modal */}
+          {userInfo.userType === 'band' ? <CreateShowModal /> : null}
           <SpotifyButton link={hubInfo.link_spotify} />
           <InstagramButton link={hubInfo.link_instagram} />
           <FacebookButton link={hubInfo.link_facebook} />
@@ -100,6 +102,9 @@ export default function Hub(props) {
         {/* Button to open create show modal */}
         <CreateShowModal />
         {/* Cards for all upcoming shows */}
+
+        <CalendarView />
+
         {shows &&
           shows.map(show => {
             return (
@@ -156,6 +161,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '700',
     color: '#fff'
+  },
+  flexRowRight: {
+    flexDirection: 'row',
+    paddingBottom: 5,
+    justifyContent: 'flex-end',
+    paddingRight: 20
   },
   thumbnail: {
     width: 300,
