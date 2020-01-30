@@ -61,7 +61,7 @@ export default function Hub(props) {
           {userInfo.userType === 'band' ? <CreateShowModal /> : null}
         </View>
         {/* Cards for all upcoming shows */}
-
+        
         <CalendarView />
 
         <Card
@@ -118,5 +118,5 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     justifyContent: 'flex-end',
     paddingRight: 20
-  }
+  },
 })

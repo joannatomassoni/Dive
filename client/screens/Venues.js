@@ -6,17 +6,20 @@ import {
 } from 'react-native';
 import {
   Card,
-} from 'react-native-elements'
+} from 'react-native-elements';
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
-import { SignedInContext } from '../context/UserContext'
-import MenuButton from '../components/MenuButton'
+import { SignedInContext } from '../context/UserContext';
+import MenuButton from '../components/MenuButton';
+import AddVenueModal from '../modals/AddVenueModal';
 import SingleVenueModal from '../modals/SingleVenueModal';
 import { AXIOS_URL } from 'react-native-dotenv';
 
 
 // export default class Venues extends React.Component {
 export default function Venues(props) {
+  ///global user signin info and editing function
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [venues, setVenues] = useState([]);
 
   useEffect(() => {
@@ -34,6 +37,8 @@ export default function Venues(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Venues</Text>
+        {/* modal to add a new venue to the venue db */}
+        {userInfo.userType === 'band' ? <AddVenueModal /> : null}
         {venues.reverse().map(venue => {
           return (
             <Card

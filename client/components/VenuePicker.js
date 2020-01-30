@@ -18,17 +18,17 @@ export default class VenuePicker extends React.Component {
   render() {
     
     return (
-      <View style={styles.flexRow}>
+      <View>
         {/* button to select a venue  */}
         <TouchableOpacity
           style={styles.createShowContainer}
           onPress={this.showActionSheet}
         >
-          <Text style={styles.selectButtonText}>Select Venue</Text>
+          <Text style={styles.selectButtonText}>
+            {(this.state.venue !== 'none selected' && this.state.venue !== 'Cancel') ?
+              this.state.venue : 'Select Venue'}
+          </Text>
         </TouchableOpacity>
-        <Text style={styles.text}>
-          {this.state.venue}
-        </Text>
       </View>
     );
   }
@@ -46,22 +46,18 @@ export default class VenuePicker extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  button: {
-    marginBottom: 10,
-    fontWeight: 'bold',
-  },
   createShowContainer: {
     backgroundColor: '#59C3D1',
     paddingVertical: 10,
     borderRadius: 5,
     marginBottom: 15,
-    width: 140,
-    marginHorizontal: 7
+    width: 200,
+    alignSelf: 'center',
+    marginTop: 5
   },
   selectButtonText: {
     textAlign: 'center',
     fontWeight: '700',
-    color: '#fff'
   },
   text: {
     fontWeight: 'bold',
