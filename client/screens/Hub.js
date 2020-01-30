@@ -67,44 +67,38 @@ export default function Hub(props) {
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Band Hub</Text>
         <View style={styles.container}>
-          <Text>
-
+          {/* image container */}
+          {/* <Text>
             {dbPhoto &&
               <Image
                 style={{ width: 100, height: 70 }}
                 source={{ uri: dbPhoto }}
               />
-
             }
-          </Text>
-
+          </Text> */}
         </View>
-
-        <Text style={{ marginBottom: 10, color: '#fff' }}>
+        <Text style={styles.infoText}>
           {hubInfo.bio}
         </Text>
         {/* Social Media Buttons */}
+        <View style={styles.flexRowRight}>
+          <SpotifyButton link={hubInfo.link_spotify} />
+          <InstagramButton link={hubInfo.link_instagram} />
+          <FacebookButton link={hubInfo.link_facebook} />
+        </View>
         <View style={{
           flexDirection: 'row',
           height: 50,
-          justifyContent: 'left',
+          justifyContent: 'center',
         }}>
           {/* Button to open create show modal */}
           <EditBandBioModal />
           {/* Button to open create show modal */}
           {userInfo.userType === 'band' ? <CreateShowModal /> : null}
-          <SpotifyButton link={hubInfo.link_spotify} />
-          <InstagramButton link={hubInfo.link_instagram} />
-          <FacebookButton link={hubInfo.link_facebook} />
         </View>
-        {/* Button to open create show modal */}
-        <EditBandBioModal />
-        {/* Button to open create show modal */}
-        <CreateShowModal />
-        {/* Cards for all upcoming shows */}
-
         <CalendarView />
 
+        {/* Cards for all upcoming shows */}
         {shows &&
           shows.map(show => {
             return (
@@ -139,13 +133,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2D323A',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   text: {
     fontSize: 50,
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20
@@ -172,7 +163,14 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     resizeMode: "contain"
-  }
+  },
+  infoText: {
+    fontSize: 20,
+    color: '#fff',
+    textAlign: 'right',
+    paddingRight: 20,
+    paddingBottom: 5
+  },
 })
 
 
