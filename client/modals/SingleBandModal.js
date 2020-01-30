@@ -90,7 +90,7 @@ export default function SingleBandModal(props) {
               <TouchableOpacity
                     style={styles.unfollowButtonContainer}
                     onPress={() => {
-                      axios.delete(`http://localhost:8080/bands/${singleBand.id}/fans`, {
+                      axios.delete(`${AXIOS_URL}/bands/${singleBand.id}/fans`, {
                         data: {
                           id_fan: userInfo.id,
                         }
@@ -108,7 +108,7 @@ export default function SingleBandModal(props) {
               <TouchableOpacity
                 style={styles.followButtonContainer}
                 onPress={() => {
-                  axios.post(`http://localhost:8080/bands/${bandId}/fans`, {
+                  axios.post(`${AXIOS_URL}/bands/${bandId}/fans`, {
                     id_fan: userInfo.id
                   })
                   .then(() => {
@@ -152,7 +152,7 @@ export default function SingleBandModal(props) {
         onPress={() => {
           setModalVisible(true);
           //axios
-          axios.get(`http://localhost:8080/users/${band}`)
+          axios.get(`${AXIOS_URL}/users/${band}`)
             .then((response) => {
               setBand(response.data);
             })
