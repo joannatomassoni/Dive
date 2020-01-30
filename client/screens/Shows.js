@@ -15,7 +15,7 @@ import SingleShowModal from '../modals/SingleShowModal'
 import { AXIOS_URL } from 'react-native-dotenv';
 
 export default function Shows(props) {
-  ///global user signin info and editing function
+  //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
   // const [flyer, setFlyer] = useState("");
@@ -37,7 +37,7 @@ export default function Shows(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.headerText}>Shows</Text>
-        {shows.map(show => {
+        {shows && shows.map(show => {
           return (
             <Card
               title={show.name}

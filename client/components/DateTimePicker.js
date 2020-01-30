@@ -35,7 +35,7 @@ export default class DatePicker extends Component {
       show: false,
     });
   }
-
+  
   render() {
     const { show, date, mode } = this.state;
     return (
@@ -88,12 +88,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#59C3D1',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
+    width: 200,
+    alignSelf: 'center',
     marginBottom: 15
   },
   buttonText: {
     textAlign: 'center',
     fontWeight: '700',
-    color: '#fff'
   },
 })
