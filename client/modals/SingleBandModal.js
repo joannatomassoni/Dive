@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
-  SafeAreaView
+  SafeAreaView,
+  Image
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -44,13 +45,13 @@ export default function SingleBandModal(props) {
       .then(() => {
         // axios request to see if user is following band
         axios.get(`${AXIOS_URL}/fans/${userInfo.id}/bands`)
-        .then((response) => {
-          response.data.map(band => {
-            if (band.id === singleBand.id) {
-              toggleFollowing(true);
-            }
+          .then((response) => {
+            response.data.map(band => {
+              if (band.id === singleBand.id) {
+                toggleFollowing(true);
+              }
+            })
           })
-        })
       })
       .catch((err) => {
         console.log(err);
@@ -76,49 +77,55 @@ export default function SingleBandModal(props) {
           />
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
+
+            <Image
+              style={{ width: 420, height: 200 }}
+              source={{ uri: singleBand.bandPhoto }}
+            />
+
             <View style={styles.flexRowRight}>
               <SpotifyButton link={singleBand.link_spotify} />
               <InstagramButton link={singleBand.link_instagram} />
               <FacebookButton link={singleBand.link_facebook} />
             </View>
-            
+
             <Text style={styles.infoText}>{singleBand.bio}</Text>
             {/* if user is signed in show button to follor band */}
-            {userInfo.signedIn ? 
-              (isFollowing ? 
-              // if following, show unfollow button
-              <TouchableOpacity
-                    style={styles.unfollowButtonContainer}
-                    onPress={() => {
-                      axios.delete(`http://localhost:8080/bands/${singleBand.id}/fans`, {
-                        data: {
-                          id_fan: userInfo.id,
-                        }
+            {userInfo.signedIn ?
+              (isFollowing ?
+                // if following, show unfollow button
+                <TouchableOpacity
+                  style={styles.unfollowButtonContainer}
+                  onPress={() => {
+                    axios.delete(`http://localhost:8080/bands/${singleBand.id}/fans`, {
+                      data: {
+                        id_fan: userInfo.id,
+                      }
+                    })
+                      .then(() => {
+                        toggleFollowing(false)
                       })
-                        .then(() => {
-                          toggleFollowing(false)
-                        })
-                        .catch(error => console.log('failed to unfollow band', error))
-                    }}
-                  >
-                    <Text style={styles.followButtonText}>Unfollow</Text>
-                  </TouchableOpacity>
-              :
-              // if not following, show follow button
-              <TouchableOpacity
-                style={styles.followButtonContainer}
-                onPress={() => {
-                  axios.post(`http://localhost:8080/bands/${bandId}/fans`, {
-                    id_fan: userInfo.id
-                  })
-                  .then(() => {
-                  toggleFollowing(true)
-                  })
-                  .catch(error => console.log('failed to follow band', error))
-                }}
-              >
-                <Text style={styles.followButtonText}>Follow</Text>
-              </TouchableOpacity>)
+                      .catch(error => console.log('failed to unfollow band', error))
+                  }}
+                >
+                  <Text style={styles.followButtonText}>Unfollow</Text>
+                </TouchableOpacity>
+                :
+                // if not following, show follow button
+                <TouchableOpacity
+                  style={styles.followButtonContainer}
+                  onPress={() => {
+                    axios.post(`http://localhost:8080/bands/${bandId}/fans`, {
+                      id_fan: userInfo.id
+                    })
+                      .then(() => {
+                        toggleFollowing(true)
+                      })
+                      .catch(error => console.log('failed to follow band', error))
+                  }}
+                >
+                  <Text style={styles.followButtonText}>Follow</Text>
+                </TouchableOpacity>)
               : null
             }
             <Text style={styles.headerText}>Shows</Text>

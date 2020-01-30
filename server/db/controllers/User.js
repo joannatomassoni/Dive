@@ -1,15 +1,15 @@
 // Requiring the models we need for our queries
 // The User model contains instances of both fans and bands. 
 // Controllers for fans and bands are found here. 
-const { 
-        BandGenre,
-        Genre,
-        Show,
-        Type, 
-        User, 
-        Venue,
-        sequelize
-    } = require('../sequelize');
+const {
+    BandGenre,
+    Genre,
+    Show,
+    Type,
+    User,
+    Venue,
+    sequelize
+} = require('../sequelize');
 
 const { getRecordByName, getRecordByID } = require('./utils');
 
@@ -48,7 +48,7 @@ const getSingleUser = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.sendStatus(400);        
+        res.sendStatus(400);
     }
 }
 
@@ -58,10 +58,11 @@ const updateUserBio = async (req, res) => {
         const { id } = req.params;
         const { bio } = req.body;
         await User.update(
-            { bio: bio }, 
-            { where: { id: id },
-            returning: true,
-            plain: true
+            { bio: bio },
+            {
+                where: { id: id },
+                returning: true,
+                plain: true
             })
         res.sendStatus(204);
     }
@@ -75,14 +76,16 @@ const updateUserBio = async (req, res) => {
 const updateBandPhoto = async (req, res) => {
     try {
         const { id } = req.params;
-        const { photo } = req.body;
+        const { bandPhoto } = req.body;
         // const [ number, user ]  = await getRecordByName('user', name);
         await User.update(
-            { bandPhoto: photo }, 
-            { where: { id: id },
-            returning: true,
-            plain: true
+            { bandPhoto },
+            {
+                where: { id: id },
+                returning: true,
+                plain: true
             })
+        console.log("saving photo to db", bandPhoto)
         res.sendStatus(204);
     }
     catch (err) {
@@ -102,7 +105,7 @@ const updateBandFB = async (req, res) => {
         )
         res.send(200);
     }
-    catch(err) {
+    catch (err) {
         console.log(err);
         res.send(400);
     }
@@ -118,7 +121,7 @@ const updateBandInstagram = async (req, res) => {
         )
         res.send(200);
     }
-    catch(err) {
+    catch (err) {
         console.log(err);
         res.send(400);
     }
@@ -134,7 +137,7 @@ const updateBandSpotify = async (req, res) => {
         )
         res.send(200);
     }
-    catch(err) {
+    catch (err) {
         console.log(err);
         res.send(400);
     }
@@ -185,7 +188,7 @@ const addGenreToBand = async (req, res) => {
         })
         res.sendStatus(201);
     }
-    catch(err) {
+    catch (err) {
         console.log(err);
         res.sendStatus(400);
     }
@@ -220,10 +223,10 @@ const getBandGenres = async (req, res) => {
         //     const genreNames = data.map(genre => {
         //         return genre.genreName;
         //     })
-            // res.send(genreNames);
+        // res.send(genreNames);
         // })
     }
-    catch(err) {
+    catch (err) {
         console.log(err);
         res.sendStatus(400);
     }
@@ -246,7 +249,7 @@ const removeBandGenre = async (req, res) => {
     catch (err) {
         console.log(err);
         res.sendStatus(400);
-    }  
+    }
 }
 
 const getBandShows = async (req, res) => {
@@ -257,10 +260,12 @@ const getBandShows = async (req, res) => {
                 id
             },
             include: [
-                { model: Show, 
+                {
+                    model: Show,
                     include: [
                         { model: Venue }
-                    ]}
+                    ]
+                }
             ]
         })
         res.status(200).send(shows);

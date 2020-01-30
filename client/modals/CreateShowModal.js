@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SignedInContext } from '../context/UserContext';
 import DateTimePicker from '../components/DateTimePicker';
 import { AXIOS_URL } from 'react-native-dotenv';
+import * as ImagePicker from 'expo-image-picker';
 
 
 export default function CreateShowModal(props) {
@@ -41,6 +42,81 @@ export default function CreateShowModal(props) {
   const [dateTime, setDateTime] = useState('');
   //show description
   const [showDesc, setShowDesc] = useState('');
+  //sets photo uploaded from phone
+  let [selectedImage, setSelectedImage] = useState({});
+  //cloudinary url to send photo to
+  let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/da4ry89ct/upload';
+  //sets band photo
+  let [flyer, setFlyerPhoto] = useState('');
+
+
+  //allows user to upload a photo
+  let openImagePickerAsync = async () => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      base64: true
+    });
+
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+
+
+    setSelectedImage({ localUri: pickerResult.uri });
+
+    let base64Img = `data:image/jpg;base64,${pickerResult.base64}`;
+
+    let data = {
+      "file": base64Img,
+      "upload_preset": "oecwb18t",
+    }
+    //sends photo to cloudinary
+    fetch(CLOUDINARY_URL, {
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+    }).then(async r => {
+      let data = await r.json()
+      // console.log("sending data to cloudinary", data.url);
+      setFlyerPhoto(data.url);
+      console.log("data from cloudinary", data.url);
+    }).catch(err => console.log(err))
+
+    // Axios request to save flyer photo to DB
+    //   axios.patch(`${AXIOS_URL}/shows`, {
+    //     flyer: flyer
+    //   })
+    //     .then(response => {
+    //       console.log("saving flyer to db", flyer)
+    //     })
+    //     .catch(err => {
+    //       console.log("not saving to db", err)
+    //     })
+    // };
+
+    // const savePhoto = async () => {
+    //   await axios.patch(`${AXIOS_URL}/shows`, {
+    //     bandPhoto: bandPhoto
+    //   })
+    //     .then(response => {
+    //       console.log("saving photo to db", bandPhoto)
+    //     })
+    //     .catch(err => {
+    //       console.log("not saving to db", err)
+    //     })
+  }
+
+  console.log("flyer has been set to state", flyer);
 
   return (
     <View>
@@ -128,7 +204,7 @@ export default function CreateShowModal(props) {
               />
 
               {/* date time picker */}
-              <DateTimePicker setDateTime={setDateTime}/>
+              <DateTimePicker setDateTime={setDateTime} />
               {/* Description input */}
               <TextInput
                 placeholder="Show Description"
@@ -137,6 +213,26 @@ export default function CreateShowModal(props) {
                 onChangeText={setShowDesc}
                 style={styles.input}
               />
+
+              {/*  button to upload photo */}
+              <View style={styles.button} >
+                <TouchableOpacity
+                  style={styles.buttonContainer}
+                  onPress={openImagePickerAsync}
+                >
+                  <Text style={styles.buttonText}>Upload Show Flyer</Text>
+                </TouchableOpacity>
+
+                {/* {image.uri && */}
+                {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
+              </View>
+              {/* <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={savePhoto}
+              >
+                <Text style={styles.buttonText}>Save Photo</Text>
+              </TouchableOpacity> */}
+
               {/* create show button when modal is showing */}
               <TouchableOpacity
                 style={styles.buttonContainer}
@@ -151,16 +247,17 @@ export default function CreateShowModal(props) {
                   })
                     .then(response => {
                       return axios.post(`${AXIOS_URL}/shows`, {
-                      name: showTitle,
-                      dateTime: dateTime,
-                      photo: null,
-                      venueName: venueName,
-                      bandName: bandNames,
-                      description: showDesc
-                    })})
+                        name: showTitle,
+                        dateTime: dateTime,
+                        venueName: venueName,
+                        bandName: bandNames,
+                        flyer: flyer,
+                        description: showDesc
+                      })
+                    })
                     .then(response => response)
                     .catch(error => console.log('failed to create show', error));
-              }}
+                }}
               >
                 <Text style={styles.buttonText}>Create Show</Text>
               </TouchableOpacity>

@@ -5,7 +5,8 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
+  Image
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -74,6 +75,10 @@ export default function SingleShowModal(props) {
             {/* header */}
             <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
             {/* additional text */}
+            <Image
+              style={{ width: 420, height: 200 }}
+              source={{ uri: singleShow.flyer }}
+            />
             <Text style={styles.infoText}>{singleShow.date}</Text>
             <Text style={styles.infoText}>{singleShow.time}</Text>
             <Text style={styles.infoText}>{singleShow.description}</Text>
@@ -82,7 +87,7 @@ export default function SingleShowModal(props) {
               return <Text style={styles.infoText}>{band.name}</Text>
             })}
             {/* button to rsvp to specific (shows when signed in) */}
-            {userInfo.signedIn ? 
+            {userInfo.signedIn ?
               //if already rsvp'd, show button to cancel rvp
               (rsvp ? <TouchableOpacity
                 style={styles.cancelButtonContainer}
@@ -99,20 +104,20 @@ export default function SingleShowModal(props) {
               >
                 <Text style={styles.signupButtonText}>Cancel RSVP</Text>
               </TouchableOpacity>
-              //if not rsvp'd, show rsvp button
-              : <TouchableOpacity
-                style={styles.buttonContainer}
-                onPress={() => {
-                  axios.post(`${AXIOS_URL}/shows/rsvps`, {
-                    id_fan: userInfo.id,
-                    id_show: singleShow.id,
-                  })
-                    .then(response => setRsvp(true))
-                    .catch(error => console.log('failed to rsvp', error));
-                }}
-              >
-                <Text style={styles.signupButtonText}>RSVP</Text>
-              </TouchableOpacity>)
+                //if not rsvp'd, show rsvp button
+                : <TouchableOpacity
+                  style={styles.buttonContainer}
+                  onPress={() => {
+                    axios.post(`${AXIOS_URL}/shows/rsvps`, {
+                      id_fan: userInfo.id,
+                      id_show: singleShow.id,
+                    })
+                      .then(response => setRsvp(true))
+                      .catch(error => console.log('failed to rsvp', error));
+                  }}
+                >
+                  <Text style={styles.signupButtonText}>RSVP</Text>
+                </TouchableOpacity>)
               : null}
             {/* button to create a new comment (shows when signed in) */}
             {userInfo.signedIn ? <CreateCommentModal userId={userInfo.id} showId={singleShow.id} /> : null}
@@ -151,7 +156,7 @@ export default function SingleShowModal(props) {
           axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
             .then((response) => {
               response.data.map(show => {
-                if (show.id === singleShow.id){
+                if (show.id === singleShow.id) {
                   setRsvp(true);
                 }
               })
@@ -159,7 +164,7 @@ export default function SingleShowModal(props) {
             .catch((err) => {
               console.log("error getting rsvp info", err);
             });
-          
+
         }}
       >
         <Text>Show More</Text>
