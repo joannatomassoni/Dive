@@ -45,7 +45,6 @@ export default function CreateShowModal(props) {
   //sets band photo
   let [flyer, setFlyerPhoto] = useState('');
 
-
   //allows user to upload a photo
   //this gets permission from phone to access images
   let openImagePickerAsync = async () => {
