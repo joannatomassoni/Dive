@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   Button,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import axios from 'axios';
@@ -30,7 +31,6 @@ export default function Hub(props) {
   const [hubInfo, setHubInfo] = useState({});
   const [shows, setShows] = useState([]);
   let [dbPhoto, setDbPhoto] = useState('');
-
 
   //load all user info when brought to hub
   useEffect(() => {
@@ -61,11 +61,16 @@ export default function Hub(props) {
       })
   }, [])
 
+
+
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Band Hub</Text>
+
+
+
         <View style={styles.container}>
           <Text>
 
