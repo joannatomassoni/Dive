@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 7
   },
   cancelButtonContainer: {
-    backgroundColor: '#C70039',
+    backgroundColor: '#AA8181',
     paddingVertical: 10,
     borderRadius: 5,
     marginBottom: 10,

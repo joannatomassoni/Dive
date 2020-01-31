@@ -24,15 +24,11 @@ export default function Shows(props) {
     axios.get(`${AXIOS_URL}/shows`)
       .then((response) => {
         setShows(() => response.data);
-
       })
       .catch((err) => {
         console.log(err);
       })
   }, [])
-
-  
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -76,6 +72,7 @@ export default function Shows(props) {
     </SafeAreaView >
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
