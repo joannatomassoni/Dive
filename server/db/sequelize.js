@@ -34,7 +34,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
   host: DB_HOST,
   timestamps: false,
   pool: {
-        max: 10,
+        max: 100,
         min: 0,
         idle: 10000
       },
