@@ -46,28 +46,35 @@ export default function Shows(props) {
               key={show.id}
               backgroundColor='#111'
               padding={10}
-              borderRadius={5}
+              borderRadius={10}
               containerStyle={styles.card}
-      >
-            {/* modal to display single show info */}
-            <SingleShowModal show={show.id} showName={show.name}/>
-              <Text style={styles.cardText}>{show.date}</Text>
-              <Text style={styles.cardText}>{show.time}</Text>
-              { show.bands ? 
-                show.bands.map(band => {
-                  <Text style={styles.cardText} key={band.id}>{band.name}</Text>
-                })
-                : null
-              }
-              <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
-              <Text>
-                {show.flyer &&
-                  <Image
-                    style={{ width: 50, height: 50 }}
-                    source={{ uri: show.flyer }}
-                  />
-                }
-              </Text>
+            >
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View>
+                  {/* modal to display single show info */}
+                  <SingleShowModal show={show.id} showName={show.name}/>
+                  <Text style={styles.cardText}>{show.date}</Text>
+                  <Text style={styles.cardText}>{show.time}</Text>
+                  { show.bands ? 
+                  show.bands.map(band => {
+                    <Text style={styles.cardText} key={band.id}>{band.name}</Text>
+                  })
+                  : null }
+                  <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
+                </View>
+                <View >
+                {/* show flyer */}
+                <Text >
+                  {show.flyer &&
+                    <Image
+                      style={{ justifyContent: 'right' }}
+                      style={styles.photo}
+                      source={{ uri: show.flyer }}
+                    />
+                  }
+                </Text>
+                </View>
+              </View>
             </Card>
           )
         })}
@@ -102,6 +109,13 @@ const styles = StyleSheet.create({
     paddingRight: 20
   },
   card: {
-    borderWidth: 0
-  }
+    borderWidth: 0,
+    paddingBottom: 0,
+    backgroundColor: '#111',
+    paddingBottom: 10 
+  },
+  photo: { 
+    width: 100, 
+    height: 100, 
+    borderRadius: 10 }
 })

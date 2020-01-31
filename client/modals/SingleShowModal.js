@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
   card: {
-    borderWidth: 0
+    borderWidth: 0,
   }
 })
 

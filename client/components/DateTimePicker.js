@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Text
 } from 'react-native';
+import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class DatePicker extends Component {
@@ -35,6 +36,7 @@ export default class DatePicker extends Component {
       show: false,
     });
   }
+
   
   render() {
     const { show, date, mode } = this.state;
