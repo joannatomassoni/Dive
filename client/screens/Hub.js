@@ -18,7 +18,6 @@ import InstagramButton from '../components/InstagramButton';
 import CreateShowModal from '../modals/CreateShowModal';
 import EditBandBioModal from '../modals/EditBandBioModal';
 import EditShowModal from '../modals/EditShowModal';
-import CalendarView from '../components/Calendar.js';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { AXIOS_URL } from 'react-native-dotenv';
@@ -96,7 +95,6 @@ export default function Hub(props) {
           {/* Button to open create show modal */}
           {userInfo.userType === 'band' ? <CreateShowModal /> : null}
         </View>
-        <CalendarView />
 
         {/* Cards for all upcoming shows */}
         {shows &&

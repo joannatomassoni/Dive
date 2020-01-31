@@ -57,13 +57,12 @@ export default function Shows(props) {
               <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
               <SingleShowModal show={show.id} />
               <Text>
-
+                
                 {show.flyer &&
                   <Image
                     style={{ width: 50, height: 50 }}
                     source={{ uri: show.flyer }}
                   />
-
                 }
               </Text>
             </Card>
