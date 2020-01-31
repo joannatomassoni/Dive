@@ -116,6 +116,11 @@ export default function SingleShowModal(props) {
             {bands.map(band => {
               return <Text style={styles.infoText}>{band.name}</Text>
             })}
+            <View style={{
+              flexDirection: 'row',
+              height: 50,
+              justifyContent: 'center',
+            }}>
             {/* add to calendar button */}
             <TouchableOpacity
               style={styles.buttonContainer}
@@ -175,6 +180,7 @@ export default function SingleShowModal(props) {
                   <Text style={styles.signupButtonText}>RSVP</Text>
                 </TouchableOpacity>)
               : null}
+              </View>
             {/* button to create a new comment (shows when signed in) */}
             {userInfo.signedIn ? <CreateCommentModal userId={userInfo.id} showId={singleShow.id} /> : null}
             {/* cards to hold comments */}
@@ -254,15 +260,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    marginBottom: 10,
+    width: 140,
+    marginHorizontal: 7
   },
   cancelButtonContainer: {
     backgroundColor: '#C70039',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    marginBottom: 10,
+    width: 140,
+    marginHorizontal: 7
   },
   cardTextUsername: {
     fontWeight: 'bold'
