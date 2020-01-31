@@ -87,8 +87,6 @@ export default function CreateShowModal(props) {
     }).catch(err => console.log(err))
   }
 
-  console.log("flyer has been set to state", flyer);
-
   return (
     <View>
       <Modal
