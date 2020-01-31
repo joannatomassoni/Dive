@@ -64,7 +64,7 @@ export default function SingleShowModal(props) {
       const { status } = await Calendar.requestCalendarPermissionsAsync();
       if (status === 'granted') {
         const calendars = await Calendar.getCalendarsAsync();
-        console.log({ calendars });
+        //console.log({ calendars });
       }
     })();
   }, [])

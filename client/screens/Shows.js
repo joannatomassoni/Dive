@@ -19,6 +19,7 @@ export default function Shows(props) {
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
   // const [flyer, setFlyer] = useState("");
+  console.log(shows)
 
   useEffect(() => {
     axios.get(`${AXIOS_URL}/shows`)
@@ -50,6 +51,7 @@ export default function Shows(props) {
               padding={10}
             // image={require('../images/pic2.jpg')}
             >
+              <Text style={styles.cardText}>{show.date}</Text>
               <Text style={styles.cardText}>{show.time}</Text>
               {show.bands.map(band => {
                 return (
@@ -57,6 +59,7 @@ export default function Shows(props) {
                 )
               })}
               <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
+              {/* modal to display single show info */}
               <SingleShowModal show={show.id} />
               <Text>
                 
