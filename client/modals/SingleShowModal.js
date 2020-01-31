@@ -38,7 +38,7 @@ export default function SingleShowModal(props) {
   const getShowComments = () => {
     axios.get(`${AXIOS_URL}/shows/${show}/comments`)
       .then((response) => {
-        setComments(() => response.data)
+        setComments(() => response.data.reverse())
       })
       .catch((err) => {
         console.log(err);
@@ -100,7 +100,6 @@ export default function SingleShowModal(props) {
       .then(response => setRsvp(false))
       .catch(error => console.log('failed to rsvp', error));
   }
-
 
   useEffect(() => {
     //get all bands for specific show
@@ -169,6 +168,7 @@ export default function SingleShowModal(props) {
               flexDirection: 'row',
               height: 50,
               justifyContent: 'center',
+              marginTop: 10
             }}>
             {/* add to calendar button */}
             <TouchableOpacity
@@ -222,13 +222,14 @@ export default function SingleShowModal(props) {
                 <Card
                   style={styles.card}
                   key={comment.id}
-                  backgroundColor='#fff'
-                  borderRadius={10}
+                  backgroundColor='#111'
                   padding={10}
+                  borderRadius={5}
+                  containerStyle={styles.card}
                 >
                   <Text style={styles.cardTextUsername} key={comment.user.id}>{comment.user.name}</Text>
                   <Text style={styles.cardText}>{comment.text}</Text>
-                  <Text style={styles.cardText}>{Moment(comment.createdAt).fromNow()}</Text>
+                  <Text style={styles.cardTextTime}>{Moment(comment.createdAt).fromNow()}</Text>
                 </Card>
               )
             })}
@@ -245,7 +246,7 @@ export default function SingleShowModal(props) {
           getRsvpInfo();
         }}
       >
-        <Text>{props.showName}</Text>
+        <Text style={styles.modalShowText}>{props.showName}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -287,7 +288,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 7
   },
   cardTextUsername: {
-    fontWeight: 'bold'
+    fontSize: 17,
+    color: '#59C3D1',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20,
+    marginBottom: 4
+  },
+  cardText: {
+    fontSize: 15,
+    color: '#fff',
+    padding: 1,
+  },
+  cardTextTime: {
+    color: '#75A4AD',
+    padding: 1,
   },
   infoText: {
     fontSize: 20,
@@ -300,6 +315,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 40,
     left: 20,
+  },
+  modalShowText: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginBottom: 10,
+    color: '#fff'
+  },
+  card: {
+    borderWidth: 0
   }
 })
 

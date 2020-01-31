@@ -43,26 +43,24 @@ export default function Shows(props) {
         {shows && shows.map(show => {
           return (
             <Card
-              title={show.name}
-              style={styles.card}
               key={show.id}
-              backgroundColor='#fff'
-              borderRadius={10}
+              backgroundColor='#111'
               padding={10}
-            // image={require('../images/pic2.jpg')}
-            >
+              borderRadius={5}
+              containerStyle={styles.card}
+      >
+            {/* modal to display single show info */}
+            <SingleShowModal show={show.id} showName={show.name}/>
               <Text style={styles.cardText}>{show.date}</Text>
               <Text style={styles.cardText}>{show.time}</Text>
-              {show.bands.map(band => {
-                return (
+              { show.bands ? 
+                show.bands.map(band => {
                   <Text style={styles.cardText} key={band.id}>{band.name}</Text>
-                )
-              })}
+                })
+                : null
+              }
               <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
-              {/* modal to display single show info */}
-              <SingleShowModal show={show.id} showName={show.name}/>
               <Text>
-                
                 {show.flyer &&
                   <Image
                     style={{ width: 50, height: 50 }}
@@ -87,7 +85,6 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 50,
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20
@@ -98,11 +95,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#59C3D1',
   },
   cardText: {
-    fontSize: 15,
+    fontSize: 16,
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
     textAlign: 'left',
     paddingRight: 20
   },
+  card: {
+    borderWidth: 0
+  }
 })
