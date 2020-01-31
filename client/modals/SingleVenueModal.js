@@ -144,12 +144,13 @@ export default function SingleVenueModal(props) {
               key: `${MAP_KEY}`,
               location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
             }
-          }).then(axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
-            params: {
-              key: `${MAP_KEY}`,
-              location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
-            }
-          }))
+          })
+            .then(axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
+              params: {
+                key: `${MAP_KEY}`,
+                location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
+              }
+            }))
             .then((response) => {
               setVenueLocation({
                 latitude: response.data.results[0].locations[0].displayLatLng.lat,
@@ -162,6 +163,7 @@ export default function SingleVenueModal(props) {
               console.log(`error getting geolocation`, err);
             });
         }}
+        
       >
         <Text style={styles.signupButtonText}>Show More</Text>
       </TouchableOpacity>
