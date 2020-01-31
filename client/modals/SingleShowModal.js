@@ -46,7 +46,7 @@ export default function SingleShowModal(props) {
     //request to get all additional bands for specific show
     axios.get(`${AXIOS_URL}/shows/${show}`)
       .then((response) => {
-        setBands(response.data.bands);
+        setBands(() => response.data.bands);
       })
       .catch((err) => {
         console.log(err);
@@ -54,7 +54,7 @@ export default function SingleShowModal(props) {
     //request to get all comments for specific show
     axios.get(`${AXIOS_URL}/shows/${show}/comments`)
       .then((response) => {
-        setComments(response.data)
+        setComments(() => response.data)
       })
       .catch((err) => {
         console.log(err);
@@ -64,7 +64,7 @@ export default function SingleShowModal(props) {
       const { status } = await Calendar.requestCalendarPermissionsAsync();
       if (status === 'granted') {
         const calendars = await Calendar.getCalendarsAsync();
-        //console.log({ calendars });
+        console.log({ calendars });
       }
     })();
   }, [])
