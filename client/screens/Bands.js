@@ -30,7 +30,6 @@ export default function Bands(props) {
       .catch(err => console.log(err))
   }, [])
 
-  console.log(bands);
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />

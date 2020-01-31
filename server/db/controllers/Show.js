@@ -122,13 +122,16 @@ const getAllUpcomingShows = async (req, res) => {
         const shows = await Show.findAll({
             where: {
                 dateTime: {
-                    [Op.gte]: moment().subtract(7, 'days').toDate()
+                    [Op.gte]: moment().subtract(12, 'hours').toDate()
                 }
             },
             include: [
                 { model: User, as: 'bands' },
                 { model: Venue }
             ],
+            order: [
+                ['dateTime', 'ASC']
+            ]
         });
         res.status(200).send(shows);
     }

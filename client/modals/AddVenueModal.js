@@ -58,6 +58,7 @@ export default function AddVenueModal(props) {
                 placeholder="Venue Name"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
+                color='black'
                 onChangeText={setVenueName}
                 style={styles.input}
               />
@@ -66,6 +67,7 @@ export default function AddVenueModal(props) {
                 placeholder="Address"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
+                color='black'
                 onChangeText={setvenueAddress}
                 style={styles.input}
               />
@@ -74,6 +76,7 @@ export default function AddVenueModal(props) {
                 placeholder="City"
                 placeholderTextColor="#75A4AD"
                 returnKeyType='next'
+                color='black'
                 onChangeText={setVenueCity}
                 style={styles.input}
               />
@@ -82,6 +85,7 @@ export default function AddVenueModal(props) {
                 placeholder="State"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
+                color='black'
                 onChangeText={setvenueState}
                 style={styles.input}
               />
@@ -90,6 +94,7 @@ export default function AddVenueModal(props) {
                 placeholder="Zip Code"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
+                color='black'
                 onChangeText={setVenueZip}
                 style={styles.input}
               />
