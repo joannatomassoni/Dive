@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { SignedInContext } from '../context/UserContext';
 import {
   Modal,
   Text,
@@ -18,6 +19,8 @@ import axios from 'axios';
 
 
 export default function SingleVenueModal(props) {
+  //global user signin info and editing function
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //set username to text in username textInput
@@ -26,28 +29,63 @@ export default function SingleVenueModal(props) {
   const [singleVenue, setVenue] = useState([]);
   //array of shows at venue
   const [shows, setShows] = useState([]);
-  //array of bands to list for each show
-  const [bands, setBands] = useState([]);
   const [venueLocation, setVenueLocation] = useState({});
+  // whether a user follows a given venue or not
+  const [isFollowing, toggleFollowing] = useState(false);
   //venue id for axios call
   let venue = props.venueID;
 
-  useEffect(() => {
-    //request to get all shows at specific venue
+  // request to get all shows at venue
+  const getAllShows = () => {
     axios.get(`${AXIOS_URL}/venues/${venue}`)
       .then((response) => {
         setShows(() => response.data.shows);
       })
       .catch((err) => {
+        console.log(err);
       });
-    //request to get all bands from each specific show
-    axios.get(`${AXIOS_URL}/shows/${venue}`)
+  }
+
+  //request to see if a user is following the venue
+  const getFollowInfo = () => {
+    axios.get(`${AXIOS_URL}/fans/${userInfo.id}/venues`)
       .then((response) => {
-        setBands(() => response.data.bands);
+        // console.log(response);
+        response.data.venuesmap(venue => {
+          if (venue.id === singleVenue.id) {
+            toggleFollowing(true);
+          }
+        })
       })
       .catch((err) => {
-        console.log("error getting bands for single show", err);
+        console.log("error getting venue/following info", err);
       });
+  }
+  // TODO:
+  // request to follow a venue
+  const addRsvp = () => {
+    axios.post(`${AXIOS_URL}/shows/rsvps`, {
+      id_fan: userInfo.id,
+      id_show: singleShow.id,
+    })
+      .then(response => setRsvp(true))
+      .catch(error => console.log('failed to rsvp', error));
+  }
+  // TODO:
+  // request to unfollow a venue
+  const removeRsvp = () => {
+    axios.delete(`${AXIOS_URL}/shows/rsvps`, {
+      data: {
+        id_fan: userInfo.id,
+        id_show: singleShow.id,
+      }
+    })
+      .then(() => setRsvp(false))
+      .catch(error => console.log('failed to rsvp', error));
+  }
+
+  useEffect(() => {
+    getAllShows();
       //CURRENT GEOLOCATION
       // navigator.geolocation.getCurrentPosition(position => {
       //   setCurrentLocation({
@@ -117,7 +155,7 @@ export default function SingleVenueModal(props) {
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>Bands:</Text>
                   {/* list for each additional band in each show */}
-                  {bands && bands.map(band => {
+                  {show.bands && show.bands.map(band => {
                     return <Text style={{ marginBottom: 10, color: '#000' }}>{band.name}</Text>
                   })}
                 </Card>
