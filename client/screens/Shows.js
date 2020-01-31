@@ -48,6 +48,7 @@ export default function Shows(props) {
               padding={10}
             // image={require('../images/pic2.jpg')}
             >
+              <Text style={styles.cardText}>{show.date}</Text>
               <Text style={styles.cardText}>{show.time}</Text>
               {show.bands.map(band => {
                 return (
