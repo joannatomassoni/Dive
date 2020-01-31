@@ -136,38 +136,45 @@ export default function Hub(props) {
             style={styles.thumbnail}
           />
         </View> */}
-        <View>
-          {/* {userInfo.userType === 'fan' ?  : null} */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={getPreviousShows}
-          >
-            <Text>Get old shows</Text>
-          </TouchableOpacity>
 
-          {
-            oldShows.map(show => {
-              return (
-                <Card
-                  title={show.name}
-                  style={styles.card}
-                  backgroundColor='#fff'
-                  borderWidth={0}
-                  borderRadius={10}
-                  padding={10}
-                // image={require('../images/pic2.jpg')}
-                >
-                  <Text style={{ marginBottom: 10 }}>{show.time}</Text>
-                  <Text style={{ marginBottom: 10 }}>{show.date}</Text>
-                  <Text style={{ marginBottom: 10 }}>{show.description}</Text>
-                  <EditShowModal />
-                </Card>
-              )
-            })
-          }
+
+
+        <View>
+          {userInfo.userType === 'fan' ?
+            <View>
+              {/* {userInfo.userType === 'fan' ?  : null} */}
+              < TouchableOpacity
+                style={styles.prevButton}
+                onPress={getPreviousShows}
+              >
+                <Text style={styles.buttText} >Get old shows</Text>
+              </TouchableOpacity>
+
+              {
+                oldShows.map(show => {
+                  return (
+                    <Card
+                      title={show.name}
+                      style={styles.card}
+                      backgroundColor='#fff'
+                      borderWidth={0}
+                      borderRadius={10}
+                      padding={10}
+                    // image={require('../images/pic2.jpg')}
+                    >
+                      <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+                      <Text style={{ marginBottom: 10 }}>{show.date}</Text>
+                      <Text style={{ marginBottom: 10 }}>{show.description}</Text>
+                      <EditShowModal />
+                    </Card>
+                  )
+                })
+              }
+            </View>
+            : null}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaView >
   )
 }
 
@@ -195,13 +202,17 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#fff'
   },
-  buttonContainer: {
-    backgroundColor: '#59C3D1',
+  buttonText: {
+    textAlign: 'center',
+    fontWeight: '700',
+    color: '#000'
+  },
+  prevButton: {
+    backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
-    marginBottom: 15,
-    width: 200,
-    alignSelf: 'center',
+    marginBottom: 10,
+    width: 140,
     marginHorizontal: 7
   },
   flexRowRight: {
