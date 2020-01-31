@@ -235,14 +235,7 @@ const getPreviousShows = async (req, res) => {
                 id_fan: id,
                 createdAt: {
                     [Op.lt]: new Date()
-                    // $lt: "2020-01-31 17:20:44"
                 }
-                // createdAt: {
-                //     // "2020-01-31 17:20:44"
-                //     $lt: "2020-01-31 17:20:44"
-                //     //  isBefore: "2020-01-31 17:20:44"
-                //     // $gt: new Date(new Date() - 24 * 60 * 60 * 1000)
-                // }
             }
         })
         Promise.all(oldshows.map(async (rsvp) => {
@@ -255,29 +248,7 @@ const getPreviousShows = async (req, res) => {
         })).then((data) => {
             console.log("are we getting old shows?", data)
             res.send(data)
-        })
-
-
-
-        // try {
-        //     const { id } = req.params;
-        //     const sql = `select id_show from rsvps where id_fan = ? and createdAt < "2020-02-30 21:18:38"`;
-        //     // const sql = `SELECT * FROM users WHERE id IN (
-        //     //                 SELECT id_band FROM fans_bands WHERE id_fan = ?)`;
-        //     const oldshows = await sequelize.query(sql, {
-        //         replacements: [id],
-        //         // include: [
-        //         //     // { model: User, through: ShowBand, as: 'bands', attributes: ['id', 'name', 'bio'] },
-        //         //     { model: Venue, attributes: ['id', 'name'] },
-        //         //     { model: Show, attributes: ['id', 'name', 'bio', 'flyer'] },
-        //         //     // { model: Comment }
-        //         // ]
-
-        //     })
-        //     console.log("what are we getting for previous shows?", oldshows)
-        //     // console.log(oldshows[0]);
-        //     res.status(200).send(oldshows[0]);
-        // }}
+        }
     }
     catch (err) {
         console.log("error getting old shows", err)
