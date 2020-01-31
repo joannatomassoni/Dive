@@ -180,6 +180,81 @@ const getFanRSVPs = async (req, res) => {
     }
 }
 
+//gets previous/past RSVPed shows
+//will need users id
+const getPreviousShows = async (req, res) => {
+    // console.log("is this previousShows working?")
+    try {
+        const { id } = req.params;
+        const oldshows = await RSVP.findAll({
+            where: {
+                id_fan: id,
+                createdAt: {
+                    [Op.lt]: new Date()
+                    // $lt: "2020-01-31 17:20:44"
+                }
+                // createdAt: {
+                //     // "2020-01-31 17:20:44"
+                //     $lt: "2020-01-31 17:20:44"
+                //     //  isBefore: "2020-01-31 17:20:44"
+                //     // $gt: new Date(new Date() - 24 * 60 * 60 * 1000)
+                // }
+            },
+            include: [
+                { model: Show },
+                // { model: Venue }
+            ],
+        });
+        console.log(oldshows);
+        res.status(200).send(oldshows);
+    }
+
+
+    // try {
+    //     const { id } = req.params;
+    //     const sql = `select id_show from rsvps where id_fan = ? and createdAt < "2020-02-30 21:18:38"`;
+    //     // const sql = `SELECT * FROM users WHERE id IN (
+    //     //                 SELECT id_band FROM fans_bands WHERE id_fan = ?)`;
+    //     const oldshows = await sequelize.query(sql, {
+    //         replacements: [id],
+    //         // include: [
+    //         //     // { model: User, through: ShowBand, as: 'bands', attributes: ['id', 'name', 'bio'] },
+    //         //     { model: Venue, attributes: ['id', 'name'] },
+    //         //     { model: Show, attributes: ['id', 'name', 'bio', 'flyer'] },
+    //         //     // { model: Comment }
+    //         // ]
+
+    //     })
+    //     console.log("what are we getting for previous shows?", oldshows)
+    //     // console.log(oldshows[0]);
+    //     res.status(200).send(oldshows[0]);
+    // }
+    catch (err) {
+        console.log("error getting old shows", err)
+        res.sendStatus(400);
+    }
+}
+
+
+// const getPreviousShows = async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         const shows = await Show.findAll({
+//             where: {
+//                 id
+//             },
+//             include: [
+//                 { model: Show },
+//                 { model: Venue }
+//             ],
+//         });
+//         res.status(200).send(shows);
+//     }
+//     catch (err) {
+//         res.send(err);
+//     }
+// }
+
 // TODO: refactor to use eager loading
 // Get all fans who have rsvpd to a show
 const getShowRSVPs = async (req, res) => {
@@ -219,4 +294,6 @@ module.exports = {
     removeFanRSVP,
     rsvpFanToShow,
     updateShow,
+    getPreviousShows,
 }
+
