@@ -30,7 +30,7 @@ export default function Hub(props) {
   const [hubInfo, setHubInfo] = useState({});
   const [shows, setShows] = useState([]);
   let [dbPhoto, setDbPhoto] = useState('');
-
+  const [oldShows, setOldShows] = useState([]);
 
 
 
@@ -63,16 +63,22 @@ export default function Hub(props) {
       })
   }, [])
 
-
+  const getPreviousShows = () => {
+    axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
+      .then(response => {
+        console.log("getting old shows", response);
+        setOldShows(response.data)
+      })
+      .catch(err => {
+        console.log("not getting older shows", err);
+      })
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Band Hub</Text>
-
-
-
         <View style={styles.container}>
           {/* image container */}
           {/* <Text>
@@ -82,7 +88,7 @@ export default function Hub(props) {
                 source={{ uri: dbPhoto }}
               />
             }
-          </Text> */}
+          </Text>  */}
         </View>
         <Text style={styles.infoText}>
           {hubInfo.bio}
@@ -130,6 +136,34 @@ export default function Hub(props) {
             style={styles.thumbnail}
           />
         </View> */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={getPreviousShows}
+        >
+          <Text>Get old shows</Text>
+        </TouchableOpacity>
+
+        {
+          oldShows.map(show => {
+            return (
+              <Card
+                title={show.name}
+                style={styles.card}
+                backgroundColor='#fff'
+                borderWidth={0}
+                borderRadius={10}
+                padding={10}
+              // image={require('../images/pic2.jpg')}
+              >
+                <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+                <Text style={{ marginBottom: 10 }}>{show.date}</Text>
+                <Text style={{ marginBottom: 10 }}>{show.description}</Text>
+                <EditShowModal />
+              </Card>
+            )
+          })
+        }
+
       </ScrollView>
     </SafeAreaView>
   )
@@ -158,6 +192,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '700',
     color: '#fff'
+  },
+  buttonContainer: {
+    backgroundColor: '#59C3D1',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginBottom: 15,
+    width: 200,
+    alignSelf: 'center',
+    marginHorizontal: 7
   },
   flexRowRight: {
     flexDirection: 'row',
