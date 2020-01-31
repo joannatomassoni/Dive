@@ -19,10 +19,6 @@ import { AXIOS_URL } from 'react-native-dotenv';
 import * as Calendar from 'expo-calendar';
 
 export default function SingleShowModal(props) {
-  Date.prototype.addHours = function (h) {
-    this.setHours(this.getHours() + h);
-    return this;
-  }
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state for modal visibility
@@ -64,6 +60,7 @@ export default function SingleShowModal(props) {
       const { status } = await Calendar.requestCalendarPermissionsAsync();
       if (status === 'granted') {
         const calendars = await Calendar.getCalendarsAsync();
+        //used to find specific expo calendar to push notifications to
         //console.log({ calendars });
       }
     })();

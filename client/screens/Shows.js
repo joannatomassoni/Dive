@@ -19,7 +19,6 @@ export default function Shows(props) {
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
   // const [flyer, setFlyer] = useState("");
-  console.log(shows)
 
   useEffect(() => {
     axios.get(`${AXIOS_URL}/shows`)
