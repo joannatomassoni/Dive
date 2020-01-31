@@ -13,7 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { AXIOS_URL } from 'react-native-dotenv';
 
 
-export default function CreateCommentModal({ showId, userId }) {
+export default function CreateCommentModal({ showId, userId, getShowComments }) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //comment text
@@ -43,6 +43,7 @@ export default function CreateCommentModal({ showId, userId }) {
                 placeholder="Comment"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
+                color='black'
                 onChangeText={setComment}
                 style={styles.input}
               />
@@ -51,6 +52,7 @@ export default function CreateCommentModal({ showId, userId }) {
                 style={styles.loginContainer}
                 onPress={() => {
                   setModalVisible(false);
+                  getShowComments();
                 }}
               >
                 <Text style={styles.buttonText}>Post Comment</Text>
@@ -116,8 +118,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    marginBottom: 10,
+    width: 140,
+    marginHorizontal: 7,
+    alignSelf: 'center'
   },
   modal: {
     marginLeft: 120

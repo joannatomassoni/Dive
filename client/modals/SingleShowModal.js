@@ -16,7 +16,7 @@ import CreateCommentModal from './CreateCommentModal';
 import Moment from 'moment';
 import axios from 'axios';
 import { AXIOS_URL } from 'react-native-dotenv';
-
+import * as Calendar from 'expo-calendar';
 
 export default function SingleShowModal(props) {
   //global user signin info and editing function
@@ -34,24 +34,102 @@ export default function SingleShowModal(props) {
   //info required for axios calls
   let show = props.show;
 
-  useEffect(() => {
-    //request to get all additional bands for specific show
+  //request to get all comments for specific show
+  const getShowComments = () => {
+    axios.get(`${AXIOS_URL}/shows/${show}/comments`)
+      .then((response) => {
+        setComments(() => response.data)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+  //request to get all additional bands for specific show
+  const getShowBands = () => {
     axios.get(`${AXIOS_URL}/shows/${show}`)
       .then((response) => {
-        setBands(response.data.bands);
+        setBands(() => response.data.bands);
       })
       .catch((err) => {
         console.log(err);
       });
-    //request to get all comments for specific show
-    axios.get(`${AXIOS_URL}/shows/${show}/comments`)
+  }
+  //request to get all info for current show
+  const getShowInfo = () => {
+    axios.get(`${AXIOS_URL}/shows/${show}`)
       .then((response) => {
-        setComments(response.data)
+        setSingleShow(response.data);
+        setStartTime(response.data.dateTime);
+        setEndTime(Moment(response.data.dateTime).add(2, 'hours'));
       })
       .catch((err) => {
-        console.log(err);
+        console.log("error getting single show info", err);
+      });
+  }
+  //request to get user's rsvp info
+  const getRsvpInfo = () => {
+    axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
+      .then((response) => {
+        response.data.map(show => {
+          if (show.id === singleShow.id) {
+            setRsvp(true);
+          }
+        })
       })
+      .catch((err) => {
+        console.log("error getting rsvp info", err);
+      });
+  }
+  //request to add rsvp
+  const addRsvp = () => {
+    axios.post(`${AXIOS_URL}/shows/rsvps`, {
+      id_fan: userInfo.id,
+      id_show: singleShow.id,
+    })
+      .then(response => setRsvp(true))
+      .catch(error => console.log('failed to rsvp', error));
+  }
+  //request to remove rsvp
+  const removeRsvp = () => {
+    axios.delete(`${AXIOS_URL}/shows/rsvps`, {
+      data: {
+        id_fan: userInfo.id,
+        id_show: singleShow.id,
+      }
+    })
+      .then(response => setRsvp(false))
+      .catch(error => console.log('failed to rsvp', error));
+  }
+
+
+  useEffect(() => {
+    //get all bands for specific show
+    getShowBands();
+    //get all comments for specific show
+    getShowComments();
+    //request to access users calendar
+    (async () => {
+      const { status } = await Calendar.requestCalendarPermissionsAsync();
+      if (status === 'granted') {
+        const calendars = await Calendar.getCalendarsAsync();
+        //used to find specific expo calendar to push notifications to
+        //console.log({ calendars });
+      }
+    })();
   }, [])
+
+  // event details for calendar integration
+  const details = {
+    title: singleShow.name,
+    startDate: singleShow.dateTime,
+    endDate: singleShow.dateTime,
+    notes: singleShow.description,
+    navigationBarIOS: {
+      tintColor: 'orange',
+      backgroundColor: 'green',
+      titleColor: 'blue',
+    },
+  };
 
   return (
     <View>
@@ -87,41 +165,57 @@ export default function SingleShowModal(props) {
             {bands.map(band => {
               return <Text style={styles.infoText}>{band.name}</Text>
             })}
+            <View style={{
+              flexDirection: 'row',
+              height: 50,
+              justifyContent: 'center',
+            }}>
+            {/* add to calendar button */}
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPress={ async () => {
+                try {
+                  console.log('Adding Event');
+                  const eventId = await Calendar.createEventAsync("D5A65218-29C5-466C-A2CE-D54DF9D4260A", details);
+                  console.log("Event Id", id);
+                }
+                catch (error) {
+                  console.log('Error', error);
+                }
+              }}
+            >
+              <Text style={styles.signupButtonText}>Add To Calendar</Text>
+            </TouchableOpacity>
             {/* button to rsvp to specific (shows when signed in) */}
             {userInfo.signedIn ?
               //if already rsvp'd, show button to cancel rvp
               (rsvp ? <TouchableOpacity
                 style={styles.cancelButtonContainer}
-                onPress={() => {
-                  axios.delete(`${AXIOS_URL}/shows/rsvps`, {
-                    data: {
-                      id_fan: userInfo.id,
-                      id_show: singleShow.id,
-                    }
-                  })
-                    .then(response => setRsvp(false))
-                    .catch(error => console.log('failed to rsvp', error));
-                }}
+                  onPress={() => { 
+                    removeRsvp();
+                  }}
               >
                 <Text style={styles.signupButtonText}>Cancel RSVP</Text>
               </TouchableOpacity>
                 //if not rsvp'd, show rsvp button
                 : <TouchableOpacity
                   style={styles.buttonContainer}
-                  onPress={() => {
-                    axios.post(`${AXIOS_URL}/shows/rsvps`, {
-                      id_fan: userInfo.id,
-                      id_show: singleShow.id,
-                    })
-                      .then(response => setRsvp(true))
-                      .catch(error => console.log('failed to rsvp', error));
+                  onPress={() => { 
+                    addRsvp();
                   }}
                 >
                   <Text style={styles.signupButtonText}>RSVP</Text>
                 </TouchableOpacity>)
               : null}
+              </View>
             {/* button to create a new comment (shows when signed in) */}
-            {userInfo.signedIn ? <CreateCommentModal userId={userInfo.id} showId={singleShow.id} /> : null}
+            {userInfo.signedIn ? 
+              <CreateCommentModal 
+              userId={userInfo.id} 
+              showId={singleShow.id}
+              getShowComments={getShowComments}
+              /> 
+            : null}
             {/* cards to hold comments */}
             {comments.map(comment => {
               return (
@@ -146,29 +240,12 @@ export default function SingleShowModal(props) {
         onPress={() => {
           setModalVisible(true);
           //request to get all info for current show
-          axios.get(`${AXIOS_URL}/shows/${show}`)
-            .then((response) => {
-              setSingleShow(response.data);
-            })
-            .catch((err) => {
-              console.log("error getting single show info", err);
-            });
+          getShowInfo();
           //request to get user's rsvp info
-          axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
-            .then((response) => {
-              response.data.map(show => {
-                if (show.id === singleShow.id) {
-                  setRsvp(true);
-                }
-              })
-            })
-            .catch((err) => {
-              console.log("error getting rsvp info", err);
-            });
-
+          getRsvpInfo();
         }}
       >
-        <Text>Show More</Text>
+        <Text>{props.showName}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -197,15 +274,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    marginBottom: 10,
+    width: 140,
+    marginHorizontal: 7
   },
   cancelButtonContainer: {
-    backgroundColor: '#C70039',
+    backgroundColor: '#AA8181',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    marginBottom: 10,
+    width: 140,
+    marginHorizontal: 7
   },
   cardTextUsername: {
     fontWeight: 'bold'

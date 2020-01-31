@@ -1,8 +1,10 @@
 // require moment for date formatting for 
 const moment = require('moment');
 // Requiring the models we need for our queries
-const { Show, RSVP, User, ShowBand, Venue, Comment, Sequelize } = require('../sequelize');
+const { Show, RSVP, User, ShowBand, Venue, Comment, Sequelize, sequelize } = require('../sequelize');
 const { getRecordByName, getRecordByID } = require('./utils');
+const { sendNotifications } = require('../../pushNotifications/pushNotifications')
+
 
 // import the Sequelize operators
 const Op = Sequelize.Op;
@@ -18,9 +20,8 @@ const createShow = async (req, res) => {
         let { name, dateTime, flyer, venueName, bandNames, description } = req.body;
         const venue = await getRecordByName('venue', venueName);
         // format dateTime to be used for sorting and to be passed back as human-friendly strings
-        dateTime = moment(dateTime).format('llll');
-        console.log(dateTime);
-        const time = moment(dateTime).format('LT');
+        // dateTime = moment(dateTime).format('llll');
+        const time = moment.utc(dateTime).format('LT');
         const date = moment(dateTime).format('ll');
 
         // add bands and venue to ShowBand join tables
@@ -33,13 +34,53 @@ const createShow = async (req, res) => {
             description: description,
             id_venue: venue.id
         })
+
+        // Sending push notifications and adding to shows_bands join table
+        // Create push tokens array
         await bandNames.forEach(async (bandName) => {
+            let bandTokens = [];
             const band = await getRecordByName('band', bandName);
             await ShowBand.create({
                 id_show: show.id,
                 id_band: band.id
             })
+
+            // Notify band followers
+            // get all followers of a given band, push their tokens to the pushTokens array
+            const sql = `SELECT * FROM users WHERE id IN (
+                SELECT id_fan FROM fans_bands WHERE id_band = ?)`;
+            const followers = await sequelize.query(sql, {
+                replacements: [band.id]
+            })
+            console.log('followers: ', followers);
+            followers[0].forEach((follower) => {
+                bandTokens.push(follower.expoPushToken)
+            })
+            // Construct title and body to send in push notification message to each group of followers for each band
+            const title = `New show from ${band.name}!`;
+            const body = 'Open Dive for more info.';
+            await sendNotifications(bandTokens, title, body);
         })
+
+
+        // Notifications for venue followers
+        let venueTokens = [];
+        // Get followers of the venue
+        const sql = `SELECT * FROM users WHERE id IN (
+            SELECT id_fan FROM fans_venues WHERE id_venue = ?)`;
+        const followers = await sequelize.query(sql, {
+            replacements: [venue.id]
+        })
+        
+        // Add expoPushTokens for each follower to the pushTokens array
+        followers[0].forEach((follower) => {
+            venueTokens.push(follower.expoPushToken)
+        })
+        const title = `New show at ${venue.name}!`;
+        const body = 'Open Dive for more info.';
+        await sendNotifications(venueTokens, title, body);
+
+
         res.sendStatus(201);
     }
     catch (err) {
@@ -81,13 +122,16 @@ const getAllUpcomingShows = async (req, res) => {
         const shows = await Show.findAll({
             where: {
                 dateTime: {
-                    [Op.gte]: moment().subtract(7, 'days').toDate()
+                    [Op.gte]: moment().subtract(12, 'hours').toDate()
                 }
             },
             include: [
                 { model: User, as: 'bands' },
                 { model: Venue }
             ],
+            order: [
+                ['dateTime', 'ASC']
+            ]
         });
         res.status(200).send(shows);
     }

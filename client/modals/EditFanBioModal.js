@@ -35,6 +35,7 @@ export default function EditBandBioModal(props) {
             name='ios-arrow-back'
             color='#59C3D1'
             size={32}
+            color='black'
             style={styles.menuIcon}
             onPress={() => { setModalVisible(false) }}
           />
@@ -46,6 +47,7 @@ export default function EditBandBioModal(props) {
                 placeholder="New Bio"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
+                color='black'
                 onChangeText={setNewBio}
                 style={styles.input}
               />
@@ -54,6 +56,7 @@ export default function EditBandBioModal(props) {
                 placeholder="Facebook Link"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
+                color='black'
                 onChangeText={setFacebookLink}
                 style={styles.input}
               />
@@ -62,6 +65,7 @@ export default function EditBandBioModal(props) {
                 placeholder="Instagram Link"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
+                color='black'
                 onChangeText={setInstagramLink}
                 style={styles.input}
               />

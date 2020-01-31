@@ -10,13 +10,13 @@ const {
     Venue,
     sequelize
 } = require('../sequelize');
-
+const { expo, sendNotifications } = require('../../pushNotifications/pushNotifications')
 const { getRecordByName, getRecordByID } = require('./utils');
 
 // Create user
 const createUser = async (req, res) => {
     try {
-        const { name, typeName, bio, link_facebook, link_spotify, link_instagram, photo } = req.body;
+        const { name, typeName, expoPushToken, bio, link_facebook, link_spotify, link_instagram, photo } = req.body;
         const type = await Type.findOne({
             where: {
                 typeName: typeName
@@ -26,15 +26,51 @@ const createUser = async (req, res) => {
             name,
             id_type: type.id,
             bio,
+            expoPushToken,
             link_facebook,
             link_instagram,
             link_spotify,
             photo
         });
-        res.status(201).send('success');
+        res.sendStatus(201);
     }
     catch (err) {
         console.log(err);
+        res.sendStatus(400);
+    }
+}
+
+// add push token
+const addPushToken = async (req, res) => {
+    try {
+        const { name } = req.params;
+        const { expoPushToken } = req.body;
+        console.log(expoPushToken);
+        await User.update(
+            { expoPushToken },
+            { where: { name } }
+        )
+    }
+    catch(err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+}
+
+const sendNotification = async (req, res) => {
+    try {
+        const message = {
+            to: 'ExponentPushToken[SbSTKdCGXiVYnXq8bfKdoj]',
+            sound: 'default',
+            title: 'Test title',
+            body: 'Test body',
+          };
+      
+        const receipt = await sendNotifications(message);
+        res.send(receipt);
+    }
+    catch (err) {
+        console.log("err, ", err);
         res.sendStatus(400);
     }
 }
@@ -279,13 +315,13 @@ const getBandShows = async (req, res) => {
 // allow a fan follow a band
 const followBand = async (req, res) => {
     try {
-        const sql = 'INSERT INTO fans_bands (id_band, id_fan, createdAt, updatedAt) VALUES (?, ?, ?, ?)';
+        const sql = 'INSERT INTO fans_bands (id_band, id_fan) VALUES (?, ?)';
         const { id } = req.params;
         const { id_fan } = req.body;
         await sequelize.query(sql, {
-            replacements: [id, id_fan, new Date(), new Date()]
+            replacements: [id, id_fan]
         })
-        res.send(201);
+        res.sendStatus(201);
     }
     catch (err) {
         console.log(err);
@@ -313,15 +349,15 @@ const unfollowBand = async (req, res) => {
 // TODO: refactor to use eager loading
 // Get all fans of a given band
 // TODO: fix this so it's not returning two copies of the fans
-const getBandFans = async (req, res) => {
+const getBandFollowers = async (req, res) => {
     try {
         const { id } = req.params;
         const sql = `SELECT * FROM users WHERE id IN (
                         SELECT id_fan FROM fans_bands WHERE id_band = ?)`;
-        const fans = await sequelize.query(sql, {
+        const followers = await sequelize.query(sql, {
             replacements: [id]
         })
-        res.status(200).send(fans[0]);
+        res.status(200).send(followers[0]);
     }
     catch (err) {
         console.log(err)
@@ -334,10 +370,10 @@ const getFanBands = async (req, res) => {
         const { id } = req.params;
         const sql = `SELECT * FROM users WHERE id IN (
                         SELECT id_band FROM fans_bands WHERE id_fan = ?)`;
-        const fans = await sequelize.query(sql, {
+        const bands = await sequelize.query(sql, {
             replacements: [id]
         })
-        res.status(200).send(fans[0]);
+        res.status(200).send(bands[0]);
     }
     catch (err) {
         console.log(err)
@@ -348,16 +384,18 @@ const getFanBands = async (req, res) => {
 
 module.exports = {
     addGenreToBand,
+    addPushToken,
     createUser,
     deleteUser,
     followBand,
     getAllBands,
-    getBandFans,
+    getBandFollowers,
     getBandGenres,
     getBandShows,
     getFanBands,
     getSingleUser,
     removeBandGenre,
+    sendNotification,
     unfollowBand,
     updateUserBio,
     updateBandPhoto,

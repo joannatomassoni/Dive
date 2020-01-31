@@ -22,12 +22,13 @@ export default function Venues(props) {
   useEffect(() => {
     axios.get(`${AXIOS_URL}/venues`)
       .then((response) => {
-        setVenues(response.data);
+        setVenues(() => response.data);
       })
       .catch((err) => {
         console.log("error getting venues", err);
       })
   }, [])
+
 
   return (
     <SafeAreaView style={styles.container}>

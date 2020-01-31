@@ -45,12 +45,10 @@ export default function CreateShowModal(props) {
   //sets band photo
   let [flyer, setFlyerPhoto] = useState('');
 
-
   //allows user to upload a photo
   //this gets permission from phone to access images
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
-
     if (permissionResult.granted === false) {
       alert('Permission to access camera roll is required!');
       return;
@@ -91,8 +89,6 @@ export default function CreateShowModal(props) {
     }).catch(err => console.log(err))
   };
 
-  // console.log("flyer has been set to state", flyer);
-
   return (
     <View>
       <Modal
@@ -118,6 +114,7 @@ export default function CreateShowModal(props) {
                 placeholder="Show Title"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
+                color='black'
                 onChangeText={setShowTitle}
                 style={styles.input}
               />
@@ -126,6 +123,7 @@ export default function CreateShowModal(props) {
                 placeholder="Show Description"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="send"
+                color='black'
                 onChangeText={setShowDesc}
                 style={styles.input}
               />
@@ -135,6 +133,7 @@ export default function CreateShowModal(props) {
                   placeholder="Add Band"
                   placeholderTextColor="#75A4AD"
                   returnKeyType="next"
+                  color='black'
                   onChangeText={setBandName}
                   style={styles.bandInput}
                 />
@@ -153,15 +152,6 @@ export default function CreateShowModal(props) {
               <VenuePicker setVenueName={setVenueName} allVenues={allVenues} />
               {/* date time picker */}
               <DateTimePicker setDateTime={setDateTime} />
-              {/* Description input */}
-              <TextInput
-                placeholder="Show Description"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="send"
-                onChangeText={setShowDesc}
-                style={styles.input}
-              />
-
               {/*  button to upload photo */}
               <View style={styles.button} >
                 <TouchableOpacity
@@ -170,7 +160,6 @@ export default function CreateShowModal(props) {
                 >
                   <Text style={styles.buttonText}>Upload Show Flyer</Text>
                 </TouchableOpacity>
-
                 {/* {image.uri && */}
                 {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
               </View>
