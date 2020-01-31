@@ -20,17 +20,20 @@ export default function Shows(props) {
   const [shows, setShows] = useState([]);
   // const [flyer, setFlyer] = useState("");
 
-  useEffect(() => {
+  //request to get all shows
+  const getAllShows = () => {
     axios.get(`${AXIOS_URL}/shows`)
       .then((response) => {
         setShows(() => response.data);
-
       })
       .catch((err) => {
         console.log(err);
       })
-  }, [])
+  }
 
+  useEffect(() => {
+    getAllShows();
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,7 +59,8 @@ export default function Shows(props) {
                 )
               })}
               <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
-              <SingleShowModal show={show.id} />
+              {/* modal to display single show info */}
+              <SingleShowModal show={show.id} showName={show.name}/>
               <Text>
                 
                 {show.flyer &&
@@ -73,6 +77,7 @@ export default function Shows(props) {
     </SafeAreaView >
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

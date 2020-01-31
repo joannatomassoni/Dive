@@ -29,6 +29,7 @@ export default function Venues(props) {
       })
   }, [])
 
+
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />

@@ -114,6 +114,7 @@ export default function CreateShowModal(props) {
                 placeholder="Show Title"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
+                color='black'
                 onChangeText={setShowTitle}
                 style={styles.input}
               />
@@ -122,6 +123,7 @@ export default function CreateShowModal(props) {
                 placeholder="Show Description"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="send"
+                color='black'
                 onChangeText={setShowDesc}
                 style={styles.input}
               />
@@ -131,6 +133,7 @@ export default function CreateShowModal(props) {
                   placeholder="Add Band"
                   placeholderTextColor="#75A4AD"
                   returnKeyType="next"
+                  color='black'
                   onChangeText={setBandName}
                   style={styles.bandInput}
                 />
