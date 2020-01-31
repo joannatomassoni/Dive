@@ -20,7 +20,8 @@ export default function Shows(props) {
   const [shows, setShows] = useState([]);
   // const [flyer, setFlyer] = useState("");
 
-  useEffect(() => {
+  //request to get all shows
+  const getAllShows = () => {
     axios.get(`${AXIOS_URL}/shows`)
       .then((response) => {
         setShows(() => response.data);
@@ -28,6 +29,10 @@ export default function Shows(props) {
       .catch((err) => {
         console.log(err);
       })
+  }
+
+  useEffect(() => {
+    getAllShows();
   }, [])
 
   return (
