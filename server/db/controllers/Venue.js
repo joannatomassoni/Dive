@@ -63,11 +63,10 @@ const getSingleVenue = async (req, res) => {
 // Allow user to follow a venue
 const addFanToVenue = async (req, res) => {
     const { id } = req.params;
-    const { fanName } = req.body;
-    const fan = await getRecordByName('fan', fanName);
+    const { id_fan } = req.body;
     try {
         FanVenue.create({
-            id_fan: fan.id,
+            id_fan,
             id_venue: id
         })
     res.sendStatus(201);
