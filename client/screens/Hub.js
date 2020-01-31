@@ -30,6 +30,8 @@ export default function Hub(props) {
   const [shows, setShows] = useState([]);
   let [dbPhoto, setDbPhoto] = useState('');
 
+  
+
 
   //load all user info when brought to hub
   useEffect(() => {

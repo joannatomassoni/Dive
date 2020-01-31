@@ -31,6 +31,8 @@ export default function Shows(props) {
       })
   }, [])
 
+  
+
 
   return (
     <SafeAreaView style={styles.container}>

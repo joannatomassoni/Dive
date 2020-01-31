@@ -43,6 +43,7 @@ export default function CreateCommentModal({ showId, userId }) {
                 placeholder="Comment"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
+                color='black'
                 onChangeText={setComment}
                 style={styles.input}
               />
