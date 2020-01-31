@@ -13,7 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { AXIOS_URL } from 'react-native-dotenv';
 
 
-export default function CreateCommentModal({ showId, userId }) {
+export default function CreateCommentModal({ showId, userId, getShowComments }) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //comment text
@@ -52,6 +52,7 @@ export default function CreateCommentModal({ showId, userId }) {
                 style={styles.loginContainer}
                 onPress={() => {
                   setModalVisible(false);
+                  getShowComments();
                 }}
               >
                 <Text style={styles.buttonText}>Post Comment</Text>
