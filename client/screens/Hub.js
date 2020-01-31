@@ -78,7 +78,7 @@ export default function Hub(props) {
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
-        <Text style={styles.text}>Band Hub</Text>
+        <Text style={styles.text}>Hub</Text>
         <View style={styles.container}>
           {/* image container */}
           {/* <Text>
@@ -136,34 +136,36 @@ export default function Hub(props) {
             style={styles.thumbnail}
           />
         </View> */}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={getPreviousShows}
-        >
-          <Text>Get old shows</Text>
-        </TouchableOpacity>
+        <View>
+          {/* {userInfo.userType === 'fan' ?  : null} */}
+          <TouchableOpacity
+            style={styles.button}
+            onPress={getPreviousShows}
+          >
+            <Text>Get old shows</Text>
+          </TouchableOpacity>
 
-        {
-          oldShows.map(show => {
-            return (
-              <Card
-                title={show.name}
-                style={styles.card}
-                backgroundColor='#fff'
-                borderWidth={0}
-                borderRadius={10}
-                padding={10}
-              // image={require('../images/pic2.jpg')}
-              >
-                <Text style={{ marginBottom: 10 }}>{show.time}</Text>
-                <Text style={{ marginBottom: 10 }}>{show.date}</Text>
-                <Text style={{ marginBottom: 10 }}>{show.description}</Text>
-                <EditShowModal />
-              </Card>
-            )
-          })
-        }
-
+          {
+            oldShows.map(show => {
+              return (
+                <Card
+                  title={show.name}
+                  style={styles.card}
+                  backgroundColor='#fff'
+                  borderWidth={0}
+                  borderRadius={10}
+                  padding={10}
+                // image={require('../images/pic2.jpg')}
+                >
+                  <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+                  <Text style={{ marginBottom: 10 }}>{show.date}</Text>
+                  <Text style={{ marginBottom: 10 }}>{show.description}</Text>
+                  <EditShowModal />
+                </Card>
+              )
+            })
+          }
+        </View>
       </ScrollView>
     </SafeAreaView>
   )
