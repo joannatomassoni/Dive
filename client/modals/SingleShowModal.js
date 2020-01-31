@@ -152,10 +152,13 @@ export default function SingleShowModal(props) {
             {/* header */}
             <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
             {/* tag for show flyer modal */}
-            {/* <Image
-              style={{ width: 420, height: 200 }}
-              source={{ uri: singleShow.flyer }}
-            /> */}
+            {singleShow.flyer ?
+              <Image
+                style={{ width: 400, height: 400, marginLeft: 5 }}
+                source={{ uri: singleShow.flyer }}
+              />
+            : null}
+            
             {/* additional text */}
             <Text style={styles.infoText}>{singleShow.date}</Text>
             <Text style={styles.infoText}>{singleShow.time}</Text>
