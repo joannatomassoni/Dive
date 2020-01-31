@@ -8,7 +8,6 @@ import {
 import LoginForm from '../components/LoginForm'
 import MenuButton from '../components/MenuButton'
 import { SignedInContext } from '../context/UserContext'
-import { AXIOS_URL } from 'react-native-dotenv'
 
 export default function Login (props) {
   //global user signin info and editing function

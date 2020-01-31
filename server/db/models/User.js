@@ -28,6 +28,10 @@ module.exports = (sequelize, type) => {
         bandPhoto: {
             type: type.STRING,
             allowNull: true
+        },
+        expoPushToken: {
+            type: type.STRING,
+            allowNull: true
         }
     })
 }
