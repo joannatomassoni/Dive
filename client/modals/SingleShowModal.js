@@ -245,7 +245,7 @@ export default function SingleShowModal(props) {
           getRsvpInfo();
         }}
       >
-        <Text>Show More</Text>
+        <Text>{props.showName}</Text>
       </TouchableOpacity>
     </View>
   );

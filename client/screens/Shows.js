@@ -60,7 +60,7 @@ export default function Shows(props) {
               })}
               <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
               {/* modal to display single show info */}
-              <SingleShowModal show={show.id} />
+              <SingleShowModal show={show.id} showName={show.name}/>
               <Text>
                 
                 {show.flyer &&
