@@ -42,11 +42,6 @@ export default function SingleShowModal(props) {
   //info required for axios calls
   let show = props.show;
 
-  //console.log(startTime)
-  //console.log(singleShow.dateTime)
-  
-  
-
   useEffect(() => {
     //request to get all additional bands for specific show
     axios.get(`${AXIOS_URL}/shows/${show}`)
