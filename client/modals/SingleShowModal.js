@@ -74,8 +74,6 @@ export default function SingleShowModal(props) {
     })();
   }, [])
 
-  console.log(startTime)
-
   // event details for calendar integration
   const details = {
     title: singleShow.name,
