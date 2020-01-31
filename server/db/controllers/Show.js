@@ -58,7 +58,7 @@ const createShow = async (req, res) => {
             })
             // Construct title and body to send in push notification message to each group of followers for each band
             const title = `New show from ${band.name}!`;
-            const body = 'Swipe for more';
+            const body = 'Open Dive for more info.';
             await sendNotifications(bandTokens, title, body);
         })
 
@@ -77,7 +77,7 @@ const createShow = async (req, res) => {
             venueTokens.push(follower.expoPushToken)
         })
         const title = `New show at ${venue.name}!`;
-        const body = 'Swipe for more.';
+        const body = 'Open Dive for more info.';
         await sendNotifications(venueTokens, title, body);
 
 

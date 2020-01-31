@@ -319,7 +319,7 @@ const followBand = async (req, res) => {
         const { id } = req.params;
         const { id_fan } = req.body;
         await sequelize.query(sql, {
-            replacements: [id, id_fan, new Date(), new Date()]
+            replacements: [id, id_fan]
         })
         res.sendStatus(201);
     }
