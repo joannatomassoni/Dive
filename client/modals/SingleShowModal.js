@@ -16,10 +16,13 @@ import CreateCommentModal from './CreateCommentModal';
 import Moment from 'moment';
 import axios from 'axios';
 import { AXIOS_URL } from 'react-native-dotenv';
-import * as AddCalendarEvent from 'react-native-add-calendar-event';
 import * as Calendar from 'expo-calendar';
 
 export default function SingleShowModal(props) {
+  Date.prototype.addHours = function (h) {
+    this.setHours(this.getHours() + h);
+    return this;
+  }
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state for modal visibility
@@ -32,8 +35,17 @@ export default function SingleShowModal(props) {
   const [comments, setComments] = useState([]);
   //user's rsvp status
   const [rsvp, setRsvp] = useState(false);
+  //start time for adding to calendar
+  const [startTime, setStartTime] = useState('');
+  //end time for adding to calendar
+  const [endTime, setEndTime] = useState('');
   //info required for axios calls
   let show = props.show;
+
+  //console.log(startTime)
+  //console.log(singleShow.dateTime)
+  
+  
 
   useEffect(() => {
     //request to get all additional bands for specific show
@@ -57,13 +69,13 @@ export default function SingleShowModal(props) {
       const { status } = await Calendar.requestCalendarPermissionsAsync();
       if (status === 'granted') {
         const calendars = await Calendar.getCalendarsAsync();
-        console.log(singleShow);
-        console.log({ calendars });
+        //console.log({ calendars });
       }
     })();
   }, [])
 
-  console.log(singleShow.dateTime);
+  console.log(startTime)
+
   // event details for calendar integration
   const details = {
     title: singleShow.name,
@@ -76,7 +88,6 @@ export default function SingleShowModal(props) {
       titleColor: 'blue',
     },
   };
-
 
   return (
     <View>
@@ -112,9 +123,7 @@ export default function SingleShowModal(props) {
             {bands.map(band => {
               return <Text style={styles.infoText}>{band.name}</Text>
             })}
-
-
-            {/* calendar test button */}
+            {/* add to calendar button */}
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={ async () => {
@@ -130,9 +139,6 @@ export default function SingleShowModal(props) {
             >
               <Text style={styles.signupButtonText}>Add To Calendar</Text>
             </TouchableOpacity>
-
-
-
             {/* button to rsvp to specific (shows when signed in) */}
             {userInfo.signedIn ?
               //if already rsvp'd, show button to cancel rvp
@@ -161,6 +167,16 @@ export default function SingleShowModal(props) {
                     })
                       .then(response => setRsvp(true))
                       .catch(error => console.log('failed to rsvp', error));
+                    async () => {
+                      try {
+                        console.log('Adding Event');
+                        const eventId = await Calendar.createEventAsync("D5A65218-29C5-466C-A2CE-D54DF9D4260A", details);
+                        console.log("Event Id", id);
+                      }
+                      catch (error) {
+                        console.log('Error', error);
+                      }
+                    };
                   }}
                 >
                   <Text style={styles.signupButtonText}>RSVP</Text>
@@ -195,6 +211,8 @@ export default function SingleShowModal(props) {
           axios.get(`${AXIOS_URL}/shows/${show}`)
             .then((response) => {
               setSingleShow(response.data);
+              setStartTime(response.data.dateTime);
+              setEndTime(Moment(response.data.dateTime).add(2, 'hours'));
             })
             .catch((err) => {
               console.log("error getting single show info", err);
