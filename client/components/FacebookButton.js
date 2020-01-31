@@ -9,7 +9,7 @@ export default function FacebookButton ({ link }) {
       color='#59C3D1'
       size={32}
       onPress={() => {
-        Linking.openURL(`http://${link}`);
+        Linking.openURL(`${link}`);
       }}
     />
   )
