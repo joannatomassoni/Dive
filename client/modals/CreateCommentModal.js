@@ -116,8 +116,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    marginBottom: 10,
+    width: 140,
+    marginHorizontal: 7,
+    alignSelf: 'center'
   },
   modal: {
     marginLeft: 120
