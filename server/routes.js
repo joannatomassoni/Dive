@@ -27,6 +27,11 @@ const ctrl = require('./db/controllers/index')
 // creates fans and bands
 router.post('/users', ctrl.createUser);
 
+router.post('/users/push', ctrl.sendNotification)
+
+// add push token to user record
+router.patch('/users/:name/push', ctrl.addPushToken)
+
 // Used for user login and getting a single band
 router.get('/users/:name', ctrl.getSingleUser)
 
@@ -77,7 +82,7 @@ router.post('/bands/:id/fans/', ctrl.followBand)
 router.delete('/bands/:id/fans', ctrl.unfollowBand)
 
 // get all fans of a given band. 
-router.get('/bands/:id/fans', ctrl.getBandFans);
+router.get('/bands/:id/fans', ctrl.getBandFollowers);
 
 // get all bands that a given fan is following
 router.get('/fans/:id/bands', ctrl.getFanBands);

@@ -46,6 +46,7 @@ export default function CreateShowModal(props) {
   let [flyer, setFlyerPhoto] = useState('');
 
   //allows user to upload a photo
+  //this gets permission from phone to access images
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
     if (permissionResult.granted === false) {
@@ -53,6 +54,7 @@ export default function CreateShowModal(props) {
       return;
     }
 
+    //this gets image from phone
     let pickerResult = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
@@ -63,8 +65,8 @@ export default function CreateShowModal(props) {
       return;
     }
 
+    //this sets "selectedImage" in state
     setSelectedImage({ localUri: pickerResult.uri });
-
     let base64Img = `data:image/jpg;base64,${pickerResult.base64}`;
 
     let data = {
@@ -85,7 +87,7 @@ export default function CreateShowModal(props) {
       setFlyerPhoto(data.url);
       console.log("data from cloudinary", data.url);
     }).catch(err => console.log(err))
-  }
+  };
 
   return (
     <View>
@@ -124,15 +126,15 @@ export default function CreateShowModal(props) {
                 style={styles.input}
               />
               <View style={styles.linkRow}>
-              {/* Bands input */}
-              <TextInput
-                placeholder="Add Band"
-                placeholderTextColor="#75A4AD"
-                returnKeyType="next"
-                onChangeText={setBandName}
-                style={styles.bandInput}
-              />
-              {/* add band button */}
+                {/* Bands input */}
+                <TextInput
+                  placeholder="Add Band"
+                  placeholderTextColor="#75A4AD"
+                  returnKeyType="next"
+                  onChangeText={setBandName}
+                  style={styles.bandInput}
+                />
+                {/* add band button */}
                 <Ionicons
                   name='md-add-circle-outline'
                   color='#59C3D1'
@@ -144,7 +146,7 @@ export default function CreateShowModal(props) {
                 />
               </View>
               {/* dropdown to select venue */}
-              <VenuePicker setVenueName={setVenueName} allVenues={allVenues}/>
+              <VenuePicker setVenueName={setVenueName} allVenues={allVenues} />
               {/* date time picker */}
               <DateTimePicker setDateTime={setDateTime} />
               {/*  button to upload photo */}
@@ -178,9 +180,9 @@ export default function CreateShowModal(props) {
                     bandNames: bandNames,
                     description: showDesc
                   })
-                  .then(response => response)
-                  .catch(error => console.log('failed to create show', error));
-              }}
+                    .then(response => response)
+                    .catch(error => console.log('failed to create show', error));
+                }}
               >
                 <Text style={styles.buttonText}>Create Show</Text>
               </TouchableOpacity>
@@ -191,16 +193,16 @@ export default function CreateShowModal(props) {
       {/* create show button when modal is hidden */}
       <TouchableOpacity
         style={styles.createShowContainer}
-        onPress={() => { 
+        onPress={() => {
           setModalVisible(true);
           //request to get all venues for venue selector
           axios.get(`${AXIOS_URL}/venues`)
-          .then(response => response.data.map(venue => {
-            if (!venues.includes(venue.name)) {
-              venues.push(venue.name);
-            }
-          }))
-          .catch(error => console.log('failed to get all venues', error));
+            .then(response => response.data.map(venue => {
+              if (!venues.includes(venue.name)) {
+                venues.push(venue.name);
+              }
+            }))
+            .catch(error => console.log('failed to get all venues', error));
           venues.push('Cancel');
           setAllVenues(venues);
         }}

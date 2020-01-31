@@ -14,6 +14,8 @@ import RadioForm from 'react-native-simple-radio-button';
 import { Ionicons } from '@expo/vector-icons';
 import * as Google from "expo-google-app-auth";
 import { IOS_AUTH_KEY, ANDROID_AUTH_KEY, AXIOS_URL } from 'react-native-dotenv';
+import registerforPushNotificationsAsync from '../expoPushFunctions/registerForPushNotificationsAsync';
+
 console.log(AXIOS_URL);
 
 export default function ModalExample(props) {
@@ -47,15 +49,23 @@ export default function ModalExample(props) {
             ...userInfo,
             signedIn: true,
             name: user.name,
-            photoUrl: user.photoUrl
+            photoUrl: user.photoUrl,
           }))
-      }
+        }
       axios.post(`${AXIOS_URL}/users`, {
         name: user.email,
         typeName: userType,
-        photo: user.photoUrl
+        photo: user.photoUrl,
       })
-      .then(response => response)
+      .then(async () => {
+        const expoPushToken = await registerforPushNotificationsAsync();
+        return expoPushToken
+      })
+      .then((expoPushToken) => {
+        axios.patch(`${AXIOS_URL}/users/${user.email}/push`, {
+          expoPushToken
+        })
+      })
       .catch(error => console.log('failed to create user', error));
     } catch(error){console.log(error)}
   }
