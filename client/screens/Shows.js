@@ -23,7 +23,7 @@ export default function Shows(props) {
   useEffect(() => {
     axios.get(`${AXIOS_URL}/shows`)
       .then((response) => {
-        setShows(response.data);
+        setShows(() => response.data);
 
       })
       .catch((err) => {

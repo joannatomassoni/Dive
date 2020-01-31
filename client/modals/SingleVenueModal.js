@@ -36,14 +36,14 @@ export default function SingleVenueModal(props) {
     //request to get all shows at specific venue
     axios.get(`${AXIOS_URL}/venues/${venue}`)
       .then((response) => {
-        setShows(response.data.shows);
+        setShows(() => response.data.shows);
       })
       .catch((err) => {
       });
     //request to get all bands from each specific show
     axios.get(`${AXIOS_URL}/shows/${venue}`)
       .then((response) => {
-        setBands(response.data.bands);
+        setBands(() => response.data.bands);
       })
       .catch((err) => {
         console.log("error getting bands for single show", err);

@@ -35,8 +35,8 @@ export default function SingleBandModal(props) {
     axios.get(`${AXIOS_URL}/bands/${bandId}/shows`)
       .then((response) => {
         // console.log("getting a bands shows from db", response.data)
-        setBand(response.data);
-        setShows(response.data.shows);
+        setBand(() => response.data);
+        setShows(() => response.data.shows);
       })
       .then(() => {
         // axios request to see if user is following band

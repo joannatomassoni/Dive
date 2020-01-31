@@ -25,7 +25,7 @@ export default function Bands(props) {
   useEffect(() => {
     axios.get(`${AXIOS_URL}/bands`)
       .then((response) => {
-        setBands(response.data);
+        setBands(() => response.data);
       })
       .catch(err => console.log(err))
   }, [])
