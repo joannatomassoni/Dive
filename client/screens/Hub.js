@@ -141,12 +141,11 @@ export default function Hub(props) {
         <View>
           {userInfo.userType === 'fan' ?
             <View>
-              {/* {userInfo.userType === 'fan' ?  : null} */}
               < TouchableOpacity
                 style={styles.prevButton}
                 onPress={getPreviousShows}
               >
-                <Text style={styles.buttText} >Get old shows</Text>
+                <Text style={styles.buttonText} >Get old shows</Text>
               </TouchableOpacity>
 
               {
@@ -210,9 +209,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
-    marginBottom: 10,
-    width: 140,
-    marginHorizontal: 7
+    marginHorizontal: 90,
+    marginBottom: 10
   },
   flexRowRight: {
     flexDirection: 'row',
