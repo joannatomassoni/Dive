@@ -40,7 +40,7 @@ export default function Bands(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.headerText}>Bands</Text>
-        {bands.map(band => {
+        {bands && bands.map(band => {
           return (
             <Card
               style={styles.card}
