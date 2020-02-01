@@ -48,7 +48,7 @@ export default function EditShowModal(props) {
         {/* start of modal when showing */}
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
           {/* back button */}
-          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
+          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
             <Ionicons
               name='ios-arrow-back'
               color='#59C3D1'
@@ -117,7 +117,7 @@ export default function EditShowModal(props) {
                     .catch(error => console.log('failed to create show', error));
                 }}
               >
-                <Text style={styles.buttonText}>Create Show</Text>
+                <Text style={styles.buttonText}>Edit Show</Text>
               </TouchableOpacity>
             </ScrollView>
           </View>
