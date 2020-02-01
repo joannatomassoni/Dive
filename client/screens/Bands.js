@@ -57,11 +57,11 @@ export default function Bands(props) {
                 </View>
                 <View>
                   <Text>
-                  {band.bandPhoto &&
-                    <Image
-                      style={styles.photo}
-                      source={{ uri: band.bandPhoto }}
-                    />
+                    {band.bandPhoto &&
+                      <Image
+                        style={styles.photo}
+                        source={{ uri: band.bandPhoto }}
+                      />
                     }
                   </Text>
                 </View>
