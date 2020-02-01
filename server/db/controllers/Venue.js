@@ -77,6 +77,25 @@ const addFanToVenue = async (req, res) => {
     }
 } 
 
+// allow user to unfollow venue
+const unfollowVenue = async (req, res) => {
+    const { id } = req.params;
+    const { id_fan } = req.body;
+    try {
+        FanVenue.destroy({
+            where: {
+                id_fan,
+                id_venue: id
+            }
+        })
+    res.sendStatus(200);
+    }
+    catch(err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+}
+
 // get venues that a fan follows
 const getFanVenues = async (req, res) => {
     try {
@@ -166,5 +185,6 @@ module.exports = {
     getFanVenues, 
     getSingleVenue,
     getVenueFans,
-    removeVenue
+    removeVenue,
+    unfollowVenue
 }

@@ -35,6 +35,7 @@ const {
     getSingleVenue,
     getVenueFans,
     removeVenue, 
+    unfollowVenue
 } = require('./Venue');
 const {
     createShow,
@@ -79,6 +80,7 @@ module.exports = {
     rsvpFanToShow,
     sendNotification,
     unfollowBand,
+    unfollowVenue,
     updateUserBio,
     updateBandPhoto,
     updateBandFB,

@@ -103,8 +103,13 @@ router.get('/venues', ctrl.getAllVenues);
 router.delete('/venues/:id', ctrl.removeVenue);
 
 // add fan to venue
-// req.body = { fanName }
+// req.body = { id_fan }
 router.post('/venues/:id/fans', ctrl.addFanToVenue);
+
+// unfollow a venue
+// req.body = { id_fan }
+router.delete('/venues/:id/fans', ctrl.unfollowVenue);
+
 
 // get all venues that a fan follows
 router.get('/fans/:id/venues', ctrl.getFanVenues)
