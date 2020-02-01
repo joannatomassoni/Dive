@@ -104,7 +104,7 @@ export default function Hub(props) {
         }}>
           {/* Button to open create show modal */}
           <EditBandBioModal />
-          <EditShowModal />
+
           {/* Button to open create show modal */}
           {userInfo.userType === 'band' ? <CreateShowModal /> : null}
         </View>
