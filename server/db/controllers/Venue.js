@@ -1,6 +1,9 @@
 // Requiring the models we need for our queries
-const { Venue, Show, User, FanVenue, sequelize } = require('../sequelize');
+const { Venue, Show, User, FanVenue, sequelize, Sequelize } = require('../sequelize');
 const { getRecordByName, getRecordByID } = require('./utils');
+
+// import the Sequelize operators
+const Op = Sequelize.Op;
 
 // Create venue
 // should we include photos?
@@ -178,6 +181,26 @@ const removeVenue = async (req, res) => {
     }
 }
 
+const searchVenues = async (req, res) => {
+    try {
+        const { query } = req.params;
+        const venues = await Venue.findAll({
+                where: {
+                    [Op.or]: [
+                        { name: { [Op.like]: `%${query}%`} }, 
+                        { address: { [Op.like]: `%${query}%` } },
+                        { city: { [Op.like]: `%${query}%` } }
+                    ]
+                }
+            })
+        res.send(venues);
+    }
+    catch (err) {
+        console.log(err);
+        res.sendStatus(404)
+    }
+}
+
 module.exports = {
     addFanToVenue,
     createVenue, 
@@ -186,5 +209,6 @@ module.exports = {
     getSingleVenue,
     getVenueFans,
     removeVenue,
+    searchVenues,
     unfollowVenue
 }
