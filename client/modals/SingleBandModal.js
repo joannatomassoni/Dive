@@ -137,12 +137,11 @@ export default function SingleBandModal(props) {
                     borderRadius={10}
                     containerStyle={styles.card}
                   >
-                    <Text style={styles.cardHeaderText}>{show.name}</Text>
+                    <SingleShowModal show={show.id} showName={show.name}/>
                     <Text style={styles.cardText}>{show.date}</Text>
                     <Text style={styles.cardText}>{show.time}</Text>
                     <Text style={styles.cardText}>{show.venue.name}</Text>
                     <Text style={styles.cardText}>{show.description}</Text>
-                    <SingleShowModal show={show.id} />
                   </Card>
                 </View>
               )
