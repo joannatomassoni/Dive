@@ -5,7 +5,6 @@ const { Show, RSVP, User, ShowBand, Venue, Comment, Sequelize, sequelize } = req
 const { getRecordByName, getRecordByID } = require('./utils');
 const { sendNotifications } = require('../../pushNotifications/pushNotifications')
 
-
 // import the Sequelize operators
 const Op = Sequelize.Op;
 
@@ -284,17 +283,34 @@ const getShowRSVPs = async (req, res) => {
     }
 }
 
+const searchShows = async (req, res) => {
+    try {
+        const { query } = req.params;
+        const shows = await Show.findAll({
+                where: {
+                    name: { [Op.like]: `%${query}%`}, 
+                }
+            })
+        res.send(shows);
+    }
+    catch (err) {
+        console.log(err);
+        res.sendStatus(404)
+    }
+}
+
 
 module.exports = {
     createShow,
     deleteShow,
     getAllUpcomingShows,
     getFanRSVPs,
+    getPreviousShows,
     getSingleShow,
     getShowRSVPs,
     removeFanRSVP,
     rsvpFanToShow,
+    searchShows,
     updateShow,
-    getPreviousShows,
 }
 

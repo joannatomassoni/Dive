@@ -8,10 +8,13 @@ const {
     Type,
     User,
     Venue,
-    sequelize
+    sequelize,
+    Sequelize
 } = require('../sequelize');
-const { expo, sendNotifications } = require('../../pushNotifications/pushNotifications')
 const { getRecordByName, getRecordByID } = require('./utils');
+
+// import the Sequelize operators
+const Op = Sequelize.Op;
 
 // Create user
 const createUser = async (req, res) => {
@@ -57,23 +60,23 @@ const addPushToken = async (req, res) => {
     }
 }
 
-const sendNotification = async (req, res) => {
-    try {
-        const message = {
-            to: 'ExponentPushToken[SbSTKdCGXiVYnXq8bfKdoj]',
-            sound: 'default',
-            title: 'Test title',
-            body: 'Test body',
-          };
+// const sendNotification = async (req, res) => {
+//     try {
+//         const message = {
+//             to: 'ExponentPushToken[SbSTKdCGXiVYnXq8bfKdoj]',
+//             sound: 'default',
+//             title: 'Test title',
+//             body: 'Test body',
+//           };
       
-        const receipt = await sendNotifications(message);
-        res.send(receipt);
-    }
-    catch (err) {
-        console.log("err, ", err);
-        res.sendStatus(400);
-    }
-}
+//         const receipt = await sendNotifications(message);
+//         res.send(receipt);
+//     }
+//     catch (err) {
+//         console.log("err, ", err);
+//         res.sendStatus(400);
+//     }
+// }
 
 // Get single user
 const getSingleUser = async (req, res) => {
@@ -381,6 +384,25 @@ const getFanBands = async (req, res) => {
     }
 }
 
+// search function
+const searchBands = async (req, res) => {
+    try {
+        const { query } = req.params;
+        const bands = await User.findAll({
+                where: {
+                    [Op.and]: [
+                        { name: { [Op.like]: `%${query}%`} }, 
+                        { id_type: 2 }
+                    ]
+                }
+            })
+        res.send(bands);
+    }
+    catch (err) {
+        console.log(err);
+        res.sendStatus(404)
+    }
+}
 
 module.exports = {
     addGenreToBand,
@@ -395,7 +417,8 @@ module.exports = {
     getFanBands,
     getSingleUser,
     removeBandGenre,
-    sendNotification,
+    searchBands,
+    // sendNotification,
     unfollowBand,
     updateUserBio,
     updateBandPhoto,
