@@ -29,8 +29,9 @@ export default function Hub(props) {
   //hub info to display
   const [hubInfo, setHubInfo] = useState({});
   const [shows, setShows] = useState([]);
-  let [dbPhoto, setDbPhoto] = useState('');
+  const [dbPhoto, setDbPhoto] = useState('');
   const [oldShows, setOldShows] = useState([]);
+  const [fanShows, setFanShows] = useState([]);
 
   //load all user info when brought to hub
   useEffect(() => {
@@ -59,6 +60,15 @@ export default function Hub(props) {
       .catch((err) => {
         console.log("front end not getting band photo from db", err);
       })
+    axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
+      .then((response) => {
+        console.log("getting a fans shows  in hub from db", response.data)
+        setFanShows(() => response.data);
+      })
+      .catch((err) => {
+        console.log("front end not getting fans shows from db", err);
+      })
+
   }, [])
 
   const getPreviousShows = () => {
@@ -104,31 +114,33 @@ export default function Hub(props) {
         }}>
           {/* Button to open create show modal */}
           <EditBandBioModal />
-          <EditShowModal />
+
           {/* Button to open create show modal */}
           {userInfo.userType === 'band' ? <CreateShowModal /> : null}
         </View>
 
-        {/* Cards for all upcoming shows */}
-        {shows &&
-          shows.map(show => {
-            return (
-              <Card
-                title={show.name}
-                style={styles.card}
-                backgroundColor='#fff'
-                borderWidth={0}
-                borderRadius={10}
-                padding={10}
-              // image={require('../images/pic2.jpg')}
-              >
-                <Text style={{ marginBottom: 10 }}>{show.time}</Text>
-                <Text style={{ marginBottom: 10 }}>{show.description}</Text>
-                <EditShowModal />
-              </Card>
-            )
-          })
-        }
+        {/* Cards for all a bands upcoming shows */}
+        <View>
+          {userInfo.userType === 'band' ?
+            shows.map(show => {
+              return (
+                <Card
+                  title={show.name}
+                  style={styles.card}
+                  backgroundColor='#fff'
+                  borderWidth={0}
+                  borderRadius={10}
+                  padding={10}
+                // image={require('../images/pic2.jpg')}
+                >
+                  <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+                  <Text style={{ marginBottom: 10 }}>{show.description}</Text>
+                  <EditShowModal />
+                </Card>
+              )
+            })
+            : null}
+        </View>
         {/* <View style={styles.container}>
           <Image
             source={dbPhoto}
@@ -136,17 +148,38 @@ export default function Hub(props) {
           />
         </View> */}
 
+        {/* Cards for all a bands upcoming shows */}
+        <View>
+          {userInfo.userType === 'fan' ?
+            fanShows.map(show => {
+              return (
+                <Card
+                  title={show.name}
+                  style={styles.card}
+                  backgroundColor='#fff'
+                  borderWidth={0}
+                  borderRadius={10}
+                  padding={10}
+                // image={require('../images/pic2.jpg')}
+                >
+                  <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+                  <Text style={{ marginBottom: 10 }}>{show.description}</Text>
+
+                </Card>
+              )
+            })
+            : null}
+        </View>
 
 
         <View>
           {userInfo.userType === 'fan' ?
             <View>
-              {/* {userInfo.userType === 'fan' ?  : null} */}
               < TouchableOpacity
                 style={styles.prevButton}
                 onPress={getPreviousShows}
               >
-                <Text style={styles.buttText} >Get old shows</Text>
+                <Text style={styles.buttonText} >Get old shows</Text>
               </TouchableOpacity>
 
               {
@@ -210,9 +243,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
-    marginBottom: 10,
-    width: 140,
-    marginHorizontal: 7
+    marginHorizontal: 90,
+    marginBottom: 10
   },
   flexRowRight: {
     flexDirection: 'row',

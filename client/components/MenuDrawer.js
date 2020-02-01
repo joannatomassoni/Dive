@@ -105,7 +105,7 @@ export default function MenuDrawer(props) {
               {navLink('Search', 'Search')}
             </View>
             <View style={{marginBottom:20}}></View>
-            <Divider style={{ backgroundColor: '#fff', height: 2 }} />
+            <Divider style={{ backgroundColor: '#fff', height: 2, marginTop: 325 }} />
             {/* logout button when user is signed in */}
             <View style={{ flexDirection: 'row' }}>
               <AntDesign

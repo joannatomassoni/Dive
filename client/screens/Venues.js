@@ -40,17 +40,15 @@ export default function Venues(props) {
         {venues.reverse().map(venue => {
           return (
             <Card
-              title={venue.name}
-              style={styles.card}
               key={venue.id}
-              backgroundColor='#fff'
-              borderWidth={0}
-              borderRadius={10}
+              backgroundColor='#111'
               padding={10}
+              borderRadius={10}
+              containerStyle={styles.card}
             >
-              <Text style={{color: '#000' }}>{venue.address}</Text>
-              <Text style={{color: '#000' }}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
-              <SingleVenueModal venueID={venue.id} />
+              <SingleVenueModal venueID={venue.id} venueName={venue.name}/>
+              <Text style={styles.cardText}>{venue.address}</Text>
+              <Text style={styles.cardText}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
             </Card>
           )
         })}
@@ -74,8 +72,10 @@ const styles = StyleSheet.create({
     paddingRight: 20
   },
   card: {
-    backgroundColor: '#75A4AD',
-    borderRadius: 10
+    borderWidth: 0,
+    paddingBottom: 0,
+    backgroundColor: '#111',
+    paddingBottom: 10 
   },
   button: {
     borderRadius: 5,
@@ -83,9 +83,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#59C3D1',
   },
   cardText: {
-    fontSize: 20,
+    fontSize: 16,
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
     textAlign: 'left',
     paddingRight: 20
