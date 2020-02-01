@@ -59,8 +59,6 @@ export default function SingleShowModal(props) {
     axios.get(`${AXIOS_URL}/shows/${show}`)
       .then((response) => {
         setSingleShow(response.data);
-        setStartTime(response.data.dateTime);
-        setEndTime(Moment(response.data.dateTime).add(2, 'hours'));
       })
       .catch((err) => {
         console.log("error getting single show info", err);
@@ -151,9 +149,8 @@ export default function SingleShowModal(props) {
           </Ionicons>
 
           <ScrollView style={{ marginTop: 30 }}>
-            {/* header */}
             <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
-            {/* tag for show flyer modal */}
+            {/* show flyer */}
             {singleShow.flyer ?
               <Image
                 style={{ width: 400, height: 400, marginLeft: 5 }}
@@ -264,7 +261,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerText: {
-    fontSize: 50,
+    fontSize: 45,
     color: '#59C3D1',
     fontWeight: 'bold',
     textAlign: 'right',

@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 50,
-    color: '#59C3D1',
+    color: '#3BAFBF',
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20
