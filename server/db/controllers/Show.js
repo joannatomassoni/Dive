@@ -5,7 +5,6 @@ const { Show, RSVP, User, ShowBand, Venue, Comment, Sequelize, sequelize } = req
 const { getRecordByName, getRecordByID } = require('./utils');
 const { sendNotifications } = require('../../pushNotifications/pushNotifications')
 
-
 // import the Sequelize operators
 const Op = Sequelize.Op;
 
@@ -122,7 +121,7 @@ const getAllUpcomingShows = async (req, res) => {
         const shows = await Show.findAll({
             where: {
                 dateTime: {
-                    [Op.gte]: moment().subtract(12, 'hours').toDate()
+                    [Op.gte]: moment().subtract(5, 'hours').toDate()
                 }
             },
             include: [
@@ -248,7 +247,7 @@ const getPreviousShows = async (req, res) => {
         })).then((data) => {
             console.log("are we getting old shows?", data)
             res.send(data)
-        }
+        })
     }
     catch (err) {
         console.log("error getting old shows", err)
@@ -284,17 +283,34 @@ const getShowRSVPs = async (req, res) => {
     }
 }
 
+const searchShows = async (req, res) => {
+    try {
+        const { query } = req.params;
+        const shows = await Show.findAll({
+                where: {
+                    name: { [Op.like]: `%${query}%`}, 
+                }
+            })
+        res.send(shows);
+    }
+    catch (err) {
+        console.log(err);
+        res.sendStatus(404)
+    }
+}
+
 
 module.exports = {
     createShow,
     deleteShow,
     getAllUpcomingShows,
     getFanRSVPs,
+    getPreviousShows,
     getSingleShow,
     getShowRSVPs,
     removeFanRSVP,
     rsvpFanToShow,
+    searchShows,
     updateShow,
-    getPreviousShows,
 }
 
