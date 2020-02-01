@@ -22,12 +22,17 @@ export default function Bands(props) {
   //state to hold bands
   const [bands, setBands] = useState([]);
 
-  useEffect(() => {
+  //request to get all bands from db
+  const getAllBands = () => {
     axios.get(`${AXIOS_URL}/bands`)
       .then((response) => {
         setBands(() => response.data);
       })
       .catch(err => console.log(err))
+  }
+
+  useEffect(() => {
+    getAllBands();
   }, [])
 
   return (
@@ -44,14 +49,13 @@ export default function Bands(props) {
               padding={10}
               borderRadius={10}
               containerStyle={styles.card}
-            // image={require('../images/pic2.jpg')}
             >
               <SingleBandModal name={band.name} bandId={band.id} />
               <Text style={styles.cardText}>{band.bio}</Text>
               <Text>
               {band.bandPhoto &&
                 <Image
-                  style={{ width: 50, height: 50 }}
+                  style={styles.photo}
                   source={{ uri: band.bandPhoto }}
                 />
                 }
@@ -99,5 +103,10 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     paddingRight: 20
   },
+  photo: {
+    width: 100,
+    height: 100,
+    borderRadius: 10
+  }
 })
 
