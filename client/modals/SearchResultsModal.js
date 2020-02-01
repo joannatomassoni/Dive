@@ -22,6 +22,7 @@ export default function SearchResultsModal(props) {
             .then((response) => {
                 if (response.data) {
                     setBands(response.data);
+                    console.log(bands);
                 }
             });
         await axios.get(`${AXIOS_URL}/search/shows/${query}`)
@@ -29,11 +30,13 @@ export default function SearchResultsModal(props) {
                 if (response.data) {
                     setShows(response.data);
                 }
+                console.log(shows);
             });
         await axios.get(`${AXIOS_URL}/search/venues/${query}`)
             .then((response) => {
                 if (response.data) {
                     setVenues(response.data);
+                    console.log(venues);
                 }
             });
     };
@@ -63,8 +66,19 @@ export default function SearchResultsModal(props) {
                     <ScrollView style={{ marginTop: 30 }}>
                         <Text style={styles.headerText}>Results</Text>       
 
-                        {/* rendering lists of venues, bands, and shows */}
-                        
+                        {/* conditionally rendering lists of venues, bands, and shows */}
+                        {bands.length ? 
+                            <Text>Bands</Text>
+                            : null
+                        }
+                        {shows.length ? 
+                            <Text>Shows</Text>
+                            : null
+                        }
+                        {venues.length ? 
+                            <Text>Venues</Text>
+                            : null
+                        }
 
                     </ScrollView>
                 </SafeAreaView>
@@ -89,8 +103,7 @@ export default function SearchResultsModal(props) {
                             color='#59C3D1'
                             size={37}
                             onPress={() => {
-                                setModalVisible(true);
-                                searchCall(query);
+                                searchCall(query).then(() => setModalVisible(true))
                             }}
                             style={styles.button}
                         />
