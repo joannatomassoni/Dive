@@ -35,6 +35,44 @@ export default function SingleVenueModal(props) {
   //venue id for axios call
   let venue = props.venueID;
 
+  // request to get single venue info
+  const getSingleVenue = async () => {
+    axios.get(`${AXIOS_URL}/venues/${venue}`)
+          .then((response) => {
+            setVenue(response.data);
+          })
+          .catch((err) => {
+            console.log("error getting single venue", err);
+          });
+  }
+
+  //request to get geolocation of address
+  const getAddressCoords = async () => {
+    axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
+      params: {
+        key: `${MAP_KEY}`,
+        location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
+      }
+    })
+      .then(axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
+        params: {
+          key: `${MAP_KEY}`,
+          location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
+        }
+      }))
+      .then((response) => {
+        setVenueLocation({
+          latitude: response.data.results[0].locations[0].displayLatLng.lat,
+          longitude: response.data.results[0].locations[0].displayLatLng.lng,
+          latitudeDelta: 0.0012,
+          longitudeDelta: 0.011
+        });
+      })
+      .catch((err) => {
+        console.log(`error getting geolocation`, err);
+      });
+  }
+
   // request to get all shows at venue
   const getAllShows = () => {
     axios.get(`${AXIOS_URL}/venues/${venue}`)
@@ -46,42 +84,45 @@ export default function SingleVenueModal(props) {
       });
   }
 
-  //request to see if a user is following the venue
+  // Request to see if a user is following the venue
   const getFollowInfo = () => {
     axios.get(`${AXIOS_URL}/fans/${userInfo.id}/venues`)
       .then((response) => {
-        // console.log(response);
-        response.data.venuesmap(venue => {
-          if (venue.id === singleVenue.id) {
-            toggleFollowing(true);
-          }
-        })
+        if (response.data[0].venues) {
+          response.data[0].venues.map(venue => {
+            if (venue.id === singleVenue.id) {
+              toggleFollowing(true);
+            }
+          })
+        }
       })
       .catch((err) => {
         console.log("error getting venue/following info", err);
       });
   }
-  // TODO:
+  
   // request to follow a venue
-  const addRsvp = () => {
-    axios.post(`${AXIOS_URL}/shows/rsvps`, {
+  const fanFollowVenue = () => {
+    console.log(singleVenue.id)
+    axios.post(`${AXIOS_URL}/venues/${singleVenue.id}/fans`, {
       id_fan: userInfo.id,
-      id_show: singleShow.id,
     })
-      .then(response => setRsvp(true))
+      .then(() => toggleFollowing(true))
+      .then(() => console.log(toggleFollowing))
       .catch(error => console.log('failed to rsvp', error));
   }
+
   // TODO:
   // request to unfollow a venue
-  const removeRsvp = () => {
+  const unfollowVenue = () => {
     axios.delete(`${AXIOS_URL}/shows/rsvps`, {
       data: {
         id_fan: userInfo.id,
-        id_show: singleShow.id,
+        id_venue: singleVenue.id,
       }
     })
-      .then(() => setRsvp(false))
-      .catch(error => console.log('failed to rsvp', error));
+      .then(() => toggleFollowing(false))
+      .catch(error => console.log('failed to unfollow venue', error));
   }
 
   useEffect(() => {
@@ -136,6 +177,40 @@ export default function SingleVenueModal(props) {
               />
             </MapView>
             </View>
+            {/* follow venue button */}
+            {userInfo.signedIn ?
+              (isFollowing ?
+                // if following, show unfollow button
+                <TouchableOpacity
+                  style={styles.unfollowButtonContainer}
+                  onPress={() => unfollowVenue()
+                  //   {
+                  //   axios.delete(`${AXIOS_URL}/bands/${singleBand.id}/fans`, {
+                  //     data: {
+                  //       id_fan: userInfo.id,
+                  //     }
+                  //   })
+                  //     .then(() => {
+                  //       toggleFollowing(false)
+                  //     })
+                  //     .catch(error => console.log('failed to unfollow band', error))
+                  // }
+                }
+                >
+                  <Text style={styles.followButtonText}>Unfollow</Text>
+                </TouchableOpacity>
+                :
+                // if not following, show follow button
+                <TouchableOpacity
+                  style={styles.followButtonContainer}
+                  onPress={() => {
+                    fanFollowVenue();
+                  }}
+                >
+                  <Text style={styles.followButtonText}>Follow</Text>
+                </TouchableOpacity>)
+              : null
+            }
             {/* shows header */}
             <Text style={styles.headerText}>Shows</Text>
             {/* cards for each upcoming show at the venue */}
@@ -169,39 +244,10 @@ export default function SingleVenueModal(props) {
         style={styles.signupContainer}
         onPress={() => {
           setModalVisible(true);
-          axios.get(`${AXIOS_URL}/venues/${venue}`)
-          .then((response) => {
-            setVenue(response.data);
-          })
-          .catch((err) => {
-            console.log("error getting single venue", err);
-          });
-          //request to get geolocation of address
-          axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
-            params: {
-              key: `${MAP_KEY}`,
-              location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
-            }
-          })
-            .then(axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
-              params: {
-                key: `${MAP_KEY}`,
-                location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
-              }
-            }))
-            .then((response) => {
-              setVenueLocation({
-                latitude: response.data.results[0].locations[0].displayLatLng.lat,
-                longitude: response.data.results[0].locations[0].displayLatLng.lng,
-                latitudeDelta: 0.0012,
-                longitudeDelta: 0.011
-              });
-            })
-            .catch((err) => {
-              console.log(`error getting geolocation`, err);
-            });
-        }}
-        
+          getFollowInfo();
+          getSingleVenue();
+          getAddressCoords();
+        }}     
       >
         <Text style={styles.signupButtonText}>Show More</Text>
       </TouchableOpacity>
@@ -236,6 +282,25 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 40,
     backgroundColor: '#59C3D1',
+  },
+  followButtonText: {
+    textAlign: 'center',
+    fontWeight: '700',
+    color: '#000'
+  },
+  unfollowButtonContainer: {
+    backgroundColor: '#C70039',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginHorizontal: 90,
+    marginBottom: 15
+  },
+  followButtonContainer: {
+    backgroundColor: '#75A4AD',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginHorizontal: 90,
+    marginBottom: 15
   },
   cardText: {
     fontSize: 30,
