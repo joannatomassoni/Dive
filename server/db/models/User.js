@@ -32,6 +32,14 @@ module.exports = (sequelize, type) => {
         expoPushToken: {
             type: type.STRING,
             allowNull: true
+        },
+        calPermission: {
+            type: type.BOOLEAN,
+            allowNull: true
+        },
+        calID: {
+            type: type.STRING,
+            allowNull: true
         }
     })
 }
