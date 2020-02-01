@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
+  View,
   SafeAreaView,
   Image
 } from 'react-native';
@@ -22,39 +23,49 @@ export default function Bands(props) {
   //state to hold bands
   const [bands, setBands] = useState([]);
 
-  useEffect(() => {
+  //request to get all bands from db
+  const getAllBands = () => {
     axios.get(`${AXIOS_URL}/bands`)
       .then((response) => {
         setBands(() => response.data);
       })
       .catch(err => console.log(err))
+  }
+
+  useEffect(() => {
+    getAllBands();
   }, [])
 
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
-        <Text style={styles.text}>Bands</Text>
-        {bands.map(band => {
+        <Text style={styles.headerText}>Bands</Text>
+        {bands && bands.map(band => {
           return (
             <Card
-              title={band.name}
-              style={styles.card}
               key={band.id}
-              backgroundColor='#fff'
-              borderWidth={0}
-              borderRadius={10}
+              backgroundColor='#111'
               padding={10}
-            // image={require('../images/pic2.jpg')}
+              borderRadius={10}
+              containerStyle={styles.card}
             >
-              <Text style={{ marginBottom: 10, color: '#000' }}>{band.bio}</Text>
-              {band.bandPhoto &&
-                <Image
-                  style={{ width: 50, height: 50 }}
-                  source={{ uri: band.bandPhoto }}
-                />
-              }
-              <SingleBandModal name={band.name} bandId={band.id} />
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View>
+                  <SingleBandModal name={band.name} bandId={band.id} />
+                  <Text style={styles.cardText}>{band.bio}</Text>
+                </View>
+                <View>
+                  <Text>
+                    {band.bandPhoto &&
+                      <Image
+                        style={styles.photo}
+                        source={{ uri: band.bandPhoto }}
+                      />
+                    }
+                  </Text>
+                </View>
+              </View>
             </Card>
           )
         })}
@@ -69,10 +80,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D323A',
     justifyContent: 'center',
   },
-  text: {
+  headerText: {
     fontSize: 50,
-    color: '#59C3D1',
-    opacity: 0.9,
+    color: '#3BAFBF',
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20
@@ -86,8 +96,23 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     backgroundColor: '#59C3D1',
   },
-  cardText: {
-
+  card: {
+    borderWidth: 0,
+    paddingBottom: 0,
+    backgroundColor: '#111',
+    paddingBottom: 10
   },
+  cardText: {
+    fontSize: 16,
+    color: '#59C3D1',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
+  },
+  photo: {
+    width: 100,
+    height: 100,
+    borderRadius: 10
+  }
 })
 

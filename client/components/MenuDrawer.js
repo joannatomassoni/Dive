@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   bottomLinks: {
     flex: 1,
     backgroundColor: '#3BAFBF',
-    paddingBottom: 450,
+    paddingBottom: 400,
   },
   link: {
     flex: 1,
