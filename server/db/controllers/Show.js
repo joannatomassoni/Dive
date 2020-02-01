@@ -248,7 +248,7 @@ const getPreviousShows = async (req, res) => {
         })).then((data) => {
             console.log("are we getting old shows?", data)
             res.send(data)
-        }
+        })
     }
     catch (err) {
         console.log("error getting old shows", err)
