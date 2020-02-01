@@ -130,18 +130,18 @@ export default function SingleBandModal(props) {
               return (
                 <View>
                   <Card
-                    title={show.name}
                     style={styles.card}
-                    key={show.id}
-                    backgroundColor='#fff'
-                    borderWidth={0}
-                    borderRadius={10}
+                    key={show.id} 
+                    backgroundColor='#111'
                     padding={10}
+                    borderRadius={10}
+                    containerStyle={styles.card}
                   >
-                    <Text style={{ color: '#000' }}>{show.date}</Text>
-                    <Text style={{ color: '#000' }}>{show.time}</Text>
-                    <Text style={{ color: '#000' }}>{show.venue.name}</Text>
-                    <Text style={{ color: '#000' }}>{show.description}</Text>
+                    <Text style={styles.cardHeaderText}>{show.name}</Text>
+                    <Text style={styles.cardText}>{show.date}</Text>
+                    <Text style={styles.cardText}>{show.time}</Text>
+                    <Text style={styles.cardText}>{show.venue.name}</Text>
+                    <Text style={styles.cardText}>{show.description}</Text>
                     <SingleShowModal show={show.id} />
                   </Card>
                 </View>
@@ -165,7 +165,7 @@ export default function SingleBandModal(props) {
             })
         }}
       >
-        <Text style={styles.modalShowText}>{singleBand.name}</Text>
+        <Text style={styles.cardHeaderText}>{singleBand.name}</Text>
       </TouchableOpacity >
     </View >
   );
@@ -222,11 +222,24 @@ const styles = StyleSheet.create({
     top: 40,
     left: 20,
   },
-  modalShowText: {
+  cardHeaderText: {
     fontWeight: 'bold',
     fontSize: 20,
     marginTop: 2,
     marginBottom: 10,
     color: '#fff'
+  },
+  cardText: {
+    fontSize: 16,
+    color: '#59C3D1',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
+  },
+  card: {
+    borderWidth: 0,
+    paddingBottom: 0,
+    backgroundColor: '#111',
+    paddingBottom: 10
   },
 })

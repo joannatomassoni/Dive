@@ -34,7 +34,7 @@ export default function Bands(props) {
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
-        <Text style={styles.text}>Bands</Text>
+        <Text style={styles.headerText}>Bands</Text>
         {bands.map(band => {
           return (
             <Card
@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D323A',
     justifyContent: 'center',
   },
-  text: {
+  headerText: {
     fontSize: 50,
-    color: '#59C3D1',
+    color: '#3BAFBF',
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20
