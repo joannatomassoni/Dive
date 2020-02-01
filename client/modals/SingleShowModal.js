@@ -264,7 +264,6 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 50,
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20
