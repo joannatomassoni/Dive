@@ -321,8 +321,7 @@ const styles = StyleSheet.create({
       zIndex: 9,
       position: 'absolute',
       top: 30,
-      left: 15,
-      // backgroundColor: 'red',
+      left: 10,
       padding: 10,
   }
 })
