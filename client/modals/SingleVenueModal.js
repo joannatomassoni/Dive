@@ -11,12 +11,11 @@ import {
 } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Card } from 'react-native-elements'
+import SingleShowModal from '../modals/SingleShowModal';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { MAP_KEY, AXIOS_URL } from 'react-native-dotenv';
 import axios from 'axios';
-
-
 
 export default function SingleVenueModal(props) {
   //global user signin info and editing function
@@ -110,7 +109,7 @@ export default function SingleVenueModal(props) {
     })
       .then(() => toggleFollowing(true))
       .then(() => console.log(isFollowing))
-      .catch(error => console.log('failed to rsvp', error));
+      .catch(error => console.log('failed to follow venue', error));
   }
 
   // request to unfollow a venue
@@ -219,20 +218,19 @@ export default function SingleVenueModal(props) {
             {shows.map(show => {
               return (
                 <Card
-                  title={show.name}
-                  style={styles.card}
                   key={show.id}
-                  backgroundColor='#fff'
-                  borderWidth={0}
-                  borderRadius={10}
+                  backgroundColor='#111'
                   padding={10}
+                  borderRadius={10}
+                  containerStyle={styles.card}
                 >
-                  <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
-                  <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
-                  <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
+                  <SingleShowModal show={show.id} showName={show.name} />
+                  <Text style={styles.cardText}>{show.date}</Text>
+                  <Text style={styles.cardText}>{show.time}</Text>
+                  <Text style={styles.cardText}>{show.description}</Text>
                   {/* list for each additional band in each show */}
                   {show.bands && show.bands.map(band => {
-                    return <Text style={{ marginBottom: 10, color: '#000' }}>{band.name}</Text>
+                    return <Text style={styles.cardBandText}>{band.name}</Text>
                   })}
                 </Card>
               )
@@ -276,8 +274,10 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   card: {
-    backgroundColor: '#75A4AD',
-    borderRadius: 10
+    borderWidth: 0,
+    paddingBottom: 0,
+    backgroundColor: '#111',
+    paddingBottom: 10
   },
   button: {
     borderRadius: 5,
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     color: '#000'
   },
   unfollowButtonContainer: {
-    backgroundColor: '#C70039',
+    backgroundColor: '#AA8181',
     paddingVertical: 10,
     borderRadius: 5,
     marginHorizontal: 90,
@@ -304,7 +304,19 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   cardText: {
-    fontSize: 30,
+    fontSize: 16,
+    color: '#59C3D1',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
+  },
+  cardBandText: {
+    fontSize: 16,
+    color: '#AA8181',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20,
+    marginBottom: 5
   },
   mapStyle: {
     width: 395,
