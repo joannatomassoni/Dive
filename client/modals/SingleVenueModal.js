@@ -104,21 +104,21 @@ export default function SingleVenueModal(props) {
   // request to follow a venue
   const fanFollowVenue = () => {
     console.log(singleVenue.id)
-    axios.post(`${AXIOS_URL}/venues/${singleVenue.id}/fans`, {
+    console.log(venue)
+    axios.post(`${AXIOS_URL}/venues/${venue}/fans`, {
       id_fan: userInfo.id,
     })
       .then(() => toggleFollowing(true))
-      .then(() => console.log(toggleFollowing))
+      .then(() => console.log(isFollowing))
       .catch(error => console.log('failed to rsvp', error));
   }
 
-  // TODO:
   // request to unfollow a venue
   const unfollowVenue = () => {
-    axios.delete(`${AXIOS_URL}/shows/rsvps`, {
+    axios.delete(`${AXIOS_URL}/venues/${venue}/fans`, {
       data: {
         id_fan: userInfo.id,
-        id_venue: singleVenue.id,
+        id_venue: venue,
       }
     })
       .then(() => toggleFollowing(false))
@@ -151,13 +151,15 @@ export default function SingleVenueModal(props) {
         {/* start of modal when showing */}
         <SafeAreaView behavior="padding" style={styles.container}>
           {/* back button */}
-          <Ionicons
-            name='ios-arrow-back'
-            color='#59C3D1'
-            size={32}
-            style={styles.menuIcon}
-            onPress={() => { setModalVisible(false) }}
-          />
+          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
+            <Ionicons
+              name='ios-arrow-back'
+              color='#59C3D1'
+              size={32}
+              style={styles.menuIcon}
+              onPress={() => { setModalVisible(false) }}
+            />
+          </Ionicons>
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleVenue.id}>{singleVenue.name}</Text>
             <Text style={styles.infoText}>{singleVenue.address}</Text>
@@ -314,5 +316,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 40,
     left: 20,
+  },
+  menuIconContainer: {
+      zIndex: 9,
+      position: 'absolute',
+      top: 30,
+      left: 15,
+      // backgroundColor: 'red',
+      padding: 10,
   }
 })
