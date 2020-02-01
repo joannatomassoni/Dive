@@ -25,7 +25,7 @@ const sendNotifications = async (pushTokens, title, body) => {
             body
           }
           messages.push(message)
-        // }
+        
         
         // The Expo push notification service accepts batches of notifications so
         // that you don't need to send 1000 requests to send 1000 notifications. We
@@ -52,9 +52,7 @@ const sendNotifications = async (pushTokens, title, body) => {
             }
           }
         })();
-
     }
-
   }
       catch(err) {
           console.log(err);
