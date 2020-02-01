@@ -59,8 +59,6 @@ export default function SingleShowModal(props) {
     axios.get(`${AXIOS_URL}/shows/${show}`)
       .then((response) => {
         setSingleShow(response.data);
-        setStartTime(response.data.dateTime);
-        setEndTime(Moment(response.data.dateTime).add(2, 'hours'));
       })
       .catch((err) => {
         console.log("error getting single show info", err);
