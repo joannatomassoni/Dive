@@ -12,6 +12,7 @@ const {
     getFanBands,
     getSingleUser,
     removeBandGenre,
+    searchBands,
     sendNotification,
     unfollowBand,
     updateUserBio,
@@ -35,6 +36,7 @@ const {
     getSingleVenue,
     getVenueFans,
     removeVenue, 
+    searchVenues,
     unfollowVenue
 } = require('./Venue');
 const {
@@ -47,6 +49,7 @@ const {
     getPreviousShows,
     removeFanRSVP,
     rsvpFanToShow,
+    searchShows,
     updateShow,
 } = require('./Show');
 
@@ -80,6 +83,9 @@ module.exports = {
     removeFanRSVP,
     removeBandGenre,
     rsvpFanToShow,
+    searchBands,
+    searchShows,
+    searchVenues,
     sendNotification,
     unfollowBand,
     unfollowVenue,

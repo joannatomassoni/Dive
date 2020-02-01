@@ -27,7 +27,7 @@ const ctrl = require('./db/controllers/index')
 // creates fans and bands
 router.post('/users', ctrl.createUser);
 
-router.post('/users/push', ctrl.sendNotification)
+// router.post('/users/push', ctrl.sendNotification)
 
 // add push token to user record
 router.patch('/users/:name/push', ctrl.addPushToken)
@@ -43,6 +43,14 @@ router.patch('/users/:id/bio', ctrl.updateUserBio)
 router.delete('/users/:id', ctrl.deleteUser)
 
 router.get('/bands/:id/shows', ctrl.getBandShows)
+
+/**
+ * Search button routes
+ */
+
+ router.get('/search/users/:query', ctrl.searchBands)
+ router.get('/search/shows/:query', ctrl.searchShows)
+ router.get('/search/venues/:query', ctrl.searchVenues)
 
 /**
  * BANDS ROUTES
