@@ -147,9 +147,8 @@ export default function SingleShowModal(props) {
           />
 
           <ScrollView style={{ marginTop: 30 }}>
-            {/* header */}
             <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
-            {/* tag for show flyer modal */}
+            {/* show flyer */}
             {singleShow.flyer ?
               <Image
                 style={{ width: 400, height: 400, marginLeft: 5 }}

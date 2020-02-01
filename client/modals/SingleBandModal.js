@@ -31,27 +31,67 @@ export default function SingleBandModal(props) {
   let band = props.name;
   let bandId = props.bandId;
 
-  useEffect(() => {
-    axios.get(`${AXIOS_URL}/bands/${bandId}/shows`)
+  // request to see if user is following band
+  const isUserFollowing = () => {
+    axios.get(`${AXIOS_URL}/fans/${userInfo.id}/bands`)
       .then((response) => {
-        // console.log("getting a bands shows from db", response.data)
-        setBand(() => response.data);
-        setShows(() => response.data.shows);
-      })
-      .then(() => {
-        // axios request to see if user is following band
-        axios.get(`${AXIOS_URL}/fans/${userInfo.id}/bands`)
-          .then((response) => {
-            response.data.map(band => {
-              if (band.id === singleBand.id) {
-                toggleFollowing(true);
-              }
-            })
-          })
+        response.data.map(band => {
+          if (band.id === singleBand.id) {
+            toggleFollowing(true);
+          }
+        })
       })
       .catch((err) => {
         console.log(err);
       })
+  };
+  // request to get all shows for specific band
+  const allBandShows = () => {
+    axios.get(`${AXIOS_URL}/bands/${bandId}/shows`)
+      .then((response) => {
+        setBand(() => response.data);
+        setShows(() => response.data.shows);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  };
+  // get all single band info
+  const getSingleBandInfo = () => {
+    axios.get(`${AXIOS_URL}/users/${band}`)
+      .then((response) => {
+        setBand(response.data);
+      })
+      .catch((err) => {
+        console.log("error getting single band from db", err);
+      })
+  };
+  // request for user to follow band
+  const followBand = () => {
+    axios.post(`${AXIOS_URL}/bands/${bandId}/fans`, {
+      id_fan: userInfo.id
+    })
+      .then(() => {
+        toggleFollowing(true)
+      })
+      .catch(error => console.log('failed to follow band', error))
+  };
+  // request for user to unfollow band
+  const unfollowBand = () => {
+    axios.delete(`${AXIOS_URL}/bands/${singleBand.id}/fans`, {
+      data: {
+        id_fan: userInfo.id,
+      }
+    })
+      .then(() => {
+        toggleFollowing(false)
+      })
+      .catch(error => console.log('failed to unfollow band', error))
+  };
+
+  useEffect(() => {
+    allBandShows();
+    isUserFollowing();
   }, [])
 
   return (
@@ -71,15 +111,17 @@ export default function SingleBandModal(props) {
             style={styles.menuIcon}
             onPress={() => { setModalVisible(false) }}
           />
+
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
-
-            {/* tag for band photo */}
-            {/* <Image
-              style={{ width: 420, height: 200 }}
-              source={{ uri: singleBand.bandPhoto }}
-            /> */}
-
+            {/* band photo */}
+            {singleBand.bandPhoto ? 
+              <Image
+                style={{ width: 420, height: 200 }}
+                source={{ uri: singleBand.bandPhoto }}
+              />
+            : null}
+            {/* social media links */}
             <View style={styles.flexRowRight}>
               <SpotifyButton link={singleBand.link_spotify} />
               <InstagramButton link={singleBand.link_instagram} />
@@ -93,17 +135,7 @@ export default function SingleBandModal(props) {
                 // if following, show unfollow button
                 <TouchableOpacity
                   style={styles.unfollowButtonContainer}
-                  onPress={() => {
-                    axios.delete(`${AXIOS_URL}/bands/${singleBand.id}/fans`, {
-                      data: {
-                        id_fan: userInfo.id,
-                      }
-                    })
-                      .then(() => {
-                        toggleFollowing(false)
-                      })
-                      .catch(error => console.log('failed to unfollow band', error))
-                  }}
+                  onPress={() => {  unfollowBand() }}
                 >
                   <Text style={styles.followButtonText}>Unfollow</Text>
                 </TouchableOpacity>
@@ -111,22 +143,14 @@ export default function SingleBandModal(props) {
                 // if not following, show follow button
                 <TouchableOpacity
                   style={styles.followButtonContainer}
-                  onPress={() => {
-                    axios.post(`${AXIOS_URL}/bands/${bandId}/fans`, {
-                      id_fan: userInfo.id
-                    })
-                      .then(() => {
-                        toggleFollowing(true)
-                      })
-                      .catch(error => console.log('failed to follow band', error))
-                  }}
+                  onPress={() => { followBand() }}
                 >
                   <Text style={styles.followButtonText}>Follow</Text>
                 </TouchableOpacity>)
               : null
             }
             <Text style={styles.headerText}>Shows</Text>
-            {shows.map(show => {
+            {shows && shows.map(show => {
               return (
                 <View>
                   <Card
@@ -137,11 +161,27 @@ export default function SingleBandModal(props) {
                     borderRadius={10}
                     containerStyle={styles.card}
                   >
-                    <SingleShowModal show={show.id} showName={show.name}/>
-                    <Text style={styles.cardText}>{show.date}</Text>
-                    <Text style={styles.cardText}>{show.time}</Text>
-                    <Text style={styles.cardText}>{show.venue.name}</Text>
-                    <Text style={styles.cardText}>{show.description}</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                      <View>
+                        <SingleShowModal show={show.id} showName={show.name}/>
+                        <Text style={styles.cardText}>{show.date}</Text>
+                        <Text style={styles.cardText}>{show.time}</Text>
+                        <Text style={styles.cardText}>{show.venue.name}</Text>
+                        <Text style={styles.cardText}>{show.description}</Text>
+                      </View>
+                      <View>
+                        {/* show flyer */}
+                        <Text >
+                          {show.flyer &&
+                            <Image
+                              style={{ justifyContent: 'right' }}
+                              style={styles.photo}
+                              source={{ uri: show.flyer }}
+                            />
+                          }
+                        </Text>
+                      </View>
+                    </View>
                   </Card>
                 </View>
               )
@@ -154,14 +194,7 @@ export default function SingleBandModal(props) {
         style={styles.signupContainer}
         onPress={() => {
           setModalVisible(true);
-          //axios
-          axios.get(`${AXIOS_URL}/users/${band}`)
-            .then((response) => {
-              setBand(response.data);
-            })
-            .catch((err) => {
-              console.log("error getting single band from db", err);
-            })
+          getSingleBandInfo();
         }}
       >
         <Text style={styles.cardHeaderText}>{singleBand.name}</Text>
@@ -197,7 +230,7 @@ const styles = StyleSheet.create({
     color: '#000'
   },
   unfollowButtonContainer: {
-    backgroundColor: '#C70039',
+    backgroundColor: '#AA8181',
     paddingVertical: 10,
     borderRadius: 5,
     marginHorizontal: 90,
