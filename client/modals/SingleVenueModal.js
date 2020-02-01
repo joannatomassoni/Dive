@@ -230,7 +230,6 @@ export default function SingleVenueModal(props) {
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.date}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.time}</Text>
                   <Text style={{ marginBottom: 10, color: '#000' }}>{show.description}</Text>
-                  <Text style={{ marginBottom: 10, color: '#000' }}>Bands:</Text>
                   {/* list for each additional band in each show */}
                   {show.bands && show.bands.map(band => {
                     return <Text style={{ marginBottom: 10, color: '#000' }}>{band.name}</Text>
@@ -251,7 +250,7 @@ export default function SingleVenueModal(props) {
           getAddressCoords();
         }}     
       >
-        <Text style={styles.signupButtonText}>Show More</Text>
+        <Text style={styles.cardTextVenueName}>{props.venueName}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -323,5 +322,11 @@ const styles = StyleSheet.create({
       top: 30,
       left: 10,
       padding: 10,
-  }
+  },
+  cardTextVenueName: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginBottom: 5,
+    color: '#fff'
+  },
 })
