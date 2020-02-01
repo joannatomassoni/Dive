@@ -29,8 +29,9 @@ export default function Hub(props) {
   //hub info to display
   const [hubInfo, setHubInfo] = useState({});
   const [shows, setShows] = useState([]);
-  let [dbPhoto, setDbPhoto] = useState('');
+  const [dbPhoto, setDbPhoto] = useState('');
   const [oldShows, setOldShows] = useState([]);
+  const [fanShows, setFanShows] = useState([]);
 
   //load all user info when brought to hub
   useEffect(() => {
@@ -59,6 +60,15 @@ export default function Hub(props) {
       .catch((err) => {
         console.log("front end not getting band photo from db", err);
       })
+    axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
+      .then((response) => {
+        console.log("getting a fans shows  in hub from db", response.data)
+        setFanShows(() => response.data);
+      })
+      .catch((err) => {
+        console.log("front end not getting fans shows from db", err);
+      })
+
   }, [])
 
   const getPreviousShows = () => {
@@ -109,7 +119,7 @@ export default function Hub(props) {
           {userInfo.userType === 'band' ? <CreateShowModal /> : null}
         </View>
 
-        {/* Cards for all upcoming shows */}
+        {/* Cards for all a bands upcoming shows */}
         <View>
           {userInfo.userType === 'band' ?
             shows.map(show => {
@@ -138,6 +148,28 @@ export default function Hub(props) {
           />
         </View> */}
 
+        {/* Cards for all a bands upcoming shows */}
+        <View>
+          {userInfo.userType === 'fan' ?
+            fanShows.map(show => {
+              return (
+                <Card
+                  title={show.name}
+                  style={styles.card}
+                  backgroundColor='#fff'
+                  borderWidth={0}
+                  borderRadius={10}
+                  padding={10}
+                // image={require('../images/pic2.jpg')}
+                >
+                  <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+                  <Text style={{ marginBottom: 10 }}>{show.description}</Text>
+
+                </Card>
+              )
+            })
+            : null}
+        </View>
 
 
         <View>
