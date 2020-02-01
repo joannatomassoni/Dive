@@ -102,7 +102,7 @@ export default function EditShowModal(props) {
               <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={() => {
-                  setModalVisible(false); 
+                  setModalVisible(false);
                   axios.patch(`${AXIOS_URL}/shows/${userInfo.id}`, {
                     name: showTitle,
                     dateTime: dateTime,
