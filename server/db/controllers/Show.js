@@ -5,7 +5,6 @@ const { Show, RSVP, User, ShowBand, Venue, Comment, Sequelize, sequelize } = req
 const { getRecordByName, getRecordByID } = require('./utils');
 const { sendNotifications } = require('../../pushNotifications/pushNotifications')
 
-
 // import the Sequelize operators
 const Op = Sequelize.Op;
 
@@ -71,7 +70,7 @@ const createShow = async (req, res) => {
         const followers = await sequelize.query(sql, {
             replacements: [venue.id]
         })
-        
+
         // Add expoPushTokens for each follower to the pushTokens array
         followers[0].forEach((follower) => {
             venueTokens.push(follower.expoPushToken)
@@ -122,7 +121,7 @@ const getAllUpcomingShows = async (req, res) => {
         const shows = await Show.findAll({
             where: {
                 dateTime: {
-                    [Op.gte]: moment().subtract(12, 'hours').toDate()
+                    [Op.gte]: moment().subtract(5, 'hours').toDate()
                 }
             },
             include: [
@@ -224,6 +223,38 @@ const getFanRSVPs = async (req, res) => {
     }
 }
 
+//gets previous/past RSVPed shows
+//will need users id
+const getPreviousShows = async (req, res) => {
+    // console.log("is this previousShows working?")
+    try {
+        const { id } = req.params;
+        const oldshows = await RSVP.findAll({
+            where: {
+                id_fan: id,
+                createdAt: {
+                    [Op.lt]: new Date()
+                }
+            }
+        })
+        Promise.all(oldshows.map(async (rsvp) => {
+            const show = await Show.findOne({
+                where: {
+                    id: rsvp.id_show
+                }
+            })
+            return show;
+        })).then((data) => {
+            console.log("are we getting old shows?", data)
+            res.send(data)
+        })
+    }
+    catch (err) {
+        console.log("error getting old shows", err)
+        res.sendStatus(400);
+    }
+}
+
 // TODO: refactor to use eager loading
 // Get all fans who have rsvpd to a show
 const getShowRSVPs = async (req, res) => {
@@ -252,15 +283,34 @@ const getShowRSVPs = async (req, res) => {
     }
 }
 
+const searchShows = async (req, res) => {
+    try {
+        const { query } = req.params;
+        const shows = await Show.findAll({
+                where: {
+                    name: { [Op.like]: `%${query}%`}, 
+                }
+            })
+        res.send(shows);
+    }
+    catch (err) {
+        console.log(err);
+        res.sendStatus(404)
+    }
+}
+
 
 module.exports = {
     createShow,
     deleteShow,
     getAllUpcomingShows,
     getFanRSVPs,
+    getPreviousShows,
     getSingleShow,
     getShowRSVPs,
     removeFanRSVP,
     rsvpFanToShow,
+    searchShows,
     updateShow,
 }
+

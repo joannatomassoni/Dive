@@ -1,5 +1,5 @@
 // compile all controllers and export to router from here
-const { 
+const {
     addGenreToBand,
     addPushToken,
     createUser,
@@ -12,29 +12,32 @@ const {
     getFanBands,
     getSingleUser,
     removeBandGenre,
+    searchBands,
     sendNotification,
     unfollowBand,
     updateUserBio,
     updateBandPhoto,
     updateBandFB,
     updateBandInstagram,
-    updateBandSpotify
+    updateBandSpotify,
 } = require('./User');
-const { 
-    getTypes 
+const {
+    getTypes
 } = require('./Type');
-const { 
-    createComment, 
-    getAllComments 
+const {
+    createComment,
+    getAllComments
 } = require('./Comment');
-const { 
+const {
     addFanToVenue,
-    createVenue, 
-    getAllVenues, 
+    createVenue,
+    getAllVenues,
     getFanVenues,
     getSingleVenue,
     getVenueFans,
     removeVenue, 
+    searchVenues,
+    unfollowVenue
 } = require('./Venue');
 const {
     createShow,
@@ -43,9 +46,11 @@ const {
     getFanRSVPs,
     getSingleShow,
     getShowRSVPs,
+    getPreviousShows,
     removeFanRSVP,
     rsvpFanToShow,
-    updateShow
+    searchShows,
+    updateShow,
 } = require('./Show');
 
 module.exports = {
@@ -66,6 +71,7 @@ module.exports = {
     getFanRSVPs,
     getFanVenues,
     getShowRSVPs,
+    getPreviousShows,
     getAllUpcomingShows,
     getSingleShow,
     getSingleUser,
@@ -77,8 +83,12 @@ module.exports = {
     removeFanRSVP,
     removeBandGenre,
     rsvpFanToShow,
+    searchBands,
+    searchShows,
+    searchVenues,
     sendNotification,
     unfollowBand,
+    unfollowVenue,
     updateUserBio,
     updateBandPhoto,
     updateBandFB,
@@ -86,5 +96,5 @@ module.exports = {
     updateBandSpotify,
     updateShow,
     createComment,
-    getAllComments
+    getAllComments,
 }

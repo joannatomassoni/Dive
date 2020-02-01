@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 // we require our models here to be instantiated after sequelize connection is made
-const { 
+const {
   BandGenreModel,
   CommentModel,
   FanVenueModel,
@@ -10,7 +10,7 @@ const {
   ShowBandModel,
   TypeModel,
   UserModel,
-  VenueModel 
+  VenueModel
 } = require('./models/index');
 
 
@@ -34,11 +34,11 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
   host: DB_HOST,
   timestamps: false,
   pool: {
-        max: 3,
-        min: 0,
-        idle: 10000
-      },
-}); 
+    max: 3,
+    min: 0,
+    idle: 10000
+  },
+});
 
 // instanstiate the models here
 const Type = TypeModel(sequelize, Sequelize);
@@ -51,6 +51,7 @@ const Comment = CommentModel(sequelize, Sequelize);
 const Show = ShowModel(sequelize, Sequelize);
 const Venue = VenueModel(sequelize, Sequelize);
 const User = UserModel(sequelize, Sequelize);
+
 
 
 /**
@@ -67,6 +68,7 @@ Venue.hasMany(Show, { foreignKey: { name: 'id_venue', allowNull: false } });
 // join table for shows and fans (RSVPs)
 Show.belongsToMany(User, { as: 'Fans', through: RSVP, foreignKey: { name: 'id_show', allowNull: false } })
 User.belongsToMany(Show, { through: RSVP, foreignKey: { name: 'id_fan', allowNull: false } })
+
 
 // join table for shows and bands
 Show.belongsToMany(User, { as: 'bands', through: ShowBand, foreignKey: { name: 'id_show', allowNull: false } });

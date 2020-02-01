@@ -39,11 +39,12 @@ export default function CreateShowModal(props) {
   const [allVenues, setAllVenues] = useState([]);
   const venues = [];
   //sets photo uploaded from phone
-  let [selectedImage, setSelectedImage] = useState({});
+  const [selectedImage, setSelectedImage] = useState({});
   //cloudinary url to send photo to
-  let CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/da4ry89ct/upload';
+  const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/da4ry89ct/upload';
   //sets band photo
-  let [flyer, setFlyerPhoto] = useState('');
+  const [flyer, setFlyerPhoto] = useState('');
+  // const [flyerUpload, ]
 
   //allows user to upload a photo
   //this gets permission from phone to access images
@@ -99,13 +100,15 @@ export default function CreateShowModal(props) {
         {/* start of modal when showing */}
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
           {/* back button */}
-          <Ionicons
-            name='ios-arrow-back'
-            color='#59C3D1'
-            size={32}
-            style={styles.menuIcon}
-            onPress={() => { setModalVisible(false) }}
-          />
+          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
+            <Ionicons
+              name='ios-arrow-back'
+              color='#59C3D1'
+              size={32}
+              style={styles.menuIcon}
+              onPress={() => { setModalVisible(false) }}
+            />
+          </Ionicons>
           <View style={styles.container}>
             <ScrollView style={styles.title}>
               <Text style={styles.text}>New Show</Text>
@@ -202,6 +205,7 @@ export default function CreateShowModal(props) {
           axios.get(`${AXIOS_URL}/venues`)
             .then(response => response.data.map(venue => {
               if (!venues.includes(venue.name)) {
+
                 venues.push(venue.name);
               }
             }))
@@ -286,6 +290,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 40,
     left: 20,
+  },
+  menuIconContainer: {
+    zIndex: 9,
+    position: 'absolute',
+    top: 30,
+    left: 10,
+    padding: 10,
   },
   linkRow: {
     flexDirection: 'row',
