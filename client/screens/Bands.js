@@ -38,16 +38,16 @@ export default function Bands(props) {
         {bands.map(band => {
           return (
             <Card
-              title={band.name}
               style={styles.card}
               key={band.id}
-              backgroundColor='#fff'
-              borderWidth={0}
-              borderRadius={10}
+              backgroundColor='#111'
               padding={10}
+              borderRadius={10}
+              containerStyle={styles.card}
             // image={require('../images/pic2.jpg')}
             >
-              <Text style={{ marginBottom: 10, color: '#000' }}>Bio: {band.bio}</Text>
+              <SingleBandModal name={band.name} bandId={band.id} />
+              <Text style={styles.cardText}>{band.bio}</Text>
               <Text>
               {band.bandPhoto &&
                 <Image
@@ -56,7 +56,6 @@ export default function Bands(props) {
                 />
                 }
               </Text>
-              <SingleBandModal name={band.name} bandId={band.id} />
             </Card>
           )
         })}
@@ -74,7 +73,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 50,
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20
@@ -88,8 +86,18 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     backgroundColor: '#59C3D1',
   },
+  card: {
+    borderWidth: 0,
+    paddingBottom: 0,
+    backgroundColor: '#111',
+    paddingBottom: 10
+  },
   cardText: {
-
+    fontSize: 16,
+    color: '#59C3D1',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
   },
 })
 

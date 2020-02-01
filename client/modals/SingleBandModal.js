@@ -165,7 +165,7 @@ export default function SingleBandModal(props) {
             })
         }}
       >
-        <Text style={styles.signupButtonText}>Show More</Text>
+        <Text style={styles.modalShowText}>{singleBand.name}</Text>
       </TouchableOpacity >
     </View >
   );
@@ -221,5 +221,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 40,
     left: 20,
-  }
+  },
+  modalShowText: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginTop: 2,
+    marginBottom: 10,
+    color: '#fff'
+  },
 })
