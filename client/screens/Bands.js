@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
+  View,
   SafeAreaView,
   Image
 } from 'react-native';
@@ -43,23 +44,28 @@ export default function Bands(props) {
         {bands && bands.map(band => {
           return (
             <Card
-              style={styles.card}
               key={band.id}
               backgroundColor='#111'
               padding={10}
               borderRadius={10}
               containerStyle={styles.card}
             >
-              <SingleBandModal name={band.name} bandId={band.id} />
-              <Text style={styles.cardText}>{band.bio}</Text>
-              <Text>
-              {band.bandPhoto &&
-                <Image
-                  style={styles.photo}
-                  source={{ uri: band.bandPhoto }}
-                />
-                }
-              </Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View>
+                  <SingleBandModal name={band.name} bandId={band.id} />
+                  <Text style={styles.cardText}>{band.bio}</Text>
+                </View>
+                <View>
+                  <Text>
+                  {band.bandPhoto &&
+                    <Image
+                      style={styles.photo}
+                      source={{ uri: band.bandPhoto }}
+                    />
+                    }
+                  </Text>
+                </View>
+              </View>
             </Card>
           )
         })}
