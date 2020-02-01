@@ -87,16 +87,6 @@ export default function EditBandBioModal(props) {
     console.log("bandPhoto has been set to state", bandPhoto);
 
     savePhoto();
-    //Axios request to save band photo to DB
-    // axios.patch(`http://localhost:8080/bands/${userInfo.id}/photo`, {
-    //   bandPhoto: bandPhoto
-    // })
-    //   .then(response => {
-    //     console.log("saving photo to db", bandPhoto)
-    //   })
-    //   .catch(err => {
-    //     console.log("not saving to db", err)
-    //   })
   };
 
   const savePhoto = async () => {
