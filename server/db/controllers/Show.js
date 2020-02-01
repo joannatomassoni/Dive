@@ -3,7 +3,7 @@ const moment = require('moment');
 // Requiring the models we need for our queries
 const { Show, RSVP, User, ShowBand, Venue, Comment, Sequelize, sequelize } = require('../sequelize');
 const { getRecordByName, getRecordByID } = require('./utils');
-const { sendNotifications } = require('../../pushNotifications/pushNotifications')
+const { sendNotifications } = require('../pushNotifications/pushNotifications')
 
 // import the Sequelize operators
 const Op = Sequelize.Op;
