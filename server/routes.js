@@ -48,7 +48,7 @@ router.get('/bands/:id/shows', ctrl.getBandShows)
  * Search button routes
  */
 
- router.get('/search/users/:query', ctrl.searchBands)
+ router.get('/search/bands/:query', ctrl.searchBands)
  router.get('/search/shows/:query', ctrl.searchShows)
  router.get('/search/venues/:query', ctrl.searchVenues)
 
