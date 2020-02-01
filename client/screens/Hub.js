@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   Button,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import axios from 'axios';
@@ -29,8 +30,8 @@ export default function Hub(props) {
   const [hubInfo, setHubInfo] = useState({});
   const [shows, setShows] = useState([]);
   let [dbPhoto, setDbPhoto] = useState('');
+  const [oldShows, setOldShows] = useState([]);
 
-  
 
 
   //load all user info when brought to hub
@@ -62,11 +63,22 @@ export default function Hub(props) {
       })
   }, [])
 
+  const getPreviousShows = () => {
+    axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
+      .then(response => {
+        console.log("getting old shows", response);
+        setOldShows(response.data)
+      })
+      .catch(err => {
+        console.log("not getting older shows", err);
+      })
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
-        <Text style={styles.text}>Band Hub</Text>
+        <Text style={styles.text}>Hub</Text>
         <View style={styles.container}>
           {/* image container */}
           {/* <Text>
@@ -76,7 +88,7 @@ export default function Hub(props) {
                 source={{ uri: dbPhoto }}
               />
             }
-          </Text> */}
+          </Text>  */}
         </View>
         <Text style={styles.infoText}>
           {hubInfo.bio}
@@ -94,6 +106,7 @@ export default function Hub(props) {
         }}>
           {/* Button to open create show modal */}
           <EditBandBioModal />
+          <EditShowModal />
           {/* Button to open create show modal */}
           {userInfo.userType === 'band' ? <CreateShowModal /> : null}
         </View>
@@ -124,8 +137,45 @@ export default function Hub(props) {
             style={styles.thumbnail}
           />
         </View> */}
+
+
+
+        <View>
+          {userInfo.userType === 'fan' ?
+            <View>
+              {/* {userInfo.userType === 'fan' ?  : null} */}
+              < TouchableOpacity
+                style={styles.prevButton}
+                onPress={getPreviousShows}
+              >
+                <Text style={styles.buttText} >Get old shows</Text>
+              </TouchableOpacity>
+
+              {
+                oldShows.map(show => {
+                  return (
+                    <Card
+                      title={show.name}
+                      style={styles.card}
+                      backgroundColor='#fff'
+                      borderWidth={0}
+                      borderRadius={10}
+                      padding={10}
+                    // image={require('../images/pic2.jpg')}
+                    >
+                      <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+                      <Text style={{ marginBottom: 10 }}>{show.date}</Text>
+                      <Text style={{ marginBottom: 10 }}>{show.description}</Text>
+                      <EditShowModal />
+                    </Card>
+                  )
+                })
+              }
+            </View>
+            : null}
+        </View>
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaView >
   )
 }
 
@@ -152,6 +202,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '700',
     color: '#fff'
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontWeight: '700',
+    color: '#000'
+  },
+  prevButton: {
+    backgroundColor: '#75A4AD',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+    width: 140,
+    marginHorizontal: 7
   },
   flexRowRight: {
     flexDirection: 'row',

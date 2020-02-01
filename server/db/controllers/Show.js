@@ -71,7 +71,7 @@ const createShow = async (req, res) => {
         const followers = await sequelize.query(sql, {
             replacements: [venue.id]
         })
-        
+
         // Add expoPushTokens for each follower to the pushTokens array
         followers[0].forEach((follower) => {
             venueTokens.push(follower.expoPushToken)
@@ -224,6 +224,38 @@ const getFanRSVPs = async (req, res) => {
     }
 }
 
+//gets previous/past RSVPed shows
+//will need users id
+const getPreviousShows = async (req, res) => {
+    // console.log("is this previousShows working?")
+    try {
+        const { id } = req.params;
+        const oldshows = await RSVP.findAll({
+            where: {
+                id_fan: id,
+                createdAt: {
+                    [Op.lt]: new Date()
+                }
+            }
+        })
+        Promise.all(oldshows.map(async (rsvp) => {
+            const show = await Show.findOne({
+                where: {
+                    id: rsvp.id_show
+                }
+            })
+            return show;
+        })).then((data) => {
+            console.log("are we getting old shows?", data)
+            res.send(data)
+        }
+    }
+    catch (err) {
+        console.log("error getting old shows", err)
+        res.sendStatus(400);
+    }
+}
+
 // TODO: refactor to use eager loading
 // Get all fans who have rsvpd to a show
 const getShowRSVPs = async (req, res) => {
@@ -263,4 +295,6 @@ module.exports = {
     removeFanRSVP,
     rsvpFanToShow,
     updateShow,
+    getPreviousShows,
 }
+
