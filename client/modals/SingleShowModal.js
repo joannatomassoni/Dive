@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerText: {
-    fontSize: 50,
+    fontSize: 45,
     color: '#59C3D1',
     fontWeight: 'bold',
     textAlign: 'right',
