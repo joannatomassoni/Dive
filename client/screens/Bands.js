@@ -47,7 +47,7 @@ export default function Bands(props) {
               padding={10}
             // image={require('../images/pic2.jpg')}
             >
-              <Text style={{ marginBottom: 10, color: '#000' }}>Bio: {band.bio}</Text>
+              <Text style={{ marginBottom: 10, color: '#000' }}>{band.bio}</Text>
               {band.bandPhoto &&
                 <Image
                   style={{ width: 50, height: 50 }}

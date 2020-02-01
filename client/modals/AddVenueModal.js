@@ -43,13 +43,15 @@ export default function AddVenueModal(props) {
         {/* start of modal when showing */}
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
           {/* back button */}
-          <Ionicons
-            name='ios-arrow-back'
-            color='#59C3D1'
-            size={32}
-            style={styles.menuIcon}
-            onPress={() => { setModalVisible(false) }}
-          />
+          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
+            <Ionicons
+              name='ios-arrow-back'
+              color='#59C3D1'
+              size={32}
+              style={styles.menuIcon}
+              onPress={() => { setModalVisible(false) }}
+            />
+          </Ionicons>
           <View style={styles.container}>
             <ScrollView style={styles.title}>
               <Text style={styles.text}>New Venue</Text>
@@ -191,5 +193,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 40,
     left: 20,
+  },
+  menuIconContainer: {
+    zIndex: 9,
+    position: 'absolute',
+    top: 30,
+    left: 15,
+    padding: 10,
   },
 })

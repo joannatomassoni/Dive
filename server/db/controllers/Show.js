@@ -122,7 +122,7 @@ const getAllUpcomingShows = async (req, res) => {
         const shows = await Show.findAll({
             where: {
                 dateTime: {
-                    [Op.gte]: moment().subtract(12, 'hours').toDate()
+                    [Op.gte]: moment().subtract(5, 'hours').toDate()
                 }
             },
             include: [
@@ -248,7 +248,7 @@ const getPreviousShows = async (req, res) => {
         })).then((data) => {
             console.log("are we getting old shows?", data)
             res.send(data)
-        }
+        })
     }
     catch (err) {
         console.log("error getting old shows", err)

@@ -63,11 +63,10 @@ const getSingleVenue = async (req, res) => {
 // Allow user to follow a venue
 const addFanToVenue = async (req, res) => {
     const { id } = req.params;
-    const { fanName } = req.body;
-    const fan = await getRecordByName('fan', fanName);
+    const { id_fan } = req.body;
     try {
         FanVenue.create({
-            id_fan: fan.id,
+            id_fan,
             id_venue: id
         })
     res.sendStatus(201);
@@ -78,6 +77,25 @@ const addFanToVenue = async (req, res) => {
     }
 } 
 
+// allow user to unfollow venue
+const unfollowVenue = async (req, res) => {
+    const { id } = req.params;
+    const { id_fan } = req.body;
+    try {
+        FanVenue.destroy({
+            where: {
+                id_fan,
+                id_venue: id
+            }
+        })
+    res.sendStatus(200);
+    }
+    catch(err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+}
+
 // get venues that a fan follows
 const getFanVenues = async (req, res) => {
     try {
@@ -87,7 +105,7 @@ const getFanVenues = async (req, res) => {
                 id
             },
             include: [
-                { model: Venue, attributes: ['name']}
+                { model: Venue, attributes: ['id', 'name']}
             ]
         })
         res.send(fanVenues);
@@ -167,5 +185,6 @@ module.exports = {
     getFanVenues, 
     getSingleVenue,
     getVenueFans,
-    removeVenue
+    removeVenue,
+    unfollowVenue
 }
