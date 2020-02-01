@@ -72,8 +72,10 @@ const styles = StyleSheet.create({
     paddingRight: 20
   },
   card: {
-    backgroundColor: '#75A4AD',
-    borderRadius: 10
+    borderWidth: 0,
+    paddingBottom: 0,
+    backgroundColor: '#111',
+    paddingBottom: 10 
   },
   button: {
     borderRadius: 5,
