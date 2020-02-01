@@ -65,7 +65,6 @@ export default function MenuDrawer(props) {
                 color='#fff'
                 size={35}
                 style={styles.showsIcon}
-                onPress={() => this.props.navigation.toggleDrawer()}
               />
               {navLink('Shows', 'Shows')}
             </View>
@@ -75,7 +74,6 @@ export default function MenuDrawer(props) {
                 color='#fff'
                 size={30}
                 style={styles.bandsIcon}
-                onPress={() => this.props.navigation.toggleDrawer()}
               />
               {navLink('Bands', 'Bands')}
             </View>
@@ -85,7 +83,6 @@ export default function MenuDrawer(props) {
                 color='#fff'
                 size={30}
                 style={styles.venuesIcon}
-                onPress={() => this.props.navigation.toggleDrawer()}
               />
               {navLink('Venues', 'Venues')}
             </View>
@@ -95,7 +92,6 @@ export default function MenuDrawer(props) {
                 color='#fff'
                 size={30}
                 style={styles.hubIcon}
-                onPress={() => this.props.navigation.toggleDrawer()}
               />
               {navLink('Hub', 'Hub')}
             </View>
@@ -108,7 +104,6 @@ export default function MenuDrawer(props) {
                 color='#fff'
                 size={24}
                 style={styles.loginIcon}
-                onPress={() => this.props.navigation.toggleDrawer()}
               />
             <TouchableOpacity 
             // log out triggers alert box
@@ -156,7 +151,6 @@ export default function MenuDrawer(props) {
                 color='#fff'
                 size={35}
                 style={styles.showsIcon}
-                onPress={() => this.props.navigation.toggleDrawer()}
               />
               {navLink('Shows', 'Shows')}
             </View>
@@ -167,7 +161,6 @@ export default function MenuDrawer(props) {
                 color='#fff'
                 size={30}
                 style={styles.bandsIcon}
-                onPress={() => this.props.navigation.toggleDrawer()}
               />
               {navLink('Bands', 'Bands')}
             </View>
@@ -178,7 +171,6 @@ export default function MenuDrawer(props) {
                 color='#fff'
                 size={30}
                 style={styles.venuesIcon}
-                onPress={() => this.props.navigation.toggleDrawer()}
               />
               {navLink('Venues', 'Venues')}
             </View>
@@ -189,7 +181,6 @@ export default function MenuDrawer(props) {
                 color='#fff'
                 size={24}
                 style={styles.loginIcon}
-                onPress={() => this.props.navigation.toggleDrawer()}
               />
               {navLink('Login', 'Login')}
             </View>

@@ -4,8 +4,6 @@ import {
   Text,
   View,
   SafeAreaView,
-  Button,
-  Image,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import axios from 'axios';
@@ -29,9 +27,6 @@ export default function Hub(props) {
   const [hubInfo, setHubInfo] = useState({});
   const [shows, setShows] = useState([]);
   let [dbPhoto, setDbPhoto] = useState('');
-
-  
-
 
   //load all user info when brought to hub
   useEffect(() => {
