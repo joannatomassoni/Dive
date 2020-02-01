@@ -32,8 +32,6 @@ export default function Hub(props) {
   let [dbPhoto, setDbPhoto] = useState('');
   const [oldShows, setOldShows] = useState([]);
 
-
-
   //load all user info when brought to hub
   useEffect(() => {
     axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
