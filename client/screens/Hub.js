@@ -110,25 +110,27 @@ export default function Hub(props) {
         </View>
 
         {/* Cards for all upcoming shows */}
-        {shows &&
-          shows.map(show => {
-            return (
-              <Card
-                title={show.name}
-                style={styles.card}
-                backgroundColor='#fff'
-                borderWidth={0}
-                borderRadius={10}
-                padding={10}
-              // image={require('../images/pic2.jpg')}
-              >
-                <Text style={{ marginBottom: 10 }}>{show.time}</Text>
-                <Text style={{ marginBottom: 10 }}>{show.description}</Text>
-                <EditShowModal />
-              </Card>
-            )
-          })
-        }
+        <View>
+          {userInfo.userType === 'band' ?
+            shows.map(show => {
+              return (
+                <Card
+                  title={show.name}
+                  style={styles.card}
+                  backgroundColor='#fff'
+                  borderWidth={0}
+                  borderRadius={10}
+                  padding={10}
+                // image={require('../images/pic2.jpg')}
+                >
+                  <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+                  <Text style={{ marginBottom: 10 }}>{show.description}</Text>
+                  <EditShowModal />
+                </Card>
+              )
+            })
+            : null}
+        </View>
         {/* <View style={styles.container}>
           <Image
             source={dbPhoto}
