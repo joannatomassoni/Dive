@@ -86,7 +86,7 @@ const getFanVenues = async (req, res) => {
                 id
             },
             include: [
-                { model: Venue, attributes: ['name']}
+                { model: Venue, attributes: ['id', 'name']}
             ]
         })
         res.send(fanVenues);
