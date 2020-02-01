@@ -48,12 +48,15 @@ export default function Bands(props) {
             // image={require('../images/pic2.jpg')}
             >
               <Text style={{ marginBottom: 10, color: '#000' }}>Bio: {band.bio}</Text>
-              {band.bandPhoto &&
-                <Image
-                  style={{ width: 50, height: 50 }}
-                  source={{ uri: band.bandPhoto }}
-                />
-              }
+              <Text>
+
+                {band.bandPhoto &&
+                  <Image
+                    style={{ width: 50, height: 50 }}
+                    source={{ uri: band.bandPhoto }}
+                  />
+                }
+              </Text>
               <SingleBandModal name={band.name} bandId={band.id} />
             </Card>
           )
