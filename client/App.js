@@ -14,7 +14,7 @@ export default function App(props) {
   return (
     <View style={styles.container}>
 
-      <Header />
+      {/* <Header /> */}
 
       {/* pass signIn state to all children components*/}
       <SignedInContext.Provider value={[userInfo, setUserInfo]}>
