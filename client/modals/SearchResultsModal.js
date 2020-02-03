@@ -5,8 +5,8 @@ import axios from 'axios';
 import { Card } from 'react-native-elements';
 import { AXIOS_URL } from 'react-native-dotenv';
 import SingleVenueModal from '../modals/SingleVenueModal'
-// import SingleBandModal from '../modals/SingleBandModal'
-// import SingleShowModal from '../modals/SingleShowModal'
+import SingleBandModal from '../modals/SingleBandModal'
+import SingleShowModal from '../modals/SingleShowModal'
 
 
 export default function SearchResultsModal() {
@@ -28,26 +28,17 @@ export default function SearchResultsModal() {
                     setBands(response.data);
                 }
             })
-            .then(() => {
-                console.log(venues);
-            });
-        await axios.get(`${AXIOS_URL}/search/shows/${query}`)
-            .then((response) => {
-                if (response.data) {
-                    setShows(response.data);
-                }
-            })
-            .then(() => {
-                console.log(venues);
-            });
         await axios.get(`${AXIOS_URL}/search/venues/${query}`)
             .then((response) => {
                 if (response.data) {
                     setVenues(response.data);
                 }
             })
-            .then(() => {
-                console.log(venues);
+            await axios.get(`${AXIOS_URL}/search/shows/${query}`)
+            .then((response) => {
+                if (response.data) {
+                    setShows(response.data);
+                }
             })
             .then(() => {
                 setModalVisible(true);
@@ -82,11 +73,63 @@ export default function SearchResultsModal() {
 
                         {/* conditionally rendering lists of venues, bands, and shows */}            
                         {bands.length ? 
-                            <Text>Bands</Text>
+                            <View>
+                                <Text style={styles.subheaderText}>Bands</Text>
+                                <View>
+                                    {bands.map((band) => {
+                                        return (
+                                            <Card
+                                                key={band.id}
+                                                backgroundColor='#111'
+                                                padding={10}
+                                                borderRadius={10}
+                                                containerStyle={styles.card}
+                                                >
+                                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                                    <View>
+                                                        <SingleBandModal name={band.name} bandId={band.id} />
+                                                        <Text style={styles.cardText}>{band.bio}</Text>
+                                                    </View>
+                                                </View>
+                                            </Card>
+                                        )
+                                    })}
+                                </View>
+                            </View>
                             : null
                         }
                         {shows.length ? 
-                            <Text>Shows</Text>
+                            <View>
+                                <Text style={styles.subheaderText}>Shows</Text>
+                                <View>
+                                    {shows.map((show) => {
+                                        return (
+                                            <Card
+                                                key={show.id}
+                                                backgroundColor='#111'
+                                                padding={10}
+                                                borderRadius={10}
+                                                containerStyle={styles.card}
+                                                >
+                                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                                    <View>
+                                                        <SingleShowModal show={show.id} showName={show.name}/>
+                                                        <Text style={styles.cardText}>{show.date}</Text>
+                                                        <Text style={styles.cardText}>{show.time}</Text>
+                                                        { show.bands ? 
+                                                        show.bands.map(band => {
+                                                            <Text style={styles.cardText} key={band.id}>{band.name}</Text>
+                                                        })
+                                                        : null }
+                                                        {/* Change query to make this venue text work */}
+                                                        {/* <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text> */}
+                                                    </View>
+                                                </View>
+                                            </Card>
+                                        )
+                                    })}
+                                </View>
+                            </View>
                             : null
                         }
                         {venues.length ? 
@@ -94,7 +137,6 @@ export default function SearchResultsModal() {
                                 <Text style={styles.subheaderText}>Venues</Text>
                                 <View>
                                     {venues.map((venue) => {
-                                        console.log(venue);
                                         return (
                                             <Card
                                                 key={venue.id}
@@ -105,7 +147,7 @@ export default function SearchResultsModal() {
                                                 >
                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                                     <View>
-                                                        <SingleVenueModal name={venue.name} venueId={venue.id} />
+                                                        <SingleVenueModal venueID={venue.id} venueName={venue.name}/>
                                                         <Text style={styles.cardText}>{venue.address}</Text>
                                                     </View>
                                                 </View>
@@ -196,14 +238,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#2D323A',
         padding: 30,
     },
+    linkRow: {
+        flexDirection: 'row',
+        height: 50,
+    },
     input: {
         height: 40,
         backgroundColor: 'rgba(255, 255, 255, 1)',
-        marginBottom: 15,
-        paddingHorizontal: 15,
+        paddingHorizontal: 10,
         borderRadius: 5,
-        marginHorizontal: 40,
-        fontWeight: 'bold'
+        width: 285,
+        fontWeight: 'bold',
+        marginRight: 10
     },
     card: {
         borderWidth: 0,
