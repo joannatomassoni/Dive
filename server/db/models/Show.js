@@ -22,6 +22,9 @@ module.exports = (sequelize, type) => {
     },
     description: {
       type: type.STRING,
+    },
+    status: {
+      type: type.STRING
     }
   })
 }
