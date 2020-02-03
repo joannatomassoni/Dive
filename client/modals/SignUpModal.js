@@ -32,6 +32,34 @@ export default function ModalExample(props) {
     { label: 'Band', value: 'band' }
   ];
 
+  //function to get default calendar from user device
+  async function getDefaultCalendarSource() {
+    const calendars = await Calendar.getCalendarsAsync();
+    const defaultCalendars = calendars.filter(
+      each => each.source.name === 'Default'
+    );
+    return defaultCalendars[0].source;
+  }
+
+  //function to create dive cal on user device
+  async function createCalendar() {
+    const defaultCalendarSource =
+      Platform.OS === 'ios'
+        ? await getDefaultCalendarSource()
+        : { isLocalAccount: true, name: 'Dive Calendar' };
+    const newCalendarID = await Calendar.createCalendarAsync({
+      title: 'Dive Calendar',
+      color: 'blue',
+      entityType: Calendar.EntityTypes.EVENT,
+      sourceId: defaultCalendarSource.id,
+      source: defaultCalendarSource,
+      name: 'RSVPd Events',
+      ownerAccount: 'personal',
+      accessLevel: Calendar.CalendarAccessLevel.OWNER,
+    });
+    console.log(`Your new calendar ID is: ${newCalendarID}`);
+  }
+
   //function to sign in with google auth
   const googleSignIn = async () => {
     try {
@@ -56,16 +84,36 @@ export default function ModalExample(props) {
         typeName: userType,
         photo: user.photoUrl,
       })
-        .then(async () => {
-          const { status } = await Calendar.requestCalendarPermissionsAsync();
-          if (status === 'granted') {
-            const calendars = await Calendar.getCalendarsAsync();
-          }
+      //request to use/create calendar
+      .then(async () => {
+        const { status } = await Calendar.requestCalendarPermissionsAsync();
+        if (status === 'granted') {
+          const calendars = await Calendar.getCalendarsAsync();
+        }
+      })()
+        .then(async function createCalendar() {
+          const defaultCalendarSource =
+            Platform.OS === 'ios'
+              ? await getDefaultCalendarSource()
+              : { isLocalAccount: true, name: 'Dive Calendar' };
+          const newCalendarID = await Calendar.createCalendarAsync({
+            title: 'Dive Calendar',
+            color: 'blue',
+            entityType: Calendar.EntityTypes.EVENT,
+            sourceId: defaultCalendarSource.id,
+            source: defaultCalendarSource,
+            name: 'RSVPd Events',
+            ownerAccount: 'personal',
+            accessLevel: Calendar.CalendarAccessLevel.OWNER,
+          });
+          console.log(`Your new calendar ID is: ${newCalendarID}`);
         })
+      //request to allow push notifications
       .then(async () => {
         const expoPushToken = await registerforPushNotificationsAsync();
         return expoPushToken
       })
+      //add push token to db
       .then((expoPushToken) => {
         axios.patch(`${AXIOS_URL}/users/${user.email}/push`, {
           expoPushToken
@@ -149,7 +197,31 @@ export default function ModalExample(props) {
                   signedIn: true,
                   name: usernameValue,
                   userType: userType
-                }));
+                }))
+                  //request to use/create calendar
+                  // .then(async () => {
+                  //   const { status } = await Calendar.requestCalendarPermissionsAsync();
+                  //   if (status === 'granted') {
+                  //     const calendars = await Calendar.getCalendarsAsync();
+                  //   }
+                  // })()
+                  // .then(async function createCalendar() {
+                  //   const defaultCalendarSource =
+                  //     Platform.OS === 'ios'
+                  //       ? await getDefaultCalendarSource()
+                  //       : { isLocalAccount: true, name: 'Dive Calendar' };
+                  //   const newCalendarID = await Calendar.createCalendarAsync({
+                  //     title: 'Dive Calendar',
+                  //     color: 'blue',
+                  //     entityType: Calendar.EntityTypes.EVENT,
+                  //     sourceId: defaultCalendarSource.id,
+                  //     source: defaultCalendarSource,
+                  //     name: 'RSVPd Events',
+                  //     ownerAccount: 'personal',
+                  //     accessLevel: Calendar.CalendarAccessLevel.OWNER,
+                  //   });
+                  //   console.log(`Your new calendar ID is: ${newCalendarID}`);
+                  // })
               }}
             >
               <Text style={styles.buttonText}>Signup</Text>
