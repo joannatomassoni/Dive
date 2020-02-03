@@ -17,7 +17,9 @@ const Op = Sequelize.Op;
 const createShow = async (req, res) => {
     try {
         let { name, dateTime, flyer, venueName, bandNames, description, status } = req.body;
+        
         const venue = await getRecordByName('venue', venueName);
+    
         // format dateTime to be used for sorting and to be passed back as human-friendly strings
         // dateTime = moment(dateTime).format('llll');
         const time = moment.utc(dateTime).format('LT');
@@ -85,7 +87,7 @@ const createShow = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.sendStatus(400);
+        res.send(err);
     }
 }
 
@@ -126,14 +128,16 @@ const deleteShow = async (req, res) => {
     }
 }
 
-// Get all upcoming shows in database
+// Get all upcoming public shows in database
 const getAllUpcomingShows = async (req, res) => {
     try {
         const shows = await Show.findAll({
             where: {
-                dateTime: {
-                    [Op.gte]: moment().subtract(5, 'hours').toDate()
-                }
+                [Op.and]: [
+                    { dateTime: { [Op.gte]: moment().toDate() } },
+                    // Placeholder "private" venue will be created initially and have an id of 1
+                    { id_venue: { [Op.gt]: 1 } }
+                ]
             },
             include: [
                 { model: User, as: 'bands' },

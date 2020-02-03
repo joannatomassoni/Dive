@@ -29,21 +29,9 @@ const { DB_USER, DB_PASS, DB_NAME, DB_HOST, CLOUD_SQL_CONNECTION_NAME } = proces
 // });
 
 // PROD
-// const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
-//   dialect: 'mysql',
-//   host: DB_HOST,
-//   timestamps: false,
-//   pool: {
-//     max: 3,
-//     min: 0,
-//     idle: 10000
-//   },
-// });
-
-
-const sequelize = new Sequelize('dive', 'root', 'dive', {
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
   dialect: 'mysql',
-  host: '35.224.191.68',
+  host: DB_HOST,
   timestamps: false,
   pool: {
     max: 3,
@@ -51,6 +39,18 @@ const sequelize = new Sequelize('dive', 'root', 'dive', {
     idle: 10000
   },
 });
+
+
+// const sequelize = new Sequelize('dive', 'root', 'dive', {
+//   dialect: 'mysql',
+//   host: '35.224.191.68',
+//   timestamps: false,
+//   pool: {
+//     max: 3,
+//     min: 0,
+//     idle: 10000
+//   },
+// });
 
 // instanstiate the models here
 const Type = TypeModel(sequelize, Sequelize);
@@ -120,7 +120,7 @@ Show.belongsToMany(Comment, { through: 'show_comments' })
 
 
 /**
- * Next we create the database and tables, and prepopulate our type and genre tables.
+ * Next we create the database and tables, and prepopulate our type, genre, and venue tables.
  */
 // TODO: should we prepopulate venues?
 
@@ -135,6 +135,20 @@ sequelize.sync()
     Type.create({
       typeName: 'band'
     });
+    Venue.create({
+      name: "private",
+      address: "private",
+      city: "private",
+      state: "private",
+      zip_code: "00000"
+    });
+     Venue.create({
+      name: "BJ's Lounge",
+      address: "4301 Burgundy St",
+      city: "New Orleans",
+      state: "LA",
+      zip_code: "70117"
+    })
     Genre.create({
       genreName: 'rock'
     });
