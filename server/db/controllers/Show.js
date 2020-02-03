@@ -136,6 +136,8 @@ const getAllUpcomingShows = async (req, res) => {
                 [Op.and]: [
                     { dateTime: { [Op.gte]: moment().toDate() } },
                     // Placeholder "private" venue will be created initially and have an id of 1
+                    // Private shows are assigned to the venue called "private"
+                    // Querying for all shows on main page will ignore these shows
                     { id_venue: { [Op.gt]: 1 } }
                 ]
             },
