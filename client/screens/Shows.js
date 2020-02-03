@@ -89,7 +89,7 @@ export default function Shows(props) {
                       <Text style={styles.cardText} key={band.id}>{band.name}</Text>
                     })
                     : null}
-                  <Text style={styles.cardText} key={show.venue.id}>{show.venue.name}</Text>
+                  <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text>
                 </View>
                 <View >
                   {/* show flyer */}
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 50,
-    color: '#59C3D1',
+    color: '#3BAFBF',
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20
@@ -133,6 +133,13 @@ const styles = StyleSheet.create({
   cardText: {
     fontSize: 16,
     color: '#59C3D1',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
+  },
+  cardVenueText: {
+    fontSize: 16,
+    color: '#AA8181',
     fontWeight: 'bold',
     textAlign: 'left',
     paddingRight: 20

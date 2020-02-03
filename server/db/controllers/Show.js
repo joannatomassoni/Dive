@@ -3,7 +3,7 @@ const moment = require('moment');
 // Requiring the models we need for our queries
 const { Show, RSVP, User, ShowBand, Venue, Comment, Sequelize, sequelize } = require('../sequelize');
 const { getRecordByName, getRecordByID } = require('./utils');
-const { sendNotifications } = require('../../pushNotifications/pushNotifications')
+const { sendNotifications } = require('../pushNotifications/pushNotifications')
 
 // import the Sequelize operators
 const Op = Sequelize.Op;
@@ -88,17 +88,26 @@ const createShow = async (req, res) => {
     }
 }
 
-// Update a show
+// Update show
+// TODO: add push notifications for rsvps
 const updateShow = async (req, res) => {
     try {
         const { id } = req.params;
+        const { fieldName, newInfo } = req.body;
+        await Show.update(
+            { [fieldName]: newInfo },
+            { where: { id: id },
+        })
+        res.sendStatus(200);
     }
-    catch {
-
+    catch (err) {
+        console.log(err);
+        res.sendStatus(400);
     }
 }
 
 // Delete a show
+// TODO: add push notifications for rsvps
 const deleteShow = async (req, res) => {
     try {
         const { id } = req.params;
@@ -108,6 +117,7 @@ const deleteShow = async (req, res) => {
             }
         });
         res.sendStatus(200)
+        //
     }
     catch (err) {
         console.log(err);

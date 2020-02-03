@@ -95,6 +95,15 @@ export default function MenuDrawer(props) {
               />
               {navLink('Hub', 'Hub')}
             </View>
+            <View style={{ flexDirection: 'row' }}>
+              <MaterialIcons
+                name='search'
+                color='#fff'
+                size={30}
+                style={styles.bandsIcon}
+              />
+              {navLink('Search', 'Search')}
+            </View>
             <View style={{marginBottom:20}}></View>
             <Divider style={{ backgroundColor: '#fff', height: 2 }} />
             {/* logout button when user is signed in */}
@@ -133,8 +142,6 @@ export default function MenuDrawer(props) {
           </View>
           {/* menu bar footer info */}
           <View style={styles.footer}>
-            <Text style={styles.description}>Dive</Text>
-            <Text style={styles.version}>v1.0</Text>
           </View>
         </ScrollView>
         // view for when user is signed in
@@ -176,6 +183,16 @@ export default function MenuDrawer(props) {
             </View>
 
             <View style={{ flexDirection: 'row' }}>
+              <MaterialIcons
+                name='search'
+                color='#fff'
+                size={30}
+                style={styles.bandsIcon}
+              />
+              {navLink('Search', 'Search')}
+            </View>
+
+            <View style={{ flexDirection: 'row' }}>
               <AntDesign
                 name='login'
                 color='#fff'
@@ -187,8 +204,6 @@ export default function MenuDrawer(props) {
           </View>
           {/* menu bar footer info */}
           <View style={styles.footer}>
-            <Text style={styles.description}>Dive</Text>
-            <Text style={styles.version}>v1.0</Text>
           </View>
         </ScrollView>
       }
@@ -235,7 +250,7 @@ const styles = StyleSheet.create({
   bottomLinks: {
     flex: 1,
     backgroundColor: '#3BAFBF',
-    paddingBottom: 450,
+    paddingBottom: 330,
   },
   link: {
     flex: 1,
@@ -251,20 +266,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#2D323A',
-    borderTopWidth: 1,
-    borderTopColor: '#9F92A3',
-  },
-  version: {
-    flex: 1,
-    textAlign: 'right',
-    marginRight: 20,
-    color: '#75A4AD',
-  },
-  description: {
-    flex: 1,
-    marginLeft: 20, 
-    fontSize: 16,
-    color: '#59C3D1'
+    borderTopWidth: 3,
+    borderTopColor: '#AA8181',
   },
   showsIcon: {
     marginLeft: 24,

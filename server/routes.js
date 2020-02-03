@@ -101,6 +101,9 @@ router.get('/fans/:id/bands', ctrl.getFanBands);
 // create a venue
 router.post('/venues', ctrl.createVenue)
 
+// edit venue info
+router.patch('/venues/:id', ctrl.updateVenue)
+
 // get one venue and its upcoming shows
 router.get('/venues/:id', ctrl.getSingleVenue)
 
