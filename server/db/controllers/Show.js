@@ -96,8 +96,9 @@ const updateShow = async (req, res) => {
         const { fieldName, newInfo } = req.body;
         await Show.update(
             { [fieldName]: newInfo },
-            { where: { id: id },
-        })
+            {
+                where: { id: id },
+            })
         res.sendStatus(200);
     }
     catch (err) {
@@ -242,15 +243,16 @@ const getPreviousShows = async (req, res) => {
         const oldshows = await RSVP.findAll({
             where: {
                 id_fan: id,
-                createdAt: {
-                    [Op.lt]: new Date()
-                }
+
             }
         })
         Promise.all(oldshows.map(async (rsvp) => {
             const show = await Show.findOne({
                 where: {
-                    id: rsvp.id_show
+                    id: rsvp.id_show,
+                    dateTime: {
+                        [Op.lt]: new Date()
+                    }
                 }
             })
             return show;
@@ -297,10 +299,10 @@ const searchShows = async (req, res) => {
     try {
         const { query } = req.params;
         const shows = await Show.findAll({
-                where: {
-                    name: { [Op.like]: `%${query}%`}, 
-                }
-            })
+            where: {
+                name: { [Op.like]: `%${query}%` },
+            }
+        })
         res.send(shows);
     }
     catch (err) {
