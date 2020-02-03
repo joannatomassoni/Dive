@@ -37,7 +37,8 @@ const {
     getVenueFans,
     removeVenue, 
     searchVenues,
-    unfollowVenue
+    unfollowVenue,
+    updateVenue
 } = require('./Venue');
 const {
     createShow,
@@ -95,6 +96,7 @@ module.exports = {
     updateBandInstagram,
     updateBandSpotify,
     updateShow,
+    updateVenue,
     createComment,
     getAllComments,
 }

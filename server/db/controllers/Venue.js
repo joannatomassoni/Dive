@@ -204,5 +204,6 @@ module.exports = {
     getVenueFans,
     removeVenue,
     searchVenues,
-    unfollowVenue
+    unfollowVenue,
+    updateVenue
 }
