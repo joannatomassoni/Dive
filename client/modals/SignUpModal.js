@@ -82,8 +82,7 @@ export default function ModalExample(props) {
         typeName: userType,
         photo: user.photoUrl,
       })
-      //request to use/create calendar
-      .then(createCalendar())
+        .then(createCalendar())
       //request to allow push notifications
       .then(async () => {
         const expoPushToken = await registerforPushNotificationsAsync();
@@ -166,7 +165,7 @@ export default function ModalExample(props) {
                   name: usernameValue,
                   typeName: userType,
                 })
-                //request to use/create calendar
+                //create new calendar
                 .then(createCalendar())
                 .catch(error => console.log('failed to create user', error));
                 setUserInfo(userInfo => ({
