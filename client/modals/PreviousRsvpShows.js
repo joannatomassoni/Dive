@@ -72,7 +72,7 @@ export default function PreviousRSVPShows(props) {
                 {oldShows && oldShows.map(show => {
                   return (
                     <Card
-                      title={show.name}
+                      key={show.id}
                       style={styles.card}
                       backgroundColor='#111'
                       padding={10}
@@ -80,6 +80,12 @@ export default function PreviousRSVPShows(props) {
                       containerStyle={styles.card}
                     // image={require('../images/pic2.jpg')}
                     >
+                      {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
+
+                      {/* modal to display single show info */}
+                      <SingleShowModal show={show.id} showName={show.name} />
+
+                      <Text style={styles.cardText}>{show.name}</Text>
                       <Text style={styles.cardText}>{show.time}</Text>
                       <Text style={styles.cardText}>{show.date}</Text>
                       <Text style={styles.cardText}>{show.description}</Text>
@@ -88,6 +94,7 @@ export default function PreviousRSVPShows(props) {
                   )
                 })
                 }
+                {/* </View> */}
               </View>
             </View>
           </ScrollView>
@@ -133,6 +140,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  cardText: {
+    fontSize: 16,
+    color: '#59C3D1',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20,
+    marginBottom: 10
+  },
   text: {
     fontSize: 30,
     alignItems: 'center',
@@ -160,11 +175,11 @@ const styles = StyleSheet.create({
   modal: {
     marginLeft: 120
   },
-  // buttonText: {
-  //   textAlign: 'center',
-  //   fontWeight: '700',
-  //   color: '#fff'
-  // },
+  buttonText: {
+    textAlign: 'center',
+    fontWeight: '700',
+    color: '#fff'
+  },
   button: {
     borderRadius: 5,
     marginHorizontal: 40,
