@@ -45,7 +45,7 @@ export default function SingleBandModal(props) {
         console.log(err);
       })
   };
-  // request to get all shows for specific band
+  // request to get all shows for specific band if the user is following the band
   const allBandShows = () => {
     axios.get(`${AXIOS_URL}/bands/${bandId}/shows`)
       .then((response) => {

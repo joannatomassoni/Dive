@@ -8,11 +8,6 @@ const { sendNotifications } = require('../pushNotifications/pushNotifications')
 // import the Sequelize operators
 const Op = Sequelize.Op;
 
-// // 2020-06-12T14:42:42.000Z
-// const dateTime = moment('2020-06-12T14:42:42.000Z').format('llll');
-// const time = moment('2020-06-12T14:42:42.000Z').format('LT');
-// const date = moment('2020-06-12T14:42:42.000Z').format('ll');
-
 // Create show
 const createShow = async (req, res) => {
     try {
@@ -54,7 +49,6 @@ const createShow = async (req, res) => {
             const followers = await sequelize.query(sql, {
                 replacements: [band.id]
             })
-            console.log('followers: ', followers);
             followers[0].forEach((follower) => {
                 bandTokens.push(follower.expoPushToken)
             })
@@ -101,6 +95,25 @@ const updateShow = async (req, res) => {
             { [fieldName]: newInfo },
             { where: { id: id },
         })
+        const show = await Show.findOne({
+            where: {
+                id
+            },
+            include: [
+                { model: User, as: 'Fans', attributes: ['expoPushToken'] },
+            ]
+        })
+        const fans = show.Fans;
+        let pushTokens = [];
+        fans.forEach((fan) => {
+            pushTokens.push(fan.expoPushToken);
+        })
+        
+        const title = `Details for '${show.name}' have been edited`;
+        const body = 'Open Dive for more info.';
+        await sendNotifications(pushTokens, title, body);
+
+
         res.sendStatus(200);
     }
     catch (err) {
