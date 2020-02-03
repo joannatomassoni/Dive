@@ -23,7 +23,9 @@ import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { AXIOS_URL } from 'react-native-dotenv';
 import SingleBandModal from '../modals/SingleBandModal';
-import SingleShowModal from '../modals/SingleShowModal'
+import SingleShowModal from '../modals/SingleShowModal';
+import PreviousRSVPShows from '../modals/PreviousRsvpShows';
+
 
 export default function Hub(props) {
   //global user signin info and editing function
@@ -32,7 +34,7 @@ export default function Hub(props) {
   const [hubInfo, setHubInfo] = useState({});
   const [shows, setShows] = useState([]);
   const [dbPhoto, setDbPhoto] = useState('');
-  const [oldShows, setOldShows] = useState([]);
+  // const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
 
@@ -86,7 +88,7 @@ export default function Hub(props) {
     getPhoto();
     getRSVPS();
     getFollowedBands();
-    getPreviousShows();
+    // getPreviousShows();
   }, [])
 
   //gets band info
@@ -149,17 +151,17 @@ export default function Hub(props) {
       })
   }
 
-  //allows user to get shows they previously went to on button click
-  const getPreviousShows = () => {
-    axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
-      .then(response => {
-        // console.log("getting old shows", response);
-        setOldShows(response.data)
-      })
-      .catch(err => {
-        // console.log("not getting older shows", err);
-      })
-  }
+  // //allows user to get shows they previously went to on button click
+  // const getPreviousShows = () => {
+  //   axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
+  //     .then(response => {
+  //       // console.log("getting old shows", response);
+  //       setOldShows(response.data)
+  //     })
+  //     .catch(err => {
+  //       // console.log("not getting older shows", err);
+  //     })
+  // }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -168,14 +170,14 @@ export default function Hub(props) {
         <Text style={styles.text}>Hub</Text>
         <View style={styles.container}>
           {/* image container */}
-          {/* <Text>
+          <Text>
             {dbPhoto &&
               <Image
                 style={{ width: 100, height: 70 }}
                 source={{ uri: dbPhoto }}
               />
             }
-          </Text>  */}
+          </Text>
         </View>
         <Text style={styles.infoText}>
           {hubInfo.bio}
@@ -229,7 +231,7 @@ export default function Hub(props) {
 
         {/* Cards for all a bands upcoming shows */}
         <View>
-          <Text style={styles.text}>RSVPed Shows</Text>
+          <Text style={styles.subText}>RSVPed Shows</Text>
 
           {userInfo.userType === 'fan' ?
             // <Text> RSVPed Shows</Text>
@@ -238,23 +240,37 @@ export default function Hub(props) {
               return (
                 // <Text>RSVPed Shows</Text>
                 <Card
-
-                  // title={show.name}
-                  style={styles.card}
+                  key={show.id}
                   backgroundColor='#111'
-                  borderWidth={0}
-                  borderRadius={10}
                   padding={10}
+                  borderRadius={10}
                   containerStyle={styles.card}
-                // image={require('../images/pic2.jpg')}
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    {/* <View> */}
-                    {/* modal to display single show info */}
-                    <SingleShowModal show={show.id} showName={show.name} />
-                    <Text style={styles.cardText}>{show.date}</Text>
-                    <Text style={styles.cardText}>{show.time}</Text>
-                    <Text style={styles.cardText}>{show.description}</Text>
+                    <View>
+                      {/* modal to display single show info */}
+                      <SingleShowModal show={show.id} showName={show.name} />
+                      <Text style={styles.cardText}>{show.date}</Text>
+                      <Text style={styles.cardText}>{show.time}</Text>
+                      {show.bands ?
+                        show.bands.map(band => {
+                          <Text style={styles.cardText} key={band.id}>{band.name}</Text>
+                        })
+                        : null}
+                      {/* <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text> */}
+                    </View>
+                    <View >
+                      {/* show flyer */}
+                      <Text >
+                        {show.flyer &&
+                          <Image
+                            style={{ justifyContent: 'right' }}
+                            style={styles.photo}
+                            source={{ uri: show.flyer }}
+                          />
+                        }
+                      </Text>
+                    </View>
                   </View>
                 </Card>
               )
@@ -265,7 +281,7 @@ export default function Hub(props) {
         </View>
 
         < View >
-          <Text style={styles.text}>Bands Followed</Text>
+          <Text style={styles.subText}>Bands Followed</Text>
           {userInfo.userType === 'fan' ?
 
             followed && followed.map(band => {
@@ -294,36 +310,8 @@ export default function Hub(props) {
         </View>
 
         <View>
-          {userInfo.userType === 'fan' ?
-            <View>
-              < TouchableOpacity
-                style={styles.prevButton}
-                onPress={getPreviousShows}
-              >
-                <Text style={styles.buttonText} >Get old shows</Text>
-              </TouchableOpacity>
+          {userInfo.userType === 'fan' ? <PreviousRSVPShows userInfo={userInfo.id} />
 
-              {
-                oldShows && oldShows.map(show => {
-                  return (
-                    <Card
-                      title={show.name}
-                      style={styles.card}
-                      backgroundColor='#111'
-                      padding={10}
-                      borderRadius={10}
-                      containerStyle={styles.card}
-                    // image={require('../images/pic2.jpg')}
-                    >
-                      <Text style={styles.cardText}>{show.time}</Text>
-                      <Text style={styles.cardText}>{show.date}</Text>
-                      <Text style={styles.cardText}>{show.description}</Text>
-                      <EditShowModal />
-                    </Card>
-                  )
-                })
-              }
-            </View>
             : null}
         </View>
       </ScrollView>
@@ -343,9 +331,37 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     paddingRight: 20
   },
-  card: {
-    backgroundColor: '#75A4AD',
+  subText: {
+    fontSize: 30,
+    color: '#59C3D1',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingRight: 20
+  },
+  cardText: {
+    fontSize: 16,
+    color: '#59C3D1',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
+  },
+  cardVenueText: {
+    fontSize: 16,
+    color: '#AA8181',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
+  },
+  photo: {
+    width: 100,
+    height: 100,
     borderRadius: 10
+  },
+  card: {
+    borderWidth: 0,
+    paddingBottom: 0,
+    backgroundColor: '#111',
+    paddingBottom: 10
   },
   cardText: {
     fontSize: 16,
