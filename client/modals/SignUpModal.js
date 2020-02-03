@@ -51,14 +51,20 @@ export default function ModalExample(props) {
             name: user.name,
             photoUrl: user.photoUrl,
           }))
-          const expoPushToken = await registerforPushNotificationsAsync();
-          return expoPushToken
         }
       axios.post(`${AXIOS_URL}/users`, {
         name: user.email,
         typeName: userType,
         photo: user.photoUrl,
-        expoPushToken: expoPushToken
+      })
+      .then(async () => {
+        const expoPushToken = await registerforPushNotificationsAsync();
+        return expoPushToken
+      })
+      .then((expoPushToken) => {
+        axios.patch(`${AXIOS_URL}/users/${user.email}/push`, {
+          expoPushToken
+        })
       })
       .catch(error => console.log('failed to create user', error));
     } catch(error){console.log(error)}
