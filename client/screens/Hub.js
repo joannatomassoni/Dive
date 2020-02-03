@@ -32,6 +32,7 @@ export default function Hub(props) {
   const [dbPhoto, setDbPhoto] = useState('');
   const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
+  const [followed, setFollowed] = useState([]);
 
   //load all user info when brought to hub
   useEffect(() => {
@@ -54,31 +55,54 @@ export default function Hub(props) {
         })
     axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
       .then((response) => {
-        console.log("getting a photo from db", response.data.bandPhoto)
+        // console.log("getting a photo from db", response.data.bandPhoto)
         setDbPhoto(() => response.data.bandPhoto);
       })
       .catch((err) => {
-        console.log("front end not getting band photo from db", err);
+        // console.log("front end not getting band photo from db", err);
       })
     axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
       .then((response) => {
-        console.log("getting a fans shows  in hub from db", response.data)
+        // console.log("getting a fans shows  in hub from db", response.data)
         setFanShows(() => response.data);
       })
       .catch((err) => {
-        console.log("front end not getting fans shows from db", err);
+        // console.log("front end not getting fans shows from db", err);
       })
 
+    axios.get(`${AXIOS_URL}/fans/${userInfo.id}/bands`)
+      .then(response => {
+        // console.log("list of followed bands", response.data);
+        setFollowed(() => response.data);
+      })
+      .catch((err) => {
+        // console.log("front end not getting fans shows from db", err);
+      })
+
+    // getFollowedBands();
+    getPreviousShows();
   }, [])
+
+
+  // const getFollowedBands = () => {
+  //   axios.get(`${AXIOS_URL}/fans/:id/bands`)
+  //     .then(response => {
+  //       console.log("list of followed bands", response.data);
+  //       setFollowed(() => response.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log("front end not getting fans shows from db", err);
+  //     })
+  // }
 
   const getPreviousShows = () => {
     axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
       .then(response => {
-        console.log("getting old shows", response);
+        // console.log("getting old shows", response);
         setOldShows(response.data)
       })
       .catch(err => {
-        console.log("not getting older shows", err);
+        // console.log("not getting older shows", err);
       })
   }
 
@@ -150,9 +174,14 @@ export default function Hub(props) {
 
         {/* Cards for all a bands upcoming shows */}
         <View>
+          <Text style={styles.text}>Bands Followed</Text>
+
           {userInfo.userType === 'fan' ?
+            // <Text> RSVPed Shows</Text>
+
             fanShows.map(show => {
               return (
+                // <Text>RSVPed Shows</Text>
                 <Card
                   title={show.name}
                   style={styles.card}
@@ -169,8 +198,34 @@ export default function Hub(props) {
               )
             })
             : null}
+
+
         </View>
 
+        < View >
+          <Text style={styles.text}>Bands Followed</Text>
+          {userInfo.userType === 'fan' ?
+
+            followed.map(band => {
+              return (
+                <Card
+                  title={band.name}
+                  style={styles.card}
+                  backgroundColor='#111'
+                  padding={10}
+                  borderRadius={10}
+                  containerStyle={styles.card}
+                // image={require('../images/pic2.jpg')}
+                >
+
+                  {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+        <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
+
+                </Card>
+              )
+            })
+            : null}
+        </View>
 
         <View>
           {userInfo.userType === 'fan' ?
@@ -188,10 +243,10 @@ export default function Hub(props) {
                     <Card
                       title={show.name}
                       style={styles.card}
-                      backgroundColor='#fff'
-                      borderWidth={0}
-                      borderRadius={10}
+                      backgroundColor='#111'
                       padding={10}
+                      borderRadius={10}
+                      containerStyle={styles.card}
                     // image={require('../images/pic2.jpg')}
                     >
                       <Text style={{ marginBottom: 10 }}>{show.time}</Text>
