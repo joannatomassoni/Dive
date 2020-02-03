@@ -27,8 +27,9 @@ export default function PreviousRSVPShows(props) {
 
   // console.log("are we getting users id?", props.userInfo)
   //allows user to get shows they previously went to on button click
+  let userId = props.userInfo;
   const getPreviousShows = () => {
-    axios.get(`${AXIOS_URL}/shows/${props.userInfo.id}/oldrsvps`)
+    axios.get(`${AXIOS_URL}/shows/${props.userInfo}/oldrsvps`)
       .then(response => {
         console.log("getting old shows", response);
         setOldShows(response.data)
@@ -89,28 +90,6 @@ export default function PreviousRSVPShows(props) {
                 }
               </View>
             </View>
-            {/* <View>
-          {oldShows && oldShows.map(show => {
-            return (
-              <Card
-                title={show.name}
-                style={styles.card}
-                backgroundColor='#111'
-                padding={10}
-                borderRadius={10}
-                containerStyle={styles.card}
-              // image={require('../images/pic2.jpg')}
-              >
-                <Text style={styles.cardText}>{show.time}</Text>
-                <Text style={styles.cardText}>{show.date}</Text>
-                <Text style={styles.cardText}>{show.description}</Text>
-                {/* <EditShowModal /> */}
-            {/* </Card>
-  //     )
-  //  })
-  //    }
-        </View>  */}
-
           </ScrollView>
         </KeyboardAvoidingView>
 
@@ -125,46 +104,6 @@ export default function PreviousRSVPShows(props) {
       </TouchableOpacity >
 
     </View >
-
-
-    // <SafeAreaView style={styles.container}>
-    //   <ScrollView style={{ marginTop: 30 }}>
-    //     <View>
-    //       <Modal
-    //         animationType="slide"
-    //         transparent={false}
-    //         visible={modalVisible}
-    //       >
-    //         {oldShows && oldShows.map(show => {
-    //           return (
-    //             <Card
-    //               title={show.name}
-    //               style={styles.card}
-    //               backgroundColor='#111'
-    //               padding={10}
-    //               borderRadius={10}
-    //               containerStyle={styles.card}
-    //             // image={require('../images/pic2.jpg')}
-    //             >
-    //               <Text style={styles.cardText}>{show.time}</Text>
-    //               <Text style={styles.cardText}>{show.date}</Text>
-    //               <Text style={styles.cardText}>{show.description}</Text>
-    //               {/* <EditShowModal /> */}
-    //             </Card>
-    //           )
-    //         })
-    //         }
-    //       </Modal>
-    //       <TouchableOpacity
-    //         style={styles.prevButton}
-    //         onPress={() => { setModalVisible(true); }}
-    //       >
-    //         <Text style={styles.buttonText}>Get previously attended shows</Text>
-    //       </TouchableOpacity>
-    //     </View>
-    //   </ScrollView>
-    // </SafeAreaView >
-
   )
 }
 
