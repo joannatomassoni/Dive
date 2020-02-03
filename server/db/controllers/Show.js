@@ -88,7 +88,7 @@ const createShow = async (req, res) => {
     }
 }
 
-// Update show info
+// Update show
 const updateShow = async (req, res) => {
     try {
         const { id } = req.params;

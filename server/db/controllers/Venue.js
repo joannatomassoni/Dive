@@ -140,25 +140,19 @@ const getVenueFans = async (req, res) => {
 }
 
 
-// Update venue
+// Update venue info
 const updateVenue = async (req, res) => {
     try {
-        const { name, address, city, state, zip_code } = req.params;
+        const { id } = req.params;
+        const { fieldName, newInfo } = req.body;
         await Venue.update(
-            {
-                name: name,
-                address: address,
-                city: city,
-                state: state,
-                zip_code: zip_code
-            },
-            { where: { name: name } }
-        )
-        console.log("updated venue");
+            { [fieldName]: newInfo },
+            { where: { id: id },
+        })
         res.sendStatus(200);
     }
-    catch {
-        console.log("error updating venue in db", err);
+    catch (err) {
+        console.log(err);
         res.sendStatus(400);
     }
 }
