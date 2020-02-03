@@ -87,7 +87,7 @@ const createShow = async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.send(err);
+        res.sendStatus(400);
     }
 }
 
