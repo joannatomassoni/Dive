@@ -17,6 +17,7 @@ import Moment from 'moment';
 import axios from 'axios';
 import { AXIOS_URL } from 'react-native-dotenv';
 import * as Calendar from 'expo-calendar';
+import SingleBandModal from './SingleBandModal'
 
 export default function SingleShowModal(props) {
   //global user signin info and editing function
@@ -128,7 +129,6 @@ export default function SingleShowModal(props) {
       titleColor: 'blue',
     },
   };
-  console.log("venue:", venue)
 
   return (
     <View>
@@ -169,7 +169,12 @@ export default function SingleShowModal(props) {
             <Text style={styles.infoText}>{singleShow.description}</Text>
             {/* list of all additional bands playing in current show */}
             {bands.map(band => {
-              return <Text style={styles.infoText}>{band.name}</Text>
+              return (
+                <View style={styles.bandModal}>
+                  <SingleBandModal name={band.name} bandId={band.id} />
+                </View> 
+              )
+
             })}
             <View style={{
               flexDirection: 'row',
@@ -270,6 +275,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#2D323A',
     justifyContent: 'center',
+  },
+  bandModal: {
+    fontSize: 20,
+    color: '#fff',
+    paddingLeft: 290,
+    paddingBottom: 5,
+    
   },
   headerText: {
     fontSize: 45,
