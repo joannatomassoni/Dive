@@ -29,9 +29,21 @@ const { DB_USER, DB_PASS, DB_NAME, DB_HOST, CLOUD_SQL_CONNECTION_NAME } = proces
 // });
 
 // PROD
-const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+// const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+//   dialect: 'mysql',
+//   host: DB_HOST,
+//   timestamps: false,
+//   pool: {
+//     max: 3,
+//     min: 0,
+//     idle: 10000
+//   },
+// });
+
+
+const sequelize = new Sequelize('dive', 'root', 'dive', {
   dialect: 'mysql',
-  host: DB_HOST,
+  host: '35.224.191.68',
   timestamps: false,
   pool: {
     max: 3,

@@ -16,7 +16,7 @@ const Op = Sequelize.Op;
 // Create show
 const createShow = async (req, res) => {
     try {
-        let { name, dateTime, flyer, venueName, bandNames, description } = req.body;
+        let { name, dateTime, flyer, venueName, bandNames, description, status } = req.body;
         const venue = await getRecordByName('venue', venueName);
         // format dateTime to be used for sorting and to be passed back as human-friendly strings
         // dateTime = moment(dateTime).format('llll');
@@ -31,6 +31,7 @@ const createShow = async (req, res) => {
             dateTime: dateTime,
             flyer: flyer,
             description: description,
+            status: status,
             id_venue: venue.id
         })
 
