@@ -22,6 +22,8 @@ import EditShowModal from '../modals/EditShowModal';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { AXIOS_URL } from 'react-native-dotenv';
+import SingleBandModal from '../modals/SingleBandModal';
+import SingleShowModal from '../modals/SingleShowModal'
 
 export default function Hub(props) {
   //global user signin info and editing function
@@ -146,7 +148,7 @@ export default function Hub(props) {
         {/* Cards for all a bands upcoming shows */}
         <View>
           {userInfo.userType === 'band' ?
-            shows.map(show => {
+            shows && shows.map(show => {
               return (
                 <Card
                   title={show.name}
@@ -174,26 +176,33 @@ export default function Hub(props) {
 
         {/* Cards for all a bands upcoming shows */}
         <View>
-          <Text style={styles.text}>Bands Followed</Text>
+          <Text style={styles.text}>RSVPed Shows</Text>
 
           {userInfo.userType === 'fan' ?
             // <Text> RSVPed Shows</Text>
 
-            fanShows.map(show => {
+            fanShows && fanShows.map(show => {
               return (
                 // <Text>RSVPed Shows</Text>
                 <Card
-                  title={show.name}
+
+                  // title={show.name}
                   style={styles.card}
-                  backgroundColor='#fff'
+                  backgroundColor='#111'
                   borderWidth={0}
                   borderRadius={10}
                   padding={10}
+                  containerStyle={styles.card}
                 // image={require('../images/pic2.jpg')}
                 >
-                  <Text style={{ marginBottom: 10 }}>{show.time}</Text>
-                  <Text style={{ marginBottom: 10 }}>{show.description}</Text>
-
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    {/* <View> */}
+                    {/* modal to display single show info */}
+                    <SingleShowModal show={show.id} showName={show.name} />
+                    <Text style={styles.cardText}>{show.date}</Text>
+                    <Text style={styles.cardText}>{show.time}</Text>
+                    <Text style={styles.cardText}>{show.description}</Text>
+                  </View>
                 </Card>
               )
             })
@@ -206,10 +215,11 @@ export default function Hub(props) {
           <Text style={styles.text}>Bands Followed</Text>
           {userInfo.userType === 'fan' ?
 
-            followed.map(band => {
+            followed && followed.map(band => {
               return (
                 <Card
-                  title={band.name}
+                  // title={band.name}
+                  key={band.id}
                   style={styles.card}
                   backgroundColor='#111'
                   padding={10}
@@ -217,7 +227,10 @@ export default function Hub(props) {
                   containerStyle={styles.card}
                 // image={require('../images/pic2.jpg')}
                 >
-
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    {/* <View> */}
+                    <SingleBandModal name={band.name} bandId={band.id} />
+                  </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
         <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
 
@@ -238,7 +251,7 @@ export default function Hub(props) {
               </TouchableOpacity>
 
               {
-                oldShows.map(show => {
+                oldShows && oldShows.map(show => {
                   return (
                     <Card
                       title={show.name}
@@ -249,9 +262,9 @@ export default function Hub(props) {
                       containerStyle={styles.card}
                     // image={require('../images/pic2.jpg')}
                     >
-                      <Text style={{ marginBottom: 10 }}>{show.time}</Text>
-                      <Text style={{ marginBottom: 10 }}>{show.date}</Text>
-                      <Text style={{ marginBottom: 10 }}>{show.description}</Text>
+                      <Text style={styles.cardText}>{show.time}</Text>
+                      <Text style={styles.cardText}>{show.date}</Text>
+                      <Text style={styles.cardText}>{show.description}</Text>
                       <EditShowModal />
                     </Card>
                   )
@@ -281,6 +294,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#75A4AD',
     borderRadius: 10
   },
+  cardText: {
+    fontSize: 16,
+    color: '#59C3D1',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20,
+    marginBottom: 10
+  },
+
   button: {
     borderRadius: 5,
     marginHorizontal: 40,
