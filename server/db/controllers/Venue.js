@@ -35,6 +35,8 @@ const getAllVenues = async (req, res) => {
     try {
         const venues = await Venue.findAll()
         console.log("retrieved venues from db", venues);
+        // returning all venues minus the placeholder "private" one
+        venues.splice(0, 1);
         res.status(200).send(venues);
     }
     catch (err) {
