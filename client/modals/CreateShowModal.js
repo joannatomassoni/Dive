@@ -16,6 +16,7 @@ import { AXIOS_URL } from 'react-native-dotenv';
 import VenuePicker from '../components/VenuePicker'
 import DateTimePicker from '../components/DateTimePicker';
 import * as ImagePicker from 'expo-image-picker';
+import RadioForm from 'react-native-simple-radio-button';
 
 
 export default function CreateShowModal(props) {
@@ -29,8 +30,10 @@ export default function CreateShowModal(props) {
   const [bandName, setBandName] = useState('');
   //array of all bands
   const [bandNames, addBandName] = useState([userInfo.username]);
+  // public/private status
+  const [ status, setStatus ] = useState('public');
   //venue name
-  const [venueName, setVenueName] = useState('');
+  const [venueName, setVenueName] = useState('private');
   //show date
   const [dateTime, setDateTime] = useState('');
   //show description
@@ -45,6 +48,11 @@ export default function CreateShowModal(props) {
   //sets band photo
   const [flyer, setFlyerPhoto] = useState('');
   // const [flyerUpload, ]
+  // values for public/private option for venue
+  const radio_props = [
+    { label: 'Public', value: 'public' },
+    { label: 'Private', value: 'private' }
+  ];
 
   //allows user to upload a photo
   //this gets permission from phone to access images
@@ -151,8 +159,25 @@ export default function CreateShowModal(props) {
                   }}
                 />
               </View>
-              {/* dropdown to select venue */}
+
+              {/* Radio button to select private/public status of show */}
+            <RadioForm
+              style={styles.modal}
+              buttonInnerColor={'#59C3D1'}
+              radio_props={radio_props}
+              initial={null}
+              formHorizontal={true}
+              labelHorizontal={false}
+              buttonColor={'#59C3D1'}
+              animation={true}
+              labelColor={'#fff'}
+              onPress={(value) => {setStatus(value)}}
+            />
+            { status === 'public' ?
+              // {/* dropdown to select venue, available if show is public */}
               <VenuePicker setVenueName={setVenueName} allVenues={allVenues} />
+              : null
+            }
               {/* date time picker */}
               <DateTimePicker setDateTime={setDateTime} />
               {/*  button to upload photo */}
@@ -302,4 +327,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 50,
   },
+  modal: {
+    marginLeft: 95
+  }
 })
