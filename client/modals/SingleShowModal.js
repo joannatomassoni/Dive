@@ -100,10 +100,6 @@ export default function SingleShowModal(props) {
   }
 
   useEffect(() => {
-    //get all bands for specific show
-    getShowBands();
-    //get all comments for specific show
-    getShowComments();
     //request to access users calendar
     (async () => {
       const { status } = await Calendar.requestCalendarPermissionsAsync();
@@ -240,12 +236,18 @@ export default function SingleShowModal(props) {
       </Modal>
       {/* show more button when modal is hidden */}
       <TouchableOpacity
-        onPress={() => {
-          setModalVisible(true);
+        onPress={async () => {
           //request to get all info for current show
-          getShowInfo();
+          await getShowInfo();
           //request to get user's rsvp info
+          await getRsvpInfo();
+          //get all bands for specific show
+          await getShowBands();
+          //get all comments for specific show
+          await getShowComments();
           getRsvpInfo();
+
+          setModalVisible(true);
         }}
       >
         <Text style={styles.modalShowText}>{props.showName}</Text>
