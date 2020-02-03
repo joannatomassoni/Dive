@@ -13,10 +13,9 @@ import { SignedInContext } from '../context/UserContext';
 import RadioForm from 'react-native-simple-radio-button';
 import { Ionicons } from '@expo/vector-icons';
 import * as Google from "expo-google-app-auth";
+import * as Calendar from 'expo-calendar';
 import { IOS_AUTH_KEY, ANDROID_AUTH_KEY, AXIOS_URL } from 'react-native-dotenv';
 import registerforPushNotificationsAsync from '../expoPushFunctions/registerForPushNotificationsAsync';
-
-console.log(AXIOS_URL);
 
 export default function ModalExample(props) {
   //state for modal visibility
@@ -57,6 +56,12 @@ export default function ModalExample(props) {
         typeName: userType,
         photo: user.photoUrl,
       })
+        .then(async () => {
+          const { status } = await Calendar.requestCalendarPermissionsAsync();
+          if (status === 'granted') {
+            const calendars = await Calendar.getCalendarsAsync();
+          }
+        })
       .then(async () => {
         const expoPushToken = await registerforPushNotificationsAsync();
         return expoPushToken

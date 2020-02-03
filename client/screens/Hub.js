@@ -4,7 +4,6 @@ import {
   Text,
   View,
   SafeAreaView,
-  Button,
   Image,
   TouchableOpacity,
 } from 'react-native';
@@ -41,32 +40,29 @@ export default function Hub(props) {
         setHubInfo(() => response.data);
       })
       .catch((err) => {
-        // console.log("were not getting hub info", err);
+        console.log("error getting user info", err);
       }),
 
       axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
         .then((response) => {
-          // console.log("getting a bands shows  in hub from db", response.data)
           setShows(() => response.data.shows);
         })
         .catch((err) => {
-          // console.log("frontend not getting band shows from db", err);
+          console.log("error getting band shows", err);
         })
     axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
       .then((response) => {
-        console.log("getting a photo from db", response.data.bandPhoto)
         setDbPhoto(() => response.data.bandPhoto);
       })
       .catch((err) => {
-        console.log("front end not getting band photo from db", err);
+        console.log("error getting band info", err);
       })
     axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
       .then((response) => {
-        console.log("getting a fans shows  in hub from db", response.data)
         setFanShows(() => response.data);
       })
       .catch((err) => {
-        console.log("front end not getting fans shows from db", err);
+        console.log("error getting rsvp shows", err);
       })
 
   }, [])
@@ -74,7 +70,6 @@ export default function Hub(props) {
   const getPreviousShows = () => {
     axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
       .then(response => {
-        console.log("getting old shows", response);
         setOldShows(response.data)
       })
       .catch(err => {
@@ -131,7 +126,6 @@ export default function Hub(props) {
                   borderWidth={0}
                   borderRadius={10}
                   padding={10}
-                // image={require('../images/pic2.jpg')}
                 >
                   <Text style={{ marginBottom: 10 }}>{show.time}</Text>
                   <Text style={{ marginBottom: 10 }}>{show.description}</Text>
@@ -160,17 +154,14 @@ export default function Hub(props) {
                   borderWidth={0}
                   borderRadius={10}
                   padding={10}
-                // image={require('../images/pic2.jpg')}
                 >
                   <Text style={{ marginBottom: 10 }}>{show.time}</Text>
                   <Text style={{ marginBottom: 10 }}>{show.description}</Text>
-
                 </Card>
               )
             })
             : null}
         </View>
-
 
         <View>
           {userInfo.userType === 'fan' ?
@@ -181,7 +172,6 @@ export default function Hub(props) {
               >
                 <Text style={styles.buttonText} >Get old shows</Text>
               </TouchableOpacity>
-
               {
                 oldShows.map(show => {
                   return (
@@ -192,7 +182,6 @@ export default function Hub(props) {
                       borderWidth={0}
                       borderRadius={10}
                       padding={10}
-                    // image={require('../images/pic2.jpg')}
                     >
                       <Text style={{ marginBottom: 10 }}>{show.time}</Text>
                       <Text style={{ marginBottom: 10 }}>{show.date}</Text>
