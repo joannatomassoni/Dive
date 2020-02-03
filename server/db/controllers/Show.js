@@ -88,13 +88,20 @@ const createShow = async (req, res) => {
     }
 }
 
-// Update a show
+// Update show info
 const updateShow = async (req, res) => {
     try {
         const { id } = req.params;
+        const { fieldName, newInfo } = req.body;
+        await Show.update(
+            { [fieldName]: newInfo },
+            { where: { id: id },
+        })
+        res.sendStatus(200);
     }
-    catch {
-
+    catch (err) {
+        console.log(err);
+        res.sendStatus(400);
     }
 }
 
@@ -108,6 +115,7 @@ const deleteShow = async (req, res) => {
             }
         });
         res.sendStatus(200)
+        //
     }
     catch (err) {
         console.log(err);
