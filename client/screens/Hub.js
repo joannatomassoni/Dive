@@ -20,6 +20,7 @@ import EditBandBioModal from '../modals/EditBandBioModal';
 import EditShowModal from '../modals/EditShowModal';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
+import Calendar from '../components/Calendar';
 import { AXIOS_URL } from 'react-native-dotenv';
 
 export default function Hub(props) {
@@ -42,7 +43,6 @@ export default function Hub(props) {
       .catch((err) => {
         console.log("error getting user info", err);
       }),
-
       axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
         .then((response) => {
           setShows(() => response.data.shows);
@@ -113,7 +113,7 @@ export default function Hub(props) {
           {/* Button to open create show modal */}
           {userInfo.userType === 'band' ? <CreateShowModal /> : null}
         </View>
-
+        <Calendar />
         {/* Cards for all a bands upcoming shows */}
         <View>
           {userInfo.userType === 'band' ?

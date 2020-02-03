@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { View, Text, Button, Platform } from 'react-native';
 import * as Calendar from 'expo-calendar';
 
-export default function App() {
+export default function Cal() {
   useEffect(() => {
     (async () => {
+      console.log('1')
       const { status } = await Calendar.requestCalendarPermissionsAsync();
       if (status === 'granted') {
         const calendars = await Calendar.getCalendarsAsync();
@@ -18,12 +19,10 @@ export default function App() {
     <View
       style={{
         flex: 1,
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'space-around',
       }}>
-      <Text>Calendar Module Example</Text>
-      <Button title="Create a new calendar" onPress={createCalendar} />
+      <Button title="Sync with Calendar" onPress={createCalendar} />
     </View>
   );
 }
@@ -32,7 +31,7 @@ async function getDefaultCalendarSource() {
   const calendars = await Calendar.getCalendarsAsync();
   const defaultCalendars = calendars.filter(
     each => each.source.name === 'Default'
-  );
+    );
   return defaultCalendars[0].source;
 }
 
