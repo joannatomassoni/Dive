@@ -2,43 +2,56 @@ import React, { useState } from 'react';
 import { Modal, View, SafeAreaView, StyleSheet, Text, ScrollView, TextInput } from 'react-native';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import axios from 'axios';
+import { Card } from 'react-native-elements';
 import { AXIOS_URL } from 'react-native-dotenv';
+import SingleVenueModal from '../modals/SingleVenueModal'
+// import SingleBandModal from '../modals/SingleBandModal'
+// import SingleShowModal from '../modals/SingleShowModal'
 
 
-export default function SearchResultsModal(props) {
+export default function SearchResultsModal() {
     //state for modal visibility
     const [modalVisible, setModalVisible] = useState(false);
     // state for input value for query
     const [ query, setQuery ] = useState('');
     // state for bands results
-    const [ bands, setBands ] = useState();
+    const [ bands, setBands ] = useState([]);
     // state for shows results
-    const [ shows, setShows ] = useState();
+    const [ shows, setShows ] = useState([]);
     // state for venues results
-    const [ venues, setVenues ] = useState();
+    const [ venues, setVenues ] = useState([]);
 
     const searchCall = async (query) => {
         await axios.get(`${AXIOS_URL}/search/bands/${query}`)
             .then((response) => {
                 if (response.data) {
                     setBands(response.data);
-                    console.log(bands);
                 }
+            })
+            .then(() => {
+                console.log(venues);
             });
         await axios.get(`${AXIOS_URL}/search/shows/${query}`)
             .then((response) => {
                 if (response.data) {
                     setShows(response.data);
                 }
-                console.log(shows);
+            })
+            .then(() => {
+                console.log(venues);
             });
         await axios.get(`${AXIOS_URL}/search/venues/${query}`)
             .then((response) => {
                 if (response.data) {
                     setVenues(response.data);
-                    console.log(venues);
                 }
-            });
+            })
+            .then(() => {
+                console.log(venues);
+            })
+            .then(() => {
+                setModalVisible(true);
+            })
     };
 
     return (
@@ -63,10 +76,11 @@ export default function SearchResultsModal(props) {
                             }}
                         />
                     </Ionicons>
+                    {/* main body */}
                     <ScrollView style={{ marginTop: 30 }}>
                         <Text style={styles.headerText}>Results</Text>       
 
-                        {/* conditionally rendering lists of venues, bands, and shows */}
+                        {/* conditionally rendering lists of venues, bands, and shows */}            
                         {bands.length ? 
                             <Text>Bands</Text>
                             : null
@@ -76,10 +90,32 @@ export default function SearchResultsModal(props) {
                             : null
                         }
                         {venues.length ? 
-                            <Text>Venues</Text>
+                            <View>
+                                <Text style={styles.subheaderText}>Venues</Text>
+                                <View>
+                                    {venues.map((venue) => {
+                                        console.log(venue);
+                                        return (
+                                            <Card
+                                                key={venue.id}
+                                                backgroundColor='#111'
+                                                padding={10}
+                                                borderRadius={10}
+                                                containerStyle={styles.card}
+                                                >
+                                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                                    <View>
+                                                        <SingleVenueModal name={venue.name} venueId={venue.id} />
+                                                        <Text style={styles.cardText}>{venue.address}</Text>
+                                                    </View>
+                                                </View>
+                                            </Card>
+                                        )
+                                    })}
+                                </View>
+                            </View>
                             : null
                         }
-
                     </ScrollView>
                 </SafeAreaView>
 
@@ -103,7 +139,7 @@ export default function SearchResultsModal(props) {
                             color='#59C3D1'
                             size={37}
                             onPress={() => {
-                                searchCall(query).then(() => setModalVisible(true))
+                                searchCall(query)
                             }}
                             style={styles.button}
                         />
@@ -147,6 +183,14 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         paddingRight: 20
     },
+    subheaderText: {
+        fontSize: 35,
+        color: '#59C3D1',
+        opacity: 0.9,
+        // fontWeight: 'bold',
+        textAlign: 'left',
+        paddingLeft: 20
+    },
     searchBarContainer: {
         flex: 1,
         backgroundColor: '#2D323A',
@@ -160,5 +204,18 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginHorizontal: 40,
         fontWeight: 'bold'
+    },
+    card: {
+        borderWidth: 0,
+        paddingBottom: 0,
+        backgroundColor: '#111',
+        paddingBottom: 10
+    },
+    cardText: {
+        fontSize: 16,
+        color: '#59C3D1',
+        fontWeight: 'bold',
+        textAlign: 'left',
+        paddingRight: 20
     },
 })
