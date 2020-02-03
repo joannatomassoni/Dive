@@ -63,12 +63,6 @@ export default function Shows(props) {
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.headerText}>Shows</Text>
-
-        <Text style={styles.headerText}>{location.timestamp}</Text>
-        <View style={styles.mapContainer}>
-          <MapView style={styles.mapStyle} />
-        </View>
-
         {shows && shows.map(show => {
           return (
             <Card
@@ -155,26 +149,6 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 10
   },
-  mapContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  mapStyle: {
-    width: 395,
-    height: 250,
-    // width: Dimensions.get('window').width,
-    // height: Dimensions.get('window').height,
-  },
-
 })
 
 
-// {"coords": {"altitude": 0,
-// "altitudeAccuracy": -1,
-// "latitude": 37.785834,
-// "accuracy":5,
-// "longitude":-122.406417,
-// "heading":-1,"speed":-1},
-// "timestamp":1580595178044.103}
