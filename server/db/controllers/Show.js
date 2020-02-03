@@ -127,11 +127,30 @@ const updateShow = async (req, res) => {
 const deleteShow = async (req, res) => {
     try {
         const { id } = req.params;
+        const show = await Show.findOne({
+            where: {
+                id
+            },
+            include: [
+                { model: User, as: 'Fans', attributes: ['expoPushToken'] },
+            ]
+        })
+        const fans = show.Fans;
+        let pushTokens = [];
+        fans.forEach((fan) => {
+            pushTokens.push(fan.expoPushToken);
+        })
+        
+        const title = `'${show.name}' was just deleted`;
+        const body = 'Open Dive for more info.';
+        await sendNotifications(pushTokens, title, body);
+
         await Show.destroy({
             where: {
                 id
             }
         });
+
         res.sendStatus(200)
         //
     }
