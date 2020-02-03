@@ -60,6 +60,23 @@ const addPushToken = async (req, res) => {
     }
 }
 
+// add calendar id
+const addCalID = async (req, res) => {
+    try {
+        const { name } = req.params;
+        const { calID } = req.body;
+        console.log(calID);
+        await User.update(
+            { calID },
+            { where: { name } }
+        )
+    }
+    catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+}
+
 // const sendNotification = async (req, res) => {
 //     try {
 //         const message = {
@@ -407,6 +424,7 @@ const searchBands = async (req, res) => {
 module.exports = {
     addGenreToBand,
     addPushToken,
+    addCalID,
     createUser,
     deleteUser,
     followBand,
