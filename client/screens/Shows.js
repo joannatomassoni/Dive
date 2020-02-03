@@ -5,6 +5,7 @@ import {
   View,
   Image,
   SafeAreaView,
+  Dimensions
 } from 'react-native';
 import { Card } from 'react-native-elements'
 import axios from 'axios';
@@ -13,11 +14,16 @@ import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 import SingleShowModal from '../modals/SingleShowModal'
 import { AXIOS_URL } from 'react-native-dotenv';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import MapView from 'react-native-maps';
 
 export default function Shows(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
+  const [location, setLocation] = useState({});
+
   // const [flyer, setFlyer] = useState("");
 
   //request to get all shows
@@ -31,8 +37,25 @@ export default function Shows(props) {
       })
   }
 
+  const getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      console.log("can't get location");
+      // this.setState({
+      //   errorMessage: 'Permission to access location was denied',
+      // });
+    }
+
+    let locationObj = await Location.getCurrentPositionAsync({});
+    locationObj = JSON.stringify(locationObj);
+    setLocation(location);
+    console.log(location);
+  };
+
+
   useEffect(() => {
     getAllShows();
+    getLocationAsync();
   }, [])
 
   return (
@@ -52,27 +75,27 @@ export default function Shows(props) {
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View>
                   {/* modal to display single show info */}
-                  <SingleShowModal show={show.id} showName={show.name}/>
+                  <SingleShowModal show={show.id} showName={show.name} />
                   <Text style={styles.cardText}>{show.date}</Text>
                   <Text style={styles.cardText}>{show.time}</Text>
-                  { show.bands ? 
-                  show.bands.map(band => {
-                    <Text style={styles.cardText} key={band.id}>{band.name}</Text>
-                  })
-                  : null }
+                  {show.bands ?
+                    show.bands.map(band => {
+                      <Text style={styles.cardText} key={band.id}>{band.name}</Text>
+                    })
+                    : null}
                   <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text>
                 </View>
                 <View >
-                {/* show flyer */}
-                <Text >
-                  {show.flyer &&
-                    <Image
-                      style={{ justifyContent: 'right' }}
-                      style={styles.photo}
-                      source={{ uri: show.flyer }}
-                    />
-                  }
-                </Text>
+                  {/* show flyer */}
+                  <Text >
+                    {show.flyer &&
+                      <Image
+                        style={{ justifyContent: 'right' }}
+                        style={styles.photo}
+                        source={{ uri: show.flyer }}
+                      />
+                    }
+                  </Text>
                 </View>
               </View>
             </Card>
@@ -119,10 +142,13 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     paddingBottom: 0,
     backgroundColor: '#111',
-    paddingBottom: 10 
+    paddingBottom: 10
   },
-  photo: { 
-    width: 100, 
-    height: 100, 
-    borderRadius: 10 }
+  photo: {
+    width: 100,
+    height: 100,
+    borderRadius: 10
+  },
 })
+
+

@@ -12,9 +12,9 @@ const Op = Sequelize.Op;
 const createShow = async (req, res) => {
     try {
         let { name, dateTime, flyer, venueName, bandNames, description, status } = req.body;
-        
+
         const venue = await getRecordByName('venue', venueName);
-    
+
         // format dateTime to be used for sorting and to be passed back as human-friendly strings
         // dateTime = moment(dateTime).format('llll');
         const time = moment.utc(dateTime).format('LT');
@@ -93,8 +93,9 @@ const updateShow = async (req, res) => {
         const { fieldName, newInfo } = req.body;
         await Show.update(
             { [fieldName]: newInfo },
-            { where: { id: id },
-        })
+            {
+                where: { id: id },
+            })
         const show = await Show.findOne({
             where: {
                 id
@@ -108,7 +109,7 @@ const updateShow = async (req, res) => {
         fans.forEach((fan) => {
             pushTokens.push(fan.expoPushToken);
         })
-        
+
         const title = `Details for '${show.name}' have been edited`;
         const body = 'Open Dive for more info.';
         await sendNotifications(pushTokens, title, body);
@@ -140,7 +141,7 @@ const deleteShow = async (req, res) => {
         fans.forEach((fan) => {
             pushTokens.push(fan.expoPushToken);
         })
-        
+
         const title = `'${show.name}' was just deleted`;
         const body = 'Open Dive for more info.';
         await sendNotifications(pushTokens, title, body);
@@ -281,15 +282,16 @@ const getPreviousShows = async (req, res) => {
         const oldshows = await RSVP.findAll({
             where: {
                 id_fan: id,
-                createdAt: {
-                    [Op.lt]: new Date()
-                }
+
             }
         })
         Promise.all(oldshows.map(async (rsvp) => {
             const show = await Show.findOne({
                 where: {
-                    id: rsvp.id_show
+                    id: rsvp.id_show,
+                    dateTime: {
+                        [Op.lt]: new Date()
+                    }
                 }
             })
             return show;
@@ -336,10 +338,10 @@ const searchShows = async (req, res) => {
     try {
         const { query } = req.params;
         const shows = await Show.findAll({
-                where: {
-                    name: { [Op.like]: `%${query}%`}, 
-                }
-            })
+            where: {
+                name: { [Op.like]: `%${query}%` },
+            }
+        })
         res.send(shows);
     }
     catch (err) {

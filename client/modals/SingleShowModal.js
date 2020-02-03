@@ -34,6 +34,8 @@ export default function SingleShowModal(props) {
   //info required for axios calls
   let show = props.show;
 
+  const [venue, setVenue] = useState("");
+
   //request to get all comments for specific show
   const getShowComments = () => {
     axios.get(`${AXIOS_URL}/shows/${show}/comments`)
@@ -58,6 +60,7 @@ export default function SingleShowModal(props) {
   const getShowInfo = () => {
     axios.get(`${AXIOS_URL}/shows/${show}`)
       .then((response) => {
+        setVenue(response.data.venue.name);
         setSingleShow(response.data);
       })
       .catch((err) => {
@@ -114,7 +117,9 @@ export default function SingleShowModal(props) {
       }
     })();
   }, [])
-
+  // const venue = singleShow.venue.name
+  // const venueName = venue.name
+  // console.log("this is a single show venue", venue);
   // event details for calendar integration
   const details = {
     title: singleShow.name,
@@ -127,6 +132,7 @@ export default function SingleShowModal(props) {
       titleColor: 'blue',
     },
   };
+  console.log("venue:", venue)
 
   return (
     <View>
@@ -138,7 +144,7 @@ export default function SingleShowModal(props) {
         {/* start of modal when showing */}
         <SafeAreaView behavior="padding" style={styles.container}>
           {/* back button */}
-          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
+          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
             <Ionicons
               name='ios-arrow-back'
               color='#59C3D1'
@@ -156,11 +162,14 @@ export default function SingleShowModal(props) {
                 style={{ width: 400, height: 400, marginLeft: 5 }}
                 source={{ uri: singleShow.flyer }}
               />
-            : null}
-            
+              : null}
+
             {/* additional text */}
             <Text style={styles.infoText}>{singleShow.date}</Text>
             <Text style={styles.infoText}>{singleShow.time}</Text>
+
+            <Text style={styles.infoText}>{venue}</Text>
+
             <Text style={styles.infoText}>{singleShow.description}</Text>
             {/* list of all additional bands playing in current show */}
             {bands.map(band => {
@@ -172,52 +181,52 @@ export default function SingleShowModal(props) {
               justifyContent: 'center',
               marginTop: 10
             }}>
-            {/* add to calendar button */}
-            <TouchableOpacity
-              style={styles.buttonContainer}
-              onPress={ async () => {
-                try {
-                  console.log('Adding Event');
-                  const eventId = await Calendar.createEventAsync("D5A65218-29C5-466C-A2CE-D54DF9D4260A", details);
-                  console.log("Event Id", id);
-                }
-                catch (error) {
-                  console.log('Error', error);
-                }
-              }}
-            >
-              <Text style={styles.signupButtonText}>Add To Calendar</Text>
-            </TouchableOpacity>
-            {/* button to rsvp to specific (shows when signed in) */}
-            {userInfo.signedIn ?
-              //if already rsvp'd, show button to cancel rvp
-              (rsvp ? <TouchableOpacity
-                style={styles.cancelButtonContainer}
-                  onPress={() => { 
+              {/* add to calendar button */}
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={async () => {
+                  try {
+                    console.log('Adding Event');
+                    const eventId = await Calendar.createEventAsync("D5A65218-29C5-466C-A2CE-D54DF9D4260A", details);
+                    console.log("Event Id", id);
+                  }
+                  catch (error) {
+                    console.log('Error', error);
+                  }
+                }}
+              >
+                <Text style={styles.signupButtonText}>Add To Calendar</Text>
+              </TouchableOpacity>
+              {/* button to rsvp to specific (shows when signed in) */}
+              {userInfo.signedIn ?
+                //if already rsvp'd, show button to cancel rvp
+                (rsvp ? <TouchableOpacity
+                  style={styles.cancelButtonContainer}
+                  onPress={() => {
                     removeRsvp();
                   }}
-              >
-                <Text style={styles.signupButtonText}>Cancel RSVP</Text>
-              </TouchableOpacity>
-                //if not rsvp'd, show rsvp button
-                : <TouchableOpacity
-                  style={styles.buttonContainer}
-                  onPress={() => { 
-                    addRsvp();
-                  }}
                 >
-                  <Text style={styles.signupButtonText}>RSVP</Text>
-                </TouchableOpacity>)
-              : null}
-              </View>
+                  <Text style={styles.signupButtonText}>Cancel RSVP</Text>
+                </TouchableOpacity>
+                  //if not rsvp'd, show rsvp button
+                  : <TouchableOpacity
+                    style={styles.buttonContainer}
+                    onPress={() => {
+                      addRsvp();
+                    }}
+                  >
+                    <Text style={styles.signupButtonText}>RSVP</Text>
+                  </TouchableOpacity>)
+                : null}
+            </View>
             {/* button to create a new comment (shows when signed in) */}
-            {userInfo.signedIn ? 
-              <CreateCommentModal 
-              userId={userInfo.id} 
-              showId={singleShow.id}
-              getShowComments={getShowComments}
-              /> 
-            : null}
+            {userInfo.signedIn ?
+              <CreateCommentModal
+                userId={userInfo.id}
+                showId={singleShow.id}
+                getShowComments={getShowComments}
+              />
+              : null}
             {/* cards to hold comments */}
             {comments.map(comment => {
               return (
@@ -334,5 +343,4 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   }
 })
-
 
