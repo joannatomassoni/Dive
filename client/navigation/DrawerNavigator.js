@@ -7,6 +7,7 @@ import Shows from '../screens/Shows'
 import Bands from '../screens/Bands';
 import Venues from '../screens/Venues';
 import Login from '../screens/Login'
+import Search from '../screens/Search'
 import MenuDrawer from '../components/MenuDrawer'
 
 const WIDTH = Dimensions.get('window').width;
@@ -36,6 +37,9 @@ const DrawerNavigator = createDrawerNavigator(
     Hub: {
       screen: Hub
     },
+    Search: {
+      screen: Search
+    }
   },
   DrawerConfig
 );

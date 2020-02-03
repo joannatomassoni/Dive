@@ -95,6 +95,15 @@ export default function MenuDrawer(props) {
               />
               {navLink('Hub', 'Hub')}
             </View>
+            <View style={{ flexDirection: 'row' }}>
+              <MaterialIcons
+                name='search'
+                color='#fff'
+                size={30}
+                style={styles.bandsIcon}
+              />
+              {navLink('Search', 'Search')}
+            </View>
             <View style={{marginBottom:20}}></View>
             <Divider style={{ backgroundColor: '#fff', height: 2 }} />
             {/* logout button when user is signed in */}
@@ -171,6 +180,16 @@ export default function MenuDrawer(props) {
                 style={styles.venuesIcon}
               />
               {navLink('Venues', 'Venues')}
+            </View>
+
+            <View style={{ flexDirection: 'row' }}>
+              <MaterialIcons
+                name='search'
+                color='#fff'
+                size={30}
+                style={styles.bandsIcon}
+              />
+              {navLink('Search', 'Search')}
             </View>
 
             <View style={{ flexDirection: 'row' }}>
