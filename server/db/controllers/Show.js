@@ -284,14 +284,19 @@ const getBandsPreviousShows = async (req, res) => {
                     [Op.lt]: new Date()
                 }
             }
+            // return show
         })
-        return show
+        console.log("are we getting shows?", id)
+        res.send(shows);
     }
     catch {
         console.log("error getting old shows", err)
         res.sendStatus(400);
     }
 }
+
+// console.log(getBandsPreviousShows);
+
 
 //gets previous/past RSVPed shows for fans
 //will need users id
@@ -374,7 +379,8 @@ module.exports = {
     deleteShow,
     getAllUpcomingShows,
     getFanRSVPs,
-    getPreviousShows,
+    getFansPreviousShows,
+    getBandsPreviousShows,
     getSingleShow,
     getShowRSVPs,
     removeFanRSVP,
