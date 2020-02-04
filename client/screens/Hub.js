@@ -38,6 +38,7 @@ export default function Hub(props) {
   // const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
+  console.log(shows);
 
   
   //gets band info
@@ -56,8 +57,10 @@ export default function Hub(props) {
   const getBandsShows = async () => {
     await axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
     .then((response) => {
-      setShows(() => response.data.shows);
-      })
+      setShows(() => response.data.shows.filter((show) => {
+        return moment(show.dateTime).toDate() > new Date();
+      }))
+    })
       .catch((err) => {
         console.log(err);
       })
@@ -165,7 +168,7 @@ export default function Hub(props) {
             <View>
               {shows.length ? 
               <Text style={styles.subText}>Your Upcoming Gigs</Text>
-              : null
+              : <Text style={styles.subText}>No Upcoming Gigs</Text>
               }
               {shows && shows.map(show => {
                 return (
