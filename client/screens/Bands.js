@@ -52,7 +52,7 @@ export default function Bands(props) {
             >
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View>
-                  <SingleBandModal name={band.name} bandId={band.id} />
+                  <SingleBandModal name={band.nickname} bandId={band.id} />
                   <Text style={styles.cardText}>{band.bio}</Text>
                 </View>
                 <View>
