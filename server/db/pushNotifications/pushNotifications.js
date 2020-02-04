@@ -11,7 +11,6 @@ const sendNotifications = async (pushTokens, title, body) => {
         let messages = [];
         for (let pushToken of pushTokens) {
           // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
-        
           // Check that all your push tokens appear to be valid Expo push tokens
           if (!Expo.isExpoPushToken(pushToken)) {
             console.error(`Push token ${pushToken} is not a valid Expo push token`);

@@ -18,6 +18,7 @@ export default function CreateCommentModal({ showId, userId, getShowComments }) 
   const [modalVisible, setModalVisible] = useState(false);
   //comment text
   const [comment, setComment] = useState('');
+   console.log(comment);
   return (
     <View>
       <Modal
@@ -46,15 +47,22 @@ export default function CreateCommentModal({ showId, userId, getShowComments }) 
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
                 color='black'
-                onChangeText={setComment}
+                onChangeText={(text) => setComment(text)}
                 style={styles.input}
+                value={comment}
               />
               {/* edit bio button when modal is showing */}
               <TouchableOpacity
                 style={styles.loginContainer}
-                onPress={() => {
-                  setModalVisible(false);
-                  getShowComments();
+                onPress={async () => {
+                  axios.post(`${AXIOS_URL}/shows/${showId}/comments`, {
+                    id_user: userId,
+                    text: comment
+                  })
+                    .then(async () => {
+                      await getShowComments();
+                      setModalVisible(false)
+                    })
                 }}
               >
                 <Text style={styles.buttonText}>Post Comment</Text>
@@ -66,15 +74,7 @@ export default function CreateCommentModal({ showId, userId, getShowComments }) 
       {/* edit bio button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
-        onPress={() => {
-          setModalVisible(true);
-          axios.post(`${AXIOS_URL}/shows/${showId}/comments`, {
-            id_user: userId,
-            text: comment
-          })
-            .then(response => console.log('success', response))
-            .catch(error => console.log('failed to create comment', error));
-        }}
+        onPress={() => {setModalVisible(true)}}
       >
         <Text style={styles.signupButtonText}>Comment</Text>
       </TouchableOpacity>

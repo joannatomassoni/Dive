@@ -181,7 +181,7 @@ export default function SearchResultsModal() {
                             color='#59C3D1'
                             size={37}
                             onPress={() => {
-                                searchCall(query)
+                                searchCall(query.trim())
                             }}
                             style={styles.button}
                         />

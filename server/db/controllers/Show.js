@@ -8,16 +8,13 @@ const { sendNotifications } = require('../pushNotifications/pushNotifications')
 // import the Sequelize operators
 const Op = Sequelize.Op;
 
-// // 2020-06-12T14:42:42.000Z
-// const dateTime = moment('2020-06-12T14:42:42.000Z').format('llll');
-// const time = moment('2020-06-12T14:42:42.000Z').format('LT');
-// const date = moment('2020-06-12T14:42:42.000Z').format('ll');
-
 // Create show
 const createShow = async (req, res) => {
     try {
-        let { name, dateTime, flyer, venueName, bandNames, description } = req.body;
+        let { name, dateTime, flyer, venueName, bandNames, description, status } = req.body;
+
         const venue = await getRecordByName('venue', venueName);
+
         // format dateTime to be used for sorting and to be passed back as human-friendly strings
         // dateTime = moment(dateTime).format('llll');
         const time = moment.utc(dateTime).format('LT');
@@ -31,6 +28,7 @@ const createShow = async (req, res) => {
             dateTime: dateTime,
             flyer: flyer,
             description: description,
+            status: status,
             id_venue: venue.id
         })
 
@@ -51,7 +49,6 @@ const createShow = async (req, res) => {
             const followers = await sequelize.query(sql, {
                 replacements: [band.id]
             })
-            console.log('followers: ', followers);
             followers[0].forEach((follower) => {
                 bandTokens.push(follower.expoPushToken)
             })
@@ -96,8 +93,28 @@ const updateShow = async (req, res) => {
         const { fieldName, newInfo } = req.body;
         await Show.update(
             { [fieldName]: newInfo },
-            { where: { id: id },
+            {
+                where: { id: id },
+            })
+        const show = await Show.findOne({
+            where: {
+                id
+            },
+            include: [
+                { model: User, as: 'Fans', attributes: ['expoPushToken'] },
+            ]
         })
+        const fans = show.Fans;
+        let pushTokens = [];
+        fans.forEach((fan) => {
+            pushTokens.push(fan.expoPushToken);
+        })
+
+        const title = `Details for '${show.name}' have been edited`;
+        const body = 'Open Dive for more info.';
+        await sendNotifications(pushTokens, title, body);
+
+
         res.sendStatus(200);
     }
     catch (err) {
@@ -111,11 +128,30 @@ const updateShow = async (req, res) => {
 const deleteShow = async (req, res) => {
     try {
         const { id } = req.params;
+        const show = await Show.findOne({
+            where: {
+                id
+            },
+            include: [
+                { model: User, as: 'Fans', attributes: ['expoPushToken'] },
+            ]
+        })
+        const fans = show.Fans;
+        let pushTokens = [];
+        fans.forEach((fan) => {
+            pushTokens.push(fan.expoPushToken);
+        })
+
+        const title = `'${show.name}' was just deleted`;
+        const body = 'Open Dive for more info.';
+        await sendNotifications(pushTokens, title, body);
+
         await Show.destroy({
             where: {
                 id
             }
         });
+
         res.sendStatus(200)
         //
     }
@@ -125,14 +161,18 @@ const deleteShow = async (req, res) => {
     }
 }
 
-// Get all upcoming shows in database
+// Get all upcoming public shows in database
 const getAllUpcomingShows = async (req, res) => {
     try {
         const shows = await Show.findAll({
             where: {
-                dateTime: {
-                    [Op.gte]: moment().subtract(5, 'hours').toDate()
-                }
+                [Op.and]: [
+                    { dateTime: { [Op.gte]: moment().toDate() } },
+                    // Placeholder "private" venue will be created initially and have an id of 1
+                    // Private shows are assigned to the venue called "private"
+                    // Querying for all shows on main page will ignore these shows
+                    { id_venue: { [Op.gt]: 1 } }
+                ]
             },
             include: [
                 { model: User, as: 'bands' },
@@ -242,15 +282,16 @@ const getPreviousShows = async (req, res) => {
         const oldshows = await RSVP.findAll({
             where: {
                 id_fan: id,
-                createdAt: {
-                    [Op.lt]: new Date()
-                }
+
             }
         })
         Promise.all(oldshows.map(async (rsvp) => {
             const show = await Show.findOne({
                 where: {
-                    id: rsvp.id_show
+                    id: rsvp.id_show,
+                    dateTime: {
+                        [Op.lt]: new Date()
+                    }
                 }
             })
             return show;
@@ -297,10 +338,10 @@ const searchShows = async (req, res) => {
     try {
         const { query } = req.params;
         const shows = await Show.findAll({
-                where: {
-                    name: { [Op.like]: `%${query}%`}, 
-                }
-            })
+            where: {
+                name: { [Op.like]: `%${query}%` },
+            }
+        })
         res.send(shows);
     }
     catch (err) {

@@ -17,6 +17,7 @@ import Moment from 'moment';
 import axios from 'axios';
 import { AXIOS_URL } from 'react-native-dotenv';
 import * as Calendar from 'expo-calendar';
+import SingleBandModal from './SingleBandModal'
 
 export default function SingleShowModal(props) {
   //global user signin info and editing function
@@ -33,6 +34,8 @@ export default function SingleShowModal(props) {
   const [rsvp, setRsvp] = useState(false);
   //info required for axios calls
   let show = props.show;
+
+  const [venue, setVenue] = useState("");
 
   //request to get all comments for specific show
   const getShowComments = () => {
@@ -58,6 +61,7 @@ export default function SingleShowModal(props) {
   const getShowInfo = () => {
     axios.get(`${AXIOS_URL}/shows/${show}`)
       .then((response) => {
+        setVenue(response.data.venue.name);
         setSingleShow(response.data);
       })
       .catch((err) => {
@@ -100,10 +104,6 @@ export default function SingleShowModal(props) {
   }
 
   useEffect(() => {
-    //get all bands for specific show
-    getShowBands();
-    //get all comments for specific show
-    getShowComments();
     //request to access users calendar
     (async () => {
       const { status } = await Calendar.requestCalendarPermissionsAsync();
@@ -114,7 +114,9 @@ export default function SingleShowModal(props) {
       }
     })();
   }, [])
-
+  // const venue = singleShow.venue.name
+  // const venueName = venue.name
+  // console.log("this is a single show venue", venue);
   // event details for calendar integration
   const details = {
     title: singleShow.name,
@@ -138,7 +140,7 @@ export default function SingleShowModal(props) {
         {/* start of modal when showing */}
         <SafeAreaView behavior="padding" style={styles.container}>
           {/* back button */}
-          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
+          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
             <Ionicons
               name='ios-arrow-back'
               color='#59C3D1'
@@ -156,15 +158,23 @@ export default function SingleShowModal(props) {
                 style={{ width: 400, height: 400, marginLeft: 5 }}
                 source={{ uri: singleShow.flyer }}
               />
-            : null}
-            
+              : null}
+
             {/* additional text */}
             <Text style={styles.infoText}>{singleShow.date}</Text>
             <Text style={styles.infoText}>{singleShow.time}</Text>
+
+            <Text style={styles.infoText}>{venue}</Text>
+
             <Text style={styles.infoText}>{singleShow.description}</Text>
             {/* list of all additional bands playing in current show */}
             {bands.map(band => {
-              return <Text style={styles.infoText}>{band.name}</Text>
+              return (
+                <View style={styles.bandModal}>
+                  <SingleBandModal name={band.name} bandId={band.id} />
+                </View> 
+              )
+
             })}
             <View style={{
               flexDirection: 'row',
@@ -172,52 +182,52 @@ export default function SingleShowModal(props) {
               justifyContent: 'center',
               marginTop: 10
             }}>
-            {/* add to calendar button */}
-            <TouchableOpacity
-              style={styles.buttonContainer}
-              onPress={ async () => {
-                try {
-                  console.log('Adding Event');
-                  const eventId = await Calendar.createEventAsync("D5A65218-29C5-466C-A2CE-D54DF9D4260A", details);
-                  console.log("Event Id", id);
-                }
-                catch (error) {
-                  console.log('Error', error);
-                }
-              }}
-            >
-              <Text style={styles.signupButtonText}>Add To Calendar</Text>
-            </TouchableOpacity>
-            {/* button to rsvp to specific (shows when signed in) */}
-            {userInfo.signedIn ?
-              //if already rsvp'd, show button to cancel rvp
-              (rsvp ? <TouchableOpacity
-                style={styles.cancelButtonContainer}
-                  onPress={() => { 
+              {/* add to calendar button */}
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={async () => {
+                  try {
+                    console.log('Adding Event');
+                    const eventId = await Calendar.createEventAsync("D5A65218-29C5-466C-A2CE-D54DF9D4260A", details);
+                    console.log("Event Id", id);
+                  }
+                  catch (error) {
+                    console.log('Error', error);
+                  }
+                }}
+              >
+                <Text style={styles.signupButtonText}>Add To Calendar</Text>
+              </TouchableOpacity>
+              {/* button to rsvp to specific (shows when signed in) */}
+              {userInfo.signedIn ?
+                //if already rsvp'd, show button to cancel rvp
+                (rsvp ? <TouchableOpacity
+                  style={styles.cancelButtonContainer}
+                  onPress={() => {
                     removeRsvp();
                   }}
-              >
-                <Text style={styles.signupButtonText}>Cancel RSVP</Text>
-              </TouchableOpacity>
-                //if not rsvp'd, show rsvp button
-                : <TouchableOpacity
-                  style={styles.buttonContainer}
-                  onPress={() => { 
-                    addRsvp();
-                  }}
                 >
-                  <Text style={styles.signupButtonText}>RSVP</Text>
-                </TouchableOpacity>)
-              : null}
-              </View>
+                  <Text style={styles.signupButtonText}>Cancel RSVP</Text>
+                </TouchableOpacity>
+                  //if not rsvp'd, show rsvp button
+                  : <TouchableOpacity
+                    style={styles.buttonContainer}
+                    onPress={() => {
+                      addRsvp();
+                    }}
+                  >
+                    <Text style={styles.signupButtonText}>RSVP</Text>
+                  </TouchableOpacity>)
+                : null}
+            </View>
             {/* button to create a new comment (shows when signed in) */}
-            {userInfo.signedIn ? 
-              <CreateCommentModal 
-              userId={userInfo.id} 
-              showId={singleShow.id}
-              getShowComments={getShowComments}
-              /> 
-            : null}
+            {userInfo.signedIn ?
+              <CreateCommentModal
+                userId={userInfo.id}
+                showId={singleShow.id}
+                getShowComments={getShowComments}
+              />
+              : null}
             {/* cards to hold comments */}
             {comments.map(comment => {
               return (
@@ -240,12 +250,18 @@ export default function SingleShowModal(props) {
       </Modal>
       {/* show more button when modal is hidden */}
       <TouchableOpacity
-        onPress={() => {
-          setModalVisible(true);
+        onPress={async () => {
           //request to get all info for current show
-          getShowInfo();
+          await getShowInfo();
           //request to get user's rsvp info
+          await getRsvpInfo();
+          //get all bands for specific show
+          await getShowBands();
+          //get all comments for specific show
+          await getShowComments();
           getRsvpInfo();
+
+          setModalVisible(true);
         }}
       >
         <Text style={styles.modalShowText}>{props.showName}</Text>
@@ -259,6 +275,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#2D323A',
     justifyContent: 'center',
+  },
+  bandModal: {
+    fontSize: 20,
+    color: '#fff',
+    paddingLeft: 290,
+    paddingBottom: 5,
+    
   },
   headerText: {
     fontSize: 45,
@@ -334,5 +357,4 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   }
 })
-
 

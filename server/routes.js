@@ -146,7 +146,7 @@ router.patch('/shows/:id', ctrl.updateShow)
 
 router.delete('/shows/:id', ctrl.deleteShow)
 
-// get all shows
+// get all upcoming public shows
 router.get('/shows', ctrl.getAllUpcomingShows)
 
 // get a single show
