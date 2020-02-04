@@ -17,6 +17,7 @@ import Moment from 'moment';
 import axios from 'axios';
 import { AXIOS_URL } from 'react-native-dotenv';
 import * as Calendar from 'expo-calendar';
+import SingleVenueModal from '../modals/SingleVenueModal';
 
 export default function SingleShowModal(props) {
   //global user signin info and editing function
@@ -33,8 +34,10 @@ export default function SingleShowModal(props) {
   const [rsvp, setRsvp] = useState(false);
   //info required for axios calls
   let show = props.show;
-
-  const [venue, setVenue] = useState("");
+  let venueId = props.showVenueId;
+  //console.log("props", props);
+  const [venueID, setVenueId] = useState("");
+  const [venueName, setVenueName] = useState("");
 
   //request to get all comments for specific show
   const getShowComments = () => {
@@ -60,7 +63,8 @@ export default function SingleShowModal(props) {
   const getShowInfo = () => {
     axios.get(`${AXIOS_URL}/shows/${show}`)
       .then((response) => {
-        setVenue(response.data.venue.name);
+        setVenueId(response.data.venue.id);
+        setVenueName(response.data.venue.name)
         setSingleShow(response.data);
       })
       .catch((err) => {
@@ -128,8 +132,8 @@ export default function SingleShowModal(props) {
       titleColor: 'blue',
     },
   };
-  console.log("venue:", venue)
 
+  console.log("single show", singleShow);
   return (
     <View>
       <Modal
@@ -163,8 +167,14 @@ export default function SingleShowModal(props) {
             {/* additional text */}
             <Text style={styles.infoText}>{singleShow.date}</Text>
             <Text style={styles.infoText}>{singleShow.time}</Text>
+            {/* <Text> */}
 
-            <Text style={styles.infoText}>{venue}</Text>
+
+
+            <SingleVenueModal venueID={venueId} venueName={venueName} />
+
+            {/* </Text> */}
+            {/* <Text style={styles.infoText}>{venue}</Text> */}
 
             <Text style={styles.infoText}>{singleShow.description}</Text>
             {/* list of all additional bands playing in current show */}
