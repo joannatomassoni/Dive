@@ -40,7 +40,7 @@ export default function ModalExample(props) {
     return defaultCalendars[0].source;
   }
   //create a new calendar for dive events
-  async function createCalendar() {
+  async function createCalendar(username) {
     const defaultCalendarSource =
       Platform.OS === 'ios'
         ? await getDefaultCalendarSource()
@@ -56,8 +56,8 @@ export default function ModalExample(props) {
       accessLevel: Calendar.CalendarAccessLevel.OWNER,
     })
     console.log(`Your new calendar ID is: ${newCalendarID}`)
-    const result = await axios.patch(`${AXIOS_URL}/users/${userInfo.email}/cal`, {
-      'calID': newCalendarID,
+    const result = await axios.patch(`${AXIOS_URL}/users/${username}/cal`, {
+      calID: newCalendarID,
     })
     .then(response => console.log(response))
     .catch(error => console.log(error));
@@ -100,6 +100,7 @@ export default function ModalExample(props) {
           expoPushToken
         })
       })
+      .then(() => createCalendar(user.email))
       .catch(error => console.log('failed to create user', error));
       //create a calendar for dive events
     } catch(error){console.log(error)}
@@ -179,7 +180,7 @@ export default function ModalExample(props) {
                   name: usernameValue,
                   userType: userType
                 }))
-                createCalendar();
+                createCalendar(userInfo.name);
               }}
             >
               <Text style={styles.buttonText}>Signup</Text>
@@ -190,7 +191,7 @@ export default function ModalExample(props) {
               onPress={() => {
                 setModalVisible(false);
                 googleSignIn();
-                createCalendar();
+                //createCalendar(userInfo.email);
               }}
             >
               <Text style={styles.buttonText}>Signup w/ GOOGLE </Text>
