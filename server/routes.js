@@ -42,7 +42,7 @@ router.patch('/users/:id/bio', ctrl.updateUserBio)
 // Delete user
 router.delete('/users/:id', ctrl.deleteUser)
 
-router.get('/bands/:id/shows', ctrl.getUpcomingBandShows)
+router.get('/bands/:id/shows', ctrl.getBandShows)
 
 /**
  * Search button routes

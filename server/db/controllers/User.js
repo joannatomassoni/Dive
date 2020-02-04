@@ -12,6 +12,8 @@ const {
     Sequelize
 } = require('../sequelize');
 const { getRecordByName, getRecordByID } = require('./utils');
+const moment = require('moment');
+
 
 // import the Sequelize operators
 const Op = Sequelize.Op;
@@ -292,7 +294,7 @@ const removeBandGenre = async (req, res) => {
 }
 
 // get upcoming band shows
-const getUpcomingBandShows = async (req, res) => {
+const getBandShows = async (req, res) => {
     try {
         const { id } = req.params;
         const shows = await User.findOne({
@@ -414,12 +416,11 @@ module.exports = {
     getAllBands,
     getBandFollowers,
     getBandGenres,
-    getUpcomingBandShows,
+    getBandShows,
     getFanBands,
     getSingleUser,
     removeBandGenre,
     searchBands,
-    // sendNotification,
     unfollowBand,
     updateUserBio,
     updateBandPhoto,
