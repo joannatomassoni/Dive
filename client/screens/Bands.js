@@ -23,8 +23,6 @@ export default function Bands(props) {
   //state to hold bands
   const [bands, setBands] = useState([]);
 
-  console.log(userInfo)
-
   //request to get all bands from db
   const getAllBands = () => {
     axios.get(`${AXIOS_URL}/bands`)
@@ -44,6 +42,7 @@ export default function Bands(props) {
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.headerText}>Bands</Text>
         {bands && bands.map(band => {
+          console.log(band.nickname);
           return (
             <Card
               key={band.id}
@@ -54,7 +53,7 @@ export default function Bands(props) {
             >
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View>
-                  <SingleBandModal name={band.nickname} bandId={band.id} />
+                  <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
                   <Text style={styles.cardText}>{band.bio}</Text>
                 </View>
                 <View>
