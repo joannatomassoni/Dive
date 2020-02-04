@@ -38,33 +38,24 @@ export default function Hub(props) {
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
 
-  //load all user info when brought to hub
-  useEffect(() => {
-    getBandInfo();
-    getBandsShows();
-    getPhoto();
-    getRSVPS();
-    getFollowedBands();
-    // getPreviousShows();
-  }, [])
-
+  
   //gets band info
   const getBandInfo = () => {
     axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
-      .then((response) => {
-        // console.log("getting band info", response.data);
-        setHubInfo(() => response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    .then((response) => {
+      // console.log("getting band info", response.data);
+      setHubInfo(() => response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
-
+  
   //gets a list of all of a bands shows
   const getBandsShows = () => {
     axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
-      .then((response) => {
-        setShows(() => response.data.shows);
+    .then((response) => {
+      setShows(() => response.data.shows);
       })
       .catch((err) => {
         console.log(err);
@@ -80,44 +71,54 @@ export default function Hub(props) {
       .catch((err) => {
         console.log(err);
       })
-  }
-
-  //allows users to see all of the shows they have RSVPed to
-  const getRSVPS = () => {
-    axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
+    }
+    
+    //allows users to see all of the shows they have RSVPed to
+    const getRSVPS = () => {
+      axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
       .then((response) => {
         setFanShows(() => response.data);
       })
       .catch((err) => {
         console.log(err);
       })
-  }
-
-  //allows user to see all the bands they follow
-  const getFollowedBands = () => {
-    axios.get(`${AXIOS_URL}/fans/${userInfo.id}/bands`)
+    }
+    
+    //allows user to see all the bands they follow
+    const getFollowedBands = () => {
+      axios.get(`${AXIOS_URL}/fans/${userInfo.id}/bands`)
       .then(response => {
         setFollowed(() => response.data);
       })
       .catch((err) => {
         console.log(err);
       })
-  }
+    }
+    
+    // //allows user to get shows they previously went to on button click
+    // const getPreviousShows = () => {
+      //   axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
+      //     .then(response => {
+        //       // console.log("getting old shows", response);
+        //       setOldShows(response.data)
+        //     })
+        //     .catch(err => {
+          //       // console.log("not getting older shows", err);
+          //     })
+          // }
+          
+      //load all user info when brought to hub
+      useEffect( async () => {
+        await getBandInfo();
+        await getBandsShows();
+        await getPhoto();
+        await getRSVPS();
+        await getFollowedBands();
+        // await getPreviousShows();
+      }, [])
 
-  // //allows user to get shows they previously went to on button click
-  // const getPreviousShows = () => {
-  //   axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
-  //     .then(response => {
-  //       // console.log("getting old shows", response);
-  //       setOldShows(response.data)
-  //     })
-  //     .catch(err => {
-  //       // console.log("not getting older shows", err);
-  //     })
-  // }
-
-  return (
-    <SafeAreaView style={styles.container}>
+          return (
+            <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Hub</Text>
@@ -160,26 +161,31 @@ export default function Hub(props) {
         {/* Cards for all a bands upcoming shows */}
         <View>
           {userInfo.userType === 'band' ?
-            shows && shows.map(show => {
-              return (
-                <Card
-                  containerStyle={styles.card}
-                  backgroundColor='#fff'
-                  borderWidth={0}
-                  borderRadius={10}
-                  padding={10}
-
-                // image={require('../images/pic2.jpg')}
-                >
-                  <SingleShowModal show={show.id} showName={show.name} />
-                  <Text style={styles.cardText}>{show.time}</Text>
-                  {show.description ? 
-                    <Text style={styles.cardText}>{show.description}</Text>
-                  : null}
-                  <EditShowModal style={styles.cardText}/>
-                </Card>
-              )
-            })
+            <View>
+              <Text style={styles.subText}>Your Upcoming Gigs</Text>
+              {shows && shows.map(show => {
+                return (
+                  <View>
+                    <Card
+                      containerStyle={styles.card}
+                      backgroundColor='#fff'
+                      borderWidth={0}
+                      borderRadius={10}
+                      padding={10}
+  
+                    // image={require('../images/pic2.jpg')}
+                    >
+                      <SingleShowModal show={show.id} showName={show.name} />
+                      <Text style={styles.cardText}>{show.time}</Text>
+                      {show.description ? 
+                        <Text style={styles.cardText}>{show.description}</Text>
+                      : null}
+                      <EditShowModal style={styles.cardText}/>
+                    </Card>
+                  </View>
+                )
+              })}
+            </View>
             : null}
         </View>
 
@@ -198,7 +204,6 @@ export default function Hub(props) {
 
             {fanShows && fanShows.map(show => {
               return (
-                // <Text>RSVPed Shows</Text>
                 <Card
                   key={show.id}
                   backgroundColor='#111'

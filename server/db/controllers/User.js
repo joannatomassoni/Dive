@@ -292,7 +292,7 @@ const removeBandGenre = async (req, res) => {
 }
 
 // get upcoming band shows
-const getBandShows = async (req, res) => {
+const getUpcomingBandShows = async (req, res) => {
     try {
         const { id } = req.params;
         const shows = await User.findOne({
@@ -414,7 +414,7 @@ module.exports = {
     getAllBands,
     getBandFollowers,
     getBandGenres,
-    getBandShows,
+    getUpcomingBandShows,
     getFanBands,
     getSingleUser,
     removeBandGenre,
