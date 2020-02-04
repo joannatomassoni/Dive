@@ -173,6 +173,7 @@ export default function ModalExample(props) {
                   name: usernameValue,
                   typeName: userType,
                 })
+                  .then(() => createCalendar(usernameValue))
                 .catch(error => console.log('failed to create user', error));
                 setUserInfo(userInfo => ({
                   ...userInfo,
@@ -180,7 +181,6 @@ export default function ModalExample(props) {
                   name: usernameValue,
                   userType: userType
                 }))
-                createCalendar(userInfo.name);
               }}
             >
               <Text style={styles.buttonText}>Signup</Text>
