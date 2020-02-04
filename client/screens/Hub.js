@@ -4,7 +4,6 @@ import {
   Text,
   View,
   SafeAreaView,
-  Button,
   Image,
   TouchableOpacity,
 } from 'react-native';
@@ -21,6 +20,7 @@ import EditBandBioModal from '../modals/EditBandBioModal';
 import EditShowModal from '../modals/EditShowModal';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
+import Calendar from '../components/Calendar';
 import { AXIOS_URL } from 'react-native-dotenv';
 import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
@@ -161,7 +161,6 @@ export default function Hub(props) {
           {/* Button to open create show modal */}
           {userInfo.userType === 'band' ? <CreateShowModal /> : null}
         </View>
-
         {/* Cards for all a bands upcoming shows */}
         <View>
           {userInfo.userType === 'band' ?

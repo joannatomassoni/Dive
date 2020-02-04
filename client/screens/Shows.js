@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   Dimensions
 } from 'react-native';
-import { Card } from 'react-native-elements'
+import { Card, Divider } from 'react-native-elements'
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext'
@@ -99,6 +99,7 @@ export default function Shows(props) {
                 </View>
               </View>
             </Card>
+            
           )
         })}
       </ScrollView>

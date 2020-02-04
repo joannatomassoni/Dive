@@ -6,7 +6,7 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 import MenuButton from '../components/MenuButton'
 import SearchResultModal from '../modals/SearchResultsModal';
- 
+
 export default function Search(props) {
     return (
         <SafeAreaView style={styles.container}>

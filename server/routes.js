@@ -32,6 +32,9 @@ router.post('/users', ctrl.createUser);
 // add push token to user record
 router.patch('/users/:name/push', ctrl.addPushToken)
 
+// add calendar id and permission
+router.patch('/users/:name/cal', ctrl.addCalID)
+
 // Used for user login and getting a single band
 router.get('/users/:name', ctrl.getSingleUser)
 

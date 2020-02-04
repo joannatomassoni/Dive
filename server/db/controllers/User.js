@@ -55,9 +55,26 @@ const addPushToken = async (req, res) => {
             { expoPushToken },
             { where: { name } }
         )
+        res.sendStatus(201);
     }
     catch(err) {
         console.log(err);
+        res.sendStatus(400);
+    }
+}
+
+// add calendar id
+const addCalID = async (req, res) => {
+    try {
+        const { name } = req.params;
+        const { calID } = req.body;
+        await User.update(
+            { calID },
+            { where: { name } }
+        )
+        res.sendStatus(201);
+    }
+    catch (err) {
         res.sendStatus(400);
     }
 }
@@ -410,6 +427,7 @@ const searchBands = async (req, res) => {
 module.exports = {
     addGenreToBand,
     addPushToken,
+    addCalID,
     createUser,
     deleteUser,
     followBand,
