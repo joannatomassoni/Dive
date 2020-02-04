@@ -40,49 +40,6 @@ export default function Hub(props) {
 
   //load all user info when brought to hub
   useEffect(() => {
-    // axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
-    //   .then((response) => {
-    //     // console.log("getting band info", response.data);
-    //     setHubInfo(() => response.data);
-    //   })
-    //   .catch((err) => {
-    //     // console.log("were not getting hub info", err);
-    //   })
-
-    // axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
-    //   .then((response) => {
-    //     // console.log("getting a bands shows  in hub from db", response.data)
-    //     setShows(() => response.data.shows);
-    //   })
-    //   .catch((err) => {
-    //     // console.log("frontend not getting band shows from db", err);
-    //   })
-
-    // axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
-    //   .then((response) => {
-    //     // console.log("getting a photo from db", response.data.bandPhoto)
-    //     setDbPhoto(() => response.data.bandPhoto);
-    //   })
-    //   .catch((err) => {
-    //     // console.log("front end not getting band photo from db", err);
-    //   })
-    // axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
-    //   .then((response) => {
-    //     // console.log("getting a fans shows  in hub from db", response.data)
-    //     setFanShows(() => response.data);
-    //   })
-    //   .catch((err) => {
-    //     // console.log("front end not getting fans shows from db", err);
-    //   })
-
-    // axios.get(`${AXIOS_URL}/fans/${userInfo.id}/bands`)
-    //   .then(response => {
-    //     // console.log("list of followed bands", response.data);
-    //     setFollowed(() => response.data);
-    //   })
-    //   .catch((err) => {
-    //     // console.log("front end not getting fans shows from db", err);
-    //   })
     getBandInfo();
     getBandsShows();
     getPhoto();
