@@ -100,16 +100,16 @@ export default function Hub(props) {
     }
     
     // //allows user to get shows they previously went to on button click
-    // const getPreviousShows = () => {
-      //   axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
-      //     .then(response => {
-        //       // console.log("getting old shows", response);
-        //       setOldShows(response.data)
-        //     })
-        //     .catch(err => {
-          //       // console.log("not getting older shows", err);
-          //     })
-          // }
+    const getPreviousShows = () => {
+        axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
+          .then(response => {
+              // console.log("getting old shows", response);
+              setOldShows(response.data)
+            })
+            .catch(err => {
+                // console.log("not getting older shows", err);
+              })
+          }
           
       //load all user info when brought to hub
       useEffect(() => {
@@ -118,7 +118,7 @@ export default function Hub(props) {
         getPhoto();
         getRSVPS();
         getFollowedBands();
-        // getPreviousShows();
+        getPreviousShows();
       }, [])
 
           return (
@@ -168,7 +168,7 @@ export default function Hub(props) {
             <View>
               {shows.length ? 
               <Text style={styles.subText}>Your Upcoming Gigs</Text>
-              : <Text style={styles.subText}>No Upcoming Gigs</Text>
+              : null
               }
               {shows && shows.map(show => {
                 return (
@@ -284,7 +284,7 @@ export default function Hub(props) {
         </View>
 
         <View>
-          {userInfo.userType === 'fan' ? <PreviousRSVPShows userInfo={userInfo.id} />
+          {userInfo.userType === 'fan' || 'band' ? <PreviousRSVPShows userInfo={userInfo.id} />
 
             : null}
         </View>
