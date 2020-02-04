@@ -30,6 +30,7 @@ export default function SingleBandModal(props) {
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   let band = props.name;
   let bandId = props.bandId;
+  console.log(singleBand);
 
   // request to see if user is following band
   const isUserFollowing = () => {
@@ -199,7 +200,7 @@ export default function SingleBandModal(props) {
           getSingleBandInfo();
         }}
       >
-        <Text style={styles.cardHeaderText}>{singleBand.name}</Text>
+        <Text style={styles.cardHeaderText}>{singleBand.nickname}</Text>
       </TouchableOpacity >
     </View >
   );
