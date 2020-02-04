@@ -57,9 +57,11 @@ export default function Hub(props) {
   const getBandsShows = async () => {
     await axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
       .then((response) => {
-        setShows(() => response.data.shows.filter((show) => {
-          return moment(show.dateTime).toDate() > new Date();
-        }))
+        if (response.data.shows) {
+          setShows(() => response.data.shows.filter((show) => {
+            return moment(show.dateTime).toDate() > new Date();
+          }))
+        }
       })
       .catch((err) => {
         console.log(err);
