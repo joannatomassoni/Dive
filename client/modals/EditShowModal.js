@@ -62,7 +62,7 @@ export default function EditShowModal(props) {
               <Text style={styles.text}>Edit Show</Text>
               {/* Title text box */}
               <TextInput
-                placeholder="Show Title"
+                placeholder="Edit Show Title"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
                 onChangeText={setShowTitle}
@@ -70,7 +70,7 @@ export default function EditShowModal(props) {
               />
               {/* Description input */}
               <TextInput
-                placeholder="Show Description"
+                placeholder="Edit Show Description"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="send"
                 onChangeText={setShowDesc}
@@ -129,7 +129,7 @@ export default function EditShowModal(props) {
           setModalVisible(true);
         }}
       >
-        <Text>Edit Show</Text>
+        <Text style={styles.modalShowText}>Edit Show</Text>
       </TouchableOpacity>
     </View>
   );
@@ -203,5 +203,12 @@ const styles = StyleSheet.create({
   linkRow: {
     flexDirection: 'row',
     height: 50,
+  },
+  modalShowText: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    marginBottom: 10,
+    color: '#AA8181',
+    textAlign: 'right'
   },
 })
