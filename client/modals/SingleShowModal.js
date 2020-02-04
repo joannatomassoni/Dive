@@ -234,7 +234,7 @@ export default function SingleShowModal(props) {
                   borderRadius={5}
                   containerStyle={styles.card}
                 >
-                  <Text style={styles.cardTextUsername} key={comment.user.id}>{comment.user.name}</Text>
+                  <Text style={styles.cardTextUsername} key={comment.user.id}>{comment.user.nickname}</Text>
                   <Text style={styles.cardText}>{comment.text}</Text>
                   <Text style={styles.cardTextTime}>{Moment(comment.createdAt).fromNow()}</Text>
                 </Card>
