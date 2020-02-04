@@ -54,8 +54,14 @@ export default function ModalExample(props) {
       name: 'RSVPd Events',
       ownerAccount: 'personal',
       accessLevel: Calendar.CalendarAccessLevel.OWNER,
-    });
-    console.log(`Your new calendar ID is: ${newCalendarID}`);
+    })
+    console.log(`Your new calendar ID is: ${newCalendarID}`)
+    const result = await axios.patch(`${AXIOS_URL}/users/${userInfo.email}/cal`, {
+      'calID': newCalendarID,
+    })
+    .then(response => console.log(response))
+    .catch(error => console.log(error));
+    console.log(result)
   };
 
   //function to sign in with google auth
@@ -74,6 +80,7 @@ export default function ModalExample(props) {
             ...userInfo,
             signedIn: true,
             name: user.name,
+            email: user.email,
             photoUrl: user.photoUrl,
           }))
         }
@@ -82,7 +89,6 @@ export default function ModalExample(props) {
         typeName: userType,
         photo: user.photoUrl,
       })
-        .then(createCalendar())
       //request to allow push notifications
       .then(async () => {
         const expoPushToken = await registerforPushNotificationsAsync();
@@ -95,6 +101,7 @@ export default function ModalExample(props) {
         })
       })
       .catch(error => console.log('failed to create user', error));
+      //create a calendar for dive events
     } catch(error){console.log(error)}
   }
 
@@ -165,8 +172,6 @@ export default function ModalExample(props) {
                   name: usernameValue,
                   typeName: userType,
                 })
-                //create new calendar
-                .then(createCalendar())
                 .catch(error => console.log('failed to create user', error));
                 setUserInfo(userInfo => ({
                   ...userInfo,
@@ -174,6 +179,7 @@ export default function ModalExample(props) {
                   name: usernameValue,
                   userType: userType
                 }))
+                createCalendar();
               }}
             >
               <Text style={styles.buttonText}>Signup</Text>
@@ -184,6 +190,7 @@ export default function ModalExample(props) {
               onPress={() => {
                 setModalVisible(false);
                 googleSignIn();
+                createCalendar();
               }}
             >
               <Text style={styles.buttonText}>Signup w/ GOOGLE </Text>

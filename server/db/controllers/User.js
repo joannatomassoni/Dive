@@ -53,6 +53,7 @@ const addPushToken = async (req, res) => {
             { expoPushToken },
             { where: { name } }
         )
+        res.sendStatus(201);
     }
     catch(err) {
         console.log(err);
@@ -70,6 +71,7 @@ const addCalID = async (req, res) => {
             { calID },
             { where: { name } }
         )
+        res.send(res);
     }
     catch (err) {
         console.log(err);

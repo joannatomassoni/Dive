@@ -113,7 +113,6 @@ export default function Hub(props) {
           {/* Button to open create show modal */}
           {userInfo.userType === 'band' ? <CreateShowModal /> : null}
         </View>
-        <Calendar />
         {/* Cards for all a bands upcoming shows */}
         <View>
           {userInfo.userType === 'band' ?
