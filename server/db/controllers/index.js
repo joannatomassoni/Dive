@@ -1,5 +1,6 @@
 // compile all controllers and export to router from here
 const {
+    addCalID,
     addGenreToBand,
     addPushToken,
     createUser,
@@ -55,6 +56,7 @@ const {
 } = require('./Show');
 
 module.exports = {
+    addCalID,
     addFanToVenue,
     addGenreToBand,
     addPushToken,
@@ -65,6 +67,7 @@ module.exports = {
     followBand,
     getAllBands,
     getAllVenues,
+    getAllUpcomingShows,
     getBandFollowers,
     getBandGenres,
     getBandShows,
@@ -73,7 +76,7 @@ module.exports = {
     getFanVenues,
     getShowRSVPs,
     getPreviousShows,
-    getAllUpcomingShows,
+    getBandShows,
     getSingleShow,
     getSingleUser,
     getSingleVenue,

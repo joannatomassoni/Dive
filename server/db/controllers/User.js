@@ -12,6 +12,8 @@ const {
     Sequelize
 } = require('../sequelize');
 const { getRecordByName, getRecordByID } = require('./utils');
+const moment = require('moment');
+
 
 // import the Sequelize operators
 const Op = Sequelize.Op;
@@ -19,7 +21,7 @@ const Op = Sequelize.Op;
 // Create user
 const createUser = async (req, res) => {
     try {
-        const { name, typeName, expoPushToken, bio, link_facebook, link_spotify, link_instagram, photo } = req.body;
+        const { name, nickname, typeName, expoPushToken, bio, link_facebook, link_spotify, link_instagram, photo } = req.body;
         const type = await Type.findOne({
             where: {
                 typeName: typeName
@@ -27,6 +29,7 @@ const createUser = async (req, res) => {
         });
         await User.create({
             name,
+            nickname,
             id_type: type.id,
             bio,
             expoPushToken,
@@ -53,9 +56,26 @@ const addPushToken = async (req, res) => {
             { expoPushToken },
             { where: { name } }
         )
+        res.sendStatus(201);
     }
     catch(err) {
         console.log(err);
+        res.sendStatus(400);
+    }
+}
+
+// add calendar id
+const addCalID = async (req, res) => {
+    try {
+        const { name } = req.params;
+        const { calID } = req.body;
+        await User.update(
+            { calID },
+            { where: { name } }
+        )
+        res.sendStatus(201);
+    }
+    catch (err) {
         res.sendStatus(400);
     }
 }
@@ -291,6 +311,7 @@ const removeBandGenre = async (req, res) => {
     }
 }
 
+// get upcoming band shows
 const getBandShows = async (req, res) => {
     try {
         const { id } = req.params;
@@ -407,6 +428,7 @@ const searchBands = async (req, res) => {
 module.exports = {
     addGenreToBand,
     addPushToken,
+    addCalID,
     createUser,
     deleteUser,
     followBand,
@@ -418,7 +440,6 @@ module.exports = {
     getSingleUser,
     removeBandGenre,
     searchBands,
-    // sendNotification,
     unfollowBand,
     updateUserBio,
     updateBandPhoto,

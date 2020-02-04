@@ -13,10 +13,9 @@ import { SignedInContext } from '../context/UserContext';
 import RadioForm from 'react-native-simple-radio-button';
 import { Ionicons } from '@expo/vector-icons';
 import * as Google from "expo-google-app-auth";
+import * as Calendar from 'expo-calendar';
 import { IOS_AUTH_KEY, ANDROID_AUTH_KEY, AXIOS_URL } from 'react-native-dotenv';
 import registerforPushNotificationsAsync from '../expoPushFunctions/registerForPushNotificationsAsync';
-
-console.log(AXIOS_URL);
 
 export default function ModalExample(props) {
   //state for modal visibility
@@ -32,6 +31,37 @@ export default function ModalExample(props) {
     { label: 'Fan', value: 'fan' },
     { label: 'Band', value: 'band' }
   ];
+  //get default calendar id
+  async function getDefaultCalendarSource() {
+    const calendars = await Calendar.getCalendarsAsync();
+    const defaultCalendars = calendars.filter(
+      each => each.source.name === 'Default'
+    );
+    return defaultCalendars[0].source;
+  }
+  //create a new calendar for dive events
+  async function createCalendar(username) {
+    const defaultCalendarSource =
+      Platform.OS === 'ios'
+        ? await getDefaultCalendarSource()
+        : { isLocalAccount: true, name: 'Dive Calendar' };
+    const newCalendarID = await Calendar.createCalendarAsync({
+      title: 'Dive Calendar',
+      color: 'blue',
+      entityType: Calendar.EntityTypes.EVENT,
+      sourceId: defaultCalendarSource.id,
+      source: defaultCalendarSource,
+      name: 'RSVPd Events',
+      ownerAccount: 'personal',
+      accessLevel: Calendar.CalendarAccessLevel.OWNER,
+    })
+    console.log(`Your new calendar ID is: ${newCalendarID}`)
+    const result = await axios.patch(`${AXIOS_URL}/users/${username}/cal`, {
+      calID: newCalendarID,
+    })
+    .then(response => console.log(response))
+    .catch(error => console.log(error));
+  };
 
   //function to sign in with google auth
   const googleSignIn = async () => {
@@ -49,18 +79,30 @@ export default function ModalExample(props) {
             ...userInfo,
             signedIn: true,
             name: user.name,
+            email: user.email,
             photoUrl: user.photoUrl,
           }))
-          const expoPushToken = await registerforPushNotificationsAsync();
-          return expoPushToken
         }
       axios.post(`${AXIOS_URL}/users`, {
         name: user.email,
+        nickname: user.name,
         typeName: userType,
         photo: user.photoUrl,
-        expoPushToken: expoPushToken
       })
+      //request to allow push notifications
+      .then(async () => {
+        const expoPushToken = await registerforPushNotificationsAsync();
+        return expoPushToken
+      })
+      //add push token to db
+      .then((expoPushToken) => {
+        axios.patch(`${AXIOS_URL}/users/${user.email}/push`, {
+          expoPushToken
+        })
+      })
+      .then(() => createCalendar(user.email))
       .catch(error => console.log('failed to create user', error));
+      //create a calendar for dive events
     } catch(error){console.log(error)}
   }
 
@@ -131,14 +173,14 @@ export default function ModalExample(props) {
                   name: usernameValue,
                   typeName: userType,
                 })
-                .then(response => response)
+                  .then(() => createCalendar(usernameValue))
                 .catch(error => console.log('failed to create user', error));
                 setUserInfo(userInfo => ({
                   ...userInfo,
                   signedIn: true,
                   name: usernameValue,
                   userType: userType
-                }));
+                }))
               }}
             >
               <Text style={styles.buttonText}>Signup</Text>
@@ -149,6 +191,7 @@ export default function ModalExample(props) {
               onPress={() => {
                 setModalVisible(false);
                 googleSignIn();
+                //createCalendar(userInfo.email);
               }}
             >
               <Text style={styles.buttonText}>Signup w/ GOOGLE </Text>

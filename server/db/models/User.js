@@ -5,6 +5,11 @@ module.exports = (sequelize, type) => {
             allowNull: false,
             unique: true
         },
+        nickname: {
+            type: type.STRING,
+            allowNull: false,
+            unique: true
+        },
         bio: {
             type: type.STRING,
             allowNull: true,

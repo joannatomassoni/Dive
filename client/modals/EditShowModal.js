@@ -37,6 +37,11 @@ export default function EditShowModal(props) {
   //list of venues
   const [allVenues, setAllVenues] = useState([]);
   const venues = [];
+  const getBandsShows = props.getBandsShows;
+  const showID = props.show;
+  const deleteShow = async () => {
+    await axios.delete(`${AXIOS_URL}/shows/${showID}`);
+  }
 
   return (
     <View>
@@ -59,10 +64,10 @@ export default function EditShowModal(props) {
           </Ionicons>
           <View style={styles.container}>
             <ScrollView style={styles.title}>
-              <Text style={styles.text}>Edit Show</Text>
+              <Text style={styles.text}>Edit {props.showName}</Text>
               {/* Title text box */}
               <TextInput
-                placeholder="Show Title"
+                placeholder="Edit Show Title"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="next"
                 onChangeText={setShowTitle}
@@ -70,7 +75,7 @@ export default function EditShowModal(props) {
               />
               {/* Description input */}
               <TextInput
-                placeholder="Show Description"
+                placeholder="Edit Show Description"
                 placeholderTextColor="#75A4AD"
                 returnKeyType="send"
                 onChangeText={setShowDesc}
@@ -100,7 +105,7 @@ export default function EditShowModal(props) {
               <VenuePicker setVenueName={setVenueName} allVenues={allVenues} />
               {/* date time picker */}
               <DateTimePicker setDateTime={setDateTime} />
-              {/* create show button when modal is showing */}
+              {/* edit show button when modal is showing */}
               <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={() => {
@@ -114,10 +119,25 @@ export default function EditShowModal(props) {
                     description: showDesc
                   })
                     .then(response => response)
-                    .catch(error => console.log('failed to create show', error));
+                    .catch(error => console.log('failed to edit show', error));
                 }}
               >
                 <Text style={styles.buttonText}>Edit Show</Text>
+              </TouchableOpacity>
+              {/* Delete show button */}
+              {/* edit show button when modal is showing */}
+              <TouchableOpacity
+                style={styles.altButtonContainer}
+                onPress={async () => {
+                  await deleteShow()
+                  .then(async () => {
+                    await getBandsShows();
+                  })
+                  .then(() => setModalVisible(false))
+                  .catch(error => console.log('failed to delete show', error));
+                }}
+              >
+                <Text style={styles.buttonText}>Delete Show</Text>
               </TouchableOpacity>
             </ScrollView>
           </View>
@@ -129,7 +149,7 @@ export default function EditShowModal(props) {
           setModalVisible(true);
         }}
       >
-        <Text>Edit Show</Text>
+        <Text style={styles.modalShowText}>Edit Show</Text>
       </TouchableOpacity>
     </View>
   );
@@ -183,6 +203,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginHorizontal: 7
   },
+  altButtonContainer: {
+    backgroundColor: '#AA8181',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginBottom: 15,
+    width: 200,
+    alignSelf: 'center',
+    marginHorizontal: 7
+  },
   buttonText: {
     textAlign: 'center',
     fontWeight: '700',
@@ -203,5 +232,12 @@ const styles = StyleSheet.create({
   linkRow: {
     flexDirection: 'row',
     height: 50,
+  },
+  modalShowText: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    marginBottom: 10,
+    color: '#AA8181',
+    textAlign: 'right'
   },
 })
