@@ -285,7 +285,7 @@ const getPreviousShows = async (req, res) => {
 
             }
         })
-        Promise.all(oldshows.map(async (rsvp) => {
+        const shows = Promise.all(oldshows.map(async (rsvp) => {
             const show = await Show.findOne({
                 where: {
                     id: rsvp.id_show,
@@ -295,10 +295,8 @@ const getPreviousShows = async (req, res) => {
                 }
             })
             return show;
-        })).then((data) => {
-            console.log("are we getting old shows?", data)
-            res.send(data)
-        })
+        }))
+        res.send(shows);
     }
     catch (err) {
         console.log("error getting old shows", err)

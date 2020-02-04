@@ -27,7 +27,6 @@ import SingleShowModal from '../modals/SingleShowModal';
 import PreviousRSVPShows from '../modals/PreviousRsvpShows';
 import moment from 'moment';
 
-
 export default function Hub(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
@@ -38,7 +37,7 @@ export default function Hub(props) {
   // const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
-  console.log(shows);
+  console.log(fanShows);
 
   
   //gets band info
@@ -57,9 +56,11 @@ export default function Hub(props) {
   const getBandsShows = async () => {
     await axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
     .then((response) => {
-      setShows(() => response.data.shows.filter((show) => {
-        return moment(show.dateTime).toDate() > new Date();
-      }))
+      if (response.data.shows) {
+        setShows(() => response.data.shows.filter((show) => {
+          return moment(show.dateTime).toDate() > new Date();
+        }))
+      }
     })
       .catch((err) => {
         console.log(err);
@@ -207,7 +208,10 @@ export default function Hub(props) {
 
         {/* Cards for shows the user has RSVPd to*/}
         <View>
+          {fanShows.length ? 
           <Text style={styles.subText}>Your RSVP'd Shows</Text>
+          : null
+          }
 
 
             {fanShows && fanShows.map(show => {
@@ -254,9 +258,11 @@ export default function Hub(props) {
 
         {/* Cards for bands the user follows */}
         < View >
-          <Text style={styles.subText}>Bands You Follow</Text>
+            {followed.length ?
+              <Text style={styles.subText}>Bands You Follow</Text>
+               : null 
+            }
           {
-
             followed && followed.map(band => {
               return (
                 <Card
@@ -271,7 +277,7 @@ export default function Hub(props) {
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {/* <View> */}
-                    <SingleBandModal name={band.name} bandId={band.id} />
+                    <SingleBandModal name={band.nickname} bandId={band.id} />
                   </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
         <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
@@ -283,9 +289,7 @@ export default function Hub(props) {
         </View>
 
         <View>
-          {userInfo.userType === 'fan' || 'band' ? <PreviousRSVPShows userInfo={userInfo.id} />
-
-            : null}
+          <PreviousRSVPShows userId={userInfo.id} />
         </View>
       </ScrollView>
     </SafeAreaView >

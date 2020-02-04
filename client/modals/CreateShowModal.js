@@ -202,7 +202,6 @@ export default function CreateShowModal(props) {
               <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={() => {
-                  setModalVisible(false);
                   axios.post(`${AXIOS_URL}/shows`, {
                     name: showTitle,
                     dateTime: dateTime,
@@ -211,7 +210,7 @@ export default function CreateShowModal(props) {
                     bandNames: bandNames,
                     description: showDesc
                   })
-                    .then(response => response)
+                    .then(() => setModalVisible(false))
                     .catch(error => console.log('failed to create show', error));
                 }}
               >
