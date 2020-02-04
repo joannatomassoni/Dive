@@ -39,6 +39,7 @@ export default function LoginForm (props) {
             userType: res.data.id_type === 1 ? 'fan' : 'band',
             photoUrl: res.data.photo,
             id: res.data.id,
+            calID: res.data.calID
           })))
           .catch(error => console.log('failed to find user', error));
       }
@@ -81,7 +82,8 @@ export default function LoginForm (props) {
               signedIn: true,
               username: res.data.name,
               userType: res.data.id_type === 1 ? 'fan' : 'band',
-              id: res.data.id
+              id: res.data.id,
+              calID: res.data.calID
             })))
             .catch(error => console.log('failed to find user', error));
         }}
