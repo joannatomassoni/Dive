@@ -66,16 +66,13 @@ const addCalID = async (req, res) => {
     try {
         const { name } = req.params;
         const { calID } = req.body;
-        console.log('calID', calID);
         await User.update(
             { calID },
             { where: { name } }
         )
-        console.log('name', name)
         res.sendStatus(201);
     }
     catch (err) {
-        console.log(err);
         res.sendStatus(400);
     }
 }

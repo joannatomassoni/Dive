@@ -61,7 +61,6 @@ export default function ModalExample(props) {
     })
     .then(response => console.log(response))
     .catch(error => console.log(error));
-    console.log(result)
   };
 
   //function to sign in with google auth
