@@ -36,7 +36,7 @@ const {
     getFanVenues,
     getSingleVenue,
     getVenueFans,
-    removeVenue, 
+    removeVenue,
     searchVenues,
     unfollowVenue,
     updateVenue
@@ -48,11 +48,12 @@ const {
     getFanRSVPs,
     getSingleShow,
     getShowRSVPs,
-    getPreviousShows,
+    getFansPreviousShows,
     removeFanRSVP,
     rsvpFanToShow,
     searchShows,
     updateShow,
+    getBandsPreviousShows
 } = require('./Show');
 
 module.exports = {
@@ -75,7 +76,8 @@ module.exports = {
     getFanRSVPs,
     getFanVenues,
     getShowRSVPs,
-    getPreviousShows,
+    getFansPreviousShows,
+    getBandsPreviousShows,
     getBandShows,
     getSingleShow,
     getSingleUser,
