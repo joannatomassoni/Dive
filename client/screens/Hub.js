@@ -209,7 +209,10 @@ export default function Hub(props) {
 
         {/* Cards for shows the user has RSVPd to*/}
         <View>
+          {fanShows.length ? 
           <Text style={styles.subText}>Your RSVP'd Shows</Text>
+          : null
+          }
 
 
             {fanShows && fanShows.map(show => {
@@ -256,9 +259,11 @@ export default function Hub(props) {
 
         {/* Cards for bands the user follows */}
         < View >
-          <Text style={styles.subText}>Bands You Follow</Text>
+            {followed.length ?
+              <Text style={styles.subText}>Bands You Follow</Text>
+               : null 
+            }
           {
-
             followed && followed.map(band => {
               return (
                 <Card
