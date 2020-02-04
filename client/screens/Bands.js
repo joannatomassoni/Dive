@@ -23,6 +23,8 @@ export default function Bands(props) {
   //state to hold bands
   const [bands, setBands] = useState([]);
 
+  console.log(userInfo)
+
   //request to get all bands from db
   const getAllBands = () => {
     axios.get(`${AXIOS_URL}/bands`)
