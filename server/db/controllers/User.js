@@ -21,7 +21,7 @@ const Op = Sequelize.Op;
 // Create user
 const createUser = async (req, res) => {
     try {
-        const { name, typeName, expoPushToken, bio, link_facebook, link_spotify, link_instagram, photo } = req.body;
+        const { name, nickname, typeName, expoPushToken, bio, link_facebook, link_spotify, link_instagram, photo } = req.body;
         const type = await Type.findOne({
             where: {
                 typeName: typeName
@@ -29,6 +29,7 @@ const createUser = async (req, res) => {
         });
         await User.create({
             name,
+            nickname,
             id_type: type.id,
             bio,
             expoPushToken,

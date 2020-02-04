@@ -85,6 +85,7 @@ export default function ModalExample(props) {
         }
       axios.post(`${AXIOS_URL}/users`, {
         name: user.email,
+        nickname: user.name,
         typeName: userType,
         photo: user.photoUrl,
       })
