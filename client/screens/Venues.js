@@ -15,7 +15,7 @@ import { AXIOS_URL } from 'react-native-dotenv';
 
 // export default class Venues extends React.Component {
 export default function Venues(props) {
-  ///global user signin info and editing function
+  //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [venues, setVenues] = useState([]);
 
@@ -52,7 +52,6 @@ export default function Venues(props) {
             </Card>
           )
         })}
-        {/* implemented with Text and Button as children */}
       </ScrollView>
     </SafeAreaView >
   )
