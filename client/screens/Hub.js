@@ -41,8 +41,8 @@ export default function Hub(props) {
 
   
   //gets band info
-  const getBandInfo = () => {
-    axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
+  const getBandInfo = async () => {
+    await axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
     .then((response) => {
       // console.log("getting band info", response.data);
       setHubInfo(() => response.data);
@@ -53,8 +53,8 @@ export default function Hub(props) {
   }
   
   //gets a list of all of a bands shows
-  const getBandsShows = () => {
-    axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
+  const getBandsShows = async () => {
+    await axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
     .then((response) => {
       setShows(() => response.data.shows);
       })
@@ -64,8 +64,8 @@ export default function Hub(props) {
   }
 
   //gets bands photo from database
-  const getPhoto = () => {
-    axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
+  const getPhoto = async () => {
+    await axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
       .then((response) => {
         setDbPhoto(() => response.data.bandPhoto);
       })
@@ -75,8 +75,8 @@ export default function Hub(props) {
     }
     
     //allows users to see all of the shows they have RSVPed to
-    const getRSVPS = () => {
-      axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
+    const getRSVPS = async () => {
+      await axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
       .then((response) => {
         setFanShows(() => response.data);
       })
@@ -86,8 +86,8 @@ export default function Hub(props) {
     }
     
     //allows user to see all the bands they follow
-    const getFollowedBands = () => {
-      axios.get(`${AXIOS_URL}/fans/${userInfo.id}/bands`)
+    const getFollowedBands = async () => {
+      await axios.get(`${AXIOS_URL}/fans/${userInfo.id}/bands`)
       .then(response => {
         setFollowed(() => response.data);
       })
@@ -109,13 +109,13 @@ export default function Hub(props) {
           // }
           
       //load all user info when brought to hub
-      useEffect( async () => {
-        await getBandInfo();
-        await getBandsShows();
-        await getPhoto();
-        await getRSVPS();
-        await getFollowedBands();
-        // await getPreviousShows();
+      useEffect(() => {
+        getBandInfo();
+        getBandsShows();
+        getPhoto();
+        getRSVPS();
+        getFollowedBands();
+        // getPreviousShows();
       }, [])
 
           return (
@@ -163,7 +163,7 @@ export default function Hub(props) {
         <View>
           {userInfo.userType === 'band' ?
             <View>
-              {shows ? 
+              {shows.length ? 
               <Text style={styles.subText}>Your Upcoming Gigs</Text>
               : null
               }
@@ -185,7 +185,7 @@ export default function Hub(props) {
                         {show.description ? 
                           <Text style={styles.cardText}>{show.description}</Text>
                         : null}
-                        <EditShowModal style={styles.cardText}/>
+                        <EditShowModal show={show.id} showName={show.name} style={styles.cardText} getBandsShows={getBandsShows}/>
                       </Card>
                     </View>
                     : null
