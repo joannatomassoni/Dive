@@ -57,9 +57,11 @@ export default function Hub(props) {
   const getBandsShows = async () => {
     await axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
     .then((response) => {
-      setShows(() => response.data.shows.filter((show) => {
-        return moment(show.dateTime).toDate() > new Date();
-      }))
+      if (response.data.shows) {
+        setShows(() => response.data.shows.filter((show) => {
+          return moment(show.dateTime).toDate() > new Date();
+        }))
+      }
     })
       .catch((err) => {
         console.log(err);
@@ -271,7 +273,7 @@ export default function Hub(props) {
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {/* <View> */}
-                    <SingleBandModal name={band.name} bandId={band.id} />
+                    <SingleBandModal name={band.nickname} bandId={band.id} />
                   </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
         <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
