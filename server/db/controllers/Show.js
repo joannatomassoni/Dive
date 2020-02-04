@@ -273,7 +273,27 @@ const getFanRSVPs = async (req, res) => {
     }
 }
 
-//gets previous/past RSVPed shows
+//gets a bands previous shows
+const getBandsPreviousShows = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const oldShows = await Show.findAll({
+            where: {
+                id,
+                dateTime: {
+                    [Op.lt]: new Date()
+                }
+            }
+        })
+        return show
+    }
+    catch {
+        console.log("error getting old shows", err)
+        res.sendStatus(400);
+    }
+}
+
+//gets previous/past RSVPed shows for fans
 //will need users id
 const getFansPreviousShows = async (req, res) => {
     // console.log("is this previousShows working?")
