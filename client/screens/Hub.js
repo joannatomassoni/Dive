@@ -25,6 +25,7 @@ import { AXIOS_URL } from 'react-native-dotenv';
 import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
 import PreviousRSVPShows from '../modals/PreviousRsvpShows';
+import moment from 'moment';
 
 
 export default function Hub(props) {
@@ -162,28 +163,33 @@ export default function Hub(props) {
         <View>
           {userInfo.userType === 'band' ?
             <View>
+              {shows ? 
               <Text style={styles.subText}>Your Upcoming Gigs</Text>
+              : null
+              }
               {shows && shows.map(show => {
                 return (
-                  <View>
-                    <Card
-                      containerStyle={styles.card}
-                      backgroundColor='#fff'
-                      borderWidth={0}
-                      borderRadius={10}
-                      padding={10}
-  
-                    // image={require('../images/pic2.jpg')}
-                    >
-                      <SingleShowModal show={show.id} showName={show.name} />
-                      <Text style={styles.cardText}>{show.time}</Text>
-                      {show.description ? 
-                        <Text style={styles.cardText}>{show.description}</Text>
-                      : null}
-                      <EditShowModal style={styles.cardText}/>
-                    </Card>
-                  </View>
-                )
+                  moment(show.dateTime).toDate() > new Date() ? 
+                    <View>
+                      <Card
+                        containerStyle={styles.card}
+                        backgroundColor='#fff'
+                        borderWidth={0}
+                        borderRadius={10}
+                        padding={10}
+    
+                      // image={require('../images/pic2.jpg')}
+                      >
+                        <SingleShowModal show={show.id} showName={show.name} />
+                        <Text style={styles.cardText}>{show.time}</Text>
+                        {show.description ? 
+                          <Text style={styles.cardText}>{show.description}</Text>
+                        : null}
+                        <EditShowModal style={styles.cardText}/>
+                      </Card>
+                    </View>
+                    : null
+                  )
               })}
             </View>
             : null}
