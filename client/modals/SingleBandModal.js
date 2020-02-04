@@ -116,7 +116,7 @@ export default function SingleBandModal(props) {
           </Ionicons>
 
           <ScrollView style={{ marginTop: 30 }}>
-            <Text style={styles.headerText} key={singleBand.id}>{singleBand.name}</Text>
+            <Text style={styles.headerText} key={singleBand.id}>{band}</Text>
             {/* band photo */}
             {singleBand.bandPhoto ? 
               <Image

@@ -27,7 +27,6 @@ import SingleShowModal from '../modals/SingleShowModal';
 import PreviousRSVPShows from '../modals/PreviousRsvpShows';
 import moment from 'moment';
 
-
 export default function Hub(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
@@ -38,7 +37,7 @@ export default function Hub(props) {
   // const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
-  console.log(shows);
+  console.log(fanShows);
 
   
   //gets band info
@@ -290,9 +289,7 @@ export default function Hub(props) {
         </View>
 
         <View>
-          {userInfo.userType === 'fan' || 'band' ? <PreviousRSVPShows userInfo={userInfo.id} />
-
-            : null}
+          <PreviousRSVPShows userId={userInfo.id} />
         </View>
       </ScrollView>
     </SafeAreaView >
