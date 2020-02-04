@@ -171,6 +171,7 @@ export default function ModalExample(props) {
                 setModalVisible(false);
                 axios.post(`${AXIOS_URL}/users`, {
                   name: usernameValue,
+                  nickname: usernameValue,
                   typeName: userType,
                 })
                   .then(() => createCalendar(usernameValue))
