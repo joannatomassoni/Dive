@@ -12,6 +12,8 @@ const {
     Sequelize
 } = require('../sequelize');
 const { getRecordByName, getRecordByID } = require('./utils');
+const moment = require('moment');
+
 
 // import the Sequelize operators
 const Op = Sequelize.Op;
@@ -308,6 +310,7 @@ const removeBandGenre = async (req, res) => {
     }
 }
 
+// get upcoming band shows
 const getBandShows = async (req, res) => {
     try {
         const { id } = req.params;
@@ -436,7 +439,6 @@ module.exports = {
     getSingleUser,
     removeBandGenre,
     searchBands,
-    // sendNotification,
     unfollowBand,
     updateUserBio,
     updateBandPhoto,
