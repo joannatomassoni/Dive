@@ -291,6 +291,7 @@ const removeBandGenre = async (req, res) => {
     }
 }
 
+// get upcoming band shows
 const getBandShows = async (req, res) => {
     try {
         const { id } = req.params;
