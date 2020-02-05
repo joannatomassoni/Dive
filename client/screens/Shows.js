@@ -16,8 +16,8 @@ import SingleShowModal from '../modals/SingleShowModal'
 import Moment from 'moment';
 import { AXIOS_URL } from 'react-native-dotenv';
 import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
-import MapView from 'react-native-maps';
+// import * as Permissions from 'expo-permissions';
+// import MapView from 'react-native-maps';
 import ShowsNearBy from '../modals/ShowsNearBy';
 import { LinearGradient } from 'expo-linear-gradient';
 
