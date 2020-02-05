@@ -37,6 +37,11 @@ export default function SingleShowModal(props) {
 
   const [venue, setVenue] = useState("");
 
+    //request to get all bands from db
+    const getAllBands = () => {
+      console.log('');
+    }
+
   //request to get all comments for specific show
   const getShowComments = () => {
     axios.get(`${AXIOS_URL}/shows/${show}/comments`)
@@ -167,7 +172,7 @@ export default function SingleShowModal(props) {
             {bands.map(band => {
               return (
                 <View style={styles.bandModal}>
-                  <SingleBandModal name={band.name} bandId={band.id} />
+                  <SingleBandModal getAllBands={getAllBands} name={band.name} bandId={band.id} />
                 </View> 
               )
 
