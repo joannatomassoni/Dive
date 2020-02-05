@@ -20,7 +20,6 @@ import EditBandBioModal from '../modals/EditBandBioModal';
 import EditShowModal from '../modals/EditShowModal';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
-import Calendar from '../components/Calendar';
 import { AXIOS_URL } from 'react-native-dotenv';
 import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';

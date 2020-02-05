@@ -3,7 +3,8 @@ import {
   StyleSheet, 
   Text, 
   View,
-  KeyboardAvoidingView 
+  KeyboardAvoidingView ,
+  Animated
 } from 'react-native';
 import LoginForm from '../components/LoginForm'
 import MenuButton from '../components/MenuButton'
