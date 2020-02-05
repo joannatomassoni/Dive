@@ -10,7 +10,8 @@ import {
   Dimensions
 } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { Card } from 'react-native-elements'
+import { Card } from 'react-native-elements';
+import Moment from 'moment';
 import SingleShowModal from '../modals/SingleShowModal';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
@@ -102,13 +103,10 @@ export default function SingleVenueModal(props) {
   
   // request to follow a venue
   const fanFollowVenue = () => {
-    console.log(singleVenue.id)
-    console.log(venue)
     axios.post(`${AXIOS_URL}/venues/${venue}/fans`, {
       id_fan: userInfo.id,
     })
       .then(() => toggleFollowing(true))
-      .then(() => console.log(isFollowing))
       .catch(error => console.log('failed to follow venue', error));
   }
 
@@ -226,7 +224,7 @@ export default function SingleVenueModal(props) {
                 >
                   <SingleShowModal show={show.id} showName={show.name} />
                   <Text style={styles.cardText}>{show.date}</Text>
-                  <Text style={styles.cardText}>{show.time}</Text>
+                  <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                   <Text style={styles.cardText}>{show.description}</Text>
                   {/* list for each additional band in each show */}
                   {show.bands && show.bands.map(band => {

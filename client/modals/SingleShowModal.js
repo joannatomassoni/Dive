@@ -159,8 +159,8 @@ export default function SingleShowModal(props) {
               : null}
 
             {/* additional text */}
-            <Text style={styles.infoText}>{singleShow.date}</Text>
-            <Text style={styles.infoText}>{singleShow.time}</Text>
+            <Text style={styles.infoText}>{Moment(singleShow.dateTime).format('ll')}</Text>
+            <Text style={styles.infoText}>{Moment(singleShow.dateTime).format('LT')}</Text>
             <Text style={styles.infoText}>{venue}</Text>
             <Text style={styles.infoText}>{singleShow.description}</Text>
             {/* list of all additional bands playing in current show */}
