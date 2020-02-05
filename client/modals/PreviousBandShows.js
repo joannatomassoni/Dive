@@ -28,10 +28,13 @@ export default function PreviousBandShows(props) {
   // console.log("are we getting users id?", props.userInfo)
   //allows user to get shows they previously went to on button click
   let userId = props.userInfo;
+
+  console.log("user id", userId);
+
   const getPreviousShows = () => {
     axios.get(`${AXIOS_URL}/shows/${props.userInfo}/oldShows`)
       .then(response => {
-        console.log("getting old shows", response);
+        console.log("getting old shows", response.data);
         setOldShows(response.data)
       })
       .catch(err => {
@@ -72,7 +75,7 @@ export default function PreviousBandShows(props) {
                 {oldShows && oldShows.map(show => {
                   return (
                     <Card
-                      key={show.id}
+                      key={show.shows.id}
                       style={styles.card}
                       backgroundColor='#111'
                       padding={10}
@@ -83,12 +86,12 @@ export default function PreviousBandShows(props) {
                       {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
 
                       {/* modal to display single show info */}
-                      <SingleShowModal show={show.id} showName={show.name} />
+                      <SingleShowModal show={show.shows.id} showName={show.shows.name} />
 
-                      <Text style={styles.cardText}>{show.name}</Text>
-                      <Text style={styles.cardText}>{show.time}</Text>
+                      <Text style={styles.cardText}>{show.show.name}</Text>
+                      {/* <Text style={styles.cardText}>{show.time}</Text>
                       <Text style={styles.cardText}>{show.date}</Text>
-                      <Text style={styles.cardText}>{show.description}</Text>
+                      <Text style={styles.cardText}>{show.description}</Text> */}
                       {/* <EditShowModal /> */}
                     </Card>
                   )
@@ -107,7 +110,7 @@ export default function PreviousBandShows(props) {
         onPress={() => { setModalVisible(true); }
         }
       >
-        <Text style={styles.signupButtonText}>Get previously attended shows</Text>
+        <Text style={styles.signupButtonText}>Get previously played shows BLABLABLABLABL</Text>
       </TouchableOpacity >
 
     </View >
