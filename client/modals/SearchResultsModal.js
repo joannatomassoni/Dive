@@ -27,19 +27,19 @@ export default function SearchResultsModal() {
     }
 
     const searchCall = async (query) => {
-        await axios.get(`${AXIOS_URL}/search/bands/${query}`)
+        await axios.get(`https://dive-266016.appspot.com/search/bands/${query}`)
             .then((response) => {
                 if (response.data) {
                     setBands(response.data);
                 }
             })
-        await axios.get(`${AXIOS_URL}/search/venues/${query}`)
+        await axios.get(`https://dive-266016.appspot.com/search/venues/${query}`)
             .then((response) => {
                 if (response.data) {
                     setVenues(response.data);
                 }
             })
-            await axios.get(`${AXIOS_URL}/search/shows/${query}`)
+            await axios.get(`https://dive-266016.appspot.com/search/shows/${query}`)
             .then((response) => {
                 if (response.data) {
                     setShows(response.data);
@@ -67,9 +67,6 @@ export default function SearchResultsModal() {
                             color='#59C3D1'
                             size={32}
                             style={styles.menuIcon}
-                            onPress={() => { 
-                                setModalVisible(false);
-                            }}
                         />
                     </Ionicons>
                     {/* main body */}
