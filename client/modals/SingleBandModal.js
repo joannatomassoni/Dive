@@ -95,7 +95,6 @@ export default function SingleBandModal(props) {
           {/* back button */}
           <Ionicons size={64} style={styles.menuIconContainer} 
             onPress={() => { 
-              getAllBands();
               setModalVisible(false) 
             }}> 
             <Ionicons

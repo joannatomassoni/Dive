@@ -57,7 +57,7 @@ export default function Bands(props) {
             >
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View>
-                  <SingleBandModal getAllBands={getAllBands} band={band} />
+                  <SingleBandModal band={band} />
                   <Text style={styles.cardText}>{band.bio}</Text>
                 </View>
                 <View>

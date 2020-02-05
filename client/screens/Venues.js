@@ -19,16 +19,20 @@ export default function Venues(props) {
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [venues, setVenues] = useState([]);
 
-  useEffect(() => {
+  const getAllVenues = () => {
     axios.get(`https://dive-266016.appspot.com/venues`)
       .then((response) => {
         setVenues(() => response.data);
+        console.log("venues: ", venues);
       })
       .catch((err) => {
         console.log("error getting venues", err);
       })
-  }, [])
+  }
 
+  useEffect(() => {
+    getAllVenues();
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -50,7 +54,7 @@ export default function Venues(props) {
               borderRadius={10}
               containerStyle={styles.card}
             >
-              <SingleVenueModal venue={venue} venueID={venue.id} venueName={venue.name}/>
+              <SingleVenueModal venue={venue}/>
               <Text style={styles.cardText}>{venue.address}</Text>
               <Text style={styles.cardText}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
             </Card>

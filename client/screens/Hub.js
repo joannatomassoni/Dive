@@ -37,16 +37,6 @@ export default function Hub(props) {
   // const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
-
-
-  //request to get all bands from db
-  const getAllBands = () => {
-    axios.get(`https://dive-266016.appspot.com/bands`)
-      .then((response) => {
-        setBands(() => response.data);
-      })
-      .catch(err => console.log(err))
-  }
   
   //gets band info
   const getBandInfo = async () => {
@@ -275,7 +265,7 @@ export default function Hub(props) {
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {/* <View> */}
-                    <SingleBandModal getAllBands={getAllBands} band={band} />
+                    <SingleBandModal band={band} />
                   </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
                     <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}

@@ -32,10 +32,6 @@ export default function SingleShowModal(props) {
   const venue = show.venue;
   const bands = show.bands;
 
-  //dummy function so SingleBandModal doesn't throw an error
-  const getAllBands = () => {
-    console.log('');
-  }
   //request to get all comments for specific show
   const getShowComments = () => {
      axios.get(`https://dive-266016.appspot.com/shows/${show.id}/comments`)
@@ -147,19 +143,19 @@ export default function SingleShowModal(props) {
               />
               : null}
             {/* additional text */}
-            {venue ? 
               <View>
                 <Text style={styles.infoText}>{Moment(show.dateTime).format('ll')}</Text>
                 <Text style={styles.infoText}>{Moment(show.dateTime).format('LT')}</Text>
+                {venue ? 
                 <Text style={styles.infoText}>{venue.name}</Text>
+                : null}
                 <Text style={styles.infoText}>{show.description}</Text>
               </View>
-              : null}
             {/* list of all additional bands playing in current show */}
             {bands && bands.map(band => {
               return (
                 <View style={styles.bandModal}>
-                  <SingleBandModal getAllBands={getAllBands} band={band} />
+                  <SingleBandModal band={band} />
                 </View> 
               )
             })}

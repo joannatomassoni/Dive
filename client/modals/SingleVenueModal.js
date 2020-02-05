@@ -23,27 +23,11 @@ export default function SingleVenueModal(props) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //set username to text in username textInput
-  const [showTitle, setShowTitle] = useState('');
-  //all info for signle venue
-  const [singleVenue, setVenue] = useState([]);
-  //array of shows at venue
-  const [shows, setShows] = useState([]);
   const [venueLocation, setVenueLocation] = useState({});
   // whether a user follows a given venue or not
   const [isFollowing, toggleFollowing] = useState(false);
   //venue id for axios call
-  let venue = props.venue;
-
-  // request to get single venue info
-  const getSingleVenue = async () => {
-    axios.get(`https://dive-266016.appspot.com/venues/${venue.id}`)
-          .then((response) => {
-            setVenue(response.data);
-          })
-          .catch((err) => {
-            console.log("error getting single venue", err);
-          });
-  }
+  let venue = props.venue
 
   //request to get geolocation of address
   const getAddressCoords = async () => {
@@ -69,17 +53,6 @@ export default function SingleVenueModal(props) {
       })
       .catch((err) => {
         console.log(`error getting geolocation`, err);
-      });
-  }
-
-  // request to get all shows at venue
-  const getAllShows = () => {
-    axios.get(`https://dive-266016.appspot.com/venues/${venue.id}`)
-      .then((response) => {
-        setShows(() => response.data.shows);
-      })
-      .catch((err) => {
-        console.log(err);
       });
   }
 
@@ -123,9 +96,8 @@ export default function SingleVenueModal(props) {
 
   useEffect(() => {
     getAddressCoords();
-    getSingleVenue();
     getFollowInfo();
-    getAllShows();
+
       //CURRENT GEOLOCATION
       // navigator.geolocation.getCurrentPosition(position => {
       //   setCurrentLocation({
@@ -186,19 +158,7 @@ export default function SingleVenueModal(props) {
                 // if following, show unfollow button
                 <TouchableOpacity
                   style={styles.unfollowButtonContainer}
-                  onPress={() => unfollowVenue()
-                  //   {
-                  //   axios.delete(`https://dive-266016.appspot.com/bands/${singleBand.id}/fans`, {
-                  //     data: {
-                  //       id_fan: userInfo.id,
-                  //     }
-                  //   })
-                  //     .then(() => {
-                  //       toggleFollowing(false)
-                  //     })
-                  //     .catch(error => console.log('failed to unfollow band', error))
-                  // }
-                }
+                  onPress={() => unfollowVenue()}
                 >
                   <Text style={styles.followButtonText}>Unfollow</Text>
                 </TouchableOpacity>
@@ -217,7 +177,8 @@ export default function SingleVenueModal(props) {
             {/* shows header */}
             <Text style={styles.headerText}>Shows</Text>
             {/* cards for each upcoming show at the venue */}
-            {shows && shows.map(show => {
+            {venue.shows && venue.shows.map(show => {
+              console.log("venue.show show: ", show);
               return (
                 <Card
                   key={show.id}

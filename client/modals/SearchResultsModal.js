@@ -21,7 +21,7 @@ export default function SearchResultsModal() {
     // state for venues results
     const [ venues, setVenues ] = useState([]);
 
-    //request to get all bands from db
+    // dummy function so single band modal doesn't through an error
     const getAllBands = () => {
        console.log('');
     }
@@ -88,7 +88,7 @@ export default function SearchResultsModal() {
                                                 >
                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                                     <View>
-                                                        <SingleBandModal getAllBands={getAllBands} band={band} />
+                                                        <SingleBandModal band={band} />
                                                         <Text style={styles.cardText}>{band.bio}</Text>
                                                     </View>
                                                 </View>
@@ -148,7 +148,7 @@ export default function SearchResultsModal() {
                                                 >
                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                                     <View>
-                                                        <SingleVenueModal venueID={venue.id} venueName={venue.name}/>
+                                                        <SingleVenueModal venue={venue}/>
                                                         <Text style={styles.cardText}>{venue.address}</Text>
                                                     </View>
                                                 </View>
