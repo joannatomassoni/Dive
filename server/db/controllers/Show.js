@@ -90,9 +90,15 @@ const createShow = async (req, res) => {
 const updateShow = async (req, res) => {
     try {
         const { id } = req.params;
-        const { fieldName, newInfo } = req.body;
+        const { name, dateTime, flyer, venueName, bandNames, description } = req.body;
+        const venue = await getRecordByName('venue', venueName);
+        // format dateTime to be used for sorting and to be passed back as human-friendly strings
+        // dateTime = moment(dateTime).format('llll');
+        const time = moment.utc(dateTime).format('LT');
+        const date = moment(dateTime).format('ll');
+
         await Show.update(
-            { [fieldName]: newInfo },
+            { name, dateTime, time, date, flyer, venueName, bandNames, description, id_venue: venue.id },
             {
                 where: { id: id },
             })
