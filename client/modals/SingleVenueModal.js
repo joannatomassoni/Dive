@@ -178,7 +178,6 @@ export default function SingleVenueModal(props) {
             <Text style={styles.headerText}>Shows</Text>
             {/* cards for each upcoming show at the venue */}
             {venue.shows && venue.shows.map(show => {
-              console.log("venue.show show: ", show);
               return (
                 <Card
                   key={show.id}

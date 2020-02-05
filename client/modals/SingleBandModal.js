@@ -36,7 +36,6 @@ export default function SingleBandModal(props) {
       .then((response) => {
         response.data.map(singleBand => {
           if (band.id === singleBand.id) {
-            console.log('yes');
             toggleFollowing(true);
           }
         })

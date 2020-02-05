@@ -3,9 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   Image,
-  TouchableOpacity,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import axios from 'axios';
@@ -18,12 +16,11 @@ import InstagramButton from '../components/InstagramButton';
 import CreateShowModal from '../modals/CreateShowModal';
 import EditBandBioModal from '../modals/EditBandBioModal';
 import EditShowModal from '../modals/EditShowModal';
-import * as Permissions from 'expo-permissions';
-import Constants from 'expo-constants';
 import { AXIOS_URL } from 'react-native-dotenv';
 import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
 import PreviousRSVPShows from '../modals/PreviousRsvpShows';
+import PastGigsModal from '../modals/PastGigsModal';
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -203,7 +200,7 @@ export default function Hub(props) {
         {/* Cards for shows the user has RSVPd to*/}
         <View>
           {fanShows.length ? 
-          <Text style={styles.subText}>Your RSVP'd Shows</Text>
+          <Text style={styles.subText}>Upcoming RSVPs</Text>
           : null
           }
             {fanShows && fanShows.map(show => {
@@ -276,6 +273,10 @@ export default function Hub(props) {
         </View>
         <View>
           <PreviousRSVPShows userId={userInfo.id} />
+          {userInfo.userType === 'band' ? 
+            <PastGigsModal userId={userInfo.id} />
+            : null
+          }
         </View>
       </ScrollView>
       </LinearGradient>

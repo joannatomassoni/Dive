@@ -13,26 +13,26 @@ import axios from 'axios';
 import { AXIOS_URL } from 'react-native-dotenv';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function PreviousRSVPShows(props) {
-  const [oldShows, setOldShows] = useState([]);
+export default function PastGigsModal(props) {
+  const [pastGigs, setPastGigs] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   //allows user to get shows they previously went to on button click
   let userId = props.userId;
-  
-  const getPreviousShows = () => {
-    axios.get(`https://dive-266016.appspot.com/fans/${userId}/pastrsvps`)
+
+  const getPastGigs = () => {
+    axios.get(`https://dive-266016.appspot.com/bands/${userId}/pastgigs`)
       .then(response => {
-        if (response.data.length) {
-          setOldShows(response.data)
+        if (response.data.shows.length) {
+          setPastGigs(response.data.shows)
         }
       })
       .catch(err => {
-        console.log("not getting older shows", err);
+        console.log("not getting older gigs", err);
       })
   }
 
   useEffect(() => {
-    getPreviousShows();
+    getPastGigs();
   }, []);
 
   return (
@@ -60,9 +60,9 @@ export default function PreviousRSVPShows(props) {
           >
             <View style={styles.container}>
               <View style={{ marginTop: 70 }}>
-                <Text style={styles.headerText}>Past RSVPs</Text>
-                {oldShows.length ? 
-                  oldShows.map(show => {
+                <Text style={styles.headerText}>Past Gigs</Text>
+                {pastGigs ? 
+                  pastGigs.map(show => {
                   return (
                     <Card
                       // key={show.id}
@@ -97,7 +97,7 @@ export default function PreviousRSVPShows(props) {
         onPress={() => { setModalVisible(true); }
         }
       >
-        <Text style={styles.signupButtonText}>Past Shows</Text>
+        <Text style={styles.signupButtonText}>Past Gigs</Text>
       </TouchableOpacity >
 
     </View >
