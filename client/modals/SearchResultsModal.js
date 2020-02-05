@@ -88,7 +88,7 @@ export default function SearchResultsModal() {
                                                 >
                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                                     <View>
-                                                        <SingleBandModal getAllBands={getAllBands} name={band.name} bandId={band.id} />
+                                                        <SingleBandModal getAllBands={getAllBands} band={band} />
                                                         <Text style={styles.cardText}>{band.bio}</Text>
                                                     </View>
                                                 </View>

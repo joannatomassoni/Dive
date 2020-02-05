@@ -159,7 +159,7 @@ export default function SingleShowModal(props) {
             {bands && bands.map(band => {
               return (
                 <View style={styles.bandModal}>
-                  <SingleBandModal getAllBands={getAllBands} name={band.name} bandId={band.id} />
+                  <SingleBandModal getAllBands={getAllBands} band={band} />
                 </View> 
               )
             })}
