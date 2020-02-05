@@ -29,7 +29,7 @@ export default function PreviousBandShows(props) {
   //allows user to get shows they previously went to on button click
   let userId = props.userInfo;
   const getPreviousShows = () => {
-    axios.get(`${AXIOS_URL}/shows/${props.userInfo}/oldrsvps`)
+    axios.get(`${AXIOS_URL}/shows/${props.userInfo}/oldShows`)
       .then(response => {
         console.log("getting old shows", response);
         setOldShows(response.data)
