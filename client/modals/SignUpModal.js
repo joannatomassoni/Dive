@@ -59,7 +59,7 @@ export default function ModalExample(props) {
     const result = await axios.patch(`${AXIOS_URL}/users/${username}/cal`, {
       calID: newCalendarID,
     })
-    .then(response => console.log(response))
+      .then(setUserInfo(userInfo.calID = newCalendarID))
     .catch(error => console.log(error));
   };
 

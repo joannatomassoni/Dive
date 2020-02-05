@@ -92,6 +92,7 @@ export default function SingleShowModal(props) {
       id_show: singleShow.id,
     })
       .then(response => setRsvp(true))
+      .then(createEvent())
       .catch(error => console.log('failed to rsvp', error));
   }
   //request to remove rsvp
@@ -103,29 +104,26 @@ export default function SingleShowModal(props) {
       }
     })
       .then(response => setRsvp(false))
+      .then(createEvent())
       .catch(error => console.log('failed to rsvp', error));
   }
+  //create event on user's dive calendar
+  const createEvent = async () => {
+    try {
+      const eventId = await Calendar.createEventAsync(userInfo.calID, details);
+      console.log("added event");
+    }
+    catch (error) {
+      console.log('Error', error);
+    }
+  }
 
-  useEffect(() => {
-    //request to access users calendar
-    (async () => {
-      const { status } = await Calendar.requestCalendarPermissionsAsync();
-      if (status === 'granted') {
-        const calendars = await Calendar.getCalendarsAsync();
-        //used to find specific expo calendar to push notifications to
-        //console.log({ calendars });
-      }
-    })();
-  }, [])
-  // const venue = singleShow.venue.name
-  // const venueName = venue.name
-  // console.log("this is a single show venue", venue);
   // event details for calendar integration
   const details = {
     title: singleShow.name,
     startDate: singleShow.dateTime,
     endDate: singleShow.dateTime,
-    notes: singleShow.description,
+    notes: singleShow.description ? singleShow.description : 'RSVPd show',
     navigationBarIOS: {
       tintColor: 'orange',
       backgroundColor: 'green',
@@ -167,15 +165,7 @@ export default function SingleShowModal(props) {
             {/* additional text */}
             <Text style={styles.infoText}>{singleShow.date}</Text>
             <Text style={styles.infoText}>{singleShow.time}</Text>
-            {/* <Text> */}
-
-
-
-            <SingleVenueModal venueID={venueId} venueName={venueName} />
-
-            {/* </Text> */}
-            {/* <Text style={styles.infoText}>{venue}</Text> */}
-
+            <Text style={styles.infoText}>{venue}</Text>
             <Text style={styles.infoText}>{singleShow.description}</Text>
             {/* list of all additional bands playing in current show */}
             {bands.map(band => {
@@ -197,9 +187,8 @@ export default function SingleShowModal(props) {
                 style={styles.buttonContainer}
                 onPress={async () => {
                   try {
-                    console.log('Adding Event');
-                    const eventId = await Calendar.createEventAsync("D5A65218-29C5-466C-A2CE-D54DF9D4260A", details);
-                    console.log("Event Id", id);
+                    const eventId = await Calendar.createEventAsync(userInfo.calID, details);
+                    console.log('added event');
                   }
                   catch (error) {
                     console.log('Error', error);

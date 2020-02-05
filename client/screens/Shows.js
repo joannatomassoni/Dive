@@ -49,7 +49,6 @@ export default function Shows(props) {
     let locationObj = await Location.getCurrentPositionAsync({});
     locationObj = JSON.stringify(locationObj);
     setLocation(location);
-    console.log(location);
   };
 
 
