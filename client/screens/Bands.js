@@ -16,7 +16,6 @@ import MenuButton from '../components/MenuButton'
 import SingleBandModal from '../modals/SingleBandModal';
 import { AXIOS_URL } from 'react-native-dotenv';
 
-
 export default function Bands(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);

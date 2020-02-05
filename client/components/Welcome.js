@@ -50,6 +50,12 @@ const styles = StyleSheet.create({
     color: '#59C3D1',
     fontWeight: 'bold',
     marginTop: 380,
-    fontFamily: 'AvenirNext-Bold'
+    fontFamily: 'AvenirNext-Bold',
+    textShadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    textShadowColor: '#AA8181',
+    textShadowRadius: 15
   },
 })

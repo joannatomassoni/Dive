@@ -70,7 +70,6 @@ export default function SearchResultsModal() {
                     {/* main body */}
                     <ScrollView style={{ marginTop: 30 }}>
                         <Text style={styles.headerText}>Results</Text>       
-
                         {/* conditionally rendering lists of venues, bands, and shows */}            
                         {bands.length ? 
                             <View>

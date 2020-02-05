@@ -102,7 +102,7 @@ export default function Shows(props) {
           )
         })}
       </ScrollView>
-    </SafeAreaView >
+  </SafeAreaView >
   )
 }
 

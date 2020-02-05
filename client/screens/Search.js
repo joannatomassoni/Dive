@@ -6,6 +6,7 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 import MenuButton from '../components/MenuButton'
 import SearchResultModal from '../modals/SearchResultsModal';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Search(props) {
     return (

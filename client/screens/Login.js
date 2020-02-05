@@ -64,9 +64,12 @@ const styles = StyleSheet.create({
     color: '#59C3D1',
     fontWeight: 'bold',
     marginTop: 230,
-    fontFamily: 'AvenirNext-Bold'
+    fontFamily: 'AvenirNext-Bold',
+    textShadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    textShadowColor: '#AA8181',
+    textShadowRadius: 15
   },
-  formContainer: {
-    flex: 1
-  }
 })
