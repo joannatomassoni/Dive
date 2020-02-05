@@ -18,12 +18,13 @@ import { AXIOS_URL } from 'react-native-dotenv';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import MapView from 'react-native-maps';
+import ShowsNearBy from '../modals/ShowsNearBy';
 
 export default function Shows(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
-  const [location, setLocation] = useState({});
+  // const [location, setLocation] = useState({});
 
   // const [flyer, setFlyer] = useState("");
 
@@ -31,31 +32,31 @@ export default function Shows(props) {
   const getAllShows = () => {
     axios.get(`${AXIOS_URL}/shows`)
       .then((response) => {
-        setShows(() => response.data);
+        setShows(() => response.data); xw
       })
       .catch((err) => {
         console.log(err);
       })
   }
 
-  const getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
-      console.log("can't get location");
-      // this.setState({
-      //   errorMessage: 'Permission to access location was denied',
-      // });
-    }
+  // const getLocationAsync = async () => {
+  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+  //   if (status !== 'granted') {
+  //     console.log("can't get location");
+  //     // this.setState({
+  //     //   errorMessage: 'Permission to access location was denied',
+  //     // });
+  //   }
 
-    let locationObj = await Location.getCurrentPositionAsync({});
-    locationObj = JSON.stringify(locationObj);
-    setLocation(location);
-  };
+  //   let locationObj = await Location.getCurrentPositionAsync({});
+  //   locationObj = JSON.stringify(locationObj);
+  //   setLocation(location);
+  // };
 
 
   useEffect(() => {
     getAllShows();
-    getLocationAsync();
+    // getLocationAsync();
   }, [])
 
   return (
@@ -99,9 +100,10 @@ export default function Shows(props) {
                 </View>
               </View>
             </Card>
-            
+
           )
         })}
+        <ShowsNearBy />
       </ScrollView>
     </SafeAreaView >
   )
