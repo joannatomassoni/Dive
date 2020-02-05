@@ -181,7 +181,7 @@ export default function Hub(props) {
                         padding={10}
                       >
                         <SingleShowModal show={show.id} showName={show.name} />
-                        <Text style={styles.cardText}>{moment(show.dateTime).format('LT')}</Text>
+                        <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                         {show.description ? 
                           <Text style={styles.cardText}>{show.description}</Text>
                         : null}
@@ -220,7 +220,7 @@ export default function Hub(props) {
                       {/* modal to display single show info */}
                       <SingleShowModal show={show.id} showName={show.name} />
                       <Text style={styles.cardText}>{show.date}</Text>
-                      <Text style={styles.cardText}>{moment(show.dateTime).format('LT')}</Text>
+                      <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                       {show.bands ?
                         show.bands.map(band => {
                           <Text style={styles.cardText} key={band.id}>{band.name}</Text>
