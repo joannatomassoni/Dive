@@ -25,6 +25,7 @@ import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
 import PreviousRSVPShows from '../modals/PreviousRsvpShows';
 import Moment from 'moment';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Hub(props) {
   //global user signin info and editing function
@@ -119,12 +120,16 @@ export default function Hub(props) {
         getPreviousShows();
       }, [])
 
-          return (
-            <SafeAreaView style={styles.container}>
+    return (
+      <View style={styles.container}>
       <MenuButton navigation={props.navigation} />
-      <ScrollView style={{ marginTop: 30 }}>
+        <LinearGradient
+          colors={['#38404C','#111']}
+          style={{ flex: 1 }}
+        >
+      <ScrollView style={{ marginTop: 70 }}>
         <Text style={styles.text}>Hub</Text>
-        <View style={styles.container}>
+        <View>
           {/* image container */}
           <Text>
             {dbPhoto &&
@@ -283,7 +288,8 @@ export default function Hub(props) {
           <PreviousRSVPShows userId={userInfo.id} />
         </View>
       </ScrollView>
-    </SafeAreaView >
+      </LinearGradient>
+    </View >
   )
 }
 
