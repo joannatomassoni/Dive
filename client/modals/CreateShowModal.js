@@ -30,7 +30,7 @@ export default function CreateShowModal(props) {
   //array of all bands
   const [bandNames, addBandName] = useState([userInfo.username]);
   // public/private status
-  const [ status, setStatus ] = useState('public');
+  const [status, setStatus] = useState('private');
   //venue name
   const [venueName, setVenueName] = useState('private');
   //show date
@@ -105,7 +105,7 @@ export default function CreateShowModal(props) {
         {/* start of modal when showing */}
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
           {/* back button */}
-          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
+          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
             <Ionicons
               name='ios-arrow-back'
               color='#59C3D1'
@@ -156,26 +156,31 @@ export default function CreateShowModal(props) {
                   }}
                 />
               </View>
-
-              {/* Radio button to select private/public status of show */}
-            <RadioForm
-              style={styles.modal}
-              buttonInnerColor={'#59C3D1'}
-              radio_props={radio_props}
-              initial={null}
-              formHorizontal={true}
-              labelHorizontal={false}
-              buttonColor={'#59C3D1'}
-              selectedButtonColor={'#59C3D1'}
-              animation={true}
-              labelStyle={{color: '#fff', fontWeight: 'bold'}}
-              onPress={(value) => {setStatus(value)}}
-            />
-            { status === 'public' ?
-              // {/* dropdown to select venue, available if show is public */}
-              <VenuePicker setVenueName={setVenueName} allVenues={allVenues} />
-              : null
-            }
+              {/* venue row */}
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}>
+                {/* Radio button to select private/public status of show */}
+                <RadioForm
+                  style={styles.modal}
+                  buttonInnerColor={'#59C3D1'}
+                  radio_props={radio_props}
+                  initial={1}
+                  formHorizontal={true}
+                  labelHorizontal={false}
+                  buttonColor={'#59C3D1'}
+                  selectedButtonColor={'#59C3D1'}
+                  animation={true}
+                  labelStyle={{ color: '#fff', fontWeight: 'bold' }}
+                  onPress={(value) => { setStatus(value) }}
+                />
+                {status === 'public' ?
+                  // {/* dropdown to select venue, available if show is public */}
+                  <VenuePicker setVenueName={setVenueName} allVenues={allVenues} />
+                  : null
+                }
+              </View>
               {/* date time picker */}
               <DateTimePicker setDateTime={setDateTime} />
               {/*  button to upload photo */}
@@ -184,7 +189,7 @@ export default function CreateShowModal(props) {
                   style={styles.buttonContainer}
                   onPress={openImagePickerAsync}
                 >
-                  <Text style={styles.buttonText}>Upload Show Flyer</Text>
+                  <Text style={styles.buttonText}>Upload Flyer</Text>
                 </TouchableOpacity>
                 {/* {image.uri && */}
                 {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
@@ -200,7 +205,7 @@ export default function CreateShowModal(props) {
               <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={() => {
-                  axios.post(`${AXIOS_URL}/shows`, {
+                  axios.post(`https://dive-266016.appspot.com/shows`, {
                     name: showTitle,
                     dateTime: dateTime,
                     flyer: flyer,
@@ -225,7 +230,7 @@ export default function CreateShowModal(props) {
         onPress={() => {
           setModalVisible(true);
           //request to get all venues for venue selector
-          axios.get(`${AXIOS_URL}/venues`)
+          axios.get(`https://dive-266016.appspot.com/venues`)
             .then(response => response.data.map(venue => {
               if (!venues.includes(venue.name)) {
                 venues.push(venue.name);
@@ -276,7 +281,6 @@ const styles = StyleSheet.create({
     fontSize: 40,
     alignItems: 'center',
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
     marginLeft: 75,
     marginBottom: 15
