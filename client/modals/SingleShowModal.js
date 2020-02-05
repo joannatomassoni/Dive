@@ -37,8 +37,6 @@ export default function SingleShowModal(props) {
 
   const [venue, setVenue] = useState("");
 
-  console.log('SINGLE SHOW INFO', singleShow)
-
   //request to get all comments for specific show
   const getShowComments = () => {
     axios.get(`${AXIOS_URL}/shows/${show}/comments`)
