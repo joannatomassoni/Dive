@@ -37,8 +37,6 @@ export default function Hub(props) {
   // const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
-  console.log(fanShows);
-
   
   //gets band info
   const getBandInfo = async () => {
@@ -100,7 +98,7 @@ export default function Hub(props) {
       })
     }
     
-    // //allows user to get shows they previously went to on button click
+    //allows user to get shows they previously went to on button click
     const getPreviousShows = () => {
         axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
           .then(response => {
@@ -155,10 +153,8 @@ export default function Hub(props) {
           height: 50,
           justifyContent: 'center',
         }}>
-
           {/* Button to open create show modal */}
           <EditBandBioModal />
-
           {/* Button to open create show modal */}
           {userInfo.userType === 'band' ? <CreateShowModal /> : null}
         </View>
@@ -167,7 +163,7 @@ export default function Hub(props) {
           {userInfo.userType === 'band' ?
             <View>
               {shows.length ? 
-              <Text style={styles.subText}>Your Upcoming Gigs</Text>
+              <Text style={styles.subText}>Upcoming Gigs</Text>
               : null
               }
               {shows && shows.map(show => {
@@ -180,8 +176,6 @@ export default function Hub(props) {
                         borderWidth={0}
                         borderRadius={10}
                         padding={10}
-    
-                      // image={require('../images/pic2.jpg')}
                       >
                         <SingleShowModal show={show.id} showName={show.name} />
                         <Text style={styles.cardText}>{show.time}</Text>
@@ -198,21 +192,18 @@ export default function Hub(props) {
             : null}
         </View>
 
-
         {/* <View style={styles.container}>
           <Image
             source={dbPhoto}
             style={styles.thumbnail}
           />
         </View> */}
-
         {/* Cards for shows the user has RSVPd to*/}
         <View>
           {fanShows.length ? 
           <Text style={styles.subText}>Your RSVP'd Shows</Text>
           : null
           }
-
 
             {fanShows && fanShows.map(show => {
               return (
@@ -252,15 +243,13 @@ export default function Hub(props) {
                 </Card>
               )
             })}
-
-
         </View>
 
         {/* Cards for bands the user follows */}
         < View >
             {followed.length ?
               <Text style={styles.subText}>Bands You Follow</Text>
-               : null 
+              : null 
             }
           {
             followed && followed.map(band => {
@@ -281,13 +270,11 @@ export default function Hub(props) {
                   </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
         <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
-
                 </Card>
               )
             })
             }
         </View>
-
         <View>
           <PreviousRSVPShows userId={userInfo.id} />
         </View>

@@ -63,7 +63,7 @@ export default function SingleVenueModal(props) {
         setVenueLocation({
           latitude: response.data.results[0].locations[0].displayLatLng.lat,
           longitude: response.data.results[0].locations[0].displayLatLng.lng,
-          latitudeDelta: 0.0012,
+          latitudeDelta: 0.0022,
           longitudeDelta: 0.011
         });
       })
@@ -102,8 +102,6 @@ export default function SingleVenueModal(props) {
   
   // request to follow a venue
   const fanFollowVenue = () => {
-    console.log(singleVenue.id)
-    console.log(venue)
     axios.post(`${AXIOS_URL}/venues/${venue}/fans`, {
       id_fan: userInfo.id,
     })
@@ -145,7 +143,6 @@ export default function SingleVenueModal(props) {
         transparent={false}
         visible={modalVisible}
       >
-        
         {/* start of modal when showing */}
         <SafeAreaView behavior="padding" style={styles.container}>
           {/* back button */}
