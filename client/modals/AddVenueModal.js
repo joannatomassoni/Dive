@@ -105,7 +105,7 @@ export default function AddVenueModal(props) {
                 style={styles.buttonContainer}
                 onPress={() => {
                   setModalVisible(false);
-                  axios.post(`${AXIOS_URL}/venues`, {
+                  axios.post(`https://dive-266016.appspot.com/venues`, {
                     name: venueName,
                     address: venueAddress,
                     city: venueCity,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
-    paddingTop: 30
+    paddingTop: 200
   },
   text: {
     fontSize: 40,

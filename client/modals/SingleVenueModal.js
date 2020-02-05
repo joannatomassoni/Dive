@@ -6,8 +6,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView,
-  Dimensions
 } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Card } from 'react-native-elements';
@@ -17,6 +15,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { MAP_KEY, AXIOS_URL } from 'react-native-dotenv';
 import axios from 'axios';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function SingleVenueModal(props) {
   //global user signin info and editing function
@@ -37,7 +36,7 @@ export default function SingleVenueModal(props) {
 
   // request to get single venue info
   const getSingleVenue = async () => {
-    axios.get(`${AXIOS_URL}/venues/${venue}`)
+    axios.get(`https://dive-266016.appspot.com/venues/${venue}`)
           .then((response) => {
             setVenue(response.data);
           })
@@ -64,7 +63,7 @@ export default function SingleVenueModal(props) {
         setVenueLocation({
           latitude: response.data.results[0].locations[0].displayLatLng.lat,
           longitude: response.data.results[0].locations[0].displayLatLng.lng,
-          latitudeDelta: 0.0012,
+          latitudeDelta: 0.0022,
           longitudeDelta: 0.011
         });
       })
@@ -75,7 +74,7 @@ export default function SingleVenueModal(props) {
 
   // request to get all shows at venue
   const getAllShows = () => {
-    axios.get(`${AXIOS_URL}/venues/${venue}`)
+    axios.get(`https://dive-266016.appspot.com/venues/${venue}`)
       .then((response) => {
         setShows(() => response.data.shows);
       })
@@ -86,7 +85,7 @@ export default function SingleVenueModal(props) {
 
   // Request to see if a user is following the venue
   const getFollowInfo = () => {
-    axios.get(`${AXIOS_URL}/fans/${userInfo.id}/venues`)
+    axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/venues`)
       .then((response) => {
         if (response.data[0].venues) {
           response.data[0].venues.map(venue => {
@@ -103,7 +102,7 @@ export default function SingleVenueModal(props) {
   
   // request to follow a venue
   const fanFollowVenue = () => {
-    axios.post(`${AXIOS_URL}/venues/${venue}/fans`, {
+    axios.post(`https://dive-266016.appspot.com/venues/${venue}/fans`, {
       id_fan: userInfo.id,
     })
       .then(() => toggleFollowing(true))
@@ -112,7 +111,7 @@ export default function SingleVenueModal(props) {
 
   // request to unfollow a venue
   const unfollowVenue = () => {
-    axios.delete(`${AXIOS_URL}/venues/${venue}/fans`, {
+    axios.delete(`https://dive-266016.appspot.com/venues/${venue}/fans`, {
       data: {
         id_fan: userInfo.id,
         id_venue: venue,
@@ -136,7 +135,6 @@ export default function SingleVenueModal(props) {
       // )
   }, [])
 
-
   return (
     <View>
       <Modal
@@ -144,9 +142,8 @@ export default function SingleVenueModal(props) {
         transparent={false}
         visible={modalVisible}
       >
-        
         {/* start of modal when showing */}
-        <SafeAreaView behavior="padding" style={styles.container}>
+        <View behavior="padding" style={styles.container}>
           {/* back button */}
           <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
             <Ionicons
@@ -157,7 +154,11 @@ export default function SingleVenueModal(props) {
               onPress={() => { setModalVisible(false) }}
             />
           </Ionicons>
-          <ScrollView style={{ marginTop: 30 }}>
+          <LinearGradient
+            colors={['#38404C', '#111']}
+            style={{ flex: 1 }}
+          >
+          <ScrollView style={{ marginTop: 70 }}>
             <Text style={styles.headerText} key={singleVenue.id}>{singleVenue.name}</Text>
             <Text style={styles.infoText}>{singleVenue.address}</Text>
             <Text style={styles.infoText}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
@@ -184,7 +185,7 @@ export default function SingleVenueModal(props) {
                   style={styles.unfollowButtonContainer}
                   onPress={() => unfollowVenue()
                   //   {
-                  //   axios.delete(`${AXIOS_URL}/bands/${singleBand.id}/fans`, {
+                  //   axios.delete(`https://dive-266016.appspot.com/bands/${singleBand.id}/fans`, {
                   //     data: {
                   //       id_fan: userInfo.id,
                   //     }
@@ -234,7 +235,8 @@ export default function SingleVenueModal(props) {
               )
             })}
           </ScrollView>
-        </SafeAreaView>
+          </LinearGradient>
+        </View>
       </Modal>
       {/* create show button when modal is hidden */}
       <TouchableOpacity
@@ -256,7 +258,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2D323A',
-    padding: 5
   },
   headerText: {
     fontSize: 50,

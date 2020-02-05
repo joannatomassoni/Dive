@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
-  Text,
-  SafeAreaView
+  Text,View
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import axios from 'axios';
@@ -12,6 +11,7 @@ import MenuButton from '../components/MenuButton';
 import AddVenueModal from '../modals/AddVenueModal';
 import SingleVenueModal from '../modals/SingleVenueModal';
 import { AXIOS_URL } from 'react-native-dotenv';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // export default class Venues extends React.Component {
 export default function Venues(props) {
@@ -20,7 +20,7 @@ export default function Venues(props) {
   const [venues, setVenues] = useState([]);
 
   useEffect(() => {
-    axios.get(`${AXIOS_URL}/venues`)
+    axios.get(`https://dive-266016.appspot.com/venues`)
       .then((response) => {
         setVenues(() => response.data);
       })
@@ -31,9 +31,13 @@ export default function Venues(props) {
 
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <MenuButton navigation={props.navigation} />
-      <ScrollView style={{ marginTop: 30 }}>
+      <LinearGradient
+        colors={['#38404C', '#111']}
+        style={{ flex: 1 }}
+      >
+      <ScrollView style={{ marginTop: 70 }}>
         <Text style={styles.text}>Venues</Text>
         {/* modal to add a new venue to the venue db */}
         {userInfo.userType === 'band' ? <AddVenueModal /> : null}
@@ -53,7 +57,8 @@ export default function Venues(props) {
           )
         })}
       </ScrollView>
-    </SafeAreaView >
+      </LinearGradient>
+    </View >
   )
 }
 

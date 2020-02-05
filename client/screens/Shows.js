@@ -19,6 +19,7 @@ import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import MapView from 'react-native-maps';
 import ShowsNearBy from '../modals/ShowsNearBy';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Shows(props) {
   //global user signin info and editing function
@@ -60,52 +61,57 @@ export default function Shows(props) {
   }, [])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <MenuButton navigation={props.navigation} />
-      <ScrollView style={{ marginTop: 30 }}>
-        <Text style={styles.headerText}>Shows</Text>
-        {shows && shows.map(show => {
-          return (
-            <Card
-              key={show.id}
-              backgroundColor='#111'
-              padding={10}
-              borderRadius={10}
-              containerStyle={styles.card}
-            >
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View>
-                  {/* modal to display single show info */}
-                  <SingleShowModal show={show.id} showName={show.name} showVenueId={show.venue.id} />
-                  <Text style={styles.cardText}>{show.date}</Text>
-                  <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
-                  {show.bands ?
-                    show.bands.map(band => {
-                      <Text style={styles.cardText} key={band.id}>{band.name}</Text>
-                    })
-                    : null}
-                  <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text>
+      <LinearGradient
+        colors={['#38404C', '#111']}
+        style={{ flex: 1 }}
+      >
+        <ScrollView style={{ marginTop: 70 }}>
+          <Text style={styles.headerText}>Shows</Text>
+          {shows && shows.map(show => {
+            return (
+              <Card
+                key={show.id}
+                backgroundColor='#111'
+                padding={10}
+                borderRadius={10}
+                containerStyle={styles.card}
+              >
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <View>
+                    {/* modal to display single show info */}
+                    <SingleShowModal show={show} showName={show.name} />
+                    <Text style={styles.cardText}>{show.date}</Text>
+                    <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
+                    {show.bands ?
+                      show.bands.map(band => {
+                        <Text style={styles.cardText} key={band.id}>{band.name}</Text>
+                      })
+                      : null}
+                    <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text>
+                  </View>
+                  <View >
+                    {/* show flyer */}
+                    <Text >
+                      {show.flyer &&
+                        <Image
+                          style={{ justifyContent: 'right' }}
+                          style={styles.photo}
+                          source={{ uri: show.flyer }}
+                        />
+                      }
+                    </Text>
+                  </View>
                 </View>
-                <View >
-                  {/* show flyer */}
-                  <Text >
-                    {show.flyer &&
-                      <Image
-                        style={{ justifyContent: 'right' }}
-                        style={styles.photo}
-                        source={{ uri: show.flyer }}
-                      />
-                    }
-                  </Text>
-                </View>
-              </View>
-            </Card>
+              </Card>
 
-          )
-        })}
-        <ShowsNearBy />
-      </ScrollView>
-    </SafeAreaView >
+            )
+          })}
+          <ShowsNearBy />
+        </ScrollView>
+      </LinearGradient>
+    </View >
   )
 }
 
@@ -120,7 +126,7 @@ const styles = StyleSheet.create({
     color: '#3BAFBF',
     fontWeight: 'bold',
     textAlign: 'right',
-    paddingRight: 20
+    paddingRight: 20,
   },
   button: {
     borderRadius: 5,

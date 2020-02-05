@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, View, SafeAreaView, StyleSheet, Text, ScrollView, TextInput } from 'react-native';
-import { Ionicons, Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import { Card } from 'react-native-elements';
 import { AXIOS_URL } from 'react-native-dotenv';
@@ -27,19 +27,19 @@ export default function SearchResultsModal() {
     }
 
     const searchCall = async (query) => {
-        await axios.get(`${AXIOS_URL}/search/bands/${query}`)
+        await axios.get(`https://dive-266016.appspot.com/search/bands/${query}`)
             .then((response) => {
                 if (response.data) {
                     setBands(response.data);
                 }
             })
-        await axios.get(`${AXIOS_URL}/search/venues/${query}`)
+        await axios.get(`https://dive-266016.appspot.com/search/venues/${query}`)
             .then((response) => {
                 if (response.data) {
                     setVenues(response.data);
                 }
             })
-            await axios.get(`${AXIOS_URL}/search/shows/${query}`)
+            await axios.get(`https://dive-266016.appspot.com/search/shows/${query}`)
             .then((response) => {
                 if (response.data) {
                     setShows(response.data);
@@ -67,15 +67,11 @@ export default function SearchResultsModal() {
                             color='#59C3D1'
                             size={32}
                             style={styles.menuIcon}
-                            onPress={() => { 
-                                setModalVisible(false);
-                            }}
                         />
                     </Ionicons>
                     {/* main body */}
                     <ScrollView style={{ marginTop: 30 }}>
                         <Text style={styles.headerText}>Results</Text>       
-
                         {/* conditionally rendering lists of venues, bands, and shows */}            
                         {bands.length ? 
                             <View>
@@ -181,8 +177,8 @@ export default function SearchResultsModal() {
                             onChangeText={setQuery}
                             style={styles.input}
                         />
-                        <Feather
-                            name='search'
+												<Ionicons
+                            name='md-search'
                             color='#59C3D1'
                             size={37}
                             onPress={() => {
@@ -241,7 +237,8 @@ const styles = StyleSheet.create({
     searchBarContainer: {
         flex: 1,
         backgroundColor: '#2D323A',
-        padding: 30,
+				alignSelf: 'center',
+				paddingTop: 30
     },
     linkRow: {
         flexDirection: 'row',

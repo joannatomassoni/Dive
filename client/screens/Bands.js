@@ -15,7 +15,7 @@ import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 import SingleBandModal from '../modals/SingleBandModal';
 import { AXIOS_URL } from 'react-native-dotenv';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Bands(props) {
   //global user signin info and editing function
@@ -25,7 +25,7 @@ export default function Bands(props) {
 
   //request to get all bands from db
   const getAllBands = () => {
-    axios.get(`${AXIOS_URL}/bands`)
+    axios.get(`https://dive-266016.appspot.com/bands`)
       .then((response) => {
         setBands(() => response.data);
       })
@@ -37,9 +37,13 @@ export default function Bands(props) {
   }, [])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <MenuButton navigation={props.navigation} />
-      <ScrollView style={{ marginTop: 30 }}>
+      <LinearGradient
+        colors={['#38404C', '#111']}
+        style={{ flex: 1 }}
+      >
+      <ScrollView style={{ marginTop: 70 }}>
         <Text style={styles.headerText}>Bands</Text>
         {bands && bands.map(band => {
           console.log(band.nickname);
@@ -71,7 +75,8 @@ export default function Bands(props) {
           )
         })}
       </ScrollView>
-    </SafeAreaView>
+      </LinearGradient>
+    </View>
   )
 }
 

@@ -56,7 +56,7 @@ export default function ModalExample(props) {
       accessLevel: Calendar.CalendarAccessLevel.OWNER,
     })
     console.log(`Your new calendar ID is: ${newCalendarID}`)
-    const result = await axios.patch(`${AXIOS_URL}/users/${username}/cal`, {
+    const result = await axios.patch(`https://dive-266016.appspot.com/users/${username}/cal`, {
       calID: newCalendarID,
     })
       .then(setUserInfo(userInfo.calID = newCalendarID))
@@ -83,7 +83,7 @@ export default function ModalExample(props) {
             photoUrl: user.photoUrl,
           }))
         }
-      axios.post(`${AXIOS_URL}/users`, {
+      axios.post(`https://dive-266016.appspot.com/users`, {
         name: user.email,
         nickname: user.name,
         typeName: userType,
@@ -96,7 +96,7 @@ export default function ModalExample(props) {
       })
       //add push token to db
       .then((expoPushToken) => {
-        axios.patch(`${AXIOS_URL}/users/${user.email}/push`, {
+        axios.patch(`https://dive-266016.appspot.com/users/${user.email}/push`, {
           expoPushToken
         })
       })
@@ -154,8 +154,9 @@ export default function ModalExample(props) {
               formHorizontal={true}
               labelHorizontal={false}
               buttonColor={'#59C3D1'}
+              selectedButtonColor={'#59C3D1'}
               animation={true}
-              labelColor={'#fff'}
+              labelStyle={{ color: '#fff', fontWeight: 'bold', marginBottom: 5 }}
               onPress={(value) => {setUserType(value)}}
             />
             {/* horizontal button div */}
@@ -169,7 +170,7 @@ export default function ModalExample(props) {
               style={styles.brightSignupContainer}
               onPress={() => {
                 setModalVisible(false);
-                axios.post(`${AXIOS_URL}/users`, {
+                axios.post(`https://dive-266016.appspot.com/users`, {
                   name: usernameValue,
                   nickname: usernameValue,
                   typeName: userType,

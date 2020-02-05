@@ -25,8 +25,8 @@ import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
 import PreviousRSVPShows from '../modals/PreviousRsvpShows';
 import PreviousBandShows from '../modals/PreviousRsvpShows';
-
-import moment from 'moment';
+import Moment from 'moment';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Hub(props) {
   //global user signin info and editing function
@@ -42,7 +42,7 @@ export default function Hub(props) {
 
   //request to get all bands from db
   const getAllBands = () => {
-    axios.get(`${AXIOS_URL}/bands`)
+    axios.get(`https://dive-266016.appspot.com/bands`)
       .then((response) => {
         setBands(() => response.data);
       })
@@ -51,7 +51,7 @@ export default function Hub(props) {
 
   //gets band info
   const getBandInfo = async () => {
-    await axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
+    await axios.get(`https://dive-266016.appspot.com/users/${userInfo.username}`)
       .then((response) => {
         setHubInfo(() => response.data);
       })
@@ -62,11 +62,11 @@ export default function Hub(props) {
 
   //gets a list of all of a bands shows
   const getBandsShows = async () => {
-    await axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
+    await axios.get(`https://dive-266016.appspot.com/bands/${userInfo.id}/shows`)
       .then((response) => {
         if (response.data.shows) {
           setShows(() => response.data.shows.filter((show) => {
-            return moment(show.dateTime).toDate() > new Date();
+            return Moment(show.dateTime).toDate() > new Date();
           }))
         }
       })
@@ -77,7 +77,7 @@ export default function Hub(props) {
 
   //gets bands photo from database
   const getPhoto = async () => {
-    await axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
+    await axios.get(`https://dive-266016.appspot.com/users/${userInfo.username}`)
       .then((response) => {
         setDbPhoto(() => response.data.bandPhoto);
       })
@@ -88,7 +88,7 @@ export default function Hub(props) {
 
   //allows users to see all of the shows they have RSVPed to
   const getRSVPS = async () => {
-    await axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
+    await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/rsvps`)
       .then((response) => {
         setFanShows(() => response.data);
       })
@@ -99,7 +99,7 @@ export default function Hub(props) {
 
   //allows user to see all the bands they follow
   const getFollowedBands = async () => {
-    await axios.get(`${AXIOS_URL}/fans/${userInfo.id}/bands`)
+    await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/bands`)
       .then(response => {
         setFollowed(() => response.data);
       })
@@ -110,7 +110,7 @@ export default function Hub(props) {
 
   //allows user to get shows they previously went to on button click
   const getPreviousShows = () => {
-    axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
+    axios.get(`https://dive-266016.appspot.com/shows/${userInfo.id}/oldrsvps`)
       .then(response => {
         setOldShows(response.data)
       })
@@ -130,110 +130,127 @@ export default function Hub(props) {
   }, [])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <MenuButton navigation={props.navigation} />
-      <ScrollView style={{ marginTop: 30 }}>
-        <Text style={styles.text}>Hub</Text>
-        <View style={styles.container}>
-          {/* image container */}
-          <Text>
-            {dbPhoto &&
-              <Image
-                style={{ width: 100, height: 70 }}
-                source={{ uri: dbPhoto }}
-              />
-            }
-          </Text>
-        </View>
-        <Text style={styles.infoText}>
-          {hubInfo.bio}
-        </Text>
-        {/* Social Media Buttons */}
-        <View style={styles.flexRowRight}>
-          {/* Only show spotify link if user is a band */}
-          {userInfo.userType === 'band' ?
-            <SpotifyButton link={hubInfo.link_spotify} />
-            : null}
-          <InstagramButton link={hubInfo.link_instagram} />
-          <FacebookButton link={hubInfo.link_facebook} />
-        </View>
-        <View style={{
-          flexDirection: 'row',
-          height: 50,
-          justifyContent: 'center',
-        }}>
-          {/* Button to open create show modal */}
-          <EditBandBioModal />
-          {/* Button to open create show modal */}
-          {userInfo.userType === 'band' ? <CreateShowModal getBandsShows={getBandsShows} /> : null}
-        </View>
-        {/* Cards for all a bands upcoming shows */}
-        <View>
-          {userInfo.userType === 'band' ?
-            <View>
-              {shows.length ?
-                <Text style={styles.subText}>Your Upcoming Gigs</Text>
-                : null
+      <LinearGradient
+        colors={['#38404C', '#111']}
+        style={{ flex: 1 }}
+      >
+        <ScrollView style={{ marginTop: 70 }}>
+          <Text style={styles.text}>Hub</Text>
+          <View>
+            {/* image container */}
+            <Text>
+              {dbPhoto &&
+                <Image
+                  style={{ width: 100, height: 70 }}
+                  source={{ uri: dbPhoto }}
+                />
               }
-              {shows && shows.map(show => {
-                const bandNames = show.bands.map(band => band.name);
-                return (
-                  moment(show.dateTime).toDate() > new Date() ?
-                    <View>
-                      <Card
-                        containerStyle={styles.card}
-                        backgroundColor='#fff'
-                        borderWidth={0}
-                        borderRadius={10}
-                        padding={10}
-                      >
-                        <SingleShowModal show={show.id} showName={show.name} />
-                        <Text style={styles.cardText}>{moment(show.dateTime).format('LT')}</Text>
-                        {show.description ?
-                          <Text style={styles.cardText}>{show.description}</Text>
-                          : null}
-                        <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows} />
-                      </Card>
-                    </View>
-                    : null
-                )
-              })}
-            </View>
-            : null}
-        </View>
-        {/* <View style={styles.container}>
+            </Text>
+          </View>
+          <Text style={styles.infoText}>
+            {hubInfo.bio}
+          </Text>
+          {/* Social Media Buttons */}
+          <View style={styles.flexRowRight}>
+            {/* Only show spotify link if user is a band */}
+            {userInfo.userType === 'band' ?
+              <SpotifyButton link={hubInfo.link_spotify} />
+              : null}
+            <InstagramButton link={hubInfo.link_instagram} />
+            <FacebookButton link={hubInfo.link_facebook} />
+          </View>
+          <View style={{
+            flexDirection: 'row',
+            height: 50,
+            justifyContent: 'center',
+          }}>
+            {/* Button to open create show modal */}
+            <EditBandBioModal />
+            {/* Button to open create show modal */}
+            {userInfo.userType === 'band' ? <CreateShowModal getBandsShows={getBandsShows} /> : null}
+          </View>
+          {/* Cards for all a bands upcoming shows */}
+          <View>
+            {userInfo.userType === 'band' ?
+              <View>
+                {shows.length ?
+                  <Text style={styles.subText}>Upcoming Gigs</Text>
+                  : null
+                }
+                {shows && shows.map(show => {
+                  const bandNames = show.bands.map(band => band.name);
+                  return (
+                    Moment(show.dateTime).toDate() > new Date() ?
+                      <View>
+                        <Card
+                          containerStyle={styles.card}
+                          backgroundColor='#fff'
+                          borderWidth={0}
+                          borderRadius={10}
+                          padding={10}
+                        >
+                          <SingleShowModal show={show.id} showName={show.name} />
+                          <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
+                          {show.description ?
+                            <Text style={styles.cardText}>{show.description}</Text>
+                            : null}
+                          <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows} />
+                        </Card>
+                      </View>
+                      : null
+                  )
+                })}
+              </View>
+              : null}
+          </View>
+          {/* <View style={styles.container}>
           <Image
             source={dbPhoto}
             style={styles.thumbnail}
           />
         </View> */}
-        {/* Cards for shows the user has RSVPd to*/}
-        <View>
-          {fanShows.length ?
-            <Text style={styles.subText}>Your RSVP'd Shows</Text>
-            : null
-          }
-          {fanShows && fanShows.map(show => {
-            return (
-              <Card
-                key={show.id}
-                backgroundColor='#111'
-                padding={10}
-                borderRadius={10}
-                containerStyle={styles.card}
-              >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <View>
-                    {/* modal to display single show info */}
-                    <SingleShowModal show={show.id} showName={show.name} />
-                    <Text style={styles.cardText}>{show.date}</Text>
-                    <Text style={styles.cardText}>{moment(show.dateTime).format('LT')}</Text>
-                    {show.bands ?
-                      show.bands.map(band => {
-                        <Text style={styles.cardText} key={band.id}>{band.name}</Text>
-                      })
-                      : null}
-                    {/* <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text> */}
+          {/* Cards for shows the user has RSVPd to*/}
+          <View>
+            {fanShows.length ?
+              <Text style={styles.subText}>Your RSVP'd Shows</Text>
+              : null
+            }
+            {fanShows && fanShows.map(show => {
+              return (
+                <Card
+                  key={show.id}
+                  backgroundColor='#111'
+                  padding={10}
+                  borderRadius={10}
+                  containerStyle={styles.card}
+                >
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View>
+                      {/* modal to display single show info */}
+                      <SingleShowModal show={show.id} showName={show.name} />
+                      <Text style={styles.cardText}>{show.date}</Text>
+                      <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
+                      {show.bands ?
+                        show.bands.map(band => {
+                          <Text style={styles.cardText} key={band.id}>{band.name}</Text>
+                        })
+                        : null}
+                      {/* <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text> */}
+                    </View>
+                    <View >
+                      {/* show flyer */}
+                      <Text >
+                        {show.flyer &&
+                          <Image
+                            style={{ justifyContent: 'right' }}
+                            style={styles.photo}
+                            source={{ uri: show.flyer }}
+                          />
+                        }
+                      </Text>
+                    </View>
                   </View>
                   <View >
                     {/* show flyer */}
@@ -247,51 +264,51 @@ export default function Hub(props) {
                       }
                     </Text>
                   </View>
-                </View>
-              </Card>
-            )
-          })}
-        </View>
-        {/* Cards for bands the user follows */}
-        < View >
-          {followed.length ?
-            <Text style={styles.subText}>Bands You Follow</Text>
-            : null
-          }
-          {
-            followed && followed.map(band => {
-              return (
-                <Card
-                  // title={band.name}
-                  key={band.id}
-                  style={styles.card}
-                  backgroundColor='#111'
-                  padding={10}
-                  borderRadius={10}
-                  containerStyle={styles.card}
-                // image={require('../images/pic2.jpg')}
-                >
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    {/* <View> */}
-                    <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
-                  </View>
-                  {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
-        <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
-
+                  {/* </View> */}
                 </Card>
               )
-            })
-          }
-        </View>
-        <View>
-          <PreviousRSVPShows userId={userInfo.id} />
-        </View>
-        <View>
-          <PreviousBandShows userId={userInfo.id} />
-        </View>
+            })}
+          </View >
+          {/* Cards for bands the user follows */}
+          < View >
+            {
+              followed.length ?
+                <Text style={styles.subText}>Bands You Follow</Text>
+                : null
+            }
+            {
+              followed && followed.map(band => {
+                return (
+                  <Card
+                    // title={band.name}
+                    key={band.id}
+                    style={styles.card}
+                    backgroundColor='#111'
+                    padding={10}
+                    borderRadius={10}
+                    containerStyle={styles.card}
+                  >
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                      {/* <View> */}
+                      <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
+                    </View>
+                    {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+                    <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
+                  </Card>
+                )
+              })
+            }
+          </View >
+          <View>
+            <PreviousRSVPShows userId={userInfo.id} />
+          </View>
+          <View>
+            <PreviousBandShows userId={userInfo.id} />
+          </View>
 
-      </ScrollView>
-    </SafeAreaView >
+        </ScrollView >
+      </LinearGradient >
+    </View >
   )
 }
 

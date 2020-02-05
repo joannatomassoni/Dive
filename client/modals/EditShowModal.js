@@ -42,7 +42,7 @@ export default function EditShowModal(props) {
   const venues = [];
   const getBandsShows = props.getBandsShows;
   const deleteShow = async () => {
-    await axios.delete(`${AXIOS_URL}/shows/${show.id}`);
+    await axios.delete(`https://dive-266016.appspot.com/shows/${show.id}`);
   }
 
   return (
@@ -66,7 +66,7 @@ export default function EditShowModal(props) {
           </Ionicons>
           <View style={styles.container}>
             <ScrollView style={styles.title}>
-              <Text style={styles.text}>Edit {show.name}</Text>
+              <Text style={styles.text}>{props.showName}</Text>
               {/* Title text box */}
               <TextInput
                 placeholder="Edit Show Title"
@@ -112,7 +112,7 @@ export default function EditShowModal(props) {
                 style={styles.buttonContainer}
                 onPress={() => {
                   console.log(showTitle)
-                  axios.patch(`${AXIOS_URL}/shows/${show.id}`, {
+                  axios.patch(`https://dive-266016.appspot.com/shows/${show.id}`, {
                     name: showTitle,
                     dateTime: dateTime,
                     flyer: flyer,
@@ -190,11 +190,10 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 40,
-    alignItems: 'center',
     color: '#59C3D1',
     opacity: 0.9,
     fontWeight: 'bold',
-    marginLeft: 75,
+    alignSelf: 'center',
     marginBottom: 15
   },
   buttonContainer: {
