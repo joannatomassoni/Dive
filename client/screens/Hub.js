@@ -40,18 +40,6 @@ export default function Hub(props) {
   const [followed, setFollowed] = useState([]);
 
 
-<<<<<<< HEAD
-  //gets band info
-  const getBandInfo = async () => {
-    await axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
-      .then((response) => {
-        // console.log("getting band info", response.data);
-        setHubInfo(() => response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-=======
   //request to get all bands from db
   const getAllBands = () => {
     axios.get(`${AXIOS_URL}/bands`)
@@ -64,13 +52,12 @@ export default function Hub(props) {
   //gets band info
   const getBandInfo = async () => {
     await axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
-    .then((response) => {
-      setHubInfo(() => response.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
->>>>>>> b8848c6949317becef91ae1f3c89bda716229cd8
+      .then((response) => {
+        setHubInfo(() => response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   //gets a list of all of a bands shows
