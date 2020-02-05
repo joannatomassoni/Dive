@@ -276,21 +276,40 @@ const getFanRSVPs = async (req, res) => {
 //gets a bands previous shows
 const getBandsPreviousShows = async (req, res) => {
     try {
+
         const { id } = req.params;
-        const oldShows = await Show.findAll({
+        const shows = await User.findAll({
             where: {
-                id,
-                dateTime: {
-                    [Op.lt]: new Date()
-                }
-            }
-            // return show
+                id
+            },
+            include: [
+                {
+                    model: Show,
+                    where: {
+                        dateTime: {
+                            [Op.lt]: new Date()
+                        }
+                    }
+                },
+                { model: Venue },
+            ]
         })
-        console.log("are we getting shows?", id)
         res.send(shows);
+        console.log("are we getting shows", shows);
+
+        // const showId = await ShowBand.findAll({
+        //     where: {
+        //         id,
+        //     }
+        //     // return show
+        // })
+        // console.log("are we getting shows?", showId)
+        // dateTime: {
+        //     [Op.lt]: new Date()
+        // }
     }
     catch {
-        console.log("error getting old shows", err)
+        console.log("error getting old shows")
         res.sendStatus(400);
     }
 }
