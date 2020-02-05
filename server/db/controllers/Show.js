@@ -124,7 +124,6 @@ const updateShow = async (req, res) => {
 }
 
 // Delete a show
-// TODO: add push notifications for rsvps
 const deleteShow = async (req, res) => {
     try {
         const { id } = req.params;
