@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, View, SafeAreaView, StyleSheet, Text, ScrollView, TextInput } from 'react-native';
-import { Ionicons, Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import { Card } from 'react-native-elements';
 import { AXIOS_URL } from 'react-native-dotenv';
@@ -75,7 +75,6 @@ export default function SearchResultsModal() {
                     {/* main body */}
                     <ScrollView style={{ marginTop: 30 }}>
                         <Text style={styles.headerText}>Results</Text>       
-
                         {/* conditionally rendering lists of venues, bands, and shows */}            
                         {bands.length ? 
                             <View>
@@ -181,8 +180,8 @@ export default function SearchResultsModal() {
                             onChangeText={setQuery}
                             style={styles.input}
                         />
-                        <Feather
-                            name='search'
+												<Ionicons
+                            name='md-search'
                             color='#59C3D1'
                             size={37}
                             onPress={() => {
@@ -241,7 +240,8 @@ const styles = StyleSheet.create({
     searchBarContainer: {
         flex: 1,
         backgroundColor: '#2D323A',
-        padding: 30,
+				alignSelf: 'center',
+				paddingTop: 30
     },
     linkRow: {
         flexDirection: 'row',

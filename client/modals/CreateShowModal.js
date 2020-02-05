@@ -18,7 +18,6 @@ import DateTimePicker from '../components/DateTimePicker';
 import * as ImagePicker from 'expo-image-picker';
 import RadioForm from 'react-native-simple-radio-button';
 
-
 export default function CreateShowModal(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
@@ -167,8 +166,9 @@ export default function CreateShowModal(props) {
               formHorizontal={true}
               labelHorizontal={false}
               buttonColor={'#59C3D1'}
+              selectedButtonColor={'#59C3D1'}
               animation={true}
-              labelColor={'#fff'}
+              labelStyle={{color: '#fff', fontWeight: 'bold'}}
               onPress={(value) => {setStatus(value)}}
             />
             { status === 'public' ?
@@ -228,7 +228,6 @@ export default function CreateShowModal(props) {
           axios.get(`${AXIOS_URL}/venues`)
             .then(response => response.data.map(venue => {
               if (!venues.includes(venue.name)) {
-
                 venues.push(venue.name);
               }
             }))
@@ -326,6 +325,6 @@ const styles = StyleSheet.create({
     height: 50,
   },
   modal: {
-    marginLeft: 95
+    alignSelf: 'center'
   }
 })

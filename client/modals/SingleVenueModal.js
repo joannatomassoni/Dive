@@ -6,8 +6,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView,
-  Dimensions
 } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Card } from 'react-native-elements';
@@ -17,6 +15,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { MAP_KEY, AXIOS_URL } from 'react-native-dotenv';
 import axios from 'axios';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function SingleVenueModal(props) {
   //global user signin info and editing function
@@ -64,7 +63,7 @@ export default function SingleVenueModal(props) {
         setVenueLocation({
           latitude: response.data.results[0].locations[0].displayLatLng.lat,
           longitude: response.data.results[0].locations[0].displayLatLng.lng,
-          latitudeDelta: 0.0012,
+          latitudeDelta: 0.0022,
           longitudeDelta: 0.011
         });
       })
@@ -136,7 +135,6 @@ export default function SingleVenueModal(props) {
       // )
   }, [])
 
-
   return (
     <View>
       <Modal
@@ -144,9 +142,8 @@ export default function SingleVenueModal(props) {
         transparent={false}
         visible={modalVisible}
       >
-        
         {/* start of modal when showing */}
-        <SafeAreaView behavior="padding" style={styles.container}>
+        <View behavior="padding" style={styles.container}>
           {/* back button */}
           <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
             <Ionicons
@@ -157,7 +154,11 @@ export default function SingleVenueModal(props) {
               onPress={() => { setModalVisible(false) }}
             />
           </Ionicons>
-          <ScrollView style={{ marginTop: 30 }}>
+          <LinearGradient
+            colors={['#38404C', '#111']}
+            style={{ flex: 1 }}
+          >
+          <ScrollView style={{ marginTop: 70 }}>
             <Text style={styles.headerText} key={singleVenue.id}>{singleVenue.name}</Text>
             <Text style={styles.infoText}>{singleVenue.address}</Text>
             <Text style={styles.infoText}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
@@ -234,7 +235,8 @@ export default function SingleVenueModal(props) {
               )
             })}
           </ScrollView>
-        </SafeAreaView>
+          </LinearGradient>
+        </View>
       </Modal>
       {/* create show button when modal is hidden */}
       <TouchableOpacity
@@ -256,7 +258,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2D323A',
-    padding: 5
   },
   headerText: {
     fontSize: 50,
