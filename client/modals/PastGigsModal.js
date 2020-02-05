@@ -115,6 +115,12 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     paddingRight: 20
   },
+  card: {
+    borderWidth: 0,
+    paddingBottom: 0,
+    backgroundColor: '#111',
+    paddingBottom: 10
+  },
   cardText: {
     fontSize: 16,
     color: '#59C3D1',

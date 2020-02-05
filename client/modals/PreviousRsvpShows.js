@@ -18,7 +18,7 @@ export default function PreviousRSVPShows(props) {
   const [modalVisible, setModalVisible] = useState(false);
   //allows user to get shows they previously went to on button click
   let userId = props.userId;
-  
+
   const getPreviousShows = () => {
     axios.get(`https://dive-266016.appspot.com/fans/${userId}/pastrsvps`)
       .then(response => {
@@ -114,6 +114,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20
+  },
+  card: {
+    borderWidth: 0,
+    paddingBottom: 0,
+    backgroundColor: '#111',
+    paddingBottom: 10
   },
   cardText: {
     fontSize: 16,
