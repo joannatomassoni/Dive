@@ -76,7 +76,7 @@ export default function PreviousRSVPShows(props) {
                     >
                       {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
                       {/* modal to display single show info */}
-                      <SingleShowModal show={show.id} showName={show.name} />
+                      <SingleShowModal show={show} />
                       <Text style={styles.cardText}>{show.name}</Text>
                       <Text style={styles.cardText}>{show.time}</Text>
                       <Text style={styles.cardText}>{show.date}</Text>
