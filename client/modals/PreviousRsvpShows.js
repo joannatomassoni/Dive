@@ -26,11 +26,14 @@ export default function PreviousRSVPShows(props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   //allows user to get shows they previously went to on button click
-  let userId = props.userInfo;
+  let userId = props.userId;
   const getPreviousShows = () => {
-    axios.get(`${AXIOS_URL}/shows/${props.userInfo}/oldrsvps`)
+    axios.get(`${AXIOS_URL}/shows/${userId}/oldrsvps`)
       .then(response => {
-        setOldShows(response.data)
+        if (response.data.length) {
+          setOldShows(response.data)
+          console.log(oldShows);
+        }
       })
       .catch(err => {
         console.log("not getting older shows", err);
@@ -67,10 +70,12 @@ export default function PreviousRSVPShows(props) {
                 <Text style={styles.headerText}>Previous Shows</Text>
                 {/* <Text style={styles.text}>Previous shows</Text> */}
 
-                {oldShows && oldShows.map(show => {
+                {oldShows.length ? 
+                  oldShows.map(show => {
+                  console.log(show);
                   return (
                     <Card
-                      key={show.id}
+                      // key={show.id}
                       style={styles.card}
                       backgroundColor='#111'
                       padding={10}
@@ -91,6 +96,7 @@ export default function PreviousRSVPShows(props) {
                     </Card>
                   )
                 })
+                : null
                 }
                 {/* </View> */}
               </View>
