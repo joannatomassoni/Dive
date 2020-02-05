@@ -18,6 +18,7 @@ import { AXIOS_URL } from 'react-native-dotenv';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import MapView from 'react-native-maps';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Shows(props) {
   //global user signin info and editing function
@@ -59,9 +60,13 @@ export default function Shows(props) {
   }, [])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <MenuButton navigation={props.navigation} />
-      <ScrollView style={{ marginTop: 30 }}>
+      <LinearGradient
+        colors={['#38404C', '#111']}
+        style={{ flex: 1 }}
+      >
+      <ScrollView style={{ marginTop: 70 }}>
         <Text style={styles.headerText}>Shows</Text>
         {shows && shows.map(show => {
           return (
@@ -103,7 +108,8 @@ export default function Shows(props) {
           )
         })}
       </ScrollView>
-    </SafeAreaView >
+    </LinearGradient>
+  </View >
   )
 }
 
@@ -118,7 +124,7 @@ const styles = StyleSheet.create({
     color: '#3BAFBF',
     fontWeight: 'bold',
     textAlign: 'right',
-    paddingRight: 20
+    paddingRight: 20,
   },
   button: {
     borderRadius: 5,

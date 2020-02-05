@@ -42,7 +42,7 @@ export default function MenuDrawer(props) {
         <ScrollView>
           <View style={styles.topLinks}>
             <LinearGradient
-              colors={['#2D323A', '#38404C']}
+              colors={['#111', '#38404C']}
               style={{ flex: 1 }}
             >
               {/* image from user's google auth */}
@@ -105,7 +105,7 @@ export default function MenuDrawer(props) {
               {navLink('Search', 'Search')}
             </View>
             <View style={{marginBottom:20}}></View>
-            <Divider style={{ backgroundColor: '#fff', height: 2 }} />
+            <Divider style={{ backgroundColor: '#fff', height: 1.5 }} />
             {/* logout button when user is signed in */}
             <View style={{ flexDirection: 'row' }}>
               <AntDesign
@@ -147,8 +147,13 @@ export default function MenuDrawer(props) {
         // view for when user is signed in
         : <ScrollView>
           <View style={styles.topLinks}>
+            <LinearGradient
+              colors={['#111', '#38404C']}
+              style={{ flex: 1 }}
+            >
             <View style={styles.profile}>
             </View>
+            </LinearGradient>
           </View>
           {/* nav links in menu bar for when signed out*/}
           <View style={styles.bottomLinks}>
@@ -161,7 +166,6 @@ export default function MenuDrawer(props) {
               />
               {navLink('Shows', 'Shows')}
             </View>
-
             <View style={{ flexDirection: 'row' }}>
               <MaterialIcons
                 name='people'
@@ -171,7 +175,6 @@ export default function MenuDrawer(props) {
               />
               {navLink('Bands', 'Bands')}
             </View>
-
             <View style={{ flexDirection: 'row' }}>
               <Entypo
                 name='location-pin'
@@ -181,7 +184,6 @@ export default function MenuDrawer(props) {
               />
               {navLink('Venues', 'Venues')}
             </View>
-
             <View style={{ flexDirection: 'row' }}>
               <MaterialIcons
                 name='search'
@@ -191,7 +193,8 @@ export default function MenuDrawer(props) {
               />
               {navLink('Search', 'Search')}
             </View>
-
+            <View style={{ marginBottom: 20 }}></View>
+            <Divider style={{ backgroundColor: '#fff', height: 1.5 }} />
             <View style={{ flexDirection: 'row' }}>
               <AntDesign
                 name='login'
@@ -222,7 +225,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 25,
     borderBottomWidth: 3,
-    borderBottomColor: '#59C3D1'
+    borderBottomColor: '#AA8181',
   },
   profileText: {
     flex: 1,

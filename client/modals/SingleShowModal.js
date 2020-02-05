@@ -5,7 +5,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView,
   Image
 } from 'react-native';
 import { Card } from 'react-native-elements';
@@ -18,6 +17,7 @@ import axios from 'axios';
 import { AXIOS_URL } from 'react-native-dotenv';
 import * as Calendar from 'expo-calendar';
 import SingleBandModal from './SingleBandModal'
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function SingleShowModal(props) {
   //global user signin info and editing function
@@ -122,7 +122,7 @@ export default function SingleShowModal(props) {
         visible={modalVisible}
       >
         {/* start of modal when showing */}
-        <SafeAreaView behavior="padding" style={styles.container}>
+        <View behavior="padding" style={styles.container}>
           {/* back button */}
           <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
             <Ionicons
@@ -133,9 +133,12 @@ export default function SingleShowModal(props) {
               onPress={() => { setModalVisible(false) }}
             />
           </Ionicons>
-
-          <ScrollView style={{ marginTop: 30 }}>
-            <Text style={styles.headerText} key={show.id}>{show.name}</Text>
+          <LinearGradient
+            colors={['#38404C', '#111']}
+            style={{ flex: 1 }}
+          >
+          <ScrollView style={{ marginTop: 70 }}>
+            <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
             {/* show flyer */}
             {show.flyer ?
               <Image
@@ -143,7 +146,6 @@ export default function SingleShowModal(props) {
                 source={{ uri: show.flyer }}
               />
               : null}
-
             {/* additional text */}
             <Text style={styles.infoText}>{Moment(show.dateTime).format('ll')}</Text>
             <Text style={styles.infoText}>{Moment(show.dateTime).format('LT')}</Text>
@@ -156,7 +158,6 @@ export default function SingleShowModal(props) {
                   <SingleBandModal getAllBands={getAllBands} name={band.name} bandId={band.id} />
                 </View> 
               )
-
             })}
             <View style={{
               flexDirection: 'row',
@@ -227,8 +228,10 @@ export default function SingleShowModal(props) {
               )
             })}
           </ScrollView>
-        </SafeAreaView>
+          </LinearGradient>
+        </View>
       </Modal>
+
       {/* show more button when modal is hidden */}
       <TouchableOpacity
         onPress={() => {
@@ -322,7 +325,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     marginBottom: 10,
-    color: '#fff'
+    color: '#fff',
   },
   card: {
     borderWidth: 0,

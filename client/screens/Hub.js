@@ -24,7 +24,8 @@ import { AXIOS_URL } from 'react-native-dotenv';
 import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
 import PreviousRSVPShows from '../modals/PreviousRsvpShows';
-import moment from 'moment';
+import Moment from 'moment';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Hub(props) {
   //global user signin info and editing function
@@ -64,7 +65,7 @@ export default function Hub(props) {
     .then((response) => {
       if (response.data.shows) {
         setShows(() => response.data.shows.filter((show) => {
-          return moment(show.dateTime).toDate() > new Date();
+          return Moment(show.dateTime).toDate() > new Date();
         }))
       }
     })
@@ -127,12 +128,16 @@ export default function Hub(props) {
         getPreviousShows();
       }, [])
 
-  return (
-    <SafeAreaView style={styles.container}>
+    return (
+      <View style={styles.container}>
       <MenuButton navigation={props.navigation} />
-      <ScrollView style={{ marginTop: 30 }}>
+        <LinearGradient
+          colors={['#38404C','#111']}
+          style={{ flex: 1 }}
+        >
+      <ScrollView style={{ marginTop: 70 }}>
         <Text style={styles.text}>Hub</Text>
-        <View style={styles.container}>
+        <View>
           {/* image container */}
           <Text>
             {dbPhoto &&
@@ -170,13 +175,13 @@ export default function Hub(props) {
           {userInfo.userType === 'band' ?
             <View>
               {shows.length ? 
-              <Text style={styles.subText}>Your Upcoming Gigs</Text>
+              <Text style={styles.subText}>Upcoming Gigs</Text>
               : null
               }
               {shows && shows.map(show => {
                 const bandNames = show.bands.map(band => band.name);
                 return (
-                  moment(show.dateTime).toDate() > new Date() ? 
+                  Moment(show.dateTime).toDate() > new Date() ? 
                     <View>
                       <Card
                         containerStyle={styles.card}
@@ -267,15 +272,13 @@ export default function Hub(props) {
                   padding={10}
                   borderRadius={10}
                   containerStyle={styles.card}
-                // image={require('../images/pic2.jpg')}
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {/* <View> */}
                     <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
                   </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
-        <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
-
+                    <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
                 </Card>
               )
             })
@@ -285,7 +288,8 @@ export default function Hub(props) {
           <PreviousRSVPShows userId={userInfo.id} />
         </View>
       </ScrollView>
-    </SafeAreaView >
+      </LinearGradient>
+    </View >
   )
 }
 

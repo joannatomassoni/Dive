@@ -66,7 +66,7 @@ export default function EditShowModal(props) {
           </Ionicons>
           <View style={styles.container}>
             <ScrollView style={styles.title}>
-              <Text style={styles.text}>Edit {show.name}</Text>
+              <Text style={styles.text}>{props.showName}</Text>
               {/* Title text box */}
               <TextInput
                 placeholder="Edit Show Title"
@@ -190,11 +190,10 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 40,
-    alignItems: 'center',
     color: '#59C3D1',
     opacity: 0.9,
     fontWeight: 'bold',
-    marginLeft: 75,
+    alignSelf: 'center',
     marginBottom: 15
   },
   buttonContainer: {
