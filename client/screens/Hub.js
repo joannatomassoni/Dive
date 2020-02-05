@@ -147,63 +147,31 @@ export default function Hub(props) {
                   source={{ uri: dbPhoto }}
                 />
               }
-            </Text>
-          </View>
-          <Text style={styles.infoText}>
-            {hubInfo.bio}
-          </Text>
-          {/* Social Media Buttons */}
-          <View style={styles.flexRowRight}>
-            {/* Only show spotify link if user is a band */}
-            {userInfo.userType === 'band' ?
-              <SpotifyButton link={hubInfo.link_spotify} />
-              : null}
-            <InstagramButton link={hubInfo.link_instagram} />
-            <FacebookButton link={hubInfo.link_facebook} />
-          </View>
-          <View style={{
-            flexDirection: 'row',
-            height: 50,
-            justifyContent: 'center',
-          }}>
-            {/* Button to open create show modal */}
-            <EditBandBioModal />
-            {/* Button to open create show modal */}
-            {userInfo.userType === 'band' ? <CreateShowModal getBandsShows={getBandsShows} /> : null}
-          </View>
-          {/* Cards for all a bands upcoming shows */}
-          <View>
-            {userInfo.userType === 'band' ?
-              <View>
-                {shows.length ?
-                  <Text style={styles.subText}>Upcoming Gigs</Text>
-                  : null
-                }
-                {shows && shows.map(show => {
-                  const bandNames = show.bands.map(band => band.name);
-                  return (
-                    Moment(show.dateTime).toDate() > new Date() ?
-                      <View>
-                        <Card
-                          containerStyle={styles.card}
-                          backgroundColor='#fff'
-                          borderWidth={0}
-                          borderRadius={10}
-                          padding={10}
-                        >
-                          <SingleShowModal show={show.id} showName={show.name} />
-                          <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
-                          {show.description ?
-                            <Text style={styles.cardText}>{show.description}</Text>
-                            : null}
-                          <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows} />
-                        </Card>
-                      </View>
-                      : null
-                  )
-                })}
+              {shows && shows.map(show => {
+                const bandNames = show.bands.map(band => band.name);
+                return (
+                  Moment(show.dateTime).toDate() > new Date() ?
+                    <View>
+                      <Card
+                        containerStyle={styles.card}
+                        backgroundColor='#fff'
+                        borderWidth={0}
+                        borderRadius={10}
+                        padding={10}
+                      >
+                        <SingleShowModal show={show} />
+                        <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
+                        {show.description ?
+                          <Text style={styles.cardText}>{show.description}</Text>
+                          : null}
+                        <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows} />
+                      </Card>
+                    </View>
+                    : null
+                )
+              })}
               </View>
-              : null}
+            : null}
           </View>
           {/* <View style={styles.container}>
           <Image
@@ -229,7 +197,7 @@ export default function Hub(props) {
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View>
                       {/* modal to display single show info */}
-                      <SingleShowModal show={show.id} showName={show.name} />
+                      <SingleShowModal show={show} />
                       <Text style={styles.cardText}>{show.date}</Text>
                       <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                       {show.bands ?

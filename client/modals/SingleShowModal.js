@@ -30,7 +30,7 @@ export default function SingleShowModal(props) {
   const [rsvp, setRsvp] = useState(false);
   const show = props.show;
   const venue = show.venue;
-  const bands = show.bands
+  const bands = show.bands;
 
   //dummy function so SingleBandModal doesn't throw an error
   const getAllBands = () => {
@@ -137,7 +137,8 @@ export default function SingleShowModal(props) {
             style={{ flex: 1 }}
           >
             <ScrollView style={{ marginTop: 70 }}>
-              <Text style={styles.headerText} key={show.id}>{show.name}</Text>              {/* show flyer */}
+              <Text style={styles.headerText} key={show.id}>{show.name}</Text>
+              {/* show flyer */}
               {show.flyer ?
                 <Image
                   style={{ width: 400, height: 400, marginLeft: 5 }}
@@ -145,12 +146,16 @@ export default function SingleShowModal(props) {
                 />
                 : null}
               {/* additional text */}
-              <Text style={styles.infoText}>{Moment(show.dateTime).format('ll')}</Text>
-              <Text style={styles.infoText}>{Moment(show.dateTime).format('LT')}</Text>
-              {/* <Text style={styles.infoText}>{venue.name}</Text> */}
-              <Text style={styles.infoText}>{show.description}</Text>
+              {venue ?
+                <View>
+                  <Text style={styles.infoText}>{Moment(show.dateTime).format('ll')}</Text>
+                  <Text style={styles.infoText}>{Moment(show.dateTime).format('LT')}</Text>
+                  <Text style={styles.infoText}>{venue.name}</Text>
+                  <Text style={styles.infoText}>{show.description}</Text>
+                </View>
+                : null}
               {/* list of all additional bands playing in current show */}
-              {bands.map(band => {
+              {bands && bands.map(band => {
                 return (
                   <View style={styles.bandModal}>
                     <SingleBandModal getAllBands={getAllBands} name={band.name} bandId={band.id} />
@@ -178,6 +183,17 @@ export default function SingleShowModal(props) {
                 >
                   <Text style={styles.signupButtonText}>Add To Calendar</Text>
                 </TouchableOpacity>
+                {/* button to rsvp to specific (shows when signed in) */}
+                {userInfo.signedIn ?
+                  //if already rsvp'd, show button to cancel rvp
+                  (rsvp ? <TouchableOpacity
+                    style={styles.cancelButtonContainer}
+                    onPress={() => {
+                      removeRsvp();
+                    }}
+                  >
+                    <Text style={styles.signupButtonText}>Add To Calendar</Text>
+                  </TouchableOpacity>
                 {/* button to rsvp to specific (shows when signed in) */}
                 {userInfo.signedIn ?
                   //if already rsvp'd, show button to cancel rvp
