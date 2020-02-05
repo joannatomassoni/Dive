@@ -25,6 +25,8 @@ import { AXIOS_URL } from 'react-native-dotenv';
 import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
 import PreviousRSVPShows from '../modals/PreviousRsvpShows';
+import PreviousBandShows from '../modals/PreviousRsvpShows';
+
 import moment from 'moment';
 
 export default function Hub(props) {
@@ -291,6 +293,10 @@ export default function Hub(props) {
         <View>
           <PreviousRSVPShows userId={userInfo.id} />
         </View>
+        <View>
+          <PreviousBandShows userId={userInfo.id} />
+        </View>
+
       </ScrollView>
     </SafeAreaView >
   )
