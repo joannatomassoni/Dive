@@ -174,7 +174,7 @@ export default function SingleBandModal(props) {
                   >
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                       <View>
-                        <SingleShowModal show={show.id} showName={show.name}/>
+                        <SingleShowModal show={show} />
                         <Text style={styles.cardText}>{show.date}</Text>
                         <Text style={styles.cardText}>{show.time}</Text>
                         <Text style={styles.cardText}>{show.venue.name}</Text>

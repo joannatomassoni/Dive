@@ -223,7 +223,7 @@ export default function SingleVenueModal(props) {
                   borderRadius={10}
                   containerStyle={styles.card}
                 >
-                  <SingleShowModal show={show.id} showName={show.name} />
+                  <SingleShowModal show={show} />
                   <Text style={styles.cardText}>{show.date}</Text>
                   <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                   <Text style={styles.cardText}>{show.description}</Text>
