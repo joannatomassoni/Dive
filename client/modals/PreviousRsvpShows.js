@@ -13,6 +13,7 @@ import SingleShowModal from '../modals/SingleShowModal';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import { AXIOS_URL } from 'react-native-dotenv';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function PreviousRSVPShows(props) {
   const [oldShows, setOldShows] = useState([]);
@@ -44,7 +45,7 @@ export default function PreviousRSVPShows(props) {
         visible={modalVisible}
       >
         {/* start of modal when showing */}
-        <SafeAreaView behavior="padding" style={styles.container}>
+        <View behavior="padding" style={styles.container}>
             {/* back button */}
             <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
               <Ionicons
@@ -55,10 +56,13 @@ export default function PreviousRSVPShows(props) {
                 onPress={() => { setModalVisible(false) }}
               />
             </Ionicons>
+          <LinearGradient
+            colors={['#38404C', '#111']}
+            style={{ flex: 1 }}
+          >
             <View style={styles.container}>
-              <View style={{ marginTop: 30 }}>
+              <View style={{ marginTop: 70 }}>
                 <Text style={styles.headerText}>Past Shows</Text>
-
                 {oldShows.length ? 
                   oldShows.map(show => {
                   return (
@@ -86,7 +90,8 @@ export default function PreviousRSVPShows(props) {
                 {/* </View> */}
               </View>
             </View>
-          </SafeAreaView>
+            </LinearGradient>
+          </View>
       </Modal >
       {/* edit bio button when modal is hidden */}
       < TouchableOpacity
@@ -104,8 +109,6 @@ export default function PreviousRSVPShows(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2D323A',
-    padding: 5
   },
   headerText: {
     fontSize: 50,

@@ -18,7 +18,6 @@ import DateTimePicker from '../components/DateTimePicker';
 import * as ImagePicker from 'expo-image-picker';
 import RadioForm from 'react-native-simple-radio-button';
 
-
 export default function CreateShowModal(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);

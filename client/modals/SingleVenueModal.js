@@ -6,8 +6,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView,
-  Dimensions
 } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Card } from 'react-native-elements'
