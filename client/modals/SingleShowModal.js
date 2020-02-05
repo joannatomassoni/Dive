@@ -88,7 +88,7 @@ export default function SingleShowModal(props) {
       id_fan: userInfo.id,
       id_show: singleShow.id,
     })
-      .then(response => setRsvp(true))
+      .then(() => setRsvp(true))
       .then(createEvent())
       .catch(error => console.log('failed to rsvp', error));
   }

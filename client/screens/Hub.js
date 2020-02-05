@@ -171,6 +171,7 @@ export default function Hub(props) {
               : null
               }
               {shows && shows.map(show => {
+                const bandNames = show.bands.map(band => band.name);
                 return (
                   moment(show.dateTime).toDate() > new Date() ? 
                     <View>
@@ -188,7 +189,7 @@ export default function Hub(props) {
                         {show.description ? 
                           <Text style={styles.cardText}>{show.description}</Text>
                         : null}
-                        <EditShowModal show={show.id} showName={show.name} style={styles.cardText} getBandsShows={getBandsShows}/>
+                        <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows}/>
                       </Card>
                     </View>
                     : null
