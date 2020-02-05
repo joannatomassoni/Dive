@@ -154,8 +154,9 @@ export default function ModalExample(props) {
               formHorizontal={true}
               labelHorizontal={false}
               buttonColor={'#59C3D1'}
+              selectedButtonColor={'#59C3D1'}
               animation={true}
-              labelColor={'#fff'}
+              labelStyle={{ color: '#fff', fontWeight: 'bold', marginBottom: 5 }}
               onPress={(value) => {setUserType(value)}}
             />
             {/* horizontal button div */}
