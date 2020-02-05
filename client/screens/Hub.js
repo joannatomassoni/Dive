@@ -37,14 +37,21 @@ export default function Hub(props) {
   // const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
-  console.log(fanShows);
 
+
+  //request to get all bands from db
+  const getAllBands = () => {
+    axios.get(`${AXIOS_URL}/bands`)
+      .then((response) => {
+        setBands(() => response.data);
+      })
+      .catch(err => console.log(err))
+  }
   
   //gets band info
   const getBandInfo = async () => {
     await axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
     .then((response) => {
-      // console.log("getting band info", response.data);
       setHubInfo(() => response.data);
     })
     .catch((err) => {
@@ -278,7 +285,7 @@ export default function Hub(props) {
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {/* <View> */}
-                    <SingleBandModal name={band.nickname} bandId={band.id} />
+                    <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
                   </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
         <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
