@@ -80,7 +80,7 @@ export default function Shows(props) {
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View>
                   {/* modal to display single show info */}
-                  <SingleShowModal show={show} showName={show.name} />
+                  <SingleShowModal show={show} />
                   <Text style={styles.cardText}>{show.date}</Text>
                   <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                   {show.bands ?

@@ -114,7 +114,7 @@ export default function SearchResultsModal() {
                                                 >
                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                                     <View>
-                                                        <SingleShowModal show={show.id} showName={show.name}/>
+                                                        <SingleShowModal show={show} />
                                                         <Text style={styles.cardText}>{show.date}</Text>
                                                         <Text style={styles.cardText}>{show.time}</Text>
                                                         { show.bands ? 
