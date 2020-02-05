@@ -37,6 +37,15 @@ export default function Hub(props) {
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
 
+
+  //request to get all bands from db
+  const getAllBands = () => {
+    axios.get(`${AXIOS_URL}/bands`)
+      .then((response) => {
+        setBands(() => response.data);
+      })
+      .catch(err => console.log(err))
+  }
   
   //gets band info
   const getBandInfo = async () => {
@@ -154,7 +163,7 @@ export default function Hub(props) {
           {/* Button to open create show modal */}
           <EditBandBioModal />
           {/* Button to open create show modal */}
-          {userInfo.userType === 'band' ? <CreateShowModal /> : null}
+          {userInfo.userType === 'band' ? <CreateShowModal getBandsShows={getBandsShows}/> : null}
         </View>
         {/* Cards for all a bands upcoming shows */}
         <View>
@@ -165,6 +174,7 @@ export default function Hub(props) {
               : null
               }
               {shows && shows.map(show => {
+                const bandNames = show.bands.map(band => band.name);
                 return (
                   moment(show.dateTime).toDate() > new Date() ? 
                     <View>
@@ -180,7 +190,7 @@ export default function Hub(props) {
                         {show.description ? 
                           <Text style={styles.cardText}>{show.description}</Text>
                         : null}
-                        <EditShowModal show={show.id} showName={show.name} style={styles.cardText} getBandsShows={getBandsShows}/>
+                        <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows}/>
                       </Card>
                     </View>
                     : null
@@ -261,7 +271,7 @@ export default function Hub(props) {
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {/* <View> */}
-                    <SingleBandModal name={band.nickname} bandId={band.id} />
+                    <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
                   </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
         <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}

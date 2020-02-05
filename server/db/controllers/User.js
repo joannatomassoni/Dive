@@ -80,24 +80,6 @@ const addCalID = async (req, res) => {
     }
 }
 
-// const sendNotification = async (req, res) => {
-//     try {
-//         const message = {
-//             to: 'ExponentPushToken[SbSTKdCGXiVYnXq8bfKdoj]',
-//             sound: 'default',
-//             title: 'Test title',
-//             body: 'Test body',
-//           };
-      
-//         const receipt = await sendNotifications(message);
-//         res.send(receipt);
-//     }
-//     catch (err) {
-//         console.log("err, ", err);
-//         res.sendStatus(400);
-//     }
-// }
-
 // Get single user
 const getSingleUser = async (req, res) => {
     try {
@@ -323,7 +305,8 @@ const getBandShows = async (req, res) => {
                 {
                     model: Show,
                     include: [
-                        { model: Venue }
+                        { model: Venue },
+                        { model: User, as: 'bands' },
                     ]
                 }
             ]

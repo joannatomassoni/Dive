@@ -208,6 +208,7 @@ export default function CreateShowModal(props) {
                     bandNames: bandNames,
                     description: showDesc
                   })
+                    .then(() => props.getBandsShows())
                     .then(() => setModalVisible(false))
                     .catch(error => console.log('failed to create show', error));
                 }}
