@@ -24,7 +24,7 @@ import { AXIOS_URL } from 'react-native-dotenv';
 import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
 import PreviousRSVPShows from '../modals/PreviousRsvpShows';
-import moment from 'moment';
+import Moment from 'moment';
 
 export default function Hub(props) {
   //global user signin info and editing function
@@ -55,7 +55,7 @@ export default function Hub(props) {
     .then((response) => {
       if (response.data.shows) {
         setShows(() => response.data.shows.filter((show) => {
-          return moment(show.dateTime).toDate() > new Date();
+          return Moment(show.dateTime).toDate() > new Date();
         }))
       }
     })
@@ -167,7 +167,7 @@ export default function Hub(props) {
               }
               {shows && shows.map(show => {
                 return (
-                  moment(show.dateTime).toDate() > new Date() ? 
+                  Moment(show.dateTime).toDate() > new Date() ? 
                     <View>
                       <Card
                         containerStyle={styles.card}
