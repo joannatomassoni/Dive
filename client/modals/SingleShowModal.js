@@ -147,7 +147,6 @@ export default function SingleShowModal(props) {
               onPress={() => { setModalVisible(false) }}
             />
           </Ionicons>
-
           <ScrollView style={{ marginTop: 30 }}>
             <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
             {/* show flyer */}
@@ -157,7 +156,6 @@ export default function SingleShowModal(props) {
                 source={{ uri: singleShow.flyer }}
               />
               : null}
-
             {/* additional text */}
             <Text style={styles.infoText}>{singleShow.date}</Text>
             <Text style={styles.infoText}>{singleShow.time}</Text>
@@ -170,7 +168,6 @@ export default function SingleShowModal(props) {
                   <SingleBandModal name={band.name} bandId={band.id} />
                 </View> 
               )
-
             })}
             <View style={{
               flexDirection: 'row',

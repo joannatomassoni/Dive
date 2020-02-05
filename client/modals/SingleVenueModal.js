@@ -138,7 +138,6 @@ export default function SingleVenueModal(props) {
       // )
   }, [])
 
-
   return (
     <View>
       <Modal
