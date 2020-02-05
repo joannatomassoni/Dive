@@ -180,9 +180,9 @@ export default function SingleShowModal(props) {
             })}
             <View style={{
               flexDirection: 'row',
-              height: 50,
               justifyContent: 'center',
-              marginTop: 10
+              marginTop: 10,
+              marginBottom: 10
             }}>
               {/* add to calendar button */}
               <TouchableOpacity
@@ -282,7 +282,8 @@ const styles = StyleSheet.create({
   bandModal: {
     fontSize: 20,
     color: '#fff',
-    paddingLeft: 290,
+    alignSelf: 'flex-end',
+    paddingRight: 20,
     paddingBottom: 5,
     
   },
