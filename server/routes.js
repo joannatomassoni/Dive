@@ -45,8 +45,6 @@ router.patch('/users/:id/bio', ctrl.updateUserBio)
 // Delete user
 router.delete('/users/:id', ctrl.deleteUser)
 
-router.get('/bands/:id/shows', ctrl.getBandShows)
-
 /**
  * Search button routes
  */
@@ -83,6 +81,12 @@ router.get('/bands/:id/genres', ctrl.getBandGenres);
 // delete a genre from a band
 // req.body = { genreName }
 router.delete('/bands/:id/genres', ctrl.removeBandGenre)
+
+// get band's upcoming gigs
+router.get('/bands/:id/shows', ctrl.getBandUpcomingGigs)
+
+// get all past gigs for a bad
+router.get('/bands/:id/pastgigs', ctrl.getBandPastGigs)
 
 // add fan for band
 // req.body = { id_fan }
@@ -151,7 +155,6 @@ router.get('/shows', ctrl.getAllUpcomingShows)
 
 // get a single show
 router.get('/shows/:id', ctrl.getSingleShow)
-
 
 
 
