@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     color: '#3BAFBF',
     fontWeight: 'bold',
     textAlign: 'right',
-    paddingRight: 20
+    paddingRight: 20,
   },
   button: {
     borderRadius: 5,

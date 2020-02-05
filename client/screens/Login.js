@@ -54,7 +54,7 @@ export default function Login (props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2D323A',
+    backgroundColor: '#222',
   },
   title: {
     alignItems: 'center',
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     color: '#59C3D1',
     fontWeight: 'bold',
     marginTop: 230,
+    fontFamily: 'AvenirNext-Bold'
   },
   formContainer: {
     flex: 1

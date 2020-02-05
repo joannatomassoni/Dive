@@ -40,7 +40,7 @@ export default function Welcome (props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111'
+    backgroundColor: '#222'
   },
   title: {
     alignItems: 'center',
@@ -50,5 +50,6 @@ const styles = StyleSheet.create({
     color: '#59C3D1',
     fontWeight: 'bold',
     marginTop: 380,
+    fontFamily: 'AvenirNext-Bold'
   },
 })
