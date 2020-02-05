@@ -137,8 +137,7 @@ export default function SingleShowModal(props) {
             style={{ flex: 1 }}
           >
             <ScrollView style={{ marginTop: 70 }}>
-              <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
-              {/* show flyer */}
+              <Text style={styles.headerText} key={show.id}>{show.name}</Text>              {/* show flyer */}
               {show.flyer ?
                 <Image
                   style={{ width: 400, height: 400, marginLeft: 5 }}
@@ -148,7 +147,7 @@ export default function SingleShowModal(props) {
               {/* additional text */}
               <Text style={styles.infoText}>{Moment(show.dateTime).format('ll')}</Text>
               <Text style={styles.infoText}>{Moment(show.dateTime).format('LT')}</Text>
-              <Text style={styles.infoText}>{venue.name}</Text>
+              {/* <Text style={styles.infoText}>{venue.name}</Text> */}
               <Text style={styles.infoText}>{show.description}</Text>
               {/* list of all additional bands playing in current show */}
               {bands.map(band => {
