@@ -282,27 +282,26 @@ const getFanUpcomingRSVPs = async (req, res) => {
 
 //gets previous/past RSVPed shows
 //will need users id
-const getPreviousShows = async (req, res) => {
+const getPreviousRsvps = async (req, res) => {
     try {
         const { id } = req.params;
-        const oldshows = await RSVP.findAll({
+        const rsvps = await RSVP.findAll({
             where: {
-                id_fan: id,
-
+                id_fan: id
             }
         })
-        const shows = Promise.all(oldshows.map(async (rsvp) => {
+        Promise.all(rsvps.map(async (rsvp) => {
             const show = await Show.findOne({
                 where: {
-                    id: rsvp.id_show,
-                    dateTime: {
-                        [Op.lt]: new Date()
-                    }
+                    id: rsvp.id_show
                 }
             })
             return show;
-        }))
-        res.send(shows);
+        })).then((data) => {
+            console.log(data)
+            const past = data.filter(show => show.dateTime < new Date())
+            res.send(past)
+        })
     }
     catch (err) {
         console.log("error getting old shows", err)
@@ -359,8 +358,8 @@ module.exports = {
     createShow,
     deleteShow,
     getAllUpcomingShows,
-    getFanRSVPs,
-    getPreviousShows,
+    getFanUpcomingRSVPs,
+    getPreviousRsvps,
     getSingleShow,
     getShowRSVPs,
     removeFanRSVP,

@@ -173,7 +173,7 @@ router.get('/shows/:id/rsvps', ctrl.getShowRSVPs)
 router.get('/fans/:id/rsvps', ctrl.getFanUpcomingRSVPs)
 
 //get past shows a user has attended
-router.get('/shows/:id/oldrsvps', ctrl.getPreviousShows)
+router.get('/fans/:id/pastrsvps', ctrl.getPreviousRsvps)
 
 /**
  * SHOW COMMENTS
