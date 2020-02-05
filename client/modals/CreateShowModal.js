@@ -91,9 +91,7 @@ export default function CreateShowModal(props) {
       method: 'POST',
     }).then(async r => {
       let data = await r.json()
-      // console.log("sending data to cloudinary", data.url);
       setFlyerPhoto(data.url);
-      console.log("data from cloudinary", data.url);
     }).catch(err => console.log(err))
   };
 
@@ -210,6 +208,7 @@ export default function CreateShowModal(props) {
                     bandNames: bandNames,
                     description: showDesc
                   })
+                    .then(() => props.getBandsShows())
                     .then(() => setModalVisible(false))
                     .catch(error => console.log('failed to create show', error));
                 }}

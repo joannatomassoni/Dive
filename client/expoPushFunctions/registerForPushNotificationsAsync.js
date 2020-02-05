@@ -5,7 +5,6 @@ import * as Permissions from 'expo-permissions';
 export default async function registerForPushNotificationsAsync() {
   try {
     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    console.log("status: ", status)
     // only asks if permissions have not already been determined, because
     // iOS won't necessarily prompt the user a second time.
     // On Android, permissions are granted on app installation, so

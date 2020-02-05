@@ -29,9 +29,9 @@ export default function SingleBandModal(props) {
   const [shows, setShows] = useState([]);
   const [isFollowing, toggleFollowing] = useState(false);
   const [userInfo, setUserInfo] = useContext(SignedInContext);
+  const getAllBands = props.getAllBands;
   let band = props.name;
   let bandId = props.bandId;
-  console.log(singleBand);
 
   // request to see if user is following band
   const isUserFollowing = () => {
@@ -106,13 +106,17 @@ export default function SingleBandModal(props) {
         {/* start of modal when showing */}
         <View behavior="padding" style={styles.container}>
           {/* back button */}
-          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
+          <Ionicons size={64} style={styles.menuIconContainer} 
+            onPress={() => { 
+              getAllBands();
+              setModalVisible(false) 
+            }}> 
             <Ionicons
               name='ios-arrow-back'
               color='#59C3D1'
               size={32}
               style={styles.menuIcon}
-              onPress={() => { setModalVisible(false) }}
+              // onPress={() => { setModalVisible(false) }}
             />
           </Ionicons>
           <LinearGradient

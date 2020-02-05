@@ -18,29 +18,31 @@ import DateTimePicker from '../components/DateTimePicker';
 
 
 export default function EditShowModal(props) {
+  const show = props.show;
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //shwo title
-  const [showTitle, setShowTitle] = useState('');
+  const [showTitle, setShowTitle] = useState(show.name);
   //band title
   const [bandName, setBandName] = useState('');
   //array of all bands
-  const [bandNames, addBandName] = useState([userInfo.username]);
+  const [bandNames, addBandName] = useState([bandNames]);
   //venue name
-  const [venueName, setVenueName] = useState('');
+  const [venueName, setVenueName] = useState(show.venue.name);
   //show date
-  const [dateTime, setDateTime] = useState('');
+  const [dateTime, setDateTime] = useState(show.dateTime);
   //show description
-  const [showDesc, setShowDesc] = useState('');
+  const [showDesc, setShowDesc] = useState(show.description);
+  // show flyer
+  const [flyer, setFlyer] = useState(show.flyer);
   //list of venues
   const [allVenues, setAllVenues] = useState([]);
   const venues = [];
   const getBandsShows = props.getBandsShows;
-  const showID = props.show;
   const deleteShow = async () => {
-    await axios.delete(`${AXIOS_URL}/shows/${showID}`);
+    await axios.delete(`${AXIOS_URL}/shows/${show.id}`);
   }
 
   return (
@@ -96,7 +98,7 @@ export default function EditShowModal(props) {
                   color='#59C3D1'
                   size={37}
                   onPress={() => {
-                    addBandName([...bandNames, bandName])
+                    addBandName([...bands, bandName])
                     Alert.alert('Band Added');
                   }}
                 />
@@ -109,16 +111,17 @@ export default function EditShowModal(props) {
               <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={() => {
-                  setModalVisible(false);
-                  axios.patch(`${AXIOS_URL}/shows/${userInfo.id}`, {
+                  console.log(showTitle)
+                  axios.patch(`${AXIOS_URL}/shows/${show.id}`, {
                     name: showTitle,
                     dateTime: dateTime,
-                    photo: null,
+                    flyer: flyer,
                     venueName: venueName,
-                    bandName: bandNames,
+                    bandNames: bandNames,
                     description: showDesc
                   })
-                    .then(response => response)
+                    .then(() => getBandsShows())
+                    .then(() => setModalVisible(false))
                     .catch(error => console.log('failed to edit show', error));
                 }}
               >

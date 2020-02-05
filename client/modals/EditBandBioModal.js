@@ -78,14 +78,8 @@ export default function EditBandBioModal(props) {
       method: 'POST',
     }).then(async r => {
       let data = await r.json()
-      // console.log("sending data to cloudinary", data.url);
       setBandPhoto(data.url);
-      console.log("data from cloudinary", data.url);
     }).catch(err => console.log(err))
-
-    console.log("are we getting user id?", userInfo.id)
-    console.log("bandPhoto has been set to state", bandPhoto);
-
     savePhoto();
   };
 

@@ -37,6 +37,11 @@ export default function SingleShowModal(props) {
 
   const [venue, setVenue] = useState("");
 
+    //request to get all bands from db
+    const getAllBands = () => {
+      console.log('');
+    }
+
   //request to get all comments for specific show
   const getShowComments = () => {
     axios.get(`${AXIOS_URL}/shows/${show}/comments`)
@@ -88,7 +93,7 @@ export default function SingleShowModal(props) {
       id_fan: userInfo.id,
       id_show: singleShow.id,
     })
-      .then(response => setRsvp(true))
+      .then(() => setRsvp(true))
       .then(createEvent())
       .catch(error => console.log('failed to rsvp', error));
   }
@@ -161,15 +166,15 @@ export default function SingleShowModal(props) {
               />
               : null}
             {/* additional text */}
-            <Text style={styles.infoText}>{singleShow.date}</Text>
-            <Text style={styles.infoText}>{singleShow.time}</Text>
+            <Text style={styles.infoText}>{Moment(singleShow.dateTime).format('ll')}</Text>
+            <Text style={styles.infoText}>{Moment(singleShow.dateTime).format('LT')}</Text>
             <Text style={styles.infoText}>{venue}</Text>
             <Text style={styles.infoText}>{singleShow.description}</Text>
             {/* list of all additional bands playing in current show */}
             {bands.map(band => {
               return (
                 <View style={styles.bandModal}>
-                  <SingleBandModal name={band.name} bandId={band.id} />
+                  <SingleBandModal getAllBands={getAllBands} name={band.name} bandId={band.id} />
                 </View> 
               )
             })}
@@ -235,7 +240,7 @@ export default function SingleShowModal(props) {
                   borderRadius={5}
                   containerStyle={styles.card}
                 >
-                  <Text style={styles.cardTextUsername} key={comment.user.id}>{comment.user.name}</Text>
+                  <Text style={styles.cardTextUsername} key={comment.user.id}>{comment.user.nickname}</Text>
                   <Text style={styles.cardText}>{comment.text}</Text>
                   <Text style={styles.cardTextTime}>{Moment(comment.createdAt).fromNow()}</Text>
                 </Card>

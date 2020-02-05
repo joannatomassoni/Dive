@@ -42,7 +42,6 @@ export default function Hub(props) {
   const getBandInfo = async () => {
     await axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
     .then((response) => {
-      // console.log("getting band info", response.data);
       setHubInfo(() => response.data);
     })
     .catch((err) => {
@@ -102,11 +101,10 @@ export default function Hub(props) {
     const getPreviousShows = () => {
         axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
           .then(response => {
-              // console.log("getting old shows", response);
               setOldShows(response.data)
             })
             .catch(err => {
-                // console.log("not getting older shows", err);
+                console.log("not getting older shows", err);
               })
           }
           
@@ -160,7 +158,7 @@ export default function Hub(props) {
           {/* Button to open create show modal */}
           <EditBandBioModal />
           {/* Button to open create show modal */}
-          {userInfo.userType === 'band' ? <CreateShowModal /> : null}
+          {userInfo.userType === 'band' ? <CreateShowModal getBandsShows={getBandsShows}/> : null}
         </View>
         {/* Cards for all a bands upcoming shows */}
         <View>
@@ -171,6 +169,7 @@ export default function Hub(props) {
               : null
               }
               {shows && shows.map(show => {
+                const bandNames = show.bands.map(band => band.name);
                 return (
                   Moment(show.dateTime).toDate() > new Date() ? 
                     <View>
@@ -182,17 +181,11 @@ export default function Hub(props) {
                         padding={10}
                       >
                         <SingleShowModal show={show.id} showName={show.name} />
-                        <Text style={styles.cardText}>{show.time}</Text>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                          <View>
+                        <Text style={styles.cardText}>{moment(show.dateTime).format('LT')}</Text>
                         {show.description ? 
                           <Text style={styles.cardText}>{show.description}</Text>
                         : null}
-                        </View>
-                        <View>
-                        <EditShowModal show={show.id} showName={show.name} style={styles.cardText} getBandsShows={getBandsShows}/>
-                          </View>
-                        </View>
+                        <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows}/>
                       </Card>
                     </View>
                     : null
@@ -201,7 +194,6 @@ export default function Hub(props) {
             </View>
             : null}
         </View>
-
         {/* <View style={styles.container}>
           <Image
             source={dbPhoto}
@@ -214,7 +206,6 @@ export default function Hub(props) {
           <Text style={styles.subText}>Your RSVP'd Shows</Text>
           : null
           }
-
             {fanShows && fanShows.map(show => {
               return (
                 <Card
@@ -229,7 +220,7 @@ export default function Hub(props) {
                       {/* modal to display single show info */}
                       <SingleShowModal show={show.id} showName={show.name} />
                       <Text style={styles.cardText}>{show.date}</Text>
-                      <Text style={styles.cardText}>{show.time}</Text>
+                      <Text style={styles.cardText}>{moment(show.dateTime).format('LT')}</Text>
                       {show.bands ?
                         show.bands.map(band => {
                           <Text style={styles.cardText} key={band.id}>{band.name}</Text>
@@ -254,7 +245,6 @@ export default function Hub(props) {
               )
             })}
         </View>
-
         {/* Cards for bands the user follows */}
         < View >
             {followed.length ?
@@ -275,7 +265,7 @@ export default function Hub(props) {
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {/* <View> */}
-                    <SingleBandModal name={band.nickname} bandId={band.id} />
+                    <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
                   </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
                     <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
@@ -346,7 +336,6 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     marginBottom: 10
   },
-
   button: {
     borderRadius: 5,
     marginHorizontal: 40,
@@ -386,6 +375,4 @@ const styles = StyleSheet.create({
     paddingBottom: 5
   },
 })
-
-
 
