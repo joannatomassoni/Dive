@@ -13,6 +13,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 import SingleShowModal from '../modals/SingleShowModal'
+import Moment from 'moment';
 import { AXIOS_URL } from 'react-native-dotenv';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
@@ -76,7 +77,7 @@ export default function Shows(props) {
                   {/* modal to display single show info */}
                   <SingleShowModal show={show.id} showName={show.name} />
                   <Text style={styles.cardText}>{show.date}</Text>
-                  <Text style={styles.cardText}>{show.time}</Text>
+                  <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                   {show.bands ?
                     show.bands.map(band => {
                       <Text style={styles.cardText} key={band.id}>{band.name}</Text>

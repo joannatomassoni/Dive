@@ -281,7 +281,6 @@ const getFanRSVPs = async (req, res) => {
 //gets previous/past RSVPed shows
 //will need users id
 const getPreviousShows = async (req, res) => {
-    // console.log("is this previousShows working?")
     try {
         const { id } = req.params;
         const oldshows = await RSVP.findAll({

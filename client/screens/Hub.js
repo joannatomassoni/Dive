@@ -20,7 +20,6 @@ import EditBandBioModal from '../modals/EditBandBioModal';
 import EditShowModal from '../modals/EditShowModal';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
-import Calendar from '../components/Calendar';
 import { AXIOS_URL } from 'react-native-dotenv';
 import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
@@ -107,15 +106,14 @@ export default function Hub(props) {
       })
     }
     
-    // //allows user to get shows they previously went to on button click
+    //allows user to get shows they previously went to on button click
     const getPreviousShows = () => {
         axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
           .then(response => {
-              // console.log("getting old shows", response);
               setOldShows(response.data)
             })
             .catch(err => {
-                // console.log("not getting older shows", err);
+                console.log("not getting older shows", err);
               })
           }
           
@@ -129,8 +127,8 @@ export default function Hub(props) {
         getPreviousShows();
       }, [])
 
-          return (
-            <SafeAreaView style={styles.container}>
+  return (
+    <SafeAreaView style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 30 }}>
         <Text style={styles.text}>Hub</Text>
@@ -162,10 +160,8 @@ export default function Hub(props) {
           height: 50,
           justifyContent: 'center',
         }}>
-
           {/* Button to open create show modal */}
           <EditBandBioModal />
-
           {/* Button to open create show modal */}
           {userInfo.userType === 'band' ? <CreateShowModal getBandsShows={getBandsShows}/> : null}
         </View>
@@ -188,11 +184,9 @@ export default function Hub(props) {
                         borderWidth={0}
                         borderRadius={10}
                         padding={10}
-    
-                      // image={require('../images/pic2.jpg')}
                       >
                         <SingleShowModal show={show.id} showName={show.name} />
-                        <Text style={styles.cardText}>{show.time}</Text>
+                        <Text style={styles.cardText}>{moment(show.dateTime).format('LT')}</Text>
                         {show.description ? 
                           <Text style={styles.cardText}>{show.description}</Text>
                         : null}
@@ -205,23 +199,18 @@ export default function Hub(props) {
             </View>
             : null}
         </View>
-
-
         {/* <View style={styles.container}>
           <Image
             source={dbPhoto}
             style={styles.thumbnail}
           />
         </View> */}
-
         {/* Cards for shows the user has RSVPd to*/}
         <View>
           {fanShows.length ? 
           <Text style={styles.subText}>Your RSVP'd Shows</Text>
           : null
           }
-
-
             {fanShows && fanShows.map(show => {
               return (
                 <Card
@@ -236,7 +225,7 @@ export default function Hub(props) {
                       {/* modal to display single show info */}
                       <SingleShowModal show={show.id} showName={show.name} />
                       <Text style={styles.cardText}>{show.date}</Text>
-                      <Text style={styles.cardText}>{show.time}</Text>
+                      <Text style={styles.cardText}>{moment(show.dateTime).format('LT')}</Text>
                       {show.bands ?
                         show.bands.map(band => {
                           <Text style={styles.cardText} key={band.id}>{band.name}</Text>
@@ -260,15 +249,12 @@ export default function Hub(props) {
                 </Card>
               )
             })}
-
-
         </View>
-
         {/* Cards for bands the user follows */}
         < View >
             {followed.length ?
               <Text style={styles.subText}>Bands You Follow</Text>
-               : null 
+              : null 
             }
           {
             followed && followed.map(band => {
@@ -295,7 +281,6 @@ export default function Hub(props) {
             })
             }
         </View>
-
         <View>
           <PreviousRSVPShows userId={userInfo.id} />
         </View>
@@ -357,7 +342,6 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     marginBottom: 10
   },
-
   button: {
     borderRadius: 5,
     marginHorizontal: 40,
@@ -397,6 +381,4 @@ const styles = StyleSheet.create({
     paddingBottom: 5
   },
 })
-
-
 
