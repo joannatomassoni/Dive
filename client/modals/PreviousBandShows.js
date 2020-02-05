@@ -110,7 +110,7 @@ export default function PreviousBandShows(props) {
         onPress={() => { setModalVisible(true); }
         }
       >
-        <Text style={styles.signupButtonText}>Get previously played shows BLABLABLABLABL</Text>
+        <Text style={styles.signupButtonText}>Get previously played shows</Text>
       </TouchableOpacity >
 
     </View >
