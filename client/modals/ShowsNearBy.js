@@ -28,9 +28,9 @@ export default function ShowsNearBy(props) {
   const [location, setLocation] = useState({});
   // console.log("are we getting users id?", props.userInfo)
   //allows user to get shows they previously went to on button click
-  let userId = props.userInfo;
+  // let userId = props.userInfo;
 
-  console.log("user id", userId);
+  // console.log("user id", userId);
 
   const getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -43,7 +43,9 @@ export default function ShowsNearBy(props) {
 
     let locationObj = await Location.getCurrentPositionAsync({});
     locationObj = JSON.stringify(locationObj);
-    setLocation(location);
+    setLocation(locationObj);
+    //was setLocation(location);
+    console.log("getting users location", location);
   };
 
 
@@ -73,12 +75,13 @@ export default function ShowsNearBy(props) {
               />
             </Ionicons>
             <View style={styles.container}>
-              {/* <View style={styles.title}>
+              <View style={styles.title}>
                 <Text style={styles.headerText}>Previous Shows</Text>
                 <Text style={styles.headerText}>{location.timestamp}</Text>
                 <View style={styles.mapContainer}>
                   <MapView style={styles.mapStyle} />
-                </View> */}
+                </View>
+              </View>
               {/* <Text style={styles.text}>Previous shows</Text> */}
 
               {/* {oldShows && oldShows.map(show => {
