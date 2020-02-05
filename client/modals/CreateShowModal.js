@@ -103,7 +103,7 @@ export default function CreateShowModal(props) {
         visible={modalVisible}
       >
         {/* start of modal when showing */}
-        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <KeyboardAvoidingView behavior="padding" style={styles.topContainer}>
           {/* back button */}
           <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
             <Ionicons
@@ -248,11 +248,16 @@ export default function CreateShowModal(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  topContainer: {
     flex: 1,
     backgroundColor: '#2D323A',
     padding: 20,
     paddingTop: 100
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#2D323A',
+    padding: 20,
   },
   input: {
     height: 40,
