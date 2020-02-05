@@ -252,8 +252,8 @@ const removeFanRSVP = async (req, res) => {
 }
 
 // TODO: refactor to use eager loading
-// Get all shows that a given user has rsvpd to
-const getFanRSVPs = async (req, res) => {
+// Get all upcoming shows that a given user has rsvpd to
+const getFanUpcomingRSVPs = async (req, res) => {
     try {
         const { id } = req.params;
         const rsvps = await RSVP.findAll({
@@ -269,7 +269,9 @@ const getFanRSVPs = async (req, res) => {
             })
             return show;
         })).then((data) => {
-            res.send(data)
+            console.log(data)
+            const upcoming = data.filter(show => show.dateTime > new Date())
+            res.send(upcoming)
         })
     }
     catch (err) {
