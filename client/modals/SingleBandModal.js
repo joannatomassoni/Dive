@@ -18,6 +18,7 @@ import SpotifyButton from '../components/SpotifyButton';
 import FacebookButton from '../components/FacebookButton';
 import InstagramButton from '../components/InstagramButton';
 import { AXIOS_URL } from 'react-native-dotenv';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function SingleBandModal(props) {
   //state for modal visibility
@@ -103,7 +104,7 @@ export default function SingleBandModal(props) {
         visible={modalVisible}
       >
         {/* start of modal when showing */}
-        <SafeAreaView behavior="padding" style={styles.container}>
+        <View behavior="padding" style={styles.container}>
           {/* back button */}
           <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
             <Ionicons
@@ -114,8 +115,11 @@ export default function SingleBandModal(props) {
               onPress={() => { setModalVisible(false) }}
             />
           </Ionicons>
-
-          <ScrollView style={{ marginTop: 30 }}>
+          <LinearGradient
+            colors={['#38404C', '#111']}
+            style={{ flex: 1 }}
+          >
+          <ScrollView style={{ marginTop: 70 }}>
             <Text style={styles.headerText} key={singleBand.id}>{band}</Text>
             {/* band photo */}
             {singleBand.bandPhoto ? 
@@ -190,8 +194,10 @@ export default function SingleBandModal(props) {
               )
             })}
           </ScrollView>
-        </SafeAreaView>
+          </LinearGradient>
+        </View>
       </Modal>
+
       {/* create show button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
