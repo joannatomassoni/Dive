@@ -103,13 +103,10 @@ export default function SingleVenueModal(props) {
   
   // request to follow a venue
   const fanFollowVenue = () => {
-    console.log(singleVenue.id)
-    console.log(venue)
     axios.post(`${AXIOS_URL}/venues/${venue}/fans`, {
       id_fan: userInfo.id,
     })
       .then(() => toggleFollowing(true))
-      .then(() => console.log(isFollowing))
       .catch(error => console.log('failed to follow venue', error));
   }
 

@@ -271,7 +271,6 @@ export default function Hub(props) {
             })
             }
         </View>
-
         <View>
           <PreviousRSVPShows userId={userInfo.id} />
         </View>

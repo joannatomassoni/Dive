@@ -30,7 +30,6 @@ export default function SingleBandModal(props) {
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   let band = props.name;
   let bandId = props.bandId;
-  console.log(singleBand);
 
   // request to see if user is following band
   const isUserFollowing = () => {

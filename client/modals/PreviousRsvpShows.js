@@ -25,13 +25,11 @@ export default function PreviousRSVPShows(props) {
   const [oldShows, setOldShows] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
-  // console.log("are we getting users id?", props.userInfo)
   //allows user to get shows they previously went to on button click
   let userId = props.userInfo;
   const getPreviousShows = () => {
     axios.get(`${AXIOS_URL}/shows/${props.userInfo}/oldrsvps`)
       .then(response => {
-        console.log("getting old shows", response);
         setOldShows(response.data)
       })
       .catch(err => {
