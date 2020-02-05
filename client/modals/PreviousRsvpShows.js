@@ -25,7 +25,6 @@ export default function PreviousRSVPShows(props) {
   const [oldShows, setOldShows] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
-  // console.log("are we getting users id?", props.userInfo)
   //allows user to get shows they previously went to on button click
   let userId = props.userId;
   const getPreviousShows = () => {
@@ -72,8 +71,8 @@ export default function PreviousRSVPShows(props) {
                 {/* <Text style={styles.text}>Previous shows</Text> */}
 
                 {oldShows.length ? 
-                 oldShows.map(show => {
-                   console.log(show);
+                  oldShows.map(show => {
+                  console.log(show);
                   return (
                     <Card
                       // key={show.id}

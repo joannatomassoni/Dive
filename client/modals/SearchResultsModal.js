@@ -21,6 +21,11 @@ export default function SearchResultsModal() {
     // state for venues results
     const [ venues, setVenues ] = useState([]);
 
+    //request to get all bands from db
+    const getAllBands = () => {
+       console.log('');
+    }
+
     const searchCall = async (query) => {
         await axios.get(`${AXIOS_URL}/search/bands/${query}`)
             .then((response) => {
@@ -87,7 +92,7 @@ export default function SearchResultsModal() {
                                                 >
                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                                     <View>
-                                                        <SingleBandModal name={band.name} bandId={band.id} />
+                                                        <SingleBandModal getAllBands={getAllBands} name={band.name} bandId={band.id} />
                                                         <Text style={styles.cardText}>{band.bio}</Text>
                                                     </View>
                                                 </View>

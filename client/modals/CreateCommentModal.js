@@ -18,7 +18,10 @@ export default function CreateCommentModal({ showId, userId, getShowComments }) 
   const [modalVisible, setModalVisible] = useState(false);
   //comment text
   const [comment, setComment] = useState('');
-   console.log(comment);
+<<<<<<< HEAD
+=======
+  
+>>>>>>> d6937075066772835c9fa0c37d2e5f8387cad7db
   return (
     <View>
       <Modal
