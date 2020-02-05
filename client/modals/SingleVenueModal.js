@@ -16,6 +16,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { MAP_KEY, AXIOS_URL } from 'react-native-dotenv';
 import axios from 'axios';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function SingleVenueModal(props) {
   //global user signin info and editing function
@@ -144,7 +145,7 @@ export default function SingleVenueModal(props) {
         visible={modalVisible}
       >
         {/* start of modal when showing */}
-        <SafeAreaView behavior="padding" style={styles.container}>
+        <View behavior="padding" style={styles.container}>
           {/* back button */}
           <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
             <Ionicons
@@ -155,7 +156,11 @@ export default function SingleVenueModal(props) {
               onPress={() => { setModalVisible(false) }}
             />
           </Ionicons>
-          <ScrollView style={{ marginTop: 30 }}>
+          <LinearGradient
+            colors={['#38404C', '#111']}
+            style={{ flex: 1 }}
+          >
+          <ScrollView style={{ marginTop: 70 }}>
             <Text style={styles.headerText} key={singleVenue.id}>{singleVenue.name}</Text>
             <Text style={styles.infoText}>{singleVenue.address}</Text>
             <Text style={styles.infoText}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
@@ -232,7 +237,8 @@ export default function SingleVenueModal(props) {
               )
             })}
           </ScrollView>
-        </SafeAreaView>
+          </LinearGradient>
+        </View>
       </Modal>
       {/* create show button when modal is hidden */}
       <TouchableOpacity

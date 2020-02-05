@@ -197,7 +197,6 @@ export default function SingleBandModal(props) {
           </LinearGradient>
         </View>
       </Modal>
-
       {/* create show button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
