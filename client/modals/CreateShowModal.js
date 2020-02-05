@@ -200,7 +200,7 @@ export default function CreateShowModal(props) {
               <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={() => {
-                  axios.post(`${AXIOS_URL}/shows`, {
+                  axios.post(`https://dive-266016.appspot.com/shows`, {
                     name: showTitle,
                     dateTime: dateTime,
                     flyer: flyer,
@@ -225,7 +225,7 @@ export default function CreateShowModal(props) {
         onPress={() => {
           setModalVisible(true);
           //request to get all venues for venue selector
-          axios.get(`${AXIOS_URL}/venues`)
+          axios.get(`https://dive-266016.appspot.com/venues`)
             .then(response => response.data.map(venue => {
               if (!venues.includes(venue.name)) {
 

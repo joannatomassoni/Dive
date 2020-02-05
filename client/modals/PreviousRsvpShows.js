@@ -28,7 +28,7 @@ export default function PreviousRSVPShows(props) {
   //allows user to get shows they previously went to on button click
   let userId = props.userId;
   const getPreviousShows = () => {
-    axios.get(`${AXIOS_URL}/shows/${userId}/oldrsvps`)
+    axios.get(`https://dive-266016.appspot.com/shows/${userId}/oldrsvps`)
       .then(response => {
         if (response.data.length) {
           setOldShows(response.data)

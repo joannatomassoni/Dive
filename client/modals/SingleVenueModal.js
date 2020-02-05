@@ -37,7 +37,7 @@ export default function SingleVenueModal(props) {
 
   // request to get single venue info
   const getSingleVenue = async () => {
-    axios.get(`${AXIOS_URL}/venues/${venue}`)
+    axios.get(`https://dive-266016.appspot.com/venues/${venue}`)
           .then((response) => {
             setVenue(response.data);
           })
@@ -75,7 +75,7 @@ export default function SingleVenueModal(props) {
 
   // request to get all shows at venue
   const getAllShows = () => {
-    axios.get(`${AXIOS_URL}/venues/${venue}`)
+    axios.get(`https://dive-266016.appspot.com/venues/${venue}`)
       .then((response) => {
         setShows(() => response.data.shows);
       })
@@ -86,7 +86,7 @@ export default function SingleVenueModal(props) {
 
   // Request to see if a user is following the venue
   const getFollowInfo = () => {
-    axios.get(`${AXIOS_URL}/fans/${userInfo.id}/venues`)
+    axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/venues`)
       .then((response) => {
         if (response.data[0].venues) {
           response.data[0].venues.map(venue => {
@@ -103,7 +103,7 @@ export default function SingleVenueModal(props) {
   
   // request to follow a venue
   const fanFollowVenue = () => {
-    axios.post(`${AXIOS_URL}/venues/${venue}/fans`, {
+    axios.post(`https://dive-266016.appspot.com/venues/${venue}/fans`, {
       id_fan: userInfo.id,
     })
       .then(() => toggleFollowing(true))
@@ -112,7 +112,7 @@ export default function SingleVenueModal(props) {
 
   // request to unfollow a venue
   const unfollowVenue = () => {
-    axios.delete(`${AXIOS_URL}/venues/${venue}/fans`, {
+    axios.delete(`https://dive-266016.appspot.com/venues/${venue}/fans`, {
       data: {
         id_fan: userInfo.id,
         id_venue: venue,
@@ -184,7 +184,7 @@ export default function SingleVenueModal(props) {
                   style={styles.unfollowButtonContainer}
                   onPress={() => unfollowVenue()
                   //   {
-                  //   axios.delete(`${AXIOS_URL}/bands/${singleBand.id}/fans`, {
+                  //   axios.delete(`https://dive-266016.appspot.com/bands/${singleBand.id}/fans`, {
                   //     data: {
                   //       id_fan: userInfo.id,
                   //     }

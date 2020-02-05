@@ -42,7 +42,7 @@ export default function EditShowModal(props) {
   const venues = [];
   const getBandsShows = props.getBandsShows;
   const deleteShow = async () => {
-    await axios.delete(`${AXIOS_URL}/shows/${show.id}`);
+    await axios.delete(`https://dive-266016.appspot.com/shows/${show.id}`);
   }
 
   return (
@@ -112,7 +112,7 @@ export default function EditShowModal(props) {
                 style={styles.buttonContainer}
                 onPress={() => {
                   console.log(showTitle)
-                  axios.patch(`${AXIOS_URL}/shows/${show.id}`, {
+                  axios.patch(`https://dive-266016.appspot.com/shows/${show.id}`, {
                     name: showTitle,
                     dateTime: dateTime,
                     flyer: flyer,

@@ -105,7 +105,7 @@ export default function AddVenueModal(props) {
                 style={styles.buttonContainer}
                 onPress={() => {
                   setModalVisible(false);
-                  axios.post(`${AXIOS_URL}/venues`, {
+                  axios.post(`https://dive-266016.appspot.com/venues`, {
                     name: venueName,
                     address: venueAddress,
                     city: venueCity,

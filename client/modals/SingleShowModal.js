@@ -24,27 +24,21 @@ export default function SingleShowModal(props) {
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
-  //all info for specific show
-  const [singleShow, setSingleShow] = useState({});
-  //array of all additional bands in show
-  const [bands, setBands] = useState([]);
   //array of all comments
   const [comments, setComments] = useState([]);
   //user's rsvp status
   const [rsvp, setRsvp] = useState(false);
-  //info required for axios calls
-  let show = props.show;
+  const show = props.show;
+  const venue = show.venue;
+  const bands = show.bands
 
-  const [venue, setVenue] = useState("");
-
-    //request to get all bands from db
-    const getAllBands = () => {
-      console.log('');
-    }
-
+  //dummy function so SingleBandModal doesn't throw an error
+  const getAllBands = () => {
+    console.log('');
+  }
   //request to get all comments for specific show
   const getShowComments = () => {
-    axios.get(`${AXIOS_URL}/shows/${show}/comments`)
+     axios.get(`https://dive-266016.appspot.com/shows/${show.id}/comments`)
       .then((response) => {
         setComments(() => response.data.reverse())
       })
@@ -52,33 +46,13 @@ export default function SingleShowModal(props) {
         console.log(err);
       })
   }
-  //request to get all additional bands for specific show
-  const getShowBands = () => {
-    axios.get(`${AXIOS_URL}/shows/${show}`)
-      .then((response) => {
-        setBands(() => response.data.bands);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-  //request to get all info for current show
-  const getShowInfo = () => {
-    axios.get(`${AXIOS_URL}/shows/${show}`)
-      .then((response) => {
-        setVenue(response.data.venue.name);
-        setSingleShow(response.data);
-      })
-      .catch((err) => {
-        console.log("error getting single show info", err);
-      });
-  }
+
   //request to get user's rsvp info
   const getRsvpInfo = () => {
-    axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
+     axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/rsvps`)
       .then((response) => {
-        response.data.map(show => {
-          if (show.id === singleShow.id) {
+        response.data.map((rsvp) => {
+          if (show.id === rsvp.id) {
             setRsvp(true);
           }
         })
@@ -89,9 +63,9 @@ export default function SingleShowModal(props) {
   }
   //request to add rsvp
   const addRsvp = () => {
-    axios.post(`${AXIOS_URL}/shows/rsvps`, {
+      axios.post(`https://dive-266016.appspot.com/shows/rsvps`, {
       id_fan: userInfo.id,
-      id_show: singleShow.id,
+      id_show: show.id,
     })
       .then(() => setRsvp(true))
       .then(createEvent())
@@ -99,15 +73,15 @@ export default function SingleShowModal(props) {
   }
   //request to remove rsvp
   const removeRsvp = () => {
-    axios.delete(`${AXIOS_URL}/shows/rsvps`, {
+     axios.delete(`https://dive-266016.appspot.com/shows/rsvps`, {
       data: {
         id_fan: userInfo.id,
-        id_show: singleShow.id,
+        id_show: show.id,
       }
     })
-      .then(response => setRsvp(false))
-      .then(createEvent())
-      .catch(error => console.log('failed to rsvp', error));
+      .then(() => setRsvp(false))
+      .then(() => createEvent())
+      .catch(error => console.log('failed to cancel rsvp', error));
   }
   //create event on user's dive calendar
   const createEvent = async () => {
@@ -122,16 +96,23 @@ export default function SingleShowModal(props) {
 
   // event details for calendar integration
   const details = {
-    title: singleShow.name,
-    startDate: singleShow.dateTime,
-    endDate: singleShow.dateTime,
-    notes: singleShow.description ? singleShow.description : 'RSVPd show',
+    title: show.name,
+    startDate: show.dateTime,
+    endDate: show.dateTime,
+    notes: show.description ? show.description : 'RSVPd show',
     navigationBarIOS: {
       tintColor: 'orange',
       backgroundColor: 'green',
       titleColor: 'blue',
     },
   };
+
+  useEffect(() => {
+    //get whether user is rsvpd or not
+    getRsvpInfo();
+    //get all comments for specific show
+    getShowComments();
+  }, [])
 
   return (
     <View>
@@ -154,20 +135,20 @@ export default function SingleShowModal(props) {
           </Ionicons>
 
           <ScrollView style={{ marginTop: 30 }}>
-            <Text style={styles.headerText} key={show.id}>{singleShow.name}</Text>
+            <Text style={styles.headerText} key={show.id}>{show.name}</Text>
             {/* show flyer */}
-            {singleShow.flyer ?
+            {show.flyer ?
               <Image
                 style={{ width: 400, height: 400, marginLeft: 5 }}
-                source={{ uri: singleShow.flyer }}
+                source={{ uri: show.flyer }}
               />
               : null}
 
             {/* additional text */}
-            <Text style={styles.infoText}>{Moment(singleShow.dateTime).format('ll')}</Text>
-            <Text style={styles.infoText}>{Moment(singleShow.dateTime).format('LT')}</Text>
-            <Text style={styles.infoText}>{venue}</Text>
-            <Text style={styles.infoText}>{singleShow.description}</Text>
+            <Text style={styles.infoText}>{Moment(show.dateTime).format('ll')}</Text>
+            <Text style={styles.infoText}>{Moment(show.dateTime).format('LT')}</Text>
+            <Text style={styles.infoText}>{venue.name}</Text>
+            <Text style={styles.infoText}>{show.description}</Text>
             {/* list of all additional bands playing in current show */}
             {bands.map(band => {
               return (
@@ -224,7 +205,7 @@ export default function SingleShowModal(props) {
             {userInfo.signedIn ?
               <CreateCommentModal
                 userId={userInfo.id}
-                showId={singleShow.id}
+                showId={show.id}
                 getShowComments={getShowComments}
               />
               : null}
@@ -250,21 +231,11 @@ export default function SingleShowModal(props) {
       </Modal>
       {/* show more button when modal is hidden */}
       <TouchableOpacity
-        onPress={async () => {
-          //request to get all info for current show
-          await getShowInfo();
-          //request to get user's rsvp info
-          await getRsvpInfo();
-          //get all bands for specific show
-          await getShowBands();
-          //get all comments for specific show
-          await getShowComments();
-          getRsvpInfo();
-
+        onPress={() => {
           setModalVisible(true);
         }}
       >
-        <Text style={styles.modalShowText}>{props.showName}</Text>
+        <Text style={styles.modalShowText}>{show.name}</Text>
       </TouchableOpacity>
     </View>
   );

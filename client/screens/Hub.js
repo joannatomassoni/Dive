@@ -40,7 +40,7 @@ export default function Hub(props) {
 
   //request to get all bands from db
   const getAllBands = () => {
-    axios.get(`${AXIOS_URL}/bands`)
+    axios.get(`https://dive-266016.appspot.com/bands`)
       .then((response) => {
         setBands(() => response.data);
       })
@@ -49,7 +49,7 @@ export default function Hub(props) {
   
   //gets band info
   const getBandInfo = async () => {
-    await axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
+    await axios.get(`https://dive-266016.appspot.com/users/${userInfo.username}`)
     .then((response) => {
       setHubInfo(() => response.data);
     })
@@ -60,7 +60,7 @@ export default function Hub(props) {
   
   //gets a list of all of a bands shows
   const getBandsShows = async () => {
-    await axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
+    await axios.get(`https://dive-266016.appspot.com/bands/${userInfo.id}/shows`)
     .then((response) => {
       if (response.data.shows) {
         setShows(() => response.data.shows.filter((show) => {
@@ -75,7 +75,7 @@ export default function Hub(props) {
 
   //gets bands photo from database
   const getPhoto = async () => {
-    await axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
+    await axios.get(`https://dive-266016.appspot.com/users/${userInfo.username}`)
       .then((response) => {
         setDbPhoto(() => response.data.bandPhoto);
       })
@@ -86,7 +86,7 @@ export default function Hub(props) {
     
     //allows users to see all of the shows they have RSVPed to
     const getRSVPS = async () => {
-      await axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
+      await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/rsvps`)
       .then((response) => {
         setFanShows(() => response.data);
       })
@@ -97,7 +97,7 @@ export default function Hub(props) {
     
     //allows user to see all the bands they follow
     const getFollowedBands = async () => {
-      await axios.get(`${AXIOS_URL}/fans/${userInfo.id}/bands`)
+      await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/bands`)
       .then(response => {
         setFollowed(() => response.data);
       })
@@ -108,7 +108,7 @@ export default function Hub(props) {
     
     //allows user to get shows they previously went to on button click
     const getPreviousShows = () => {
-        axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
+        axios.get(`https://dive-266016.appspot.com/shows/${userInfo.id}/oldrsvps`)
           .then(response => {
               setOldShows(response.data)
             })

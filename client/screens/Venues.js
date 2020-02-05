@@ -20,7 +20,7 @@ export default function Venues(props) {
   const [venues, setVenues] = useState([]);
 
   useEffect(() => {
-    axios.get(`${AXIOS_URL}/venues`)
+    axios.get(`https://dive-266016.appspot.com/venues`)
       .then((response) => {
         setVenues(() => response.data);
       })
