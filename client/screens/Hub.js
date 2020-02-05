@@ -179,10 +179,16 @@ export default function Hub(props) {
                       >
                         <SingleShowModal show={show.id} showName={show.name} />
                         <Text style={styles.cardText}>{show.time}</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                          <View>
                         {show.description ? 
                           <Text style={styles.cardText}>{show.description}</Text>
                         : null}
+                        </View>
+                        <View>
                         <EditShowModal show={show.id} showName={show.name} style={styles.cardText} getBandsShows={getBandsShows}/>
+                          </View>
+                        </View>
                       </Card>
                     </View>
                     : null
@@ -262,14 +268,13 @@ export default function Hub(props) {
                   padding={10}
                   borderRadius={10}
                   containerStyle={styles.card}
-                // image={require('../images/pic2.jpg')}
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {/* <View> */}
                     <SingleBandModal name={band.nickname} bandId={band.id} />
                   </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
-        <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
+                    <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
                 </Card>
               )
             })
