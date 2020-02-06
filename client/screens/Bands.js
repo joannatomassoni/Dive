@@ -36,6 +36,10 @@ export default function Bands(props) {
     console.log('');
   }
 
+  const getRSVPS = () => {
+    console.log('');
+  }
+
   useEffect(() => {
     getAllBands();
   }, [])
