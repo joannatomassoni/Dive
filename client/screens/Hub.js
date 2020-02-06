@@ -177,8 +177,7 @@ export default function Hub(props) {
                           backgroundColor='#fff'
                           borderWidth={0}
                           borderRadius={10}
-                          padding={10}
-                        >
+                          padding={10}>
                           <SingleShowModal show={show} getRSVPS={getRSVPS}/>
                           <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
                           <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
@@ -256,7 +255,7 @@ export default function Hub(props) {
                   containerStyle={styles.card}
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS}/>
+                    <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS} />
                   </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
                     <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
