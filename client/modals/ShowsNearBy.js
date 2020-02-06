@@ -22,6 +22,7 @@ import Constants from 'expo-constants';
 import { AXIOS_URL } from 'react-native-dotenv';
 import * as Location from 'expo-location';
 import MapView from 'react-native-maps';
+import Geocoder from 'react-native-geocoding';
 
 export default function ShowsNearBy(props) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -44,10 +45,13 @@ export default function ShowsNearBy(props) {
     let locationObj = await Location.getCurrentPositionAsync({});
     locationObj = JSON.stringify(locationObj);
     setLocation(locationObj);
-    //was setLocation(location);
+    // setLocation(location);
     console.log("getting users location", location);
   };
 
+  const getShowsByLocation = async () => {
+
+  }
 
   useEffect(() => {
     getLocationAsync();
@@ -76,7 +80,7 @@ export default function ShowsNearBy(props) {
             </Ionicons>
             <View style={styles.container}>
               <View style={styles.title}>
-                <Text style={styles.headerText}>Previous Shows</Text>
+                {/* <Text style={styles.headerText}>Previous Shows</Text> */}
                 <Text style={styles.headerText}>{location.timestamp}</Text>
                 <View style={styles.mapContainer}>
                   <MapView style={styles.mapStyle} />
