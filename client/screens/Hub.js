@@ -34,6 +34,7 @@ export default function Hub(props) {
   // const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
+  const [oldShows, setOldShows] = useState([]);
 
 
   //request to get all bands from db
@@ -105,6 +106,18 @@ export default function Hub(props) {
       })
   }
 
+  const getPreviousBandShows = () => {
+    console.log("blablabal")
+    axios.get(`https://dive-266016.appspot.com/shows/${userInfo.id}/oldShows`)
+      .then(response => {
+        console.log("getting old shows bands played", response.data);
+        setOldShows(response.data[0])
+      })
+      .catch(err => {
+        console.log("not getting older shows for previously played", err);
+      })
+  }
+
   //load all user info when brought to hub
   useEffect(() => {
     getRSVPS();
@@ -112,6 +125,7 @@ export default function Hub(props) {
     getBandsShows();
     getFollowedBands();
     getPreviousShows();
+    getPreviousBandShows();
   }, [])
 
   return (
@@ -265,7 +279,8 @@ export default function Hub(props) {
             }
           </View>
           <PreviousRSVPShows userId={userInfo.id} />
-          {/* <PreviousBandShows userID={userInfo.id} /> */}
+
+          <PreviousBandShows oldShows={oldShows} />
         </ScrollView>
       </LinearGradient>
     </View >
