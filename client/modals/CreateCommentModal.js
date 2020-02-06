@@ -85,13 +85,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2D323A',
-    padding: 20
+    padding: 10
   },
   input: {
     height: 40,
     backgroundColor: 'rgba(255, 255, 255, 1)',
     marginBottom: 15,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     borderRadius: 5,
     marginHorizontal: 40,
     fontWeight: 'bold'
@@ -112,8 +112,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#59C3D1',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    width: 140,
+    marginBottom: 15,
+    alignSelf: 'center'
   },
   signupContainer: {
     backgroundColor: '#75A4AD',
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     fontWeight: '700',
-    color: '#fff'
+    color: '#000'
   },
   signupButtonText: {
     textAlign: 'center',
