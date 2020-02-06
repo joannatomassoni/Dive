@@ -206,7 +206,11 @@ export default function SingleBandModal(props) {
           setModalVisible(true);
         }}
       >
+        {band.nickname ? 
         <Text style={styles.cardHeaderText}>{band.nickname}</Text>
+          :
+        <Text style={styles.cardHeaderText}>{band.name}</Text>
+      }
       </TouchableOpacity >
     </View >
   );
