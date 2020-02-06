@@ -108,9 +108,9 @@ export default function Hub(props) {
 
   //load all user info when brought to hub
   useEffect(() => {
+    getRSVPS();
     getBandInfo();
     getBandsShows();
-    getRSVPS();
     getFollowedBands();
     getPreviousShows();
   }, [])
@@ -256,7 +256,7 @@ export default function Hub(props) {
                   containerStyle={styles.card}
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <SingleBandModal band={band} getFollowedBands={getFollowedBands}/>
+                  <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS}/>
                   </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
                     <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}

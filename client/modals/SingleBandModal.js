@@ -100,6 +100,7 @@ export default function SingleBandModal(props) {
           <Ionicons size={64} style={styles.menuIconContainer} 
             onPress={() => { 
               props.getFollowedBands();
+              props.getRSVPS();
               setModalVisible(false) 
             }}> 
             <Ionicons

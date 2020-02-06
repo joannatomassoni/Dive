@@ -40,6 +40,10 @@ export default function SingleShowModal(props) {
   const getFollowedBands = () => {
     console.log('');
   }
+  
+  const getRSVPS = () => {
+    console.log('');
+  }
 
   //request to get all comments for specific show
   const getShowComments = () => {
@@ -165,7 +169,7 @@ export default function SingleShowModal(props) {
               {bands && bands.map(band => {
                 return (
                   <View style={styles.bandModal}>
-                  <SingleBandModal band={band} getFollowedBands={getFollowedBands}/>
+                  <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS}/>
                   </View>
                 )
               })}
