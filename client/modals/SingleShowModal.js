@@ -192,17 +192,6 @@ export default function SingleShowModal(props) {
                       removeRsvp();
                     }}
                   >
-                    <Text style={styles.signupButtonText}>Add To Calendar</Text>
-                  </TouchableOpacity>
-                {/* button to rsvp to specific (shows when signed in) */}
-                {userInfo.signedIn ?
-                  //if already rsvp'd, show button to cancel rvp
-                  (rsvp ? <TouchableOpacity
-                    style={styles.cancelButtonContainer}
-                    onPress={() => {
-                      removeRsvp();
-                    }}
-                  >
                     <Text style={styles.signupButtonText}>Cancel RSVP</Text>
                   </TouchableOpacity>
                     //if not rsvp'd, show rsvp button
