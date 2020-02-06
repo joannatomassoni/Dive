@@ -27,23 +27,24 @@ export default function PreviousBandShows(props) {
 
   // console.log("are we getting users id?", props.userInfo)
   //allows user to get shows they previously went to on button click
-  let userId = props.userInfo;
+  let userId = props.userID;
 
   console.log("user id", userId);
 
-  const getPreviousShows = () => {
-    axios.get(`${AXIOS_URL}/shows/${props.userInfo}/oldShows`)
+  const getPreviousBandShows = () => {
+    console.log("blablabal")
+    axios.get(`http://localhost:8080/shows/${userId}/oldShows`)
       .then(response => {
-        console.log("getting old shows", response.data);
+        console.log("getting old shows bands played", response.data);
         setOldShows(response.data)
       })
       .catch(err => {
-        console.log("not getting older shows", err);
+        console.log("not getting older shows for previously played", err);
       })
   }
 
   useEffect(() => {
-    getPreviousShows();
+    getPreviousBandShows();
   }, []);
 
 
@@ -69,13 +70,13 @@ export default function PreviousBandShows(props) {
             </Ionicons>
             <View style={styles.container}>
               <View style={styles.title}>
-                <Text style={styles.headerText}>Previous Shows</Text>
+                <Text style={styles.text}>Previously Played Shows</Text>
                 {/* <Text style={styles.text}>Previous shows</Text> */}
-
-                {oldShows && oldShows.map(show => {
+                {oldShows && oldShows[0].shows.map(show => {
+                  // band.shows.map(show => {
                   return (
                     <Card
-                      key={show.shows.id}
+                      // key={show.shows.id}
                       style={styles.card}
                       backgroundColor='#111'
                       padding={10}
@@ -83,18 +84,19 @@ export default function PreviousBandShows(props) {
                       containerStyle={styles.card}
                     // image={require('../images/pic2.jpg')}
                     >
-                      {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
+                      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                      {/* modal to display single show info */}
-                      <SingleShowModal show={show.shows.id} showName={show.shows.name} />
-
-                      <Text style={styles.cardText}>{show.show.name}</Text>
-                      {/* <Text style={styles.cardText}>{show.time}</Text>
-                      <Text style={styles.cardText}>{show.date}</Text>
-                      <Text style={styles.cardText}>{show.description}</Text> */}
-                      {/* <EditShowModal /> */}
+                        {/* modal to display single show info */}
+                        {/* {/* <SingleShowModal show={show.shows.id} showName={show.shows.name} /> */}
+                        <Text style={styles.cardText}>{show.name}</Text>
+                        <Text style={styles.cardText}>{show.dateTime}</Text>
+                        <Text style={styles.cardText}>{show.date}</Text>
+                        <Text style={styles.cardText}>{show.description}</Text>
+                        {/* <EditShowModal /> */}
+                      </View>
                     </Card>
                   )
+                  // })
                 })
                 }
                 {/* </View> */}
