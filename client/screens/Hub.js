@@ -18,7 +18,6 @@ import InstagramButton from '../components/InstagramButton';
 import CreateShowModal from '../modals/CreateShowModal';
 import EditBandBioModal from '../modals/EditBandBioModal';
 import EditShowModal from '../modals/EditShowModal';
-import { AXIOS_URL } from 'react-native-dotenv';
 import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
 import PreviousRSVPShows from '../modals/PreviousRsvpShows';

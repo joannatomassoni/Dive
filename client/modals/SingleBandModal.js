@@ -132,8 +132,6 @@ export default function SingleBandModal(props) {
               <InstagramButton link={band.link_instagram} />
               <FacebookButton link={band.link_facebook} />
             </View>
-
-            <Text style={styles.infoText}>{band.bio}</Text>
             {/* if user is signed in show button to follor band */}
             {userInfo.signedIn ?
               (isFollowing ?
@@ -249,7 +247,7 @@ const styles = StyleSheet.create({
   },
   flexRowRight: {
     flexDirection: 'row',
-    paddingBottom: 5,
+    paddingBottom: 15,
     justifyContent: 'flex-end',
     paddingRight: 20
   },
