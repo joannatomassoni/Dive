@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 10,
     borderRadius: 5,
-    marginHorizontal: 40,
+    marginHorizontal: 20,
     fontWeight: 'bold'
   },
   loginContainer: {

@@ -90,7 +90,7 @@ export default class DatePicker extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     borderRadius: 10,
     marginBottom: 10,
   },
