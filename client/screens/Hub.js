@@ -108,9 +108,9 @@ export default function Hub(props) {
   //load all user info when brought to hub
   useEffect(() => {
     getRSVPS();
+    getFollowedBands();
     getBandInfo();
     getBandsShows();
-    getFollowedBands();
     getPreviousShows();
   }, [])
 
