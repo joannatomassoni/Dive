@@ -24,7 +24,7 @@ import { AXIOS_URL } from 'react-native-dotenv';
 import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
 import PreviousRSVPShows from '../modals/PreviousRsvpShows';
-import PreviousBandShows from '../modals/PreviousRsvpShows';
+import PreviousBandShows from '../modals/PreviousBandShows';
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -127,6 +127,7 @@ export default function Hub(props) {
     getRSVPS();
     getFollowedBands();
     getPreviousShows();
+    // console.log("user id in hub", userInfo.id)
   }, [])
 
   return (
@@ -143,35 +144,67 @@ export default function Hub(props) {
             <Text>
               {dbPhoto &&
                 <Image
-                  style={{ width: 100, height: 70 }}
+                  style={{ width: 420, height: 200 }}
                   source={{ uri: dbPhoto }}
                 />
               }
-              {shows && shows.map(show => {
-                const bandNames = show.bands.map(band => band.name);
-                return (
-                  Moment(show.dateTime).toDate() > new Date() ?
-                    <View>
-                      <Card
-                        containerStyle={styles.card}
-                        backgroundColor='#fff'
-                        borderWidth={0}
-                        borderRadius={10}
-                        padding={10}
-                      >
-                        <SingleShowModal show={show} />
-                        <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
-                        {show.description ?
-                          <Text style={styles.cardText}>{show.description}</Text>
-                          : null}
-                        <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows} />
-                      </Card>
-                    </View>
-                    : null
-                )
-              })}
+            </Text>
+          </View>
+          <Text style={styles.infoText}>
+            {hubInfo.bio}
+          </Text>
+          {/* Social Media Buttons */}
+          <View style={styles.flexRowRight}>
+            {/* Only show spotify link if user is a band */}
+            {userInfo.userType === 'band' ?
+              <SpotifyButton link={hubInfo.link_spotify} />
+              : null}
+            <InstagramButton link={hubInfo.link_instagram} />
+            <FacebookButton link={hubInfo.link_facebook} />
+          </View>
+          <View style={{
+            flexDirection: 'row',
+            height: 50,
+            justifyContent: 'center',
+          }}>
+            {/* Button to open create show modal */}
+            <EditBandBioModal />
+            {/* Button to open create show modal */}
+            {userInfo.userType === 'band' ? <CreateShowModal getBandsShows={getBandsShows} /> : null}
+          </View>
+          {/* Cards for all a bands upcoming shows */}
+          <View>
+            {userInfo.userType === 'band' ?
+              <View>
+                {shows.length ?
+                  <Text style={styles.subText}>Upcoming Gigs</Text>
+                  : null
+                }
+                {shows && shows.map(show => {
+                  const bandNames = show.bands.map(band => band.name);
+                  return (
+                    Moment(show.dateTime).toDate() > new Date() ?
+                      <View>
+                        <Card
+                          containerStyle={styles.card}
+                          backgroundColor='#fff'
+                          borderWidth={0}
+                          borderRadius={10}
+                          padding={10}
+                        >
+                          <SingleShowModal show={show} />
+                          <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
+                          {show.description ?
+                            <Text style={styles.cardText}>{show.description}</Text>
+                            : null}
+                          <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows} />
+                        </Card>
+                      </View>
+                      : null
+                  )
+                })}
               </View>
-            : null}
+              : null}
           </View>
           {/* <View style={styles.container}>
           <Image
@@ -220,29 +253,15 @@ export default function Hub(props) {
                       </Text>
                     </View>
                   </View>
-                  <View >
-                    {/* show flyer */}
-                    <Text >
-                      {show.flyer &&
-                        <Image
-                          style={{ justifyContent: 'right' }}
-                          style={styles.photo}
-                          source={{ uri: show.flyer }}
-                        />
-                      }
-                    </Text>
-                  </View>
-                  {/* </View> */}
                 </Card>
               )
             })}
-          </View >
+          </View>
           {/* Cards for bands the user follows */}
           < View >
-            {
-              followed.length ?
-                <Text style={styles.subText}>Bands You Follow</Text>
-                : null
+            {followed.length ?
+              <Text style={styles.subText}>Bands You Follow</Text>
+              : null
             }
             {
               followed && followed.map(band => {
@@ -266,16 +285,16 @@ export default function Hub(props) {
                 )
               })
             }
-          </View >
-          <View>
-            <PreviousRSVPShows userId={userInfo.id} />
           </View>
-          <View>
-            <PreviousBandShows userId={userInfo.id} />
-          </View>
+          {/* <View> */}
+          <PreviousRSVPShows userId={userInfo.id} />
+          {/* </View> */}
+          {/* <View> */}
 
-        </ScrollView >
-      </LinearGradient >
+          <PreviousBandShows userID={userInfo.id} />
+          {/* </View> */}
+        </ScrollView>
+      </LinearGradient>
     </View >
   )
 }
