@@ -172,6 +172,7 @@ export default function SingleVenueModal(props) {
             <Text style={styles.headerText}>Shows</Text>
             {/* cards for each upcoming show at the venue */}
             {venue.shows && venue.shows.map(show => {
+              console.log(show);
               return (
                 <Card
                   key={show.id}
@@ -183,10 +184,13 @@ export default function SingleVenueModal(props) {
                   <SingleShowModal show={show} getRSVPS={getRSVPS}/>
                   <Text style={styles.cardText}>{show.date}</Text>
                   <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
-                  <Text style={styles.cardText}>{show.description}</Text>
+                  {show.description ? 
+                    <Text style={styles.cardText}>{show.description}</Text>
+                    : null
+                  }
                   {/* list for each additional band in each show */}
                   {show.bands && show.bands.map(band => {
-                    return <Text style={styles.cardBandText}>{band.name}</Text>
+                    return <Text style={styles.cardBandText}>{band.nickname}</Text>
                   })}
                 </Card>
               )
