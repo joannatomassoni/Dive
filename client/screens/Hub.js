@@ -255,7 +255,7 @@ export default function Hub(props) {
                   containerStyle={styles.card}
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
+                    <SingleBandModal band={band} />
                   </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
                     <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
