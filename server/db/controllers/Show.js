@@ -403,7 +403,7 @@ module.exports = {
     createShow,
     deleteShow,
     getAllUpcomingShows,
-    getFanRSVPs,
+    // getFanRSVPs,
     getFansPreviousShows,
     getBandsPreviousShows,
     getSingleShow,
@@ -412,5 +412,6 @@ module.exports = {
     rsvpFanToShow,
     searchShows,
     updateShow,
+    getFanUpcomingRSVPs
 }
 

@@ -80,7 +80,7 @@ module.exports = {
     getShowRSVPs,
     getFansPreviousShows,
     getBandsPreviousShows,
-    getBandShows,
+    // getBandShows,
     getSingleShow,
     getSingleUser,
     getSingleVenue,
@@ -106,4 +106,5 @@ module.exports = {
     updateVenue,
     createComment,
     getAllComments,
+    getFanUpcomingRSVPs
 }

@@ -265,7 +265,7 @@ export default function Hub(props) {
             }
           </View>
           <PreviousRSVPShows userId={userInfo.id} />
-          {/* <PreviousBandShows userID={userInfo.id} /> */}
+          <PreviousBandShows userID={userInfo.id} />
         </ScrollView>
       </LinearGradient>
     </View >
