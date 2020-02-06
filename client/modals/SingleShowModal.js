@@ -164,9 +164,9 @@ export default function SingleShowModal(props) {
               })}
               <View style={{
                 flexDirection: 'row',
-                height: 50,
                 justifyContent: 'center',
-                marginTop: 10
+                marginTop: 10,
+                marginBottom: 10
               }}>
                 {/* add to calendar button */}
                 <TouchableOpacity
@@ -183,6 +183,17 @@ export default function SingleShowModal(props) {
                 >
                   <Text style={styles.signupButtonText}>Add To Calendar</Text>
                 </TouchableOpacity>
+                {/* button to rsvp to specific (shows when signed in) */}
+                {userInfo.signedIn ?
+                  //if already rsvp'd, show button to cancel rvp
+                  (rsvp ? <TouchableOpacity
+                    style={styles.cancelButtonContainer}
+                    onPress={() => {
+                      removeRsvp();
+                    }}
+                  >
+                    <Text style={styles.signupButtonText}>Add To Calendar</Text>
+                  </TouchableOpacity>
                 {/* button to rsvp to specific (shows when signed in) */}
                 {userInfo.signedIn ?
                   //if already rsvp'd, show button to cancel rvp
@@ -256,7 +267,8 @@ const styles = StyleSheet.create({
   bandModal: {
     fontSize: 20,
     color: '#fff',
-    paddingLeft: 290,
+    alignSelf: 'flex-end',
+    paddingRight: 20,
     paddingBottom: 5,
 
   },

@@ -104,9 +104,8 @@ const styles = StyleSheet.create({
     fontSize: 30,
     alignItems: 'center',
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
-    marginLeft: 60,
+    alignSelf: 'center',
     marginBottom: 15
   },
   loginContainer: {

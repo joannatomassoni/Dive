@@ -16,7 +16,7 @@ import { AXIOS_URL } from 'react-native-dotenv';
 import * as ImagePicker from 'expo-image-picker';
 
 
-export default function EditBandBioModal(props) {
+export default function EditBandBioModal({ getBandInfo }) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state for modal visibility
@@ -45,7 +45,6 @@ export default function EditBandBioModal(props) {
 
     if (permissionResult.granted === false) {
       alert('Permission to access camera roll is required!');
-      return;
     }
 
     //gets image from phone
@@ -221,8 +220,10 @@ export default function EditBandBioModal(props) {
               <View style={styles.button} >
                 <TouchableOpacity
                   style={styles.returnButtonContainer}
-                  onPress={openImagePickerAsync}
-                >
+                  onPress={() => {
+                    openImagePickerAsync();
+                  }}
+              >
                   <Text style={styles.signupButtonText}>Select Photo</Text>
                 </TouchableOpacity>
 
@@ -244,7 +245,10 @@ export default function EditBandBioModal(props) {
               {/* button to complete editing */}
               <TouchableOpacity
                 style={styles.returnButtonContainer}
-                onPress={() => { setModalVisible(false); }}
+                onPress={() => { 
+                  getBandInfo();
+                  setModalVisible(false); 
+                }}
               >
                 <Text style={styles.signupButtonText}>Return</Text>
               </TouchableOpacity>

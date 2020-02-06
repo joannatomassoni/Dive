@@ -38,12 +38,10 @@ export default function Login (props) {
         <Welcome />
         //login screen if user is not logged in
         :
-        <View style={styles.container}>
           <View style={styles.title}>
             <Animated.View style={{ opacity: fadeValue }} >
               <Text style={styles.text}>DIVE</Text>
             </Animated.View>
-          </View>
           <LoginForm />
         </View>
       }
@@ -61,9 +59,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 110,
+    marginTop: 140,
     color: '#59C3D1',
     fontWeight: 'bold',
-    marginTop: 230,
     fontFamily: 'AvenirNext-Bold',
     textShadowOffset: {
       width: 2,
