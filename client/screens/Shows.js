@@ -40,6 +40,10 @@ export default function Shows(props) {
       })
   }
 
+  const getRSVPS = () => {
+    console.log('');
+  }
+
   // const getLocationAsync = async () => {
   //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
   //   if (status !== 'granted') {
@@ -81,7 +85,7 @@ export default function Shows(props) {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                   <View>
                     {/* modal to display single show info */}
-                    <SingleShowModal show={show} />
+                    <SingleShowModal show={show} getRSVPS={getRSVPS}/>
                     <Text style={styles.cardText}>{show.date}</Text>
                     <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                     {show.bands ?
