@@ -22,7 +22,7 @@ export default function Venues(props) {
   const getAllVenues = () => {
     axios.get(`https://dive-266016.appspot.com/venues`)
       .then((response) => {
-        setVenues(() => response.data);
+        setVenues(() => response.data.reverse());
       })
       .catch((err) => {
         console.log("error getting venues", err);
