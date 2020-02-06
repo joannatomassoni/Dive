@@ -16,9 +16,6 @@ import SingleShowModal from '../modals/SingleShowModal';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
-import MenuButton from '../components/MenuButton';
-import * as Permissions from 'expo-permissions';
-import Constants from 'expo-constants';
 import { AXIOS_URL } from 'react-native-dotenv';
 
 export default function PreviousBandShows(props) {
@@ -84,16 +81,17 @@ export default function PreviousBandShows(props) {
                       containerStyle={styles.card}
                     // image={require('../images/pic2.jpg')}
                     >
-                      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                      {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
 
-                        {/* modal to display single show info */}
-                        {/* {/* <SingleShowModal show={show.shows.id} showName={show.shows.name} /> */}
-                        <Text style={styles.cardText}>{show.name}</Text>
-                        <Text style={styles.cardText}>{show.dateTime}</Text>
-                        <Text style={styles.cardText}>{show.date}</Text>
-                        <Text style={styles.cardText}>{show.description}</Text>
-                        {/* <EditShowModal /> */}
-                      </View>
+                      {/* modal to display single show info */}
+                      {/* {/* <SingleShowModal show={show.shows.id} showName={show.shows.name} /> */}
+                      <SingleShowModal show={show} />
+
+                      <Text style={styles.cardText}>{show.dateTime}</Text>
+                      <Text style={styles.cardText}>{show.date}</Text>
+                      <Text style={styles.cardText}>{show.description}</Text>
+                      {/* <EditShowModal /> */}
+                      {/* </View> */}
                     </Card>
                   )
                   // })
@@ -144,6 +142,12 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     justifyContent: 'center',
+  },
+  card: {
+    borderWidth: 0,
+    paddingBottom: 0,
+    backgroundColor: '#111',
+    paddingBottom: 10
   },
   cardText: {
     fontSize: 16,
