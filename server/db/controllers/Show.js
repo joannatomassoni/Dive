@@ -412,5 +412,6 @@ module.exports = {
     getFanUpcomingRSVPs,
     searchShows,
     updateShow,
+    getFanUpcomingRSVPs
 }
 
