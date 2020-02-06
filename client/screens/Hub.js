@@ -34,10 +34,20 @@ export default function Hub(props) {
   // const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
+
+
+  //request to get all bands from db
+  const getAllBands = () => {
+    axios.get(`https://dive-266016.appspot.com/bands`)
+      .then((response) => {
+        setBands(() => response.data);
+      })
+      .catch(err => console.log(err))
+  }
   
   //gets band info
   const getBandInfo = async () => {
-    await axios.get(`${AXIOS_URL}/users/${userInfo.username}`)
+    await axios.get(`https://dive-266016.appspot.com/users/${userInfo.username}`)
     .then((response) => {
       setHubInfo(() => response.data);
     })
@@ -48,7 +58,7 @@ export default function Hub(props) {
   
   //gets a list of all of a bands shows
   const getBandsShows = async () => {
-    await axios.get(`${AXIOS_URL}/bands/${userInfo.id}/shows`)
+    await axios.get(`https://dive-266016.appspot.com/bands/${userInfo.id}/shows`)
     .then((response) => {
       if (response.data.shows) {
         setShows(() => response.data.shows.filter((show) => {
@@ -63,7 +73,7 @@ export default function Hub(props) {
     
     //allows users to see all of the shows they have RSVPed to
     const getRSVPS = async () => {
-      await axios.get(`${AXIOS_URL}/fans/${userInfo.id}/rsvps`)
+      await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/rsvps`)
       .then((response) => {
         setFanShows(() => response.data);
       })
@@ -74,7 +84,7 @@ export default function Hub(props) {
     
     //allows user to see all the bands they follow
     const getFollowedBands = async () => {
-      await axios.get(`${AXIOS_URL}/fans/${userInfo.id}/bands`)
+      await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/bands`)
       .then(response => {
         setFollowed(() => response.data);
       })
@@ -85,7 +95,7 @@ export default function Hub(props) {
     
     //allows user to get shows they previously went to on button click
     const getPreviousShows = () => {
-        axios.get(`${AXIOS_URL}/shows/${userInfo.id}/oldrsvps`)
+        axios.get(`https://dive-266016.appspot.com/shows/${userInfo.id}/oldrsvps`)
           .then(response => {
               setOldShows(response.data)
             })
@@ -169,7 +179,7 @@ export default function Hub(props) {
                         borderRadius={10}
                         padding={10}
                       >
-                        <SingleShowModal show={show.id} showName={show.name} />
+                        <SingleShowModal show={show} />
                         <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                         {show.description ? 
                           <Text style={styles.cardText}>{show.description}</Text>
@@ -207,7 +217,7 @@ export default function Hub(props) {
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View>
                       {/* modal to display single show info */}
-                      <SingleShowModal show={show.id} showName={show.name} />
+                      <SingleShowModal show={show} />
                       <Text style={styles.cardText}>{show.date}</Text>
                       <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                       {show.bands ?

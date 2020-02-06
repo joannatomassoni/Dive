@@ -30,7 +30,7 @@ export default function Shows(props) {
 
   //request to get all shows
   const getAllShows = () => {
-    axios.get(`${AXIOS_URL}/shows`)
+    axios.get('https://dive-266016.appspot.com/shows')
       .then((response) => {
         setShows(() => response.data);
       })
@@ -80,7 +80,7 @@ export default function Shows(props) {
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View>
                   {/* modal to display single show info */}
-                  <SingleShowModal show={show.id} showName={show.name} />
+                  <SingleShowModal show={show} />
                   <Text style={styles.cardText}>{show.date}</Text>
                   <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                   {show.bands ?

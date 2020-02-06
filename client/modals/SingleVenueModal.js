@@ -32,11 +32,11 @@ export default function SingleVenueModal(props) {
   // whether a user follows a given venue or not
   const [isFollowing, toggleFollowing] = useState(false);
   //venue id for axios call
-  let venue = props.venueID;
+  let venue = props.venue;
 
   // request to get single venue info
   const getSingleVenue = async () => {
-    axios.get(`${AXIOS_URL}/venues/${venue}`)
+    axios.get(`https://dive-266016.appspot.com/venues/${venue.id}`)
           .then((response) => {
             setVenue(response.data);
           })
@@ -50,13 +50,13 @@ export default function SingleVenueModal(props) {
     axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
       params: {
         key: `${MAP_KEY}`,
-        location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
+        location: `${venue.address},${venue.city}${venue.state},${venue.zip_code}`
       }
     })
       .then(axios.get(`http://www.mapquestapi.com/geocoding/v1/address`, {
         params: {
           key: `${MAP_KEY}`,
-          location: `${singleVenue.address},${singleVenue.city}${singleVenue.state},${singleVenue.zip_code}`
+          location: `${venue.address},${venue.city}${venue.state},${venue.zip_code}`
         }
       }))
       .then((response) => {
@@ -74,7 +74,7 @@ export default function SingleVenueModal(props) {
 
   // request to get all shows at venue
   const getAllShows = () => {
-    axios.get(`${AXIOS_URL}/venues/${venue}`)
+    axios.get(`https://dive-266016.appspot.com/venues/${venue.id}`)
       .then((response) => {
         setShows(() => response.data.shows);
       })
@@ -85,10 +85,10 @@ export default function SingleVenueModal(props) {
 
   // Request to see if a user is following the venue
   const getFollowInfo = () => {
-    axios.get(`${AXIOS_URL}/fans/${userInfo.id}/venues`)
+    axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/venues`)
       .then((response) => {
         if (response.data[0].venues) {
-          response.data[0].venues.map(venue => {
+          response.data[0].venues.map(singleVenue => {
             if (venue.id === singleVenue.id) {
               toggleFollowing(true);
             }
@@ -102,7 +102,7 @@ export default function SingleVenueModal(props) {
   
   // request to follow a venue
   const fanFollowVenue = () => {
-    axios.post(`${AXIOS_URL}/venues/${venue}/fans`, {
+    axios.post(`https://dive-266016.appspot.com/venues/${venue.id}/fans`, {
       id_fan: userInfo.id,
     })
       .then(() => toggleFollowing(true))
@@ -111,10 +111,10 @@ export default function SingleVenueModal(props) {
 
   // request to unfollow a venue
   const unfollowVenue = () => {
-    axios.delete(`${AXIOS_URL}/venues/${venue}/fans`, {
+    axios.delete(`https://dive-266016.appspot.com/venues/${venue.id}/fans`, {
       data: {
         id_fan: userInfo.id,
-        id_venue: venue,
+        id_venue: venue.id,
       }
     })
       .then(() => toggleFollowing(false))
@@ -122,6 +122,9 @@ export default function SingleVenueModal(props) {
   }
 
   useEffect(() => {
+    getAddressCoords();
+    getSingleVenue();
+    getFollowInfo();
     getAllShows();
       //CURRENT GEOLOCATION
       // navigator.geolocation.getCurrentPosition(position => {
@@ -159,9 +162,9 @@ export default function SingleVenueModal(props) {
             style={{ flex: 1 }}
           >
           <ScrollView style={{ marginTop: 70 }}>
-            <Text style={styles.headerText} key={singleVenue.id}>{singleVenue.name}</Text>
-            <Text style={styles.infoText}>{singleVenue.address}</Text>
-            <Text style={styles.infoText}>{singleVenue.city}, {singleVenue.state}{' '}{singleVenue.zip_code}</Text>
+            <Text style={styles.headerText} key={venue.id}>{venue.name}</Text>
+            <Text style={styles.infoText}>{venue.address}</Text>
+            <Text style={styles.infoText}>{venue.city}, {venue.state}{' '}{venue.zip_code}</Text>
             {/* map view for current venue */}
             <View style={{padding: 10}}>
             <MapView 
@@ -173,7 +176,7 @@ export default function SingleVenueModal(props) {
               <Marker 
               coordinate={venueLocation}
                 pinColor={'#59C3D1'}
-                title={`${singleVenue.name}`}
+                title={`${venue.name}`}
               />
             </MapView>
             </View>
@@ -185,7 +188,7 @@ export default function SingleVenueModal(props) {
                   style={styles.unfollowButtonContainer}
                   onPress={() => unfollowVenue()
                   //   {
-                  //   axios.delete(`${AXIOS_URL}/bands/${singleBand.id}/fans`, {
+                  //   axios.delete(`https://dive-266016.appspot.com/bands/${singleBand.id}/fans`, {
                   //     data: {
                   //       id_fan: userInfo.id,
                   //     }
@@ -214,7 +217,7 @@ export default function SingleVenueModal(props) {
             {/* shows header */}
             <Text style={styles.headerText}>Shows</Text>
             {/* cards for each upcoming show at the venue */}
-            {shows.map(show => {
+            {shows && shows.map(show => {
               return (
                 <Card
                   key={show.id}
@@ -223,7 +226,7 @@ export default function SingleVenueModal(props) {
                   borderRadius={10}
                   containerStyle={styles.card}
                 >
-                  <SingleShowModal show={show.id} showName={show.name} />
+                  <SingleShowModal show={show} />
                   <Text style={styles.cardText}>{show.date}</Text>
                   <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                   <Text style={styles.cardText}>{show.description}</Text>
@@ -243,12 +246,9 @@ export default function SingleVenueModal(props) {
         style={styles.signupContainer}
         onPress={() => {
           setModalVisible(true);
-          getFollowInfo();
-          getSingleVenue();
-          getAddressCoords();
         }}     
       >
-        <Text style={styles.cardTextVenueName}>{props.venueName}</Text>
+        <Text style={styles.cardTextVenueName}>{venue.name}</Text>
       </TouchableOpacity>
     </View>
   );

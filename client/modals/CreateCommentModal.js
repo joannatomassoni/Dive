@@ -55,7 +55,7 @@ export default function CreateCommentModal({ showId, userId, getShowComments }) 
               <TouchableOpacity
                 style={styles.loginContainer}
                 onPress={async () => {
-                  axios.post(`${AXIOS_URL}/shows/${showId}/comments`, {
+                  axios.post(`https://dive-266016.appspot.com/shows/${showId}/comments`, {
                     id_user: userId,
                     text: comment
                   })

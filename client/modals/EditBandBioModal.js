@@ -83,7 +83,7 @@ export default function EditBandBioModal({ getBandInfo }) {
   };
 
   const savePhoto = async () => {
-    await axios.patch(`${AXIOS_URL}/bands/${userInfo.id}/photo`, {
+    await axios.patch(`https://dive-266016.appspot.com/bands/${userInfo.id}/photo`, {
       bandPhoto: bandPhoto
     })
       .then(response => {
@@ -132,7 +132,7 @@ export default function EditBandBioModal({ getBandInfo }) {
                   color='#59C3D1'
                   size={37}
                   onPress={() => {
-                    axios.patch(`${AXIOS_URL}/users/${userInfo.id}/bio`, {
+                    axios.patch(`https://dive-266016.appspot.com/users/${userInfo.id}/bio`, {
                       bio: newBio,
                     })
                       .then(response => response)
@@ -157,7 +157,7 @@ export default function EditBandBioModal({ getBandInfo }) {
                   color='#59C3D1'
                   size={37}
                   onPress={() => {
-                    axios.patch(`${AXIOS_URL}/bands/${userInfo.id}/spotify`, {
+                    axios.patch(`https://dive-266016.appspot.com/bands/${userInfo.id}/spotify`, {
                       link_spotify: spotifyLink,
                     })
                       .then(response => response)
@@ -182,7 +182,7 @@ export default function EditBandBioModal({ getBandInfo }) {
                   color='#59C3D1'
                   size={37}
                   onPress={() => {
-                    axios.patch(`${AXIOS_URL}/bands/${userInfo.id}/fb`, {
+                    axios.patch(`https://dive-266016.appspot.com/bands/${userInfo.id}/fb`, {
                       link_facebook: facebookLink,
                     })
                       .then(response => response)
@@ -207,7 +207,7 @@ export default function EditBandBioModal({ getBandInfo }) {
                   color='#59C3D1'
                   size={37}
                   onPress={() => {
-                    axios.patch(`${AXIOS_URL}/bands/${userInfo.id}/insta`, {
+                    axios.patch(`https://dive-266016.appspot.com/bands/${userInfo.id}/insta`, {
                       link_instagram: instagramLink,
                     })
                       .then(response => response)
