@@ -34,7 +34,7 @@ export default function SingleShowModal(props) {
 
   //request to get all comments for specific show
   const getShowComments = () => {
-     axios.get(`https://dive-266016.appspot.com/shows/${show.id}/comments`)
+    axios.get(`https://dive-266016.appspot.com/shows/${show.id}/comments`)
       .then((response) => {
         setComments(() => response.data.reverse())
       })
@@ -42,10 +42,9 @@ export default function SingleShowModal(props) {
         console.log(err);
       })
   }
-
   //request to get user's rsvp info
   const getRsvpInfo = () => {
-     axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/rsvps`)
+    axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/rsvps`)
       .then((response) => {
         response.data.map((rsvp) => {
           if (show.id === rsvp.id) {
@@ -59,7 +58,7 @@ export default function SingleShowModal(props) {
   }
   //request to add rsvp
   const addRsvp = () => {
-      axios.post(`https://dive-266016.appspot.com/shows/rsvps`, {
+    axios.post(`https://dive-266016.appspot.com/shows/rsvps`, {
       id_fan: userInfo.id,
       id_show: show.id,
     })
@@ -69,7 +68,7 @@ export default function SingleShowModal(props) {
   }
   //request to remove rsvp
   const removeRsvp = () => {
-     axios.delete(`https://dive-266016.appspot.com/shows/rsvps`, {
+    axios.delete(`https://dive-266016.appspot.com/shows/rsvps`, {
       data: {
         id_fan: userInfo.id,
         id_show: show.id,
@@ -133,101 +132,112 @@ export default function SingleShowModal(props) {
             colors={['#38404C', '#111']}
             style={{ flex: 1 }}
           >
-          <ScrollView style={{ marginTop: 70 }}>
-            <Text style={styles.headerText} key={show.id}>{show.name}</Text>
-            {/* show flyer */}
-            {show.flyer ?
-              <Image
-                style={{ width: 400, height: 400, marginLeft: 5 }}
-                source={{ uri: show.flyer }}
-              />
-              : null}
-            {/* additional text */}
-              <View>
-                <Text style={styles.infoText}>{Moment(show.dateTime).format('ll')}</Text>
-                <Text style={styles.infoText}>{Moment(show.dateTime).format('LT')}</Text>
-                {venue ? 
-                <Text style={styles.infoText}>{venue.name}</Text>
+            <ScrollView style={{ marginTop: 70 }}>
+              <Text style={styles.headerText} key={show.id}>{show.name}</Text>
+              {/* show flyer */}
+              {show.flyer ?
+                <Image
+                  style={{ width: 400, height: 400, marginLeft: 5 }}
+                  source={{ uri: show.flyer }}
+                />
                 : null}
-                <Text style={styles.infoText}>{show.description}</Text>
-              </View>
-            {/* list of all additional bands playing in current show */}
-            {bands && bands.map(band => {
-              return (
-                <View style={styles.bandModal}>
-                  <SingleBandModal band={band} />
-                </View> 
-              )
-            })}
-            <View style={{
-              flexDirection: 'row',
-              height: 50,
-              justifyContent: 'center',
-              marginTop: 10
-            }}>
-              {/* add to calendar button */}
-              <TouchableOpacity
-                style={styles.buttonContainer}
-                onPress={async () => {
-                  try {
-                    const eventId = await Calendar.createEventAsync(userInfo.calID, details);
-                    console.log('added event');
-                  }
-                  catch (error) {
-                    console.log('Error', error);
-                  }
-                }}
-              >
-                <Text style={styles.signupButtonText}>Add To Calendar</Text>
-              </TouchableOpacity>
-              {/* button to rsvp to specific (shows when signed in) */}
-              {userInfo.signedIn ?
-                //if already rsvp'd, show button to cancel rvp
-                (rsvp ? <TouchableOpacity
-                  style={styles.cancelButtonContainer}
-                  onPress={() => {
-                    removeRsvp();
+              {/* additional text */}
+              {venue ?
+                <View>
+                  <Text style={styles.infoText}>{Moment(show.dateTime).format('ll')}</Text>
+                  <Text style={styles.infoText}>{Moment(show.dateTime).format('LT')}</Text>
+                  <Text style={styles.infoText}>{venue.name}</Text>
+                  <Text style={styles.infoText}>{show.description}</Text>
+                </View>
+                : null}
+              {/* list of all additional bands playing in current show */}
+              {bands && bands.map(band => {
+                return (
+                  <View style={styles.bandModal}>
+                    <SingleBandModal getAllBands={getAllBands} name={band.name} bandId={band.id} />
+                  </View>
+                )
+              })}
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: 10,
+                marginBottom: 10
+              }}>
+                {/* add to calendar button */}
+                <TouchableOpacity
+                  style={styles.buttonContainer}
+                  onPress={async () => {
+                    try {
+                      const eventId = await Calendar.createEventAsync(userInfo.calID, details);
+                      console.log('added event');
+                    }
+                    catch (error) {
+                      console.log('Error', error);
+                    }
                   }}
                 >
-                  <Text style={styles.signupButtonText}>Cancel RSVP</Text>
+                  <Text style={styles.signupButtonText}>Add To Calendar</Text>
                 </TouchableOpacity>
-                  //if not rsvp'd, show rsvp button
-                  : <TouchableOpacity
-                    style={styles.buttonContainer}
+                {/* button to rsvp to specific (shows when signed in) */}
+                {userInfo.signedIn ?
+                  //if already rsvp'd, show button to cancel rvp
+                  (rsvp ? <TouchableOpacity
+                    style={styles.cancelButtonContainer}
                     onPress={() => {
-                      addRsvp();
+                      removeRsvp();
                     }}
                   >
-                    <Text style={styles.signupButtonText}>RSVP</Text>
-                  </TouchableOpacity>)
+                    <Text style={styles.signupButtonText}>Add To Calendar</Text>
+                  </TouchableOpacity>
+                {/* button to rsvp to specific (shows when signed in) */}
+                {userInfo.signedIn ?
+                  //if already rsvp'd, show button to cancel rvp
+                  (rsvp ? <TouchableOpacity
+                    style={styles.cancelButtonContainer}
+                    onPress={() => {
+                      removeRsvp();
+                    }}
+                  >
+                    <Text style={styles.signupButtonText}>Cancel RSVP</Text>
+                  </TouchableOpacity>
+                    //if not rsvp'd, show rsvp button
+                    : <TouchableOpacity
+                      style={styles.buttonContainer}
+                      onPress={() => {
+                        addRsvp();
+                      }}
+                    >
+                      <Text style={styles.signupButtonText}>RSVP</Text>
+                    </TouchableOpacity>)
+                  : null}
+              </View>
+              {/* button to create a new comment (shows when signed in) */}
+              {userInfo.signedIn ?
+                <CreateCommentModal
+                  userId={userInfo.id}
+                  showId={show.id}
+                  getShowComments={getShowComments}
+                />
                 : null}
-            </View>
-            {/* button to create a new comment (shows when signed in) */}
-            {userInfo.signedIn ?
-              <CreateCommentModal
-                userId={userInfo.id}
-                showId={show.id}
-                getShowComments={getShowComments}
-              />
-              : null}
-            {/* cards to hold comments */}
-            {comments.map(comment => {
-              return (
-                <Card
-                  style={styles.card}
-                  key={comment.id}
-                  backgroundColor='#111'
-                  padding={10}
-                  borderRadius={5}
-                  containerStyle={styles.card}
-                >
-                  <Text style={styles.cardTextUsername} key={comment.user.id}>{comment.user.nickname}</Text>
-                  <Text style={styles.cardText}>{comment.text}</Text>
-                  <Text style={styles.cardTextTime}>{Moment(comment.createdAt).fromNow()}</Text>
-                </Card>
-              )
-            })}
-          </ScrollView>
+              {/* cards to hold comments */}
+              {comments.map(comment => {
+                return (
+                  <Card
+                    style={styles.card}
+                    key={comment.id}
+                    backgroundColor='#111'
+                    padding={10}
+                    borderRadius={5}
+                    containerStyle={styles.card}
+                  >
+                    <Text style={styles.cardTextUsername} key={comment.user.id}>{comment.user.nickname}</Text>
+                    <Text style={styles.cardText}>{comment.text}</Text>
+                    <Text style={styles.cardTextTime}>{Moment(comment.createdAt).fromNow()}</Text>
+                  </Card>
+                )
+              })}
+            </ScrollView>
           </LinearGradient>
         </View>
       </Modal>
@@ -253,9 +263,10 @@ const styles = StyleSheet.create({
   bandModal: {
     fontSize: 20,
     color: '#fff',
-    paddingLeft: 290,
+    alignSelf: 'flex-end',
+    paddingRight: 20,
     paddingBottom: 5,
-    
+
   },
   headerText: {
     fontSize: 45,

@@ -6,7 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
-  Image
+  Image,
+  ImageBackground
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -110,12 +111,21 @@ export default function SingleBandModal(props) {
           <ScrollView style={{ marginTop: 70 }}>
             <Text style={styles.headerText} key={band.id}>{band.nickname}</Text>
             {/* band photo */}
-            {band.bandPhoto ? 
-              <Image
-                style={{ width: 420, height: 200 }}
-                source={{ uri: band.bandPhoto }}
-              />
-            : null}
+              {band.bandPhoto ?
+                <View style={{ marginBottom: -75 }}>
+                  <ImageBackground
+                    style={{ width: 415, height: 415, alignSelf: 'center', }}
+                    source={{ uri: band.bandPhoto }}
+                  >
+                    <LinearGradient
+                      colors={['transparent', 'rgba(0,0,0,0.3)', '#000']}
+                      style={{ width: 415, height: 415, alignSelf: 'center', }}
+                    >
+                    </LinearGradient>
+                  </ImageBackground>
+                </View>
+                : null}
+            <Text style={styles.infoText}>{band.bio}</Text>
             {/* social media links */}
             <View style={styles.flexRowRight}>
               <SpotifyButton link={band.link_spotify} />

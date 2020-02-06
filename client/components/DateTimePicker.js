@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Text
 } from 'react-native';
-import moment from 'moment';
+import Moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class DatePicker extends Component {
@@ -15,6 +15,7 @@ export default class DatePicker extends Component {
       date: new Date(),
       mode: 'datetime',
       show: false,
+      selected: false
     }
   }
   //set date on each selector change
@@ -34,12 +35,13 @@ export default class DatePicker extends Component {
   hide = () => {
     this.setState({
       show: false,
+      selected: true
     });
   }
 
   
   render() {
-    const { show, date, mode } = this.state;
+    const { show, date, mode, selected } = this.state;
     return (
       <View>
         <View>
@@ -67,12 +69,18 @@ export default class DatePicker extends Component {
             </TouchableOpacity>
           </View>
           // open date selector
-          : <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={this.show}
-          >
-            <Text style={styles.buttonText}>Select Date</Text>
-          </TouchableOpacity>
+          : <View>
+              {selected && <Text style={styles.dateText}>
+                {Moment(this.state.date).format('MMM Do YYYY, h:mm')}
+              </Text>}
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={this.show}
+              >
+                <Text style={styles.buttonText}>Select Date</Text>
+              </TouchableOpacity>
+              
+            </View>
         }
       </View>
     );
@@ -92,10 +100,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: 200,
     alignSelf: 'center',
-    marginBottom: 15
+    marginBottom: 15,
   },
   buttonText: {
     textAlign: 'center',
     fontWeight: '700',
   },
+  dateText: { 
+    color: '#fff', 
+    fontWeight: 'bold' ,
+    alignSelf: 'center',
+    marginBottom: 15,
+    marginTop: 5,
+    fontSize: 20
+  }
 })
