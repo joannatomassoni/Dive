@@ -168,38 +168,6 @@ export default function Hub(props) {
                   <Text style={styles.subText}>Upcoming Gigs</Text>
                   : null
                 }
-            </Text>
-          </View>
-          <Text style={styles.infoText}>
-            {hubInfo.bio}
-          </Text>
-          {/* Social Media Buttons */}
-          <View style={styles.flexRowRight}>
-            {/* Only show spotify link if user is a band */}
-            {userInfo.userType === 'band' ?
-              <SpotifyButton link={hubInfo.link_spotify} />
-              : null}
-            <InstagramButton link={hubInfo.link_instagram} />
-            <FacebookButton link={hubInfo.link_facebook} />
-          </View>
-          <View style={{
-            flexDirection: 'row',
-            height: 50,
-            justifyContent: 'center',
-          }}>
-            {/* Button to open create show modal */}
-            <EditBandBioModal />
-            {/* Button to open create show modal */}
-            {userInfo.userType === 'band' ? <CreateShowModal getBandsShows={getBandsShows} /> : null}
-          </View>
-          {/* Cards for all a bands upcoming shows */}
-          <View>
-            {userInfo.userType === 'band' ?
-              <View>
-                {shows.length ?
-                  <Text style={styles.subText}>Upcoming Gigs</Text>
-                  : null
-                }
                 {shows && shows.map(show => {
                   const bandNames = show.bands.map(band => band.name);
                   return (
@@ -226,12 +194,6 @@ export default function Hub(props) {
               </View>
               : null}
           </View>
-          {/* <View style={styles.container}>
-          <Image
-            source={dbPhoto}
-            style={styles.thumbnail}
-          />
-        </View> */}
           {/* Cards for shows the user has RSVPd to*/}
           <View>
             {fanShows.length ?
@@ -281,13 +243,10 @@ export default function Hub(props) {
           < View >
             {followed.length ?
               <Text style={styles.subText}>Bands You Follow</Text>
-              : null
-            }
-            {
-              followed && followed.map(band => {
+              : null}
+            {followed && followed.map(band => {
                 return (
                   <Card
-                    // title={band.name}
                     key={band.id}
                     style={styles.card}
                     backgroundColor='#111'
@@ -296,7 +255,6 @@ export default function Hub(props) {
                     containerStyle={styles.card}
                   >
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                      {/* <View> */}
                       <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
                     </View>
                     {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
@@ -306,13 +264,8 @@ export default function Hub(props) {
               })
             }
           </View>
-          {/* <View> */}
           <PreviousRSVPShows userId={userInfo.id} />
-          {/* </View> */}
-          {/* <View> */}
-
-          <PreviousBandShows userID={userInfo.id} />
-          {/* </View> */}
+          {/* <PreviousBandShows userID={userInfo.id} /> */}
         </ScrollView>
       </LinearGradient>
     </View >
@@ -411,4 +364,3 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
 })
-
