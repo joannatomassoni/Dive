@@ -294,7 +294,7 @@ const removeBandGenre = async (req, res) => {
 }
 
 // get upcoming band shows
-const getBandShows = async (req, res) => {
+const getBandUpcomingGigs = async (req, res) => {
     try {
         const { id } = req.params;
         const shows = await User.findOne({
@@ -304,6 +304,7 @@ const getBandShows = async (req, res) => {
             include: [
                 {
                     model: Show,
+                    where: { dateTime: { [Op.gte]: moment().toDate() } },
                     include: [
                         { model: Venue },
                         { model: User, as: 'bands' },
@@ -318,6 +319,35 @@ const getBandShows = async (req, res) => {
         res.sendStatus(400);
     }
 }
+
+// get band's past shows
+const getBandPastGigs = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const shows = await User.findOne({
+            where: {
+                id
+            },
+            include: [
+                {
+                    model: Show,
+                    where: { dateTime: { [Op.lt]: moment().toDate() } },
+                    include: [
+                        { model: Venue },
+                        { model: User, as: 'bands' },
+                    ]
+                }
+            ]
+        })
+        // shows = shows.filter((show) => show.dateTime < new Date())
+        res.status(200).send(shows);
+    }
+    catch (err) {
+        console.log(err);
+        res.sendStatus(400);
+    }
+}
+
 
 // allow a fan follow a band
 const followBand = async (req, res) => {
@@ -418,7 +448,8 @@ module.exports = {
     getAllBands,
     getBandFollowers,
     getBandGenres,
-    getBandShows,
+    getBandUpcomingGigs,
+    getBandPastGigs,
     getFanBands,
     getSingleUser,
     removeBandGenre,

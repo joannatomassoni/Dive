@@ -45,8 +45,6 @@ router.patch('/users/:id/bio', ctrl.updateUserBio)
 // Delete user
 router.delete('/users/:id', ctrl.deleteUser)
 
-router.get('/bands/:id/shows', ctrl.getBandShows)
-
 /**
  * Search button routes
  */
@@ -83,6 +81,12 @@ router.get('/bands/:id/genres', ctrl.getBandGenres);
 // delete a genre from a band
 // req.body = { genreName }
 router.delete('/bands/:id/genres', ctrl.removeBandGenre)
+
+// get band's upcoming gigs
+router.get('/bands/:id/shows', ctrl.getBandUpcomingGigs)
+
+// get all past gigs for a bad
+router.get('/bands/:id/pastgigs', ctrl.getBandPastGigs)
 
 // add fan for band
 // req.body = { id_fan }
@@ -154,7 +158,6 @@ router.get('/shows/:id', ctrl.getSingleShow)
 
 
 
-
 /**
  * RSVPs (shows/fans)
  */
@@ -169,8 +172,8 @@ router.delete('/shows/rsvps', ctrl.removeFanRSVP)
 // get fans who have rsvpd to a given show. 
 router.get('/shows/:id/rsvps', ctrl.getShowRSVPs)
 
-// get shows that a given fan has rsvpd to. 
-router.get('/fans/:id/rsvps', ctrl.getFanRSVPs)
+// get upcoming shows that a user has rsvpd to. 
+router.get('/fans/:id/rsvps', ctrl.getFanUpcomingRSVPs)
 
 //get past shows a user has attended
 router.get('/shows/:id/oldrsvps', ctrl.getFansPreviousShows)

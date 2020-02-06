@@ -46,7 +46,7 @@ export default function Bands(props) {
       <ScrollView style={{ marginTop: 70 }}>
         <Text style={styles.headerText}>Bands</Text>
         {bands && bands.map(band => {
-          console.log(band.nickname);
+          console.log(band);
           return (
             <Card
               key={band.id}
@@ -57,7 +57,7 @@ export default function Bands(props) {
             >
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View>
-                  <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
+                  <SingleBandModal band={band} />
                   <Text style={styles.cardText}>{band.bio}</Text>
                 </View>
                 <View>

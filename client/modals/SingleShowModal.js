@@ -32,10 +32,11 @@ export default function SingleShowModal(props) {
   const venue = show.venue;
   const bands = show.bands;
 
-  //dummy function so SingleBandModal doesn't throw an error
+  // dummy function so singleshowmoal doesn't throw error
   const getAllBands = () => {
     console.log('');
   }
+
   //request to get all comments for specific show
   const getShowComments = () => {
     axios.get(`https://dive-266016.appspot.com/shows/${show.id}/comments`)
@@ -158,7 +159,7 @@ export default function SingleShowModal(props) {
               {bands && bands.map(band => {
                 return (
                   <View style={styles.bandModal}>
-                    <SingleBandModal getAllBands={getAllBands} name={band.name} bandId={band.id} />
+                    <SingleBandModal band={band} />
                   </View>
                 )
               })}
@@ -184,10 +185,10 @@ export default function SingleShowModal(props) {
                   <Text style={styles.signupButtonText}>Add To Calendar</Text>
                 </TouchableOpacity>
                 {/* button to rsvp to specific (shows when signed in) */}
-                
                 {userInfo.signedIn ?
+
                   //if already rsvp'd, show button to cancel rvp
-                  (rsvp ? <TouchableOpacity
+                  rsvp ? <TouchableOpacity
                     style={styles.cancelButtonContainer}
                     onPress={() => {
                       removeRsvp();
@@ -203,7 +204,7 @@ export default function SingleShowModal(props) {
                       }}
                     >
                       <Text style={styles.signupButtonText}>RSVP</Text>
-                    </TouchableOpacity>)
+                    </TouchableOpacity>
                   : null}
               </View>
               {/* button to create a new comment (shows when signed in) */}
@@ -336,4 +337,3 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   }
 })
-

@@ -122,7 +122,7 @@ export default function Hub(props) {
         style={{ flex: 1 }}
       >
         <ScrollView style={{ marginTop: 70 }}>
-          <Text style={styles.text}>{hubInfo.name}</Text>
+          <Text style={styles.text}>{hubInfo.nickname}</Text>
           {/* image container */}
           {hubInfo.bandPhoto ?
             <View style={{ marginBottom: -75 }}>
@@ -245,23 +245,23 @@ export default function Hub(props) {
               <Text style={styles.subText}>Bands You Follow</Text>
               : null}
             {followed && followed.map(band => {
-                return (
-                  <Card
-                    key={band.id}
-                    style={styles.card}
-                    backgroundColor='#111'
-                    padding={10}
-                    borderRadius={10}
-                    containerStyle={styles.card}
-                  >
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                      <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
-                    </View>
-                    {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+              return (
+                <Card
+                  key={band.id}
+                  style={styles.card}
+                  backgroundColor='#111'
+                  padding={10}
+                  borderRadius={10}
+                  containerStyle={styles.card}
+                >
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
+                  </View>
+                  {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
                     <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
-                  </Card>
-                )
-              })
+                </Card>
+              )
+            })
             }
           </View>
           <PreviousRSVPShows userId={userInfo.id} />

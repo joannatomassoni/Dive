@@ -25,20 +25,17 @@ export default function SingleBandModal(props) {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //set username to text in username textInput
-  const [showTitle, setShowTitle] = useState('');
-  const [singleBand, setBand] = useState([]);
+  const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
   const [isFollowing, toggleFollowing] = useState(false);
-  const [userInfo, setUserInfo] = useContext(SignedInContext);
   const getAllBands = props.getAllBands;
-  let band = props.name;
-  let bandId = props.bandId;
-
+  const band = props.band;
+ 
   // request to see if user is following band
   const isUserFollowing = () => {
     axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/bands`)
       .then((response) => {
-        response.data.map(band => {
+        response.data.map(singleBand => {
           if (band.id === singleBand.id) {
             toggleFollowing(true);
           }
@@ -50,28 +47,17 @@ export default function SingleBandModal(props) {
   };
   // request to get all shows for specific band if the user is following the band
   const allBandShows = () => {
-    axios.get(`https://dive-266016.appspot.com/bands/${bandId}/shows`)
+    axios.get(`https://dive-266016.appspot.com/bands/${band.id}/shows`)
       .then((response) => {
-        setBand(() => response.data);
         setShows(() => response.data.shows);
       })
       .catch((err) => {
         console.log(err);
       })
   };
-  // get all single band info
-  const getSingleBandInfo = () => {
-    axios.get(`https://dive-266016.appspot.com/users/${band}`)
-      .then((response) => {
-        setBand(response.data);
-      })
-      .catch((err) => {
-        console.log("error getting single band from db", err);
-      })
-  };
   // request for user to follow band
   const followBand = () => {
-    axios.post(`https://dive-266016.appspot.com/bands/${bandId}/fans`, {
+    axios.post(`https://dive-266016.appspot.com/bands/${band.id}/fans`, {
       id_fan: userInfo.id
     })
       .then(() => {
@@ -81,7 +67,7 @@ export default function SingleBandModal(props) {
   };
   // request for user to unfollow band
   const unfollowBand = () => {
-    axios.delete(`https://dive-266016.appspot.com/bands/${singleBand.id}/fans`, {
+    axios.delete(`https://dive-266016.appspot.com/bands/${band.id}/fans`, {
       data: {
         id_fan: userInfo.id,
       }
@@ -109,7 +95,6 @@ export default function SingleBandModal(props) {
           {/* back button */}
           <Ionicons size={64} style={styles.menuIconContainer} 
             onPress={() => { 
-              getAllBands();
               setModalVisible(false) 
             }}> 
             <Ionicons
@@ -117,7 +102,6 @@ export default function SingleBandModal(props) {
               color='#59C3D1'
               size={32}
               style={styles.menuIcon}
-              // onPress={() => { setModalVisible(false) }}
             />
           </Ionicons>
           <LinearGradient
@@ -125,13 +109,13 @@ export default function SingleBandModal(props) {
             style={{ flex: 1 }}
           >
           <ScrollView style={{ marginTop: 70 }}>
-            <Text style={styles.headerText} key={singleBand.id}>{band}</Text>
+            <Text style={styles.headerText} key={band.id}>{band.nickname}</Text>
             {/* band photo */}
-              {singleBand.bandPhoto ?
+              {band.bandPhoto ?
                 <View style={{ marginBottom: -75 }}>
                   <ImageBackground
                     style={{ width: 415, height: 415, alignSelf: 'center', }}
-                    source={{ uri: singleBand.bandPhoto }}
+                    source={{ uri: band.bandPhoto }}
                   >
                     <LinearGradient
                       colors={['transparent', 'rgba(0,0,0,0.3)', '#000']}
@@ -141,13 +125,15 @@ export default function SingleBandModal(props) {
                   </ImageBackground>
                 </View>
                 : null}
-            <Text style={styles.infoText}>{singleBand.bio}</Text>
+            <Text style={styles.infoText}>{band.bio}</Text>
             {/* social media links */}
             <View style={styles.flexRowRight}>
-              <SpotifyButton link={singleBand.link_spotify} />
-              <InstagramButton link={singleBand.link_instagram} />
-              <FacebookButton link={singleBand.link_facebook} />
+              <SpotifyButton link={band.link_spotify} />
+              <InstagramButton link={band.link_instagram} />
+              <FacebookButton link={band.link_facebook} />
             </View>
+
+            <Text style={styles.infoText}>{band.bio}</Text>
             {/* if user is signed in show button to follor band */}
             {userInfo.signedIn ?
               (isFollowing ?
@@ -214,10 +200,9 @@ export default function SingleBandModal(props) {
         style={styles.signupContainer}
         onPress={() => {
           setModalVisible(true);
-          getSingleBandInfo();
         }}
       >
-        <Text style={styles.cardHeaderText}>{singleBand.nickname}</Text>
+        <Text style={styles.cardHeaderText}>{band.nickname}</Text>
       </TouchableOpacity >
     </View >
   );
