@@ -113,7 +113,8 @@ export default function Hub(props) {
       <ScrollView style={{ marginTop: 70 }}>
         <Text style={styles.text}>{hubInfo.name}</Text>
           {/* image container */}
-        <View style={{paddingBottom: -40}}>
+        {hubInfo.bandPhoto ?
+        <View style={{marginBottom: -75}}>
           <ImageBackground
               style={{ width: 415, height: 415, alignSelf: 'center', }}
             source={{ uri: hubInfo.bandPhoto }}
@@ -125,6 +126,7 @@ export default function Hub(props) {
             </LinearGradient>
           </ImageBackground>
         </View>
+        : null }
         <Text style={styles.infoText}>
           {hubInfo.bio}
         </Text>
@@ -360,7 +362,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     paddingRight: 20,
     paddingBottom: 5,
-    marginTop: -65
   },
 })
 

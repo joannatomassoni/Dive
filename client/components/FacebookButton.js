@@ -7,6 +7,7 @@ export default function FacebookButton ({ link }) {
     <Entypo
       name='facebook'
       color='#59C3D1'
+      style={{ padding: 5 }}
       size={32}
       onPress={() => {
         Linking.openURL(`${link}`);
