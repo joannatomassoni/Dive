@@ -50,7 +50,7 @@ export default function Venues(props) {
               borderRadius={10}
               containerStyle={styles.card}
             >
-              <SingleVenueModal venueID={venue.id} venueName={venue.name}/>
+              <SingleVenueModal venue={venue} venueID={venue.id} venueName={venue.name}/>
               <Text style={styles.cardText}>{venue.address}</Text>
               <Text style={styles.cardText}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
             </Card>
