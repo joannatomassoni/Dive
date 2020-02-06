@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 110,
-    marginTop: 140,
+    marginTop: 160,
     color: '#59C3D1',
     fontWeight: 'bold',
     fontFamily: 'AvenirNext-Bold',

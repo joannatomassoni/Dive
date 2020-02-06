@@ -101,17 +101,6 @@ export default function SingleVenueModal(props) {
   useEffect(() => {
     getAddressCoords();
     getFollowInfo();
-
-      //CURRENT GEOLOCATION
-      // navigator.geolocation.getCurrentPosition(position => {
-      //   setCurrentLocation({
-      //     latitude: position.coords.latitude,
-      //     longitude: position.coords.longitude,
-      //     error: null,
-      //   })
-      // }, error => setCurrentLocation({error: error.message}),
-      // { enableHighAccuracy: true, timeout: 20000, maximumAge: 2000 }
-      // )
   }, [])
 
   return (
@@ -145,7 +134,8 @@ export default function SingleVenueModal(props) {
             <View style={{padding: 10}}>
             <MapView 
             // use line below for google maps
-            //provider={PROVIDER_GOOGLE}
+            // provider={PROVIDER_GOOGLE}
+            showsUserLocation={true}
             style={styles.mapStyle}
             region={venueLocation}
             >
@@ -182,6 +172,7 @@ export default function SingleVenueModal(props) {
             <Text style={styles.headerText}>Shows</Text>
             {/* cards for each upcoming show at the venue */}
             {venue.shows && venue.shows.map(show => {
+              console.log(show);
               return (
                 <Card
                   key={show.id}
@@ -193,10 +184,13 @@ export default function SingleVenueModal(props) {
                   <SingleShowModal show={show} getRSVPS={getRSVPS}/>
                   <Text style={styles.cardText}>{show.date}</Text>
                   <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
-                  <Text style={styles.cardText}>{show.description}</Text>
+                  {show.description ? 
+                    <Text style={styles.cardText}>{show.description}</Text>
+                    : null
+                  }
                   {/* list for each additional band in each show */}
                   {show.bands && show.bands.map(band => {
-                    return <Text style={styles.cardBandText}>{band.name}</Text>
+                    return <Text style={styles.cardBandText}>{band.nickname}</Text>
                   })}
                 </Card>
               )

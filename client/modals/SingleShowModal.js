@@ -157,14 +157,14 @@ export default function SingleShowModal(props) {
                 />
                 : null}
               {/* additional text */}
-              {venue ?
                 <View>
                   <Text style={styles.infoText}>{Moment(show.dateTime).format('ll')}</Text>
                   <Text style={styles.infoText}>{Moment(show.dateTime).format('LT')}</Text>
+              {venue ?
                   <Text style={styles.infoText}>{venue.name}</Text>
+              : null}
                   <Text style={styles.infoText}>{show.description}</Text>
                 </View>
-                : null}
               {/* list of all additional bands playing in current show */}
               {bands && bands.map(band => {
                 return (
@@ -180,7 +180,7 @@ export default function SingleShowModal(props) {
                 marginBottom: 10
               }}>
                 {/* add to calendar button */}
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={styles.buttonContainer}
                   onPress={async () => {
                     try {
@@ -193,7 +193,7 @@ export default function SingleShowModal(props) {
                   }}
                 >
                   <Text style={styles.signupButtonText}>Add To Calendar</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 {/* button to rsvp to specific (shows when signed in) */}
                 {userInfo.signedIn ?
 
