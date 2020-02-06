@@ -259,13 +259,19 @@ const getFanUpcomingRSVPs = async (req, res) => {
         const rsvps = await RSVP.findAll({
             where: {
                 id_fan: id
-            }
+            },
         })
         Promise.all(rsvps.map(async (rsvp) => {
             const show = await Show.findOne({
                 where: {
-                    id: rsvp.id_show
-                }
+                    id: rsvp.id_show,
+                },
+                include: [
+                    { model: User, through: ShowBand, as: 'bands', attributes: ['id', 'name'] },
+                    { model: Venue, attributes: ['id', 'name'] },
+                    { model: User, as: 'Fans', attributes: ['id', 'name'] },
+                    { model: Comment }
+                ]
             })
             return show;
         })).then((data) => {
