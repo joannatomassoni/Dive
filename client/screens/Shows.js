@@ -14,19 +14,12 @@ import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 import SingleShowModal from '../modals/SingleShowModal'
 import Moment from 'moment';
-import { AXIOS_URL } from 'react-native-dotenv';
-import * as Location from 'expo-location';
-// import * as Permissions from 'expo-permissions';
-// import MapView from 'react-native-maps';
-// import ShowsNearBy from '../modals/ShowsNearBy';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Shows(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
-  // const [location, setLocation] = useState({});
-
   // const [flyer, setFlyer] = useState("");
 
   //request to get all shows
@@ -44,25 +37,11 @@ export default function Shows(props) {
     console.log('');
   }
 
-  // const getLocationAsync = async () => {
-  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
-  //   if (status !== 'granted') {
-  //     console.log("can't get location");
-  //     // this.setState({
-  //     //   errorMessage: 'Permission to access location was denied',
-  //     // });
-  //   }
-
-  //   let locationObj = await Location.getCurrentPositionAsync({});
-  //   locationObj = JSON.stringify(locationObj);
-  //   setLocation(location);
-  // };
-
-
   useEffect(() => {
     getAllShows();
-    // getLocationAsync();
   }, [])
+
+  console.log(shows);
 
   return (
     <View style={styles.container}>

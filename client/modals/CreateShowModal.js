@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ScrollView,
+  Alert
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#2D323A',
     padding: 20,
-    paddingTop: 100
+    paddingTop: 40
   },
   container: {
     flex: 1,
@@ -287,7 +288,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: '#59C3D1',
     fontWeight: 'bold',
-    marginLeft: 75,
+    alignSelf: 'flex-end',
     marginBottom: 15
   },
   createShowContainer: {

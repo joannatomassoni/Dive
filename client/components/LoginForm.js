@@ -55,6 +55,7 @@ export default function LoginForm (props) {
       placeholder="username or email"
       placeholderTextColor="#75A4AD"
       returnKeyType="next"
+      color='black'
       onChangeText={setUsernameValue}
       keyboardType="email-address"
       style={styles.input} 
@@ -64,6 +65,7 @@ export default function LoginForm (props) {
       placeholder="password"
       placeholderTextColor="#75A4AD"
       returnKeyType="go"
+      color='black'
       secureTextEntry
       style={styles.input}
       />
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 10,
     borderRadius: 5,
-    marginHorizontal: 40,
+    marginHorizontal: 20,
     fontWeight: 'bold'
   },
   loginContainer: {

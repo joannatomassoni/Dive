@@ -40,7 +40,7 @@ export default function SingleShowModal(props) {
   const getFollowedBands = () => {
     console.log('');
   }
-  
+
   const getRSVPS = () => {
     console.log('');
   }
@@ -138,9 +138,10 @@ export default function SingleShowModal(props) {
               color='#59C3D1'
               size={32}
               style={styles.menuIcon}
-              onPress={() => { 
+              onPress={() => {
                 props.getRSVPS();
-                setModalVisible(false) }}
+                setModalVisible(false)
+              }}
             />
           </Ionicons>
           <LinearGradient
@@ -157,19 +158,19 @@ export default function SingleShowModal(props) {
                 />
                 : null}
               {/* additional text */}
-              {venue ?
-                <View>
-                  <Text style={styles.infoText}>{Moment(show.dateTime).format('ll')}</Text>
-                  <Text style={styles.infoText}>{Moment(show.dateTime).format('LT')}</Text>
+              <View>
+                <Text style={styles.infoText}>{Moment(show.dateTime).format('ll')}</Text>
+                <Text style={styles.infoText}>{Moment(show.dateTime).format('LT')}</Text>
+                {venue ?
                   <Text style={styles.infoText}>{venue.name}</Text>
-                  <Text style={styles.infoText}>{show.description}</Text>
-                </View>
-                : null}
+                  : null}
+                <Text style={styles.infoText}>{show.description}</Text>
+              </View>
               {/* list of all additional bands playing in current show */}
               {bands && bands.map(band => {
                 return (
                   <View style={styles.bandModal}>
-                  <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS}/>
+                    <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS} />
                   </View>
                 )
               })}
@@ -180,7 +181,7 @@ export default function SingleShowModal(props) {
                 marginBottom: 10
               }}>
                 {/* add to calendar button */}
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={styles.buttonContainer}
                   onPress={async () => {
                     try {
@@ -193,7 +194,7 @@ export default function SingleShowModal(props) {
                   }}
                 >
                   <Text style={styles.signupButtonText}>Add To Calendar</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 {/* button to rsvp to specific (shows when signed in) */}
                 {userInfo.signedIn ?
 
@@ -270,7 +271,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     alignSelf: 'flex-end',
     paddingRight: 20,
-    paddingBottom: 5,
+    // paddingBottom: 5,
 
   },
   headerText: {

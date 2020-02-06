@@ -16,35 +16,33 @@ import SingleShowModal from '../modals/SingleShowModal';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
-import MenuButton from '../components/MenuButton';
-import * as Permissions from 'expo-permissions';
-import Constants from 'expo-constants';
 import { AXIOS_URL } from 'react-native-dotenv';
 
 export default function PreviousBandShows(props) {
-  const [oldShows, setOldShows] = useState([]);
+  // const [oldShows, setOldShows] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
   // console.log("are we getting users id?", props.userInfo)
   //allows user to get shows they previously went to on button click
-  let userId = props.userID;
+  // let userId = props.userID;
+  let oldShows = props.oldShows.shows;
 
-  console.log("user id", userId);
+  console.log("props", oldShows);
 
-  const getPreviousBandShows = () => {
-    console.log("blablabal")
-    axios.get(`http://localhost:8080/shows/${userId}/oldShows`)
-      .then(response => {
-        console.log("getting old shows bands played", response.data);
-        setOldShows(response.data)
-      })
-      .catch(err => {
-        console.log("not getting older shows for previously played", err);
-      })
-  }
+  // const getPreviousBandShows = () => {
+  //   console.log("blablabal")
+  //   axios.get(`https://dive-266016.appspot.com/shows/${userId}/oldShows`)
+  //     .then(response => {
+  //       console.log("getting old shows bands played", response.data);
+  //       setOldShows(response.data[0])
+  //     })
+  //     .catch(err => {
+  //       console.log("not getting older shows for previously played", err);
+  //     })
+  // }
 
   useEffect(() => {
-    getPreviousBandShows();
+    // getPreviousBandShows();
   }, []);
 
 
@@ -72,7 +70,7 @@ export default function PreviousBandShows(props) {
               <View style={styles.title}>
                 <Text style={styles.text}>Previously Played Shows</Text>
                 {/* <Text style={styles.text}>Previous shows</Text> */}
-                {oldShows && oldShows[0].shows.map(show => {
+                {oldShows && oldShows.map(show => {
                   // band.shows.map(show => {
                   return (
                     <Card
@@ -84,16 +82,17 @@ export default function PreviousBandShows(props) {
                       containerStyle={styles.card}
                     // image={require('../images/pic2.jpg')}
                     >
-                      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                      {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
 
-                        {/* modal to display single show info */}
-                        {/* {/* <SingleShowModal show={show.shows.id} showName={show.shows.name} /> */}
-                        <Text style={styles.cardText}>{show.name}</Text>
-                        <Text style={styles.cardText}>{show.dateTime}</Text>
-                        <Text style={styles.cardText}>{show.date}</Text>
-                        <Text style={styles.cardText}>{show.description}</Text>
-                        {/* <EditShowModal /> */}
-                      </View>
+                      {/* modal to display single show info */}
+                      {/* {/* <SingleShowModal show={show.shows.id} showName={show.shows.name} /> */}
+                      <SingleShowModal show={show} />
+
+                      <Text style={styles.cardText}>{show.dateTime}</Text>
+                      <Text style={styles.cardText}>{show.date}</Text>
+                      <Text style={styles.cardText}>{show.description}</Text>
+                      {/* <EditShowModal /> */}
+                      {/* </View> */}
                     </Card>
                   )
                   // })
@@ -144,6 +143,12 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     justifyContent: 'center',
+  },
+  card: {
+    borderWidth: 0,
+    paddingBottom: 0,
+    backgroundColor: '#111',
+    paddingBottom: 10
   },
   cardText: {
     fontSize: 16,

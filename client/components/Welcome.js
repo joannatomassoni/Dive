@@ -46,10 +46,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   welcome: {
-    fontSize: 70,
+    fontSize: 65,
     color: '#59C3D1',
     fontWeight: 'bold',
-    marginTop: 380,
+    marginTop: 270,
     fontFamily: 'AvenirNext-Bold',
     textShadowOffset: {
       width: 2,

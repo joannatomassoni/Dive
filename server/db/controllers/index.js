@@ -106,4 +106,5 @@ module.exports = {
     updateVenue,
     createComment,
     getAllComments,
+    getFanUpcomingRSVPs
 }
