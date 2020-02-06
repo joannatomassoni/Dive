@@ -54,55 +54,55 @@ export default function PreviousBandShows(props) {
         visible={modalVisible}
       >
         {/* start of modal when showing */}
-        {/* <KeyboardAvoidingView behavior="padding" style={styles.container}> */}
-        <ScrollView style={{ marginTop: 20 }}>
-          {/* back button */}
-          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
-            <Ionicons
-              name='ios-arrow-back'
-              color='#59C3D1'
-              size={32}
-              style={styles.menuIcon}
-              onPress={() => { setModalVisible(false) }}
-            />
-          </Ionicons>
-          <View style={styles.container}>
-            <View style={styles.title}>
-              <Text style={styles.text}>Previously Played Shows</Text>
-              {/* <Text style={styles.text}>Previous shows</Text> */}
-              {oldShows && oldShows.map(show => {
-                // band.shows.map(show => {
-                return (
-                  <Card
-                    // key={show.shows.id}
-                    style={styles.card}
-                    backgroundColor='#111'
-                    padding={10}
-                    borderRadius={10}
-                    containerStyle={styles.card}
-                  // image={require('../images/pic2.jpg')}
-                  >
-                    {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+          <ScrollView style={{ marginTop: 20 }}>
+            {/* back button */}
+            <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
+              <Ionicons
+                name='ios-arrow-back'
+                color='#59C3D1'
+                size={32}
+                style={styles.menuIcon}
+                onPress={() => { setModalVisible(false) }}
+              />
+            </Ionicons>
+            <View style={styles.container}>
+              <View style={styles.title}>
+                <Text style={styles.text}>Previously Played Shows</Text>
+                {/* <Text style={styles.text}>Previous shows</Text> */}
+                {oldShows && oldShows.map(show => {
+                  // band.shows.map(show => {
+                  return (
+                    <Card
+                      // key={show.shows.id}
+                      style={styles.card}
+                      backgroundColor='#111'
+                      padding={10}
+                      borderRadius={10}
+                      containerStyle={styles.card}
+                    // image={require('../images/pic2.jpg')}
+                    >
+                      {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
 
-                    {/* modal to display single show info */}
-                    {/* {/* <SingleShowModal show={show.shows.id} showName={show.shows.name} /> */}
-                    <SingleShowModal show={show} />
+                      {/* modal to display single show info */}
+                      {/* {/* <SingleShowModal show={show.shows.id} showName={show.shows.name} /> */}
+                      <SingleShowModal show={show} />
 
-                    <Text style={styles.cardText}>{show.dateTime}</Text>
-                    <Text style={styles.cardText}>{show.date}</Text>
-                    <Text style={styles.cardText}>{show.description}</Text>
-                    {/* <EditShowModal /> */}
-                    {/* </View> */}
-                  </Card>
-                )
-                // })
-              })
-              }
-              {/* </View> */}
+                      <Text style={styles.cardText}>{show.dateTime}</Text>
+                      <Text style={styles.cardText}>{show.date}</Text>
+                      <Text style={styles.cardText}>{show.description}</Text>
+                      {/* <EditShowModal /> */}
+                      {/* </View> */}
+                    </Card>
+                  )
+                  // })
+                })
+                }
+                {/* </View> */}
+              </View>
             </View>
-          </View>
-        </ScrollView>
-        {/* </KeyboardAvoidingView> */}
+          </ScrollView>
+        </KeyboardAvoidingView>
 
       </Modal >
       {/* edit bio button when modal is hidden */}
