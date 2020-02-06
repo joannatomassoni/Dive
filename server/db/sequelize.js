@@ -41,17 +41,6 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
 });
 
 
-// const sequelize = new Sequelize('dive', 'root', 'dive', {
-//   dialect: 'mysql',
-//   host: '35.224.191.68',
-//   timestamps: false,
-//   pool: {
-//     max: 3,
-//     min: 0,
-//     idle: 10000
-//   },
-// });
-
 // instanstiate the models here
 const Type = TypeModel(sequelize, Sequelize);
 const BandGenre = BandGenreModel(sequelize, Sequelize);
@@ -148,6 +137,90 @@ sequelize.sync()
       city: "New Orleans",
       state: "LA",
       zip_code: "70117"
+    })
+    Venue.create({
+      name: "Saturn Bar",
+      address: "3067 St Claude Ave",
+      city: "New Orleans",
+      state: "LA",
+      zip_code: "70117"
+    })
+    Venue.create({
+      name: "The Mudlark Theatre",
+      address: "1200 Port St",
+      city: "New Orleans",
+      state: "LA",
+      zip_code: "70117"
+    })
+    Venue.create({
+      name: "Sidney's Saloon",
+      address: "1200 St Bernard Ave",
+      city: "New Orleans",
+      state: "LA",
+      zip_code: "70116"
+    })
+    Venue.create({
+      name: "The Goat",
+      address: "1301 St Bernard Ave",
+      city: "New Orleans",
+      state: "LA",
+      zip_code: "70116"
+    })
+    Venue.create({
+      name: "Poor Boys Bar",
+      address: "1328 St Bernard Ave",
+      city: "New Orleans",
+      state: "LA",
+      zip_code: "70116"
+    })
+    Venue.create({
+      name: "Santos",
+      address: "1135 Decatur St",
+      city: "New Orleans",
+      state: "LA",
+      zip_code: "70116"
+    })
+    Venue.create({
+      name: "The Starlight Lounge",
+      address: "817 St Louis St",
+      city: "New Orleans",
+      state: "LA",
+      zip_code: "70112"
+    })
+    Venue.create({
+      name: "One Eyed Jack's",
+      address: "615 Toulouse St",
+      city: "New Orleans",
+      state: "LA",
+      zip_code: "70130"
+    })
+    Venue.create({
+      name: "Circle Bar",
+      address: "1032 St Charles Ave",
+      city: "New Orleans",
+      state: "LA",
+      zip_code: "70130"
+    })
+    Venue.create({
+      name: "Gasa Gasa",
+      address: "4920 Freret St",
+      city: "New Orleans",
+      state: "LA",
+      zip_code: "70115"
+    })
+    Venue.create({
+      name: "Portside Lounge",
+      address: "3000 Dryades St",
+      city: "New Orleans",
+      state: "LA",
+      zip_code: "70115"
+    })
+    Venue.create({
+      name: "Banks St Bar",
+      address: "4401 Banks St",
+      city: "New Orleans",
+      state: "LA",
+      zip_code: "70119"
     })
     Genre.create({
       genreName: 'rock'

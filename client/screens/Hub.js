@@ -35,17 +35,7 @@ export default function Hub(props) {
   // const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
-
-
-  //request to get all bands from db
-  const getAllBands = () => {
-    axios.get(`https://dive-266016.appspot.com/bands`)
-      .then((response) => {
-        setBands(() => response.data);
-      })
-      .catch(err => console.log(err))
-  }
-
+  
   //gets band info
   const getBandInfo = async () => {
     await axios.get(`https://dive-266016.appspot.com/users/${userInfo.username}`)
@@ -167,9 +157,10 @@ export default function Hub(props) {
                 {shows.length ?
                   <Text style={styles.subText}>Upcoming Gigs</Text>
                   : null
-                }
-            </Text>
-          </View>
+                } 
+              </View>
+              : null
+            }
           <Text style={styles.infoText}>
             {hubInfo.bio}
           </Text>
@@ -231,13 +222,13 @@ export default function Hub(props) {
             source={dbPhoto}
             style={styles.thumbnail}
           />
-        </View> */}
           {/* Cards for shows the user has RSVPd to*/}
-          <View>
-            {fanShows.length ?
-              <Text style={styles.subText}>Your RSVP'd Shows</Text>
-              : null
-            }
+          </View>
+        <View>
+          {fanShows.length ? 
+          <Text style={styles.subText}>Upcoming RSVPs</Text>
+          : null
+          }
             {fanShows && fanShows.map(show => {
               return (
                 <Card
@@ -283,23 +274,23 @@ export default function Hub(props) {
               <Text style={styles.subText}>Bands You Follow</Text>
               : null
             }
-            {
-              followed && followed.map(band => {
-                return (
-                  <Card
-                    // title={band.name}
-                    key={band.id}
-                    style={styles.card}
-                    backgroundColor='#111'
-                    padding={10}
-                    borderRadius={10}
-                    containerStyle={styles.card}
-                  >
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                      {/* <View> */}
-                      <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
-                    </View>
-                    {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
+          {
+            followed && followed.map(band => {
+              return (
+                <Card
+                  // title={band.name}
+                  key={band.id}
+                  style={styles.card}
+                  backgroundColor='#111'
+                  padding={10}
+                  borderRadius={10}
+                  containerStyle={styles.card}
+                >
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    {/* <View> */}
+                    <SingleBandModal band={band} />
+                  </View>
+                  {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
                     <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
                   </Card>
                 )
