@@ -111,7 +111,7 @@ export default function Hub(props) {
     getBandInfo();
     getBandsShows();
     getPreviousShows();
-  }, [fanShows])
+  }, [])
 
   return (
     <View style={styles.container}>
