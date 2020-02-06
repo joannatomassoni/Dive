@@ -54,7 +54,7 @@ export default class DatePicker extends Component {
               style={styles.container}
               value={date}
               mode={mode}
-              is24Hour={true}
+              is24Hour={false}
               onChange={this.setDate}
             />
             {/* set date and close selector */}
@@ -90,7 +90,7 @@ export default class DatePicker extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
+    backgroundColor: '#fff',
     borderRadius: 10,
     marginBottom: 10,
   },
