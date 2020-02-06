@@ -15,6 +15,7 @@ import { SignedInContext } from '../context/UserContext';
 import { AXIOS_URL } from 'react-native-dotenv';
 import VenuePicker from '../components/VenuePicker'
 import DateTimePicker from '../components/DateTimePicker';
+import RadioForm from 'react-native-simple-radio-button';
 
 
 export default function EditShowModal(props) {
@@ -27,6 +28,8 @@ export default function EditShowModal(props) {
   const [showTitle, setShowTitle] = useState(show.name);
   //band title
   const [bandName, setBandName] = useState('');
+  // public/private status
+  const [status, setStatus] = useState('private');
   //array of all bands
   const [bandNames, addBandName] = useState([bandNames]);
   //venue name
@@ -41,11 +44,16 @@ export default function EditShowModal(props) {
   const [allVenues, setAllVenues] = useState([]);
   const venues = [];
   const getBandsShows = props.getBandsShows;
+  // values for public/private option for venue
+  const radio_props = [
+    { label: 'Public', value: 'public' },
+    { label: 'Private', value: 'private' }
+  ];
+
   const deleteShow = async () => {
     await axios.delete(`https://dive-266016.appspot.com/shows/${show.id}`);
   }
 
-  console.log(props);
 
   return (
     <View>
@@ -105,8 +113,30 @@ export default function EditShowModal(props) {
                   }}
                 />
               </View>
-              {/* dropdown to select venue */}
+              {/* venue row */}
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}>
+                {/* Radio button to select private/public status of show */}
+                <RadioForm
+                  style={styles.modal}
+                  buttonInnerColor={'#59C3D1'}
+                  radio_props={radio_props}
+                  initial={1}
+                  formHorizontal={true}
+                  labelHorizontal={false}
+                  buttonColor={'#59C3D1'}
+                  selectedButtonColor={'#59C3D1'}
+                  animation={true}
+                  labelStyle={{ color: '#fff', fontWeight: 'bold' }}
+                  onPress={(value) => { setStatus(value) }}
+                />
+                {status === 'public' ?
               <VenuePicker setVenueName={setVenueName} allVenues={allVenues} />
+              : null
+                }
+                </View>
               {/* date time picker */}
               <DateTimePicker setDateTime={setDateTime} />
               {/* edit show button when modal is showing */}
@@ -165,7 +195,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#2D323A',
     padding: 20,
-    paddingTop: 100
+    paddingTop: 40
   },
   input: {
     height: 40,
@@ -244,4 +274,8 @@ const styles = StyleSheet.create({
     color: '#AA8181',
     textAlign: 'right'
   },
+  modal: {
+    alignSelf: 'center',
+    paddingRight: 20
+  }
 })
