@@ -19,29 +19,30 @@ import axios from 'axios';
 import { AXIOS_URL } from 'react-native-dotenv';
 
 export default function PreviousBandShows(props) {
-  const [oldShows, setOldShows] = useState([]);
+  // const [oldShows, setOldShows] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
   // console.log("are we getting users id?", props.userInfo)
   //allows user to get shows they previously went to on button click
-  let userId = props.userID;
+  // let userId = props.userID;
+  let oldShows = props.oldShows.shows;
 
-  console.log("user id", userId);
+  console.log("props", oldShows);
 
-  const getPreviousBandShows = () => {
-    console.log("blablabal")
-    axios.get(`http://localhost:8080/shows/${userId}/oldShows`)
-      .then(response => {
-        console.log("getting old shows bands played", response.data);
-        setOldShows(response.data)
-      })
-      .catch(err => {
-        console.log("not getting older shows for previously played", err);
-      })
-  }
+  // const getPreviousBandShows = () => {
+  //   console.log("blablabal")
+  //   axios.get(`https://dive-266016.appspot.com/shows/${userId}/oldShows`)
+  //     .then(response => {
+  //       console.log("getting old shows bands played", response.data);
+  //       setOldShows(response.data[0])
+  //     })
+  //     .catch(err => {
+  //       console.log("not getting older shows for previously played", err);
+  //     })
+  // }
 
   useEffect(() => {
-    getPreviousBandShows();
+    // getPreviousBandShows();
   }, []);
 
 
@@ -53,55 +54,55 @@ export default function PreviousBandShows(props) {
         visible={modalVisible}
       >
         {/* start of modal when showing */}
-        <KeyboardAvoidingView behavior="padding" style={styles.container}>
-          <ScrollView style={{ marginTop: 20 }}>
-            {/* back button */}
-            <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
-              <Ionicons
-                name='ios-arrow-back'
-                color='#59C3D1'
-                size={32}
-                style={styles.menuIcon}
-                onPress={() => { setModalVisible(false) }}
-              />
-            </Ionicons>
-            <View style={styles.container}>
-              <View style={styles.title}>
-                <Text style={styles.text}>Previously Played Shows</Text>
-                {/* <Text style={styles.text}>Previous shows</Text> */}
-                {oldShows && oldShows[0].shows.map(show => {
-                  // band.shows.map(show => {
-                  return (
-                    <Card
-                      // key={show.shows.id}
-                      style={styles.card}
-                      backgroundColor='#111'
-                      padding={10}
-                      borderRadius={10}
-                      containerStyle={styles.card}
-                    // image={require('../images/pic2.jpg')}
-                    >
-                      {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
+        {/* <KeyboardAvoidingView behavior="padding" style={styles.container}> */}
+        <ScrollView style={{ marginTop: 20 }}>
+          {/* back button */}
+          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
+            <Ionicons
+              name='ios-arrow-back'
+              color='#59C3D1'
+              size={32}
+              style={styles.menuIcon}
+              onPress={() => { setModalVisible(false) }}
+            />
+          </Ionicons>
+          <View style={styles.container}>
+            <View style={styles.title}>
+              <Text style={styles.text}>Previously Played Shows</Text>
+              {/* <Text style={styles.text}>Previous shows</Text> */}
+              {oldShows && oldShows.map(show => {
+                // band.shows.map(show => {
+                return (
+                  <Card
+                    // key={show.shows.id}
+                    style={styles.card}
+                    backgroundColor='#111'
+                    padding={10}
+                    borderRadius={10}
+                    containerStyle={styles.card}
+                  // image={require('../images/pic2.jpg')}
+                  >
+                    {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
 
-                      {/* modal to display single show info */}
-                      {/* {/* <SingleShowModal show={show.shows.id} showName={show.shows.name} /> */}
-                      <SingleShowModal show={show} />
+                    {/* modal to display single show info */}
+                    {/* {/* <SingleShowModal show={show.shows.id} showName={show.shows.name} /> */}
+                    <SingleShowModal show={show} />
 
-                      <Text style={styles.cardText}>{show.dateTime}</Text>
-                      <Text style={styles.cardText}>{show.date}</Text>
-                      <Text style={styles.cardText}>{show.description}</Text>
-                      {/* <EditShowModal /> */}
-                      {/* </View> */}
-                    </Card>
-                  )
-                  // })
-                })
-                }
-                {/* </View> */}
-              </View>
+                    <Text style={styles.cardText}>{show.dateTime}</Text>
+                    <Text style={styles.cardText}>{show.date}</Text>
+                    <Text style={styles.cardText}>{show.description}</Text>
+                    {/* <EditShowModal /> */}
+                    {/* </View> */}
+                  </Card>
+                )
+                // })
+              })
+              }
+              {/* </View> */}
             </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
+          </View>
+        </ScrollView>
+        {/* </KeyboardAvoidingView> */}
 
       </Modal >
       {/* edit bio button when modal is hidden */}
