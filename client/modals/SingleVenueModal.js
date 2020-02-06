@@ -186,7 +186,7 @@ export default function SingleVenueModal(props) {
                   <Text style={styles.cardText}>{show.description}</Text>
                   {/* list for each additional band in each show */}
                   {show.bands && show.bands.map(band => {
-                    return <Text style={styles.cardBandText}>{band.name}</Text>
+                    return <Text style={styles.cardBandText}>{band.nickname}</Text>
                   })}
                 </Card>
               )
