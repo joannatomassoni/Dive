@@ -26,6 +26,10 @@ export default function SearchResultsModal() {
        console.log('');
     }
 
+    const getRSVPS = () => {
+        console.log('');
+    }
+
     const searchCall = async (query) => {
         await axios.get(`https://dive-266016.appspot.com/search/bands/${query}`)
             .then((response) => {
@@ -49,6 +53,10 @@ export default function SearchResultsModal() {
                 setModalVisible(true);
             })
     };
+
+    const getFollowedBands = () => {
+        console.log('');
+    }
 
     return (
         <View>
@@ -88,7 +96,7 @@ export default function SearchResultsModal() {
                                                 >
                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                                     <View>
-                                                        <SingleBandModal band={band} />
+                                                        <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS}/>
                                                         <Text style={styles.cardText}>{band.bio}</Text>
                                                     </View>
                                                 </View>
