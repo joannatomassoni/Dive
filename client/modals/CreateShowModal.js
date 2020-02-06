@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ScrollView,
+  Alert
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
