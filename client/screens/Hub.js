@@ -76,7 +76,6 @@ export default function Hub(props) {
     await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/rsvps`)
       .then((response) => {
         setFanShows(() => response.data);
-        console.log(fanShows);
       })
       .catch((err) => {
         console.log(err);
