@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     fontSize: 65,
     color: '#59C3D1',
     fontWeight: 'bold',
-    marginTop: 260,
+    marginTop: 270,
     fontFamily: 'AvenirNext-Bold',
     textShadowOffset: {
       width: 2,
