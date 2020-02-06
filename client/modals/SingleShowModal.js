@@ -170,6 +170,7 @@ export default function SingleShowModal(props) {
                 </View>
               {/* list of all additional bands playing in current show */}
               {bands && bands.map(band => {
+                console.log(band);
                 return (
                   <View style={styles.bandModal}>
                   <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS}/>
