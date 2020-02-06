@@ -252,8 +252,8 @@ const removeFanRSVP = async (req, res) => {
 }
 
 // TODO: refactor to use eager loading
-// Get all shows that a given user has rsvpd to
-const getFanRSVPs = async (req, res) => {
+// Get all upcoming shows that a given user has rsvpd to
+const getFanUpcomingRSVPs = async (req, res) => {
     try {
         const { id } = req.params;
         const rsvps = await RSVP.findAll({
@@ -269,7 +269,9 @@ const getFanRSVPs = async (req, res) => {
             })
             return show;
         })).then((data) => {
-            res.send(data)
+            console.log(data)
+            const upcoming = data.filter(show => show.dateTime > new Date())
+            res.send(upcoming)
         })
     }
     catch (err) {
@@ -278,29 +280,73 @@ const getFanRSVPs = async (req, res) => {
     }
 }
 
-//gets previous/past RSVPed shows
+//gets a bands previous shows
+const getBandsPreviousShows = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+        const shows = await User.findAll({
+            where: {
+                id
+            },
+            include: [
+                {
+                    model: Show,
+                    where: {
+                        dateTime: {
+                            [Op.lt]: new Date()
+                        }
+                    }
+                },
+                { model: Venue },
+            ]
+        })
+        res.send(shows);
+        console.log("are we getting shows", shows);
+
+        // const showId = await ShowBand.findAll({
+        //     where: {
+        //         id,
+        //     }
+        //     // return show
+        // })
+        // console.log("are we getting shows?", showId)
+        // dateTime: {
+        //     [Op.lt]: new Date()
+        // }
+    }
+    catch {
+        console.log("error getting old shows")
+        res.sendStatus(400);
+    }
+}
+
+// console.log(getBandsPreviousShows);
+
+
+//gets previous/past RSVPed shows for fans
 //will need users id
-const getPreviousShows = async (req, res) => {
+const getFansPreviousShows = async (req, res) => {
+    // console.log("is this previousShows working?")
     try {
         const { id } = req.params;
-        const oldshows = await RSVP.findAll({
+        const rsvps = await RSVP.findAll({
             where: {
-                id_fan: id,
-
+                id_fan: id
             }
         })
-        const shows = Promise.all(oldshows.map(async (rsvp) => {
+        Promise.all(rsvps.map(async (rsvp) => {
             const show = await Show.findOne({
                 where: {
-                    id: rsvp.id_show,
-                    dateTime: {
-                        [Op.lt]: new Date()
-                    }
+                    id: rsvp.id_show
                 }
             })
             return show;
-        }))
-        res.send(shows);
+        })).then((data) => {
+            console.log(data)
+            const past = data.filter(show => show.dateTime < new Date())
+            res.send(past)
+        })
     }
     catch (err) {
         console.log("error getting old shows", err)
@@ -358,7 +404,8 @@ module.exports = {
     deleteShow,
     getAllUpcomingShows,
     getFanRSVPs,
-    getPreviousShows,
+    getFansPreviousShows,
+    getBandsPreviousShows,
     getSingleShow,
     getShowRSVPs,
     removeFanRSVP,

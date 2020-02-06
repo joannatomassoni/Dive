@@ -33,7 +33,11 @@ const createVenue = async (req, res) => {
 // Get all venues
 const getAllVenues = async (req, res) => {
     try {
-        const venues = await Venue.findAll()
+        const venues = await Venue.findAll({
+            include: [
+                { model: Show, include: [{ model: User, as: 'bands' }] }
+            ]
+        })
         console.log("retrieved venues from db", venues);
         // return all venues minus the placeholder "private" one
         venues.splice(0, 1);

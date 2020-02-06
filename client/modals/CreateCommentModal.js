@@ -18,7 +18,7 @@ export default function CreateCommentModal({ showId, userId, getShowComments }) 
   const [modalVisible, setModalVisible] = useState(false);
   //comment text
   const [comment, setComment] = useState('');
-  
+
   return (
     <View>
       <Modal
@@ -29,7 +29,7 @@ export default function CreateCommentModal({ showId, userId, getShowComments }) 
         {/* start of modal when showing */}
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
           {/* back button */}
-          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
+          <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
             <Ionicons
               name='ios-arrow-back'
               color='#59C3D1'
@@ -74,7 +74,7 @@ export default function CreateCommentModal({ showId, userId, getShowComments }) 
       {/* edit bio button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
-        onPress={() => {setModalVisible(true)}}
+        onPress={() => { setModalVisible(true) }}
       >
         <Text style={styles.signupButtonText}>Comment</Text>
       </TouchableOpacity>

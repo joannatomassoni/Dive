@@ -22,6 +22,7 @@ import { AXIOS_URL } from 'react-native-dotenv';
 import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
 import PreviousRSVPShows from '../modals/PreviousRsvpShows';
+import PreviousBandShows from '../modals/PreviousBandShows';
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -44,167 +45,161 @@ export default function Hub(props) {
       })
       .catch(err => console.log(err))
   }
-  
+
   //gets band info
   const getBandInfo = async () => {
     await axios.get(`https://dive-266016.appspot.com/users/${userInfo.username}`)
-    .then((response) => {
-      setHubInfo(() => response.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }
-  
-  //gets a list of all of a bands shows
-  const getBandsShows = async () => {
-    await axios.get(`https://dive-266016.appspot.com/bands/${userInfo.id}/shows`)
-    .then((response) => {
-      if (response.data.shows) {
-        setShows(() => response.data.shows.filter((show) => {
-          return Moment(show.dateTime).toDate() > new Date();
-        }))
-      }
-    })
+      .then((response) => {
+        setHubInfo(() => response.data);
+      })
       .catch((err) => {
         console.log(err);
       })
-    }
-    
-    //allows users to see all of the shows they have RSVPed to
-    const getRSVPS = async () => {
-      await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/rsvps`)
+  }
+
+  //gets a list of all of a bands shows
+  const getBandsShows = async () => {
+    await axios.get(`https://dive-266016.appspot.com/bands/${userInfo.id}/shows`)
+      .then((response) => {
+        if (response.data.shows) {
+          setShows(() => response.data.shows.filter((show) => {
+            return Moment(show.dateTime).toDate() > new Date();
+          }))
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  //allows users to see all of the shows they have RSVPed to
+  const getRSVPS = async () => {
+    await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/rsvps`)
       .then((response) => {
         setFanShows(() => response.data);
       })
       .catch((err) => {
         console.log(err);
       })
-    }
-    
-    //allows user to see all the bands they follow
-    const getFollowedBands = async () => {
-      await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/bands`)
+  }
+
+  //allows user to see all the bands they follow
+  const getFollowedBands = async () => {
+    await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/bands`)
       .then(response => {
         setFollowed(() => response.data);
       })
       .catch((err) => {
         console.log(err);
       })
-    }
-    
-    //allows user to get shows they previously went to on button click
-    const getPreviousShows = () => {
-        axios.get(`https://dive-266016.appspot.com/shows/${userInfo.id}/oldrsvps`)
-          .then(response => {
-              setOldShows(response.data)
-            })
-            .catch(err => {
-                console.log("not getting older shows", err);
-              })
-          }
-          
-      //load all user info when brought to hub
-      useEffect(() => {
-        getBandInfo();
-        getBandsShows();
-        getRSVPS();
-        getFollowedBands();
-        getPreviousShows();
-      }, [])
+  }
 
-    return (
-      <View style={styles.container}>
+  //allows user to get shows they previously went to on button click
+  const getPreviousShows = () => {
+    axios.get(`https://dive-266016.appspot.com/shows/${userInfo.id}/oldrsvps`)
+      .then(response => {
+        setOldShows(response.data)
+      })
+      .catch(err => {
+        console.log("not getting older shows", err);
+      })
+  }
+
+  //load all user info when brought to hub
+  useEffect(() => {
+    getBandInfo();
+    getBandsShows();
+    getRSVPS();
+    getFollowedBands();
+    getPreviousShows();
+  }, [])
+
+  return (
+    <View style={styles.container}>
       <MenuButton navigation={props.navigation} />
-        <LinearGradient
-          colors={['#38404C','#111']}
-          style={{ flex: 1 }}
-        >
-      <ScrollView style={{ marginTop: 70 }}>
-        <Text style={styles.text}>{hubInfo.name}</Text>
+      <LinearGradient
+        colors={['#38404C', '#111']}
+        style={{ flex: 1 }}
+      >
+        <ScrollView style={{ marginTop: 70 }}>
+          <Text style={styles.text}>{hubInfo.nickname}</Text>
           {/* image container */}
-        {hubInfo.bandPhoto ?
-        <View style={{marginBottom: -75}}>
-          <ImageBackground
-              style={{ width: 415, height: 415, alignSelf: 'center', }}
-            source={{ uri: hubInfo.bandPhoto }}
-          >
-            <LinearGradient
+          {hubInfo.bandPhoto ?
+            <View style={{ marginBottom: -75 }}>
+              <ImageBackground
+                style={{ width: 415, height: 415, alignSelf: 'center', }}
+                source={{ uri: hubInfo.bandPhoto }}
+              >
+                <LinearGradient
                   colors={['transparent', 'rgba(0,0,0,0.3)', '#111']}
-              style={{ width: 415, height: 415, alignSelf: 'center', }}
-            >
-            </LinearGradient>
-          </ImageBackground>
-        </View>
-        : null }
-        <Text style={styles.infoText}>
-          {hubInfo.bio}
-        </Text>
-        {/* Social Media Buttons */}
-        <View style={styles.flexRowRight}>
-          {/* Only show spotify link if user is a band */}
-          {userInfo.userType === 'band' ?
-          <SpotifyButton link={hubInfo.link_spotify} />
-          : null }
-          <InstagramButton link={hubInfo.link_instagram} />
-          <FacebookButton link={hubInfo.link_facebook} />
-        </View>
-        <View style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          marginTop: 30
-        }}>
-          {/* Button to open create show modal */}
-          <EditBandBioModal getBandInfo={getBandInfo}/>
-          {/* Button to open create show modal */}
-          {userInfo.userType === 'band' ? <CreateShowModal getBandsShows={getBandsShows}/> : null}
-        </View>
-        {/* Cards for all a bands upcoming shows */}
-        <View>
-          {userInfo.userType === 'band' ?
-            <View>
-              {shows.length ? 
-              <Text style={styles.subText}>Upcoming Gigs</Text>
-              : null
-              }
-              {shows && shows.map(show => {
-                const bandNames = show.bands.map(band => band.name);
-                return (
-                  Moment(show.dateTime).toDate() > new Date() ? 
-                    <View>
-                      <Card
-                        containerStyle={styles.card}
-                        backgroundColor='#fff'
-                        borderWidth={0}
-                        borderRadius={10}
-                        padding={10}
-                      >
-                        <SingleShowModal show={show} />
-                        <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
-                        {show.description ? 
-                          <Text style={styles.cardText}>{show.description}</Text>
-                        : null}
-                        <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows}/>
-                      </Card>
-                    </View>
-                    : null
-                  )
-              })}
+                  style={{ width: 415, height: 415, alignSelf: 'center', }}
+                >
+                </LinearGradient>
+              </ImageBackground>
             </View>
             : null}
-        </View>
-        {/* <View style={styles.container}>
-          <Image
-            source={dbPhoto}
-            style={styles.thumbnail}
-          />
-        </View> */}
-        {/* Cards for shows the user has RSVPd to*/}
-        <View>
-          {fanShows.length ? 
-          <Text style={styles.subText}>Your RSVP'd Shows</Text>
-          : null
-          }
+          <Text style={styles.infoText}>
+            {hubInfo.bio}
+          </Text>
+          {/* Social Media Buttons */}
+          <View style={styles.flexRowRight}>
+            {/* Only show spotify link if user is a band */}
+            {userInfo.userType === 'band' ?
+              <SpotifyButton link={hubInfo.link_spotify} />
+              : null}
+            <InstagramButton link={hubInfo.link_instagram} />
+            <FacebookButton link={hubInfo.link_facebook} />
+          </View>
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginTop: 30
+          }}>
+            {/* Button to open create show modal */}
+            <EditBandBioModal getBandInfo={getBandInfo} />
+            {/* Button to open create show modal */}
+            {userInfo.userType === 'band' ? <CreateShowModal getBandsShows={getBandsShows} /> : null}
+          </View>
+          {/* Cards for all a bands upcoming shows */}
+          <View>
+            {userInfo.userType === 'band' ?
+              <View>
+                {shows.length ?
+                  <Text style={styles.subText}>Upcoming Gigs</Text>
+                  : null
+                }
+                {shows && shows.map(show => {
+                  const bandNames = show.bands.map(band => band.name);
+                  return (
+                    Moment(show.dateTime).toDate() > new Date() ?
+                      <View>
+                        <Card
+                          containerStyle={styles.card}
+                          backgroundColor='#fff'
+                          borderWidth={0}
+                          borderRadius={10}
+                          padding={10}
+                        >
+                          <SingleShowModal show={show} />
+                          <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
+                          {show.description ?
+                            <Text style={styles.cardText}>{show.description}</Text>
+                            : null}
+                          <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows} />
+                        </Card>
+                      </View>
+                      : null
+                  )
+                })}
+              </View>
+              : null}
+          </View>
+          {/* Cards for shows the user has RSVPd to*/}
+          <View>
+            {fanShows.length ?
+              <Text style={styles.subText}>Your RSVP'd Shows</Text>
+              : null
+            }
             {fanShows && fanShows.map(show => {
               return (
                 <Card
@@ -243,18 +238,15 @@ export default function Hub(props) {
                 </Card>
               )
             })}
-        </View>
-        {/* Cards for bands the user follows */}
-        < View >
+          </View>
+          {/* Cards for bands the user follows */}
+          < View >
             {followed.length ?
               <Text style={styles.subText}>Bands You Follow</Text>
-              : null 
-            }
-          {
-            followed && followed.map(band => {
+              : null}
+            {followed && followed.map(band => {
               return (
                 <Card
-                  // title={band.name}
                   key={band.id}
                   style={styles.card}
                   backgroundColor='#111'
@@ -263,8 +255,7 @@ export default function Hub(props) {
                   containerStyle={styles.card}
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    {/* <View> */}
-                    <SingleBandModal getAllBands={getAllBands} name={band.nickname} bandId={band.id} />
+                    <SingleBandModal band={band} />
                   </View>
                   {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
                     <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
@@ -272,11 +263,10 @@ export default function Hub(props) {
               )
             })
             }
-        </View>
-        <View>
+          </View>
           <PreviousRSVPShows userId={userInfo.id} />
-        </View>
-      </ScrollView>
+          {/* <PreviousBandShows userID={userInfo.id} /> */}
+        </ScrollView>
       </LinearGradient>
     </View >
   )
@@ -374,4 +364,3 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
 })
-

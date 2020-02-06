@@ -1,39 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { SignedInContext } from '../context/UserContext';
 import {
   Modal,
   Text,
   View,
   StyleSheet,
   TouchableOpacity,
+  SafeAreaView,
+  Dimensions,
+  KeyboardAvoidingView,
+  TextInput,
 } from 'react-native';
 import { Card } from 'react-native-elements'
 import SingleShowModal from '../modals/SingleShowModal';
+import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
+import MenuButton from '../components/MenuButton';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
 import { AXIOS_URL } from 'react-native-dotenv';
-import { LinearGradient } from 'expo-linear-gradient';
 
-export default function PreviousRSVPShows(props) {
+export default function PreviousBandShows(props) {
   const [oldShows, setOldShows] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  //allows user to get shows they previously went to on button click
-  let userId = props.userId;
 
-  const getPreviousShows = () => {
-    axios.get(`https://dive-266016.appspot.com/fans/${userId}/pastrsvps`)
+  // console.log("are we getting users id?", props.userInfo)
+  //allows user to get shows they previously went to on button click
+  let userId = props.userID;
+
+  console.log("user id", userId);
+
+  const getPreviousBandShows = () => {
+    console.log("blablabal")
+    axios.get(`http://localhost:8080/shows/${userId}/oldShows`)
       .then(response => {
-        if (response.data.length) {
-          setOldShows(response.data)
-        }
+        console.log("getting old shows bands played", response.data);
+        setOldShows(response.data)
       })
       .catch(err => {
-        console.log("not getting older shows", err);
+        console.log("not getting older shows for previously played", err);
       })
   }
 
   useEffect(() => {
-    getPreviousShows();
+    getPreviousBandShows();
   }, []);
+
 
   return (
     <View>
@@ -43,7 +56,8 @@ export default function PreviousRSVPShows(props) {
         visible={modalVisible}
       >
         {/* start of modal when showing */}
-        <View behavior="padding" style={styles.container}>
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+          <ScrollView style={{ marginTop: 20 }}>
             {/* back button */}
             <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
               <Ionicons
@@ -54,42 +68,43 @@ export default function PreviousRSVPShows(props) {
                 onPress={() => { setModalVisible(false) }}
               />
             </Ionicons>
-          <LinearGradient
-            colors={['#38404C', '#111']}
-            style={{ flex: 1 }}
-          >
             <View style={styles.container}>
-              <View style={{ marginTop: 70 }}>
-                <Text style={styles.headerText}>Past RSVPs</Text>
-                {oldShows.length ? 
-                  oldShows.map(show => {
+              <View style={styles.title}>
+                <Text style={styles.text}>Previously Played Shows</Text>
+                {/* <Text style={styles.text}>Previous shows</Text> */}
+                {oldShows && oldShows[0].shows.map(show => {
+                  // band.shows.map(show => {
                   return (
                     <Card
-                      // key={show.id}
+                      // key={show.shows.id}
                       style={styles.card}
                       backgroundColor='#111'
                       padding={10}
                       borderRadius={10}
                       containerStyle={styles.card}
+                    // image={require('../images/pic2.jpg')}
                     >
-                      {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
-                      {/* modal to display single show info */}
-                      <SingleShowModal show={show} />
-                      <Text style={styles.cardText}>{show.name}</Text>
-                      <Text style={styles.cardText}>{show.time}</Text>
-                      <Text style={styles.cardText}>{show.date}</Text>
-                      <Text style={styles.cardText}>{show.description}</Text>
-                      {/* <EditShowModal /> */}
+                      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+
+                        {/* modal to display single show info */}
+                        {/* {/* <SingleShowModal show={show.shows.id} showName={show.shows.name} /> */}
+                        <Text style={styles.cardText}>{show.name}</Text>
+                        <Text style={styles.cardText}>{show.dateTime}</Text>
+                        <Text style={styles.cardText}>{show.date}</Text>
+                        <Text style={styles.cardText}>{show.description}</Text>
+                        {/* <EditShowModal /> */}
+                      </View>
                     </Card>
                   )
+                  // })
                 })
-                : null
                 }
                 {/* </View> */}
               </View>
             </View>
-            </LinearGradient>
-          </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+
       </Modal >
       {/* edit bio button when modal is hidden */}
       < TouchableOpacity
@@ -97,7 +112,7 @@ export default function PreviousRSVPShows(props) {
         onPress={() => { setModalVisible(true); }
         }
       >
-        <Text style={styles.signupButtonText}>Past Shows</Text>
+        <Text style={styles.signupButtonText}>Get previously played shows</Text>
       </TouchableOpacity >
 
     </View >
@@ -107,19 +122,28 @@ export default function PreviousRSVPShows(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#2D323A',
+    padding: 20
   },
   headerText: {
     fontSize: 50,
-    color: '#59C3D1',
+    color: '#3BAFBF',
     fontWeight: 'bold',
     textAlign: 'right',
     paddingRight: 20
   },
-  card: {
-    borderWidth: 0,
-    paddingBottom: 0,
-    backgroundColor: '#111',
-    paddingBottom: 10
+  input: {
+    height: 40,
+    backgroundColor: 'rgba(255, 255, 255, 1)',
+    marginBottom: 15,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    marginHorizontal: 40,
+    fontWeight: 'bold'
+  },
+  title: {
+    flex: 1,
+    justifyContent: 'center',
   },
   cardText: {
     fontSize: 16,
@@ -138,15 +162,20 @@ const styles = StyleSheet.create({
     marginLeft: 90,
     marginBottom: 15
   },
+  loginContainer: {
+    backgroundColor: '#C70039',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginBottom: 15,
+    width: 140,
+    marginHorizontal: 7
+  },
   signupContainer: {
     backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
-    marginBottom: 10,
-    marginTop: 15,
-    alignSelf: 'center',
-    width: 140,
-    marginHorizontal: 7
+    marginHorizontal: 90,
+    marginBottom: 15
   },
   modal: {
     marginLeft: 120
