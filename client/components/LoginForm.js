@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 5,
     marginBottom: 15,
+    height: 36,
     width: 140,
     marginHorizontal: 7
   },
@@ -131,6 +132,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 5,
     marginBottom: 15,
+    height: 36,
     width: 140,
     marginHorizontal: 7
   },

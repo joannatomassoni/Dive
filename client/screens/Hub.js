@@ -3,9 +3,9 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   Image,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import axios from 'axios';
@@ -18,8 +18,6 @@ import InstagramButton from '../components/InstagramButton';
 import CreateShowModal from '../modals/CreateShowModal';
 import EditBandBioModal from '../modals/EditBandBioModal';
 import EditShowModal from '../modals/EditShowModal';
-import * as Permissions from 'expo-permissions';
-import Constants from 'expo-constants';
 import { AXIOS_URL } from 'react-native-dotenv';
 import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
@@ -33,7 +31,6 @@ export default function Hub(props) {
   //hub info to display
   const [hubInfo, setHubInfo] = useState({});
   const [shows, setShows] = useState([]);
-  const [dbPhoto, setDbPhoto] = useState('');
   // const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
@@ -69,17 +66,6 @@ export default function Hub(props) {
         }))
       }
     })
-      .catch((err) => {
-        console.log(err);
-      })
-  }
-
-  //gets bands photo from database
-  const getPhoto = async () => {
-    await axios.get(`https://dive-266016.appspot.com/users/${userInfo.username}`)
-      .then((response) => {
-        setDbPhoto(() => response.data.bandPhoto);
-      })
       .catch((err) => {
         console.log(err);
       })
@@ -122,7 +108,6 @@ export default function Hub(props) {
       useEffect(() => {
         getBandInfo();
         getBandsShows();
-        getPhoto();
         getRSVPS();
         getFollowedBands();
         getPreviousShows();
@@ -136,18 +121,22 @@ export default function Hub(props) {
           style={{ flex: 1 }}
         >
       <ScrollView style={{ marginTop: 70 }}>
-        <Text style={styles.text}>Hub</Text>
-        <View>
+        <Text style={styles.text}>{hubInfo.name}</Text>
           {/* image container */}
-          <Text>
-            {dbPhoto &&
-              <Image
-                style={{ width: 100, height: 70 }}
-                source={{ uri: dbPhoto }}
-              />
-            }
-          </Text>
+        {hubInfo.bandPhoto ?
+        <View style={{marginBottom: -75}}>
+          <ImageBackground
+              style={{ width: 415, height: 415, alignSelf: 'center', }}
+            source={{ uri: hubInfo.bandPhoto }}
+          >
+            <LinearGradient
+                  colors={['transparent', 'rgba(0,0,0,0.3)', '#111']}
+              style={{ width: 415, height: 415, alignSelf: 'center', }}
+            >
+            </LinearGradient>
+          </ImageBackground>
         </View>
+        : null }
         <Text style={styles.infoText}>
           {hubInfo.bio}
         </Text>
@@ -162,11 +151,11 @@ export default function Hub(props) {
         </View>
         <View style={{
           flexDirection: 'row',
-          height: 50,
           justifyContent: 'center',
+          marginTop: 30
         }}>
           {/* Button to open create show modal */}
-          <EditBandBioModal />
+          <EditBandBioModal getBandInfo={getBandInfo}/>
           {/* Button to open create show modal */}
           {userInfo.userType === 'band' ? <CreateShowModal getBandsShows={getBandsShows}/> : null}
         </View>
@@ -299,7 +288,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D323A',
   },
   text: {
-    fontSize: 50,
+    fontSize: 40,
     color: '#59C3D1',
     fontWeight: 'bold',
     textAlign: 'right',
@@ -382,7 +371,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'right',
     paddingRight: 20,
-    paddingBottom: 5
+    paddingBottom: 5,
   },
 })
 
