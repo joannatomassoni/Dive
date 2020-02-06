@@ -16,15 +16,16 @@ import SingleShowModal from '../modals/SingleShowModal'
 import Moment from 'moment';
 import { AXIOS_URL } from 'react-native-dotenv';
 import * as Location from 'expo-location';
-import * as Permissions from 'expo-permissions';
-import MapView from 'react-native-maps';
+// import * as Permissions from 'expo-permissions';
+// import MapView from 'react-native-maps';
+import ShowsNearBy from '../modals/ShowsNearBy';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Shows(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
-  const [location, setLocation] = useState({});
+  // const [location, setLocation] = useState({});
 
   // const [flyer, setFlyer] = useState("");
 
@@ -39,24 +40,24 @@ export default function Shows(props) {
       })
   }
 
-  const getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
-      console.log("can't get location");
-      // this.setState({
-      //   errorMessage: 'Permission to access location was denied',
-      // });
-    }
+  // const getLocationAsync = async () => {
+  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+  //   if (status !== 'granted') {
+  //     console.log("can't get location");
+  //     // this.setState({
+  //     //   errorMessage: 'Permission to access location was denied',
+  //     // });
+  //   }
 
-    let locationObj = await Location.getCurrentPositionAsync({});
-    locationObj = JSON.stringify(locationObj);
-    setLocation(location);
-  };
+  //   let locationObj = await Location.getCurrentPositionAsync({});
+  //   locationObj = JSON.stringify(locationObj);
+  //   setLocation(location);
+  // };
 
 
   useEffect(() => {
     getAllShows();
-    getLocationAsync();
+    // getLocationAsync();
   }, [])
 
   return (
@@ -66,50 +67,40 @@ export default function Shows(props) {
         colors={['#38404C', '#111']}
         style={{ flex: 1 }}
       >
-      <ScrollView style={{ marginTop: 70 }}>
-        <Text style={styles.headerText}>Shows</Text>
-        {shows && shows.map(show => {
-          return (
-            <Card
-              key={show.id}
-              backgroundColor='#111'
-              padding={10}
-              borderRadius={10}
-              containerStyle={styles.card}
-            >
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View>
-                  {/* modal to display single show info */}
-                  <SingleShowModal show={show} />
-                  <Text style={styles.cardText}>{show.date}</Text>
-                  <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
-                  {show.bands ?
-                    show.bands.map(band => {
-                      <Text style={styles.cardText} key={band.id}>{band.name}</Text>
-                    })
-                    : null}
-                  <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text>
+        <ScrollView style={{ marginTop: 70 }}>
+          <Text style={styles.headerText}>Shows</Text>
+          {shows && shows.map(show => {
+            return (
+              <Card
+                key={show.id}
+                backgroundColor='#111'
+                padding={10}
+                borderRadius={10}
+                containerStyle={styles.card}
+              >
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <View>
+                    {/* modal to display single show info */}
+                    <SingleShowModal show={show} />
+                    <Text style={styles.cardText}>{show.date}</Text>
+                    <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
+                    {show.bands ?
+                      show.bands.map(band => {
+                        <Text style={styles.cardText} key={band.id}>{band.name}</Text>
+                      })
+                      : null}
+                    <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text>
+                  </View>
                 </View>
-                <View >
-                  {/* show flyer */}
-                  <Text >
-                    {show.flyer &&
-                      <Image
-                        style={{ justifyContent: 'right' }}
-                        style={styles.photo}
-                        source={{ uri: show.flyer }}
-                      />
-                    }
-                  </Text>
-                </View>
-              </View>
-            </Card>
-            
-          )
-        })}
-      </ScrollView>
-    </LinearGradient>
-  </View >
+              </Card>
+
+            )
+          })}
+          {/* modal for getting nearby shows */}
+          {/* <ShowsNearBy /> */}
+        </ScrollView>
+      </LinearGradient>
+    </View >
   )
 }
 

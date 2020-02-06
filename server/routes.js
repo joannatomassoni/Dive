@@ -51,9 +51,9 @@ router.get('/bands/:id/shows', ctrl.getBandShows)
  * Search button routes
  */
 
- router.get('/search/bands/:query', ctrl.searchBands)
- router.get('/search/shows/:query', ctrl.searchShows)
- router.get('/search/venues/:query', ctrl.searchVenues)
+router.get('/search/bands/:query', ctrl.searchBands)
+router.get('/search/shows/:query', ctrl.searchShows)
+router.get('/search/venues/:query', ctrl.searchVenues)
 
 /**
  * BANDS ROUTES
@@ -173,7 +173,10 @@ router.get('/shows/:id/rsvps', ctrl.getShowRSVPs)
 router.get('/fans/:id/rsvps', ctrl.getFanRSVPs)
 
 //get past shows a user has attended
-router.get('/shows/:id/oldrsvps', ctrl.getPreviousShows)
+router.get('/shows/:id/oldrsvps', ctrl.getFansPreviousShows)
+
+//gets band's previous shows
+router.get('/shows/:id/oldShows', ctrl.getBandsPreviousShows)
 
 /**
  * SHOW COMMENTS
