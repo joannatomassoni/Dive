@@ -45,6 +45,8 @@ export default function EditShowModal(props) {
     await axios.delete(`https://dive-266016.appspot.com/shows/${show.id}`);
   }
 
+  console.log(props);
+
   return (
     <View>
       <Modal
@@ -66,7 +68,7 @@ export default function EditShowModal(props) {
           </Ionicons>
           <View style={styles.container}>
             <ScrollView style={styles.title}>
-              <Text style={styles.text}>{props.showName}</Text>
+              <Text style={styles.text}>{show.name}</Text>
               {/* Title text box */}
               <TextInput
                 placeholder="Edit Show Title"
