@@ -271,8 +271,6 @@ export default function Hub(props) {
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS} />
                   </View>
-                  {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
-                    <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
                 </Card>
               )
             })
@@ -280,7 +278,7 @@ export default function Hub(props) {
           </View>
           <PreviousRSVPShows userId={userInfo.id} />
 
-          <PreviousBandShows oldShows={oldShows} />
+          {/* <PreviousBandShows oldShows={oldShows} /> */}
         </ScrollView>
       </LinearGradient>
     </View >
