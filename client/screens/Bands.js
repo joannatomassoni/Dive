@@ -32,6 +32,10 @@ export default function Bands(props) {
       .catch(err => console.log(err))
   }
 
+  const getFollowedBands = () => {
+    console.log('');
+  }
+
   useEffect(() => {
     getAllBands();
   }, [])
@@ -57,7 +61,7 @@ export default function Bands(props) {
             >
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View>
-                  <SingleBandModal band={band} />
+                <SingleBandModal band={band} getFollowedBands={getFollowedBands}/>
                   <Text style={styles.cardText}>{band.bio}</Text>
                 </View>
                 <View>

@@ -77,6 +77,7 @@ export default function Hub(props) {
     await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/rsvps`)
       .then((response) => {
         setFanShows(() => response.data);
+        console.log(fanShows);
       })
       .catch((err) => {
         console.log(err);
@@ -180,7 +181,7 @@ export default function Hub(props) {
                           borderRadius={10}
                           padding={10}
                         >
-                          <SingleShowModal show={show} />
+                          <SingleShowModal show={show} getRSVPS={getRSVPS}/>
                           <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                           {show.description ?
                             <Text style={styles.cardText}>{show.description}</Text>

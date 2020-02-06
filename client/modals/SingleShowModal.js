@@ -37,6 +37,10 @@ export default function SingleShowModal(props) {
     console.log('');
   }
 
+  const getFollowedBands = () => {
+    console.log('');
+  }
+
   //request to get all comments for specific show
   const getShowComments = () => {
     axios.get(`https://dive-266016.appspot.com/shows/${show.id}/comments`)
@@ -130,7 +134,9 @@ export default function SingleShowModal(props) {
               color='#59C3D1'
               size={32}
               style={styles.menuIcon}
-              onPress={() => { setModalVisible(false) }}
+              onPress={() => { 
+                props.getRSVPS();
+                setModalVisible(false) }}
             />
           </Ionicons>
           <LinearGradient
@@ -159,7 +165,7 @@ export default function SingleShowModal(props) {
               {bands && bands.map(band => {
                 return (
                   <View style={styles.bandModal}>
-                    <SingleBandModal band={band} />
+                  <SingleBandModal band={band} getFollowedBands={getFollowedBands}/>
                   </View>
                 )
               })}
