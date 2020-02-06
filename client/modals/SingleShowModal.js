@@ -172,7 +172,9 @@ export default function SingleShowModal(props) {
                   <Text style={styles.infoText}>{show.description}</Text>
                   : null
                 }
+                {venue ?
                 <Text style={styles.infoVenueText}>{venue.name}</Text>
+                : null}
                 </View>
               {/* list of all additional bands playing in current show */}
               {bands && bands.map(band => {
