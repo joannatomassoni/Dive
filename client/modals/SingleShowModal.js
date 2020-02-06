@@ -180,7 +180,7 @@ export default function SingleShowModal(props) {
                 marginBottom: 10
               }}>
                 {/* add to calendar button */}
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={styles.buttonContainer}
                   onPress={async () => {
                     try {
@@ -193,7 +193,7 @@ export default function SingleShowModal(props) {
                   }}
                 >
                   <Text style={styles.signupButtonText}>Add To Calendar</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 {/* button to rsvp to specific (shows when signed in) */}
                 {userInfo.signedIn ?
 

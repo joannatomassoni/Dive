@@ -114,7 +114,7 @@ export default function SingleBandModal(props) {
             colors={['#38404C', '#111']}
             style={{ flex: 1 }}
           >
-          <ScrollView style={{ marginTop: 70 }}>
+          <ScrollView style={{ marginTop: 60 }}>
             <Text style={styles.headerText} key={band.id}>{band.nickname}</Text>
             {/* band photo */}
               {band.bandPhoto ?
@@ -138,8 +138,6 @@ export default function SingleBandModal(props) {
               <InstagramButton link={band.link_instagram} />
               <FacebookButton link={band.link_facebook} />
             </View>
-
-            <Text style={styles.infoText}>{band.bio}</Text>
             {/* if user is signed in show button to follor band */}
             {userInfo.signedIn ?
               (isFollowing ?
@@ -225,7 +223,8 @@ const styles = StyleSheet.create({
     color: '#59C3D1',
     fontWeight: 'bold',
     textAlign: 'right',
-    paddingRight: 20
+    paddingRight: 20,
+    paddingLeft: 40
   },
   infoText: {
     fontSize: 20,
@@ -255,7 +254,7 @@ const styles = StyleSheet.create({
   },
   flexRowRight: {
     flexDirection: 'row',
-    paddingBottom: 5,
+    paddingBottom: 15,
     justifyContent: 'flex-end',
     paddingRight: 20
   },
