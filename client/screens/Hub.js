@@ -77,7 +77,6 @@ export default function Hub(props) {
     await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/rsvps`)
       .then((response) => {
         setFanShows(() => response.data);
-        console.log(fanShows);
       })
       .catch((err) => {
         console.log(err);
@@ -121,9 +120,9 @@ export default function Hub(props) {
   //load all user info when brought to hub
   useEffect(() => {
     getRSVPS();
+    getFollowedBands();
     getBandInfo();
     getBandsShows();
-    getFollowedBands();
     getPreviousShows();
     getPreviousBandShows();
   }, [])
@@ -192,9 +191,9 @@ export default function Hub(props) {
                           backgroundColor='#fff'
                           borderWidth={0}
                           borderRadius={10}
-                          padding={10}
-                        >
-                          <SingleShowModal show={show} getRSVPS={getRSVPS} />
+                          padding={10}>
+                          <SingleShowModal show={show} getRSVPS={getRSVPS}/>
+                          <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
                           <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                           {show.description ?
                             <Text style={styles.cardText}>{show.description}</Text>
@@ -229,6 +228,7 @@ export default function Hub(props) {
                       <SingleShowModal show={show} />
                       <Text style={styles.cardText}>{show.date}</Text>
                       <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
+                      <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
                       {show.bands ?
                         show.bands.map(band => {
                           <Text style={styles.cardText} key={band.id}>{band.name}</Text>

@@ -163,11 +163,15 @@ export default function SingleShowModal(props) {
                 <Text style={styles.infoText}>{Moment(show.dateTime).format('LT')}</Text>
                 {venue ?
                   <Text style={styles.infoText}>{venue.name}</Text>
-                  : null}
+              : null}
+              {show.description ?
                 <Text style={styles.infoText}>{show.description}</Text>
-              </View>
+                : null
+              }
+                </View>
               {/* list of all additional bands playing in current show */}
               {bands && bands.map(band => {
+                console.log(band);
                 return (
                   <View style={styles.bandModal}>
                     <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS} />
