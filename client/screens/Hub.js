@@ -180,6 +180,7 @@ export default function Hub(props) {
                           padding={10}
                         >
                           <SingleShowModal show={show} getRSVPS={getRSVPS}/>
+                          <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
                           <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                           {show.description ?
                             <Text style={styles.cardText}>{show.description}</Text>
