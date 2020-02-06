@@ -186,7 +186,7 @@ export default function SingleShowModal(props) {
                 </TouchableOpacity>
                 {/* button to rsvp to specific (shows when signed in) */}
                 {userInfo.signedIn ?
-                  
+
                   //if already rsvp'd, show button to cancel rvp
                   rsvp ? <TouchableOpacity
                     style={styles.cancelButtonContainer}
@@ -337,4 +337,3 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   }
 })
-
