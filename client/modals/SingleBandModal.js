@@ -78,6 +78,10 @@ export default function SingleBandModal(props) {
       .catch(error => console.log('failed to unfollow band', error))
   };
 
+  const getRSVPS = () => {
+    console.log('');
+  }
+
   useEffect(() => {
     allBandShows();
     isUserFollowing();
@@ -95,6 +99,8 @@ export default function SingleBandModal(props) {
           {/* back button */}
           <Ionicons size={64} style={styles.menuIconContainer} 
             onPress={() => { 
+              props.getFollowedBands();
+              props.getRSVPS();
               setModalVisible(false) 
             }}> 
             <Ionicons
@@ -166,7 +172,7 @@ export default function SingleBandModal(props) {
                   >
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                       <View>
-                        <SingleShowModal show={show} />
+                        <SingleShowModal show={show} getRSVPS={getRSVPS}/>
                         <Text style={styles.cardText}>{show.date}</Text>
                         <Text style={styles.cardText}>{show.time}</Text>
                         <Text style={styles.cardText}>{show.venue.name}</Text>

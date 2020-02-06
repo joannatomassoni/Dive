@@ -32,6 +32,14 @@ export default function Bands(props) {
       .catch(err => console.log(err))
   }
 
+  const getFollowedBands = () => {
+    console.log('');
+  }
+
+  const getRSVPS = () => {
+    console.log('');
+  }
+
   useEffect(() => {
     getAllBands();
   }, [])
@@ -57,7 +65,7 @@ export default function Bands(props) {
             >
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View>
-                  <SingleBandModal band={band} />
+                <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS}/>
                   <Text style={styles.cardText}>{band.bio}</Text>
                 </View>
                 <View>
