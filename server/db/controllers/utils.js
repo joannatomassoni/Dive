@@ -16,7 +16,7 @@ const getRecordByName = async (type, name) => {
         if (type === 'band' || type === 'fan' || type === 'user') {
             let userRecord = await User.findOne({
                 where: {
-                    name: name
+                    nickname: name
                 }
             });
             return userRecord;

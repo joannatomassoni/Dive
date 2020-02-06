@@ -424,9 +424,16 @@ const searchBands = async (req, res) => {
         const { query } = req.params;
         const bands = await User.findAll({
                 where: {
-                    [Op.and]: [
-                        { name: { [Op.like]: `%${query}%`} }, 
-                        { id_type: 2 }
+                    [Op.or]: [
+                        {[Op.and]: [
+                            { nickname: { [Op.like]: `%${query}%`} }, 
+                            { id_type: 2 }
+                        ]},
+                        {[Op.and]: [
+                            { name: { [Op.like]: `%${query}%`} }, 
+                            { id_type: 2 }
+                        ]}
+
                     ]
                 }
             })
