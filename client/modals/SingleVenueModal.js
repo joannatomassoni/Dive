@@ -56,6 +56,10 @@ export default function SingleVenueModal(props) {
       });
   }
 
+  const getRSVPS = () => {
+    console.log('');
+  }
+
   // Request to see if a user is following the venue
   const getFollowInfo = () => {
     axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/venues`)
@@ -186,7 +190,7 @@ export default function SingleVenueModal(props) {
                   borderRadius={10}
                   containerStyle={styles.card}
                 >
-                  <SingleShowModal show={show} />
+                  <SingleShowModal show={show} getRSVPS={getRSVPS}/>
                   <Text style={styles.cardText}>{show.date}</Text>
                   <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                   <Text style={styles.cardText}>{show.description}</Text>
