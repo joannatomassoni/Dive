@@ -111,7 +111,7 @@ export default function Hub(props) {
     getBandInfo();
     getBandsShows();
     getPreviousShows();
-  }, [])
+  }, [fanShows])
 
   return (
     <View style={styles.container}>
@@ -215,6 +215,7 @@ export default function Hub(props) {
                       <SingleShowModal show={show} />
                       <Text style={styles.cardText}>{show.date}</Text>
                       <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
+                      <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
                       {show.bands ?
                         show.bands.map(band => {
                           <Text style={styles.cardText} key={band.id}>{band.name}</Text>
