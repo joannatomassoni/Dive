@@ -18,7 +18,7 @@ import { AXIOS_URL } from 'react-native-dotenv';
 import * as Location from 'expo-location';
 // import * as Permissions from 'expo-permissions';
 // import MapView from 'react-native-maps';
-import ShowsNearBy from '../modals/ShowsNearBy';
+// import ShowsNearBy from '../modals/ShowsNearBy';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Shows(props) {
