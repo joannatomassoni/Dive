@@ -133,7 +133,6 @@ export default function SingleBandModal(props) {
               <FacebookButton link={band.link_facebook} />
             </View>
 
-            <Text style={styles.infoText}>{band.bio}</Text>
             {/* if user is signed in show button to follor band */}
             {userInfo.signedIn ?
               (isFollowing ?
