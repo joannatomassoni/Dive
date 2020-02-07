@@ -88,6 +88,7 @@ router.get('/bands/:id/shows', ctrl.getBandUpcomingGigs)
 // get all past gigs for a bad
 router.get('/bands/:id/pastgigs', ctrl.getBandPastGigs)
 
+
 // add fan for band
 // req.body = { id_fan }
 router.post('/bands/:id/fans/', ctrl.followBand)

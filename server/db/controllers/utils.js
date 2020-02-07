@@ -1,4 +1,7 @@
-const { User, Genre, Venue, Show } = require('../sequelize');
+const { User, Genre, Venue, Show, Sequelize } = require('../sequelize');
+
+// import the Sequelize operators
+const Op = Sequelize.Op;
 
 /**
  * These are helper functions to grab all data from a single record 
@@ -16,7 +19,10 @@ const getRecordByName = async (type, name) => {
         if (type === 'band' || type === 'fan' || type === 'user') {
             let userRecord = await User.findOne({
                 where: {
-                    name: name
+                    [Op.or]: [
+                        { nickname: name },
+                        { name: name }
+                    ]
                 }
             });
             return userRecord;

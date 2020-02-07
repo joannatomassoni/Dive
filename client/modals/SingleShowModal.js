@@ -5,7 +5,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Image
+  ImageBackground
 } from 'react-native';
 import { Card } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -32,7 +32,7 @@ export default function SingleShowModal(props) {
   const venue = show.venue;
   const bands = show.bands;
 
-  // dummy function so singleshowmoal doesn't throw error
+  // dummy function so singleShowModal doesn't throw error
   const getAllBands = () => {
     console.log('');
   }
@@ -40,7 +40,7 @@ export default function SingleShowModal(props) {
   const getFollowedBands = () => {
     console.log('');
   }
-  
+
   const getRSVPS = () => {
     console.log('');
   }
@@ -138,9 +138,10 @@ export default function SingleShowModal(props) {
               color='#59C3D1'
               size={32}
               style={styles.menuIcon}
-              onPress={() => { 
+              onPress={() => {
                 props.getRSVPS();
-                setModalVisible(false) }}
+                setModalVisible(false)
+              }}
             />
           </Ionicons>
           <LinearGradient
@@ -149,27 +150,38 @@ export default function SingleShowModal(props) {
           >
             <ScrollView style={{ marginTop: 70 }}>
               <Text style={styles.headerText} key={show.id}>{show.name}</Text>
-              {/* show flyer */}
+              {/* display show flyer if one exists */}
               {show.flyer ?
-                <Image
-                  style={{ width: 400, height: 400, marginLeft: 5 }}
-                  source={{ uri: show.flyer }}
-                />
-                : null}
-              {/* additional text */}
-              {venue ?
-                <View>
-                  <Text style={styles.infoText}>{Moment(show.dateTime).format('ll')}</Text>
-                  <Text style={styles.infoText}>{Moment(show.dateTime).format('LT')}</Text>
-                  <Text style={styles.infoText}>{venue.name}</Text>
-                  <Text style={styles.infoText}>{show.description}</Text>
+                <View style={{ marginBottom: -140 }}>
+                  <ImageBackground
+                    style={{ width: 415, height: 415, alignSelf: 'center', }}
+                    source={{ uri: show.flyer }}
+                  >
+                    <LinearGradient
+                      colors={['transparent', 'rgba(0,0,0,0.5)', '#000']}
+                      style={{ width: 415, height: 415, alignSelf: 'center', }}
+                    >
+                    </LinearGradient>
+                  </ImageBackground>
                 </View>
                 : null}
+              <View>
+                <Text style={styles.infoDateText}>{Moment(show.dateTime).format('ll')}</Text>
+                <Text style={styles.infoDateText}>{Moment(show.dateTime).format('LT')}</Text>
+                {show.description ?
+                  <Text style={styles.infoText}>{show.description}</Text>
+                  : null
+                }
+                {venue ?
+                <Text style={styles.infoVenueText}>{venue.name}</Text>
+                : null}
+                </View>
               {/* list of all additional bands playing in current show */}
               {bands && bands.map(band => {
+                console.log(band);
                 return (
                   <View style={styles.bandModal}>
-                  <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS}/>
+                    <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS} />
                   </View>
                 )
               })}
@@ -177,9 +189,16 @@ export default function SingleShowModal(props) {
               <View style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
-                marginTop: 10,
-                marginBottom: 10
+                marginTop: 20,
               }}>
+                {/* button to create a new comment (shows when signed in) */}
+                {userInfo.signedIn ?
+                  <CreateCommentModal
+                    userId={userInfo.id}
+                    showId={show.id}
+                    getShowComments={getShowComments}
+                  />
+                  : null}
                 {/* add to calendar button */}
                 {/* <TouchableOpacity
                   style={styles.buttonContainer}
@@ -204,7 +223,6 @@ export default function SingleShowModal(props) {
                   : null}
                 {/* button to rsvp to specific (shows when signed in) */}
                 {userInfo.signedIn ?
-
                   //if already rsvp'd, show button to cancel rvp
                   rsvp ? <TouchableOpacity
                     style={styles.cancelButtonContainer}
@@ -271,8 +289,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     alignSelf: 'flex-end',
     paddingRight: 20,
-    paddingBottom: 5,
-
   },
   headerText: {
     fontSize: 45,
@@ -319,12 +335,36 @@ const styles = StyleSheet.create({
     color: '#75A4AD',
     padding: 1,
   },
-  infoText: {
+  infoDateText: {
     fontSize: 20,
-    color: '#fff',
+    color: '#59C3D1',
     textAlign: 'right',
     paddingRight: 20,
-    paddingBottom: 5
+    fontWeight: 'bold',
+    textShadowColor: '#111',
+    textShadowOffset: { width: 5, height: 5 },
+    textShadowRadius: 10
+  },
+  infoVenueText: {
+    fontSize: 22,
+    color: '#AA8181',
+    textAlign: 'right',
+    fontWeight: 'bold',
+    paddingRight: 20,
+    paddingBottom: 3,
+    textShadowColor: '#111',
+    textShadowOffset: { width: 5, height: 5 },
+    textShadowRadius: 10
+  },
+  infoText: {
+    fontSize: 20,
+    color: '#75A4AD',
+    textAlign: 'right',
+    paddingRight: 20,
+    paddingBottom: 1,
+    textShadowColor: '#111',
+    textShadowOffset: { width: 5, height: 5 },
+    textShadowRadius: 10
   },
   menuIcon: {
     position: 'absolute',

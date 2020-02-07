@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ScrollView,
+  Alert
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
@@ -108,7 +109,7 @@ export default function EditShowModal(props) {
                   color='#59C3D1'
                   size={37}
                   onPress={() => {
-                    addBandName([...bands, bandName])
+                    addBandName([...bandNames, bandName])
                     Alert.alert('Band Added');
                   }}
                 />
@@ -165,11 +166,11 @@ export default function EditShowModal(props) {
                 style={styles.altButtonContainer}
                 onPress={async () => {
                   await deleteShow()
-                  .then(async () => {
-                    await getBandsShows();
-                  })
-                  .then(() => setModalVisible(false))
-                  .catch(error => console.log('failed to delete show', error));
+                    .then(async () => {
+                      await getBandsShows();
+                    })
+                    .then(() => setModalVisible(false))
+                    .catch(error => console.log('failed to delete show', error));
                 }}
               >
                 <Text style={styles.buttonText}>Delete Show</Text>

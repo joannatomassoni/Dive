@@ -34,6 +34,7 @@ export default function Hub(props) {
   // const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
+  const [oldShows, setOldShows] = useState([]);
 
 
   //request to get all bands from db
@@ -76,7 +77,6 @@ export default function Hub(props) {
     await axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/rsvps`)
       .then((response) => {
         setFanShows(() => response.data);
-        console.log(fanShows);
       })
       .catch((err) => {
         console.log(err);
@@ -105,13 +105,26 @@ export default function Hub(props) {
       })
   }
 
+  const getPreviousBandShows = () => {
+    console.log("blablabal")
+    axios.get(`https://dive-266016.appspot.com/shows/${userInfo.id}/oldShows`)
+      .then(response => {
+        console.log("getting old shows bands played", response.data);
+        setOldShows(response.data[0])
+      })
+      .catch(err => {
+        console.log("not getting older shows for previously played", err);
+      })
+  }
+
   //load all user info when brought to hub
   useEffect(() => {
     getRSVPS();
+    getFollowedBands();
     getBandInfo();
     getBandsShows();
-    getFollowedBands();
     getPreviousShows();
+    getPreviousBandShows();
   }, [])
 
   return (
@@ -178,9 +191,9 @@ export default function Hub(props) {
                           backgroundColor='#fff'
                           borderWidth={0}
                           borderRadius={10}
-                          padding={10}
-                        >
+                          padding={10}>
                           <SingleShowModal show={show} getRSVPS={getRSVPS}/>
+                          <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
                           <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                           {show.description ?
                             <Text style={styles.cardText}>{show.description}</Text>
@@ -215,6 +228,7 @@ export default function Hub(props) {
                       <SingleShowModal show={show} />
                       <Text style={styles.cardText}>{show.date}</Text>
                       <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
+                      <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
                       {show.bands ?
                         show.bands.map(band => {
                           <Text style={styles.cardText} key={band.id}>{band.name}</Text>
@@ -255,17 +269,16 @@ export default function Hub(props) {
                   containerStyle={styles.card}
                 >
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS}/>
+                    <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS} />
                   </View>
-                  {/* <Text style={{ marginBottom: 10 }}>{show.time}</Text>
-                    <Text style={{ marginBottom: 10 }}>{show.description}</Text> */}
                 </Card>
               )
             })
             }
           </View>
           <PreviousRSVPShows userId={userInfo.id} />
-          {/* <PreviousBandShows userID={userInfo.id} /> */}
+
+          {/* <PreviousBandShows oldShows={oldShows} /> */}
         </ScrollView>
       </LinearGradient>
     </View >
