@@ -335,6 +335,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   modal: {
-    alignSelf: 'center'
+    alignSelf: 'center',
+    paddingRight: 20
   }
 })

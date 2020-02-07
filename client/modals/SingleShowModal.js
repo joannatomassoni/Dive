@@ -185,6 +185,7 @@ export default function SingleShowModal(props) {
                   </View>
                 )
               })}
+
               <View style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
@@ -213,6 +214,13 @@ export default function SingleShowModal(props) {
                 >
                   <Text style={styles.signupButtonText}>Add To Calendar</Text>
                 </TouchableOpacity> */}
+                {userInfo.signedIn ?
+                  <CreateCommentModal
+                    userId={userInfo.id}
+                    showId={show.id}
+                    getShowComments={getShowComments}
+                  />
+                  : null}
                 {/* button to rsvp to specific (shows when signed in) */}
                 {userInfo.signedIn ?
                   //if already rsvp'd, show button to cancel rvp
@@ -235,6 +243,7 @@ export default function SingleShowModal(props) {
                     </TouchableOpacity>
                   : null}
               </View>
+              {/* button to create a new comment (shows when signed in) */}
               {/* cards to hold comments */}
               {comments.map(comment => {
                 return (

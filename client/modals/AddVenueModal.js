@@ -41,7 +41,7 @@ export default function AddVenueModal(props) {
         visible={modalVisible}
       >
         {/* start of modal when showing */}
-        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <KeyboardAvoidingView behavior="padding" style={styles.topContainer}>
           {/* back button */}
           <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
             <Ionicons
@@ -136,10 +136,13 @@ export default function AddVenueModal(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  topContainer: {
     flex: 1,
     backgroundColor: '#2D323A',
-    padding: 20
+    paddingHorizontal: 15
+  },
+  container: {
+    flex: 1,
   },
   input: {
     height: 40,
@@ -152,15 +155,13 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
-    paddingTop: 200
+    marginTop: 130
   },
   text: {
     fontSize: 40,
-    alignItems: 'center',
+    alignSelf: 'center',
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
-    marginLeft: 75,
     marginBottom: 15
   },
   createShowContainer: {
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     fontWeight: '700',
-    color: '#fff'
+    color: '#000'
   },
   signupButtonText: {
     textAlign: 'center',
