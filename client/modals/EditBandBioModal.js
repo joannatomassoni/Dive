@@ -250,7 +250,7 @@ export default function EditBandBioModal({ getBandInfo }) {
                   setModalVisible(false); 
                 }}
               >
-                <Text style={styles.signupButtonText}>Return</Text>
+                <Text style={styles.signupButtonText}>Save</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 1)',
     paddingHorizontal: 10,
     borderRadius: 5,
-    width: 300,
+    width: 265,
     fontWeight: 'bold',
     marginRight: 10
   },
@@ -288,14 +288,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 50,
-    alignItems: 'center',
     color: '#59C3D1',
     fontWeight: 'bold',
     alignSelf: 'center',
     marginBottom: 15
   },
   returnButtonContainer: {
-    backgroundColor: '#75A4AD',
+    backgroundColor: '#59C3D1',
     paddingVertical: 10,
     borderRadius: 5,
     marginHorizontal: 90,

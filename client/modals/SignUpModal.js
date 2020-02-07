@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { 
   Modal, 
   Text, 
@@ -105,6 +105,17 @@ export default function ModalExample(props) {
       //create a calendar for dive events
     } catch(error){console.log(error)}
   }
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Calendar.requestCalendarPermissionsAsync();
+      if (status === 'granted') {
+        const calendars = await Calendar.getCalendarsAsync();
+        console.log('Here are all your calendars:');
+        console.log({ calendars });
+      }
+    })();
+  }, []);
 
   return (
     <View>

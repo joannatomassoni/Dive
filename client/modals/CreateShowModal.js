@@ -288,7 +288,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: '#59C3D1',
     fontWeight: 'bold',
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
+    textAlign: 'center',
     marginBottom: 15
   },
   createShowContainer: {
@@ -335,6 +336,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   modal: {
-    alignSelf: 'center'
+    alignSelf: 'center',
+    paddingRight: 20
   }
 })
