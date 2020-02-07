@@ -36,6 +36,7 @@ export default function Hub(props) {
   const [followed, setFollowed] = useState([]);
   const [oldShows, setOldShows] = useState([]);
 
+  console.log(hubInfo);
 
   //request to get all bands from db
   const getAllBands = () => {
@@ -277,7 +278,6 @@ export default function Hub(props) {
             }
           </View>
           <PreviousRSVPShows userId={userInfo.id} />
-
           {/* <PreviousBandShows oldShows={oldShows} /> */}
         </ScrollView>
       </LinearGradient>
