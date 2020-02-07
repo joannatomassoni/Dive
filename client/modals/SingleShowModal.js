@@ -214,13 +214,6 @@ export default function SingleShowModal(props) {
                 >
                   <Text style={styles.signupButtonText}>Add To Calendar</Text>
                 </TouchableOpacity> */}
-                {userInfo.signedIn ?
-                  <CreateCommentModal
-                    userId={userInfo.id}
-                    showId={show.id}
-                    getShowComments={getShowComments}
-                  />
-                  : null}
                 {/* button to rsvp to specific (shows when signed in) */}
                 {userInfo.signedIn ?
                   //if already rsvp'd, show button to cancel rvp
