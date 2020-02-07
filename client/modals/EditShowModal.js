@@ -224,9 +224,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 40,
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
     alignSelf: 'center',
+    textAlign: 'center',
     marginBottom: 15
   },
   buttonContainer: {
