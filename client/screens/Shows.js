@@ -68,7 +68,7 @@ export default function Shows(props) {
                     <Text style={styles.cardDateText}>{show.date}</Text>
                     <Text style={styles.cardDateText}>{Moment(show.dateTime).format('LT')}</Text>
                     <Text style={styles.cardVenueText}>{show.venue.name}</Text>
-                    <Text style={styles.cardBandText}>{show.bands[0].name}</Text>
+                    <Text style={styles.cardBandText}>{show.bands[0].nickname}</Text>
                   </View>
                   <View>
                     <Text style={{marginTop: 10}}>
