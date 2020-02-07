@@ -201,7 +201,6 @@ export default function SingleBandModal(props) {
       </Modal>
       {/* create show button when modal is hidden */}
       <TouchableOpacity
-        style={styles.signupContainer}
         onPress={() => {
           setModalVisible(true);
         }}
@@ -277,7 +276,6 @@ const styles = StyleSheet.create({
   cardHeaderText: {
     fontWeight: 'bold',
     fontSize: 20,
-    marginTop: 2,
     marginBottom: 10,
     color: '#fff'
   },

@@ -7,26 +7,19 @@ import {
   SafeAreaView,
   Dimensions
 } from 'react-native';
-import { Card, Divider } from 'react-native-elements'
+import { Card } from 'react-native-elements'
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 import SingleShowModal from '../modals/SingleShowModal'
 import Moment from 'moment';
-import { AXIOS_URL } from 'react-native-dotenv';
-import * as Location from 'expo-location';
-// import * as Permissions from 'expo-permissions';
-// import MapView from 'react-native-maps';
-// import ShowsNearBy from '../modals/ShowsNearBy';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Shows(props) {
   //global user signin info and editing function
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
-  // const [location, setLocation] = useState({});
-
   // const [flyer, setFlyer] = useState("");
 
   //request to get all shows
@@ -44,25 +37,11 @@ export default function Shows(props) {
     console.log('');
   }
 
-  // const getLocationAsync = async () => {
-  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
-  //   if (status !== 'granted') {
-  //     console.log("can't get location");
-  //     // this.setState({
-  //     //   errorMessage: 'Permission to access location was denied',
-  //     // });
-  //   }
-
-  //   let locationObj = await Location.getCurrentPositionAsync({});
-  //   locationObj = JSON.stringify(locationObj);
-  //   setLocation(location);
-  // };
-
-
   useEffect(() => {
     getAllShows();
-    // getLocationAsync();
   }, [])
+
+  console.log(shows);
 
   return (
     <View style={styles.container}>
@@ -86,14 +65,20 @@ export default function Shows(props) {
                   <View>
                     {/* modal to display single show info */}
                     <SingleShowModal show={show} getRSVPS={getRSVPS}/>
-                    <Text style={styles.cardText}>{show.date}</Text>
-                    <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
-                    {show.bands ?
-                      show.bands.map(band => {
-                        <Text style={styles.cardText} key={band.id}>{band.name}</Text>
-                      })
-                      : null}
-                    <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text>
+                    <Text style={styles.cardDateText}>{show.date}</Text>
+                    <Text style={styles.cardDateText}>{Moment(show.dateTime).format('LT')}</Text>
+                    <Text style={styles.cardVenueText}>{show.venue.name}</Text>
+                    <Text style={styles.cardBandText}>{show.bands[0].name}</Text>
+                  </View>
+                  <View>
+                    <Text style={{marginTop: 10}}>
+                      {show.flyer &&
+                        <Image
+                          style={styles.photo}
+                          source={{ uri: show.flyer }}
+                        />
+                      }
+                    </Text>
                   </View>
                 </View>
               </Card>
@@ -126,15 +111,22 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     backgroundColor: '#59C3D1',
   },
-  cardText: {
+  cardDateText: {
     fontSize: 16,
+    color: '#75A4AD',
+    fontWeight: '500',
+    textAlign: 'left',
+    paddingRight: 20
+  },
+  cardBandText: {
+    fontSize: 18,
     color: '#59C3D1',
     fontWeight: 'bold',
     textAlign: 'left',
     paddingRight: 20
   },
   cardVenueText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#AA8181',
     fontWeight: 'bold',
     textAlign: 'left',
@@ -149,8 +141,6 @@ const styles = StyleSheet.create({
   photo: {
     width: 100,
     height: 100,
-    borderRadius: 10
+    borderRadius: 10,
   },
 })
-
-
