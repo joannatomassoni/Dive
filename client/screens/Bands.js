@@ -25,7 +25,7 @@ export default function Bands(props) {
 
   //request to get all bands from db
   const getAllBands = () => {
-    axios.get(`https://dive-266016.appspot.com/bands`)
+    axios.get(`https://dive-ios.appspot.com/bands`)
       .then((response) => {
         setBands(() => response.data);
       })

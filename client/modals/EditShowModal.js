@@ -52,7 +52,7 @@ export default function EditShowModal(props) {
   ];
 
   const deleteShow = async () => {
-    await axios.delete(`https://dive-266016.appspot.com/shows/${show.id}`);
+    await axios.delete(`https://dive-ios.appspot.com/shows/${show.id}`);
   }
 
 
@@ -145,7 +145,7 @@ export default function EditShowModal(props) {
                 style={styles.buttonContainer}
                 onPress={() => {
                   console.log(showTitle)
-                  axios.patch(`https://dive-266016.appspot.com/shows/${show.id}`, {
+                  axios.patch(`https://dive-ios.appspot.com/shows/${show.id}`, {
                     name: showTitle,
                     dateTime: dateTime,
                     flyer: flyer,

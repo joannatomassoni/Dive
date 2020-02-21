@@ -47,7 +47,7 @@ export default function SingleShowModal(props) {
 
   //request to get all comments for specific show
   const getShowComments = () => {
-    axios.get(`https://dive-266016.appspot.com/shows/${show.id}/comments`)
+    axios.get(`https://dive-ios.appspot.com/shows/${show.id}/comments`)
       .then((response) => {
         setComments(() => response.data.reverse())
       })
@@ -57,7 +57,7 @@ export default function SingleShowModal(props) {
   }
   //request to get user's rsvp info
   const getRsvpInfo = () => {
-    axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/rsvps`)
+    axios.get(`https://dive-ios.appspot.com/fans/${userInfo.id}/rsvps`)
       .then((response) => {
         response.data.map((rsvp) => {
           if (show.id === rsvp.id) {
@@ -71,7 +71,7 @@ export default function SingleShowModal(props) {
   }
   //request to add rsvp
   const addRsvp = () => {
-    axios.post(`https://dive-266016.appspot.com/shows/rsvps`, {
+    axios.post(`https://dive-ios.appspot.com/shows/rsvps`, {
       id_fan: userInfo.id,
       id_show: show.id,
     })
@@ -81,7 +81,7 @@ export default function SingleShowModal(props) {
   }
   //request to remove rsvp
   const removeRsvp = () => {
-    axios.delete(`https://dive-266016.appspot.com/shows/rsvps`, {
+    axios.delete(`https://dive-ios.appspot.com/shows/rsvps`, {
       data: {
         id_fan: userInfo.id,
         id_show: show.id,

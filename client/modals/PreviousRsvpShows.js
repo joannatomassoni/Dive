@@ -20,7 +20,7 @@ export default function PreviousRSVPShows(props) {
   let userId = props.userId;
 
   const getPreviousShows = () => {
-    axios.get(`https://dive-266016.appspot.com/fans/${userId}/pastrsvps`)
+    axios.get(`https://dive-ios.appspot.com/fans/${userId}/pastrsvps`)
       .then(response => {
         if (response.data.length) {
           setOldShows(response.data)

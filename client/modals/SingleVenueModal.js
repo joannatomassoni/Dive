@@ -27,7 +27,7 @@ export default function SingleVenueModal(props) {
   // whether a user follows a given venue or not
   const [isFollowing, toggleFollowing] = useState(false);
   //venue id for axios call
-  let venue = props.venue
+  let venue = props.venue;
 
   //request to get geolocation of address
   const getAddressCoords = async () => {
@@ -62,7 +62,7 @@ export default function SingleVenueModal(props) {
 
   // Request to see if a user is following the venue
   const getFollowInfo = () => {
-    axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/venues`)
+    axios.get(`https://dive-ios.appspot.com/fans/${userInfo.id}/venues`)
       .then((response) => {
         if (response.data[0].venues) {
           response.data[0].venues.map(singleVenue => {
@@ -79,7 +79,7 @@ export default function SingleVenueModal(props) {
   
   // request to follow a venue
   const fanFollowVenue = () => {
-    axios.post(`https://dive-266016.appspot.com/venues/${venue.id}/fans`, {
+    axios.post(`https://dive-ios.appspot.com/venues/${venue.id}/fans`, {
       id_fan: userInfo.id,
     })
       .then(() => toggleFollowing(true))
@@ -88,7 +88,7 @@ export default function SingleVenueModal(props) {
 
   // request to unfollow a venue
   const unfollowVenue = () => {
-    axios.delete(`https://dive-266016.appspot.com/venues/${venue.id}/fans`, {
+    axios.delete(`https://dive-ios.appspot.com/venues/${venue.id}/fans`, {
       data: {
         id_fan: userInfo.id,
         id_venue: venue.id,
@@ -171,7 +171,7 @@ export default function SingleVenueModal(props) {
             {/* shows header */}
             <Text style={styles.headerText}>Shows</Text>
             {/* cards for each upcoming show at the venue */}
-            {venue.shows && venue.shows.map(show => {
+            {venue.shows.length && venue.shows.map(show => {
               return (
                 <Card
                   key={show.id}
