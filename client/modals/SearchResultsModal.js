@@ -31,19 +31,19 @@ export default function SearchResultsModal() {
     }
 
     const searchCall = async (query) => {
-        await axios.get(`https://dive-266016.appspot.com/search/bands/${query}`)
+        await axios.get(`https://dive-ios.appspot.com/search/bands/${query}`)
             .then((response) => {
                 if (response.data) {
                     setBands(response.data);
                 }
             })
-        await axios.get(`https://dive-266016.appspot.com/search/venues/${query}`)
+        await axios.get(`https://dive-ios.appspot.com/search/venues/${query}`)
             .then((response) => {
                 if (response.data) {
                     setVenues(response.data);
                 }
             })
-            await axios.get(`https://dive-266016.appspot.com/search/shows/${query}`)
+            await axios.get(`https://dive-ios.appspot.com/search/shows/${query}`)
             .then((response) => {
                 if (response.data) {
                     setShows(response.data);

@@ -33,7 +33,7 @@ export default function SingleBandModal(props) {
  
   // request to see if user is following band
   const isUserFollowing = () => {
-    axios.get(`https://dive-266016.appspot.com/fans/${userInfo.id}/bands`)
+    axios.get(`https://dive-ios.appspot.com/fans/${userInfo.id}/bands`)
       .then((response) => {
         response.data.map(singleBand => {
           if (band.id === singleBand.id) {
@@ -47,7 +47,7 @@ export default function SingleBandModal(props) {
   };
   // request to get all shows for specific band if the user is following the band
   const allBandShows = () => {
-    axios.get(`https://dive-266016.appspot.com/bands/${band.id}/shows`)
+    axios.get(`https://dive-ios.appspot.com/bands/${band.id}/shows`)
       .then((response) => {
         setShows(() => response.data.shows);
       })
@@ -57,7 +57,7 @@ export default function SingleBandModal(props) {
   };
   // request for user to follow band
   const followBand = () => {
-    axios.post(`https://dive-266016.appspot.com/bands/${band.id}/fans`, {
+    axios.post(`https://dive-ios.appspot.com/bands/${band.id}/fans`, {
       id_fan: userInfo.id
     })
       .then(() => {
@@ -67,7 +67,7 @@ export default function SingleBandModal(props) {
   };
   // request for user to unfollow band
   const unfollowBand = () => {
-    axios.delete(`https://dive-266016.appspot.com/bands/${band.id}/fans`, {
+    axios.delete(`https://dive-ios.appspot.com/bands/${band.id}/fans`, {
       data: {
         id_fan: userInfo.id,
       }

@@ -30,7 +30,7 @@ export default function LoginForm (props) {
       if (type === "success") {
         //console.log('User Info: ', user, 'Access Token: ', accessToken);
         //key values to add to the userInfo global state
-        axios.get(`https://dive-266016.appspot.com/users/${user.email}`)
+        axios.get(`https://dive-ios.appspot.com/users/${user.email}`)
           .then(res => setUserInfo(userInfo => ({
             ...userInfo,
             signedIn: true,
@@ -78,7 +78,7 @@ export default function LoginForm (props) {
       <TouchableOpacity 
         style={styles.loginContainer}
         onPress={() => {
-          axios.get(`https://dive-266016.appspot.com/users/${usernameValue}`)
+          axios.get(`https://dive-ios.appspot.com/users/${usernameValue}`)
             .then(res => setUserInfo(userInfo => ({
               ...userInfo,
               signedIn: true,

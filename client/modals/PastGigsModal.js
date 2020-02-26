@@ -20,7 +20,7 @@ export default function PastGigsModal(props) {
   let userId = props.userId;
 
   const getPastGigs = () => {
-    axios.get(`https://dive-266016.appspot.com/bands/${userId}/pastgigs`)
+    axios.get(`https://dive-ios.appspot.com/bands/${userId}/pastgigs`)
       .then(response => {
         if (response.data.shows.length) {
           setPastGigs(response.data.shows)

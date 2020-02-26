@@ -31,7 +31,7 @@ export default function PreviousBandShows(props) {
 
   // const getPreviousBandShows = () => {
   //   console.log("blablabal")
-  //   axios.get(`https://dive-266016.appspot.com/shows/${userId}/oldShows`)
+  //   axios.get(`https://dive-ios.appspot.com/shows/${userId}/oldShows`)
   //     .then(response => {
   //       console.log("getting old shows bands played", response.data);
   //       setOldShows(response.data[0])

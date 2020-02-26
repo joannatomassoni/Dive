@@ -20,7 +20,7 @@ export default function Venues(props) {
   const [venues, setVenues] = useState([]);
 
   const getAllVenues = () => {
-    axios.get(`https://dive-266016.appspot.com/venues`)
+    axios.get(`https://dive-ios.appspot.com/venues`)
       .then((response) => {
         setVenues(() => response.data.reverse());
       })
