@@ -223,9 +223,8 @@ export default function Hub(props) {
                     <View>
                       {/* modal to display single show info */}
                       <SingleShowModal show={show} />
-                      <Text style={styles.cardText}>{show.date}</Text>
-                      <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
-                      <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
+                      <Text style={styles.cardDateText}>{Moment(show.dateTime).format('ll')}</Text>
+                      <Text style={styles.cardDateText}>{Moment(show.dateTime).format('LT')}</Text>
                       {show.bands ?
                         show.bands.map(band => {
                           <Text style={styles.cardText} key={band.id}>{band.name}</Text>
