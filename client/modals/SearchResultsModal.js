@@ -210,8 +210,8 @@ const styles = StyleSheet.create({
         fontSize: 50,
         color: '#59C3D1',
         fontWeight: 'bold',
-        textAlign: 'center',
-        paddingRight: 20
+        textAlign: 'left',
+        paddingLeft: 20
     },
     menuIcon: {
         position: 'absolute',
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#2D323A',
         alignSelf: 'center',
-        paddingTop: 30
+        paddingTop: 15
     },
     linkRow: {
         flexDirection: 'row',
