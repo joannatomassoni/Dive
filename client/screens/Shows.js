@@ -65,7 +65,7 @@ export default function Shows(props) {
                   <View>
                     {/* modal to display single show info */}
                     <SingleShowModal show={show} getRSVPS={getRSVPS}/>
-                    <Text style={styles.cardDateText}>{show.date}</Text>
+                    <Text style={styles.cardDateText}>{Moment(show.dateTime).format('ll')}</Text>
                     <Text style={styles.cardDateText}>{Moment(show.dateTime).format('LT')}</Text>
                     <Text style={styles.cardVenueText}>{show.venue.name}</Text>
                     <Text style={styles.cardBandText}>{show.bands[0].nickname}</Text>

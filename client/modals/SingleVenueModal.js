@@ -181,7 +181,7 @@ export default function SingleVenueModal(props) {
                   containerStyle={styles.card}
                 >
                   <SingleShowModal show={show} getRSVPS={getRSVPS}/>
-                  <Text style={styles.cardText}>{show.date}</Text>
+                  <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
                   <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
                   {show.description ? 
                     <Text style={styles.cardText}>{show.description}</Text>

@@ -174,7 +174,7 @@ export default function SingleBandModal(props) {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                       <View>
                         <SingleShowModal show={show} getRSVPS={getRSVPS}/>
-                        <Text style={styles.cardDateText}>{show.date}</Text>
+                        <Text style={styles.cardDateText}>{Moment(show.dateTime).format('ll')}</Text>
                         <Text style={styles.cardDateText}>{Moment(show.dateTime).format('LT')}</Text>
                         <Text style={styles.cardVenueText}>{show.venue.name}</Text>
                         <Text style={styles.cardText}>{show.description}</Text>
