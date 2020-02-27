@@ -185,7 +185,7 @@ export default function SearchResultsModal() {
                             onChangeText={setQuery}
                             style={styles.input}
                         />
-												<Ionicons
+						<Ionicons
                             name='md-search'
                             color='#59C3D1'
                             size={37}
@@ -209,10 +209,9 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 50,
         color: '#59C3D1',
-        opacity: 0.9,
         fontWeight: 'bold',
-        textAlign: 'right',
-        paddingRight: 20
+        textAlign: 'left',
+        paddingLeft: 20
     },
     menuIcon: {
         position: 'absolute',
@@ -228,25 +227,22 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: 50,
-        color: '#59C3D1',
-        opacity: 0.9,
+        color: '#3BAFBF',
         fontWeight: 'bold',
-        textAlign: 'right',
-        paddingRight: 20
+        textAlign: 'left',
+        paddingLeft: 20
     },
     subheaderText: {
         fontSize: 35,
         color: '#59C3D1',
-        opacity: 0.9,
-        // fontWeight: 'bold',
         textAlign: 'left',
         paddingLeft: 20
     },
     searchBarContainer: {
         flex: 1,
         backgroundColor: '#2D323A',
-				alignSelf: 'center',
-				paddingTop: 30
+        alignSelf: 'center',
+        paddingTop: 15
     },
     linkRow: {
         flexDirection: 'row',

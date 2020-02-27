@@ -41,7 +41,7 @@ export default function Venues(props) {
         style={{ flex: 1 }}
       >
       <ScrollView style={{ marginTop: 70 }}>
-        <Text style={styles.text}>Venues</Text>
+          <Text style={styles.headerText}>Venues</Text>
         {/* modal to add a new venue to the venue db */}
         {userInfo.userType === 'band' ? <AddVenueModal /> : null}
         {venues.reverse().map(venue => {
@@ -55,7 +55,7 @@ export default function Venues(props) {
             >
               <SingleVenueModal venue={venue}/>
               <Text style={styles.cardText}>{venue.address}</Text>
-              <Text style={styles.cardText}>{venue.city}, {venue.state} {" "} {venue.zip_code}</Text>
+              <Text style={styles.cardText}>{venue.city}, {venue.state}</Text>
             </Card>
           )
         })}
@@ -71,12 +71,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D323A',
     justifyContent: 'center',
   },
-  text: {
+  headerText: {
     fontSize: 50,
-    color: '#59C3D1',
+    color: '#3BAFBF',
     fontWeight: 'bold',
-    textAlign: 'right',
-    paddingRight: 20
+    textAlign: 'left',
+    paddingLeft: 20
   },
   card: {
     borderWidth: 0,

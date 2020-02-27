@@ -101,11 +101,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerText: {
-    fontSize: 50,
-    color: '#3BAFBF',
-    fontWeight: 'bold',
-    textAlign: 'right',
-    paddingRight: 20,
+      fontSize: 50,
+      color: '#3BAFBF',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      paddingLeft: 20
   },
   button: {
     borderRadius: 5,

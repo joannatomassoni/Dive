@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
     fontSize: 50,
     color: '#3BAFBF',
     fontWeight: 'bold',
-    textAlign: 'right',
-    paddingRight: 20
+    textAlign: 'left',
+    paddingLeft: 20
   },
   card: {
     backgroundColor: '#75A4AD',
