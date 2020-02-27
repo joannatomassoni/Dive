@@ -168,10 +168,10 @@ export default function SingleVenueModal(props) {
                 </TouchableOpacity>)
               : null
             }
-            {/* shows header */}
-            <Text style={styles.headerText}>Shows</Text>
-            {/* cards for each upcoming show at the venue */}
-            {venue.shows.length && venue.shows.map(show => {
+            {venue.shows && venue.shows.map(show => {
+              {/* shows header */}
+              <Text style={styles.headerText}>Shows</Text>
+              {/* cards for each upcoming show at the venue */}
               return (
                 <Card
                   key={show.id}
@@ -181,12 +181,8 @@ export default function SingleVenueModal(props) {
                   containerStyle={styles.card}
                 >
                   <SingleShowModal show={show} getRSVPS={getRSVPS}/>
-                  <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
-                  <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
-                  {show.description ? 
-                    <Text style={styles.cardText}>{show.description}</Text>
-                    : null
-                  }
+                  <Text style={styles.cardDateText}>{Moment(show.dateTime).format('ll')}</Text>
+                  <Text style={styles.cardDateText}>{Moment(show.dateTime).format('LT')}</Text>
                   {/* list for each additional band in each show */}
                   {show.bands && show.bands.map(band => {
                     return <Text style={styles.cardBandText}>{band.nickname}</Text>
@@ -234,6 +230,13 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     backgroundColor: '#111',
     paddingBottom: 10
+  },
+  cardDateText: {
+    fontSize: 16,
+    color: '#75A4AD',
+    fontWeight: '500',
+    textAlign: 'left',
+    paddingRight: 20
   },
   button: {
     borderRadius: 5,
