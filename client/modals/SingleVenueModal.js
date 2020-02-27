@@ -168,10 +168,10 @@ export default function SingleVenueModal(props) {
                 </TouchableOpacity>)
               : null
             }
-            {/* shows header */}
-            <Text style={styles.headerText}>Shows</Text>
-            {/* cards for each upcoming show at the venue */}
-            {venue.shows.length && venue.shows.map(show => {
+            {venue.shows && venue.shows.map(show => {
+              {/* shows header */}
+              <Text style={styles.headerText}>Shows</Text>
+              {/* cards for each upcoming show at the venue */}
               return (
                 <Card
                   key={show.id}
