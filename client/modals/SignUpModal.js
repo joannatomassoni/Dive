@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   modal: {
-    marginLeft: 120
+    alignSelf: 'center'
   },
   buttonText: {
     textAlign: 'center',
