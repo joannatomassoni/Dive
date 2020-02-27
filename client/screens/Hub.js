@@ -193,8 +193,8 @@ export default function Hub(props) {
                           borderRadius={10}
                           padding={10}>
                           <SingleShowModal show={show} getRSVPS={getRSVPS}/>
-                          <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
-                          <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
+                          <Text style={styles.cardDateText}>{Moment(show.dateTime).format('ll')}</Text>
+                          <Text style={styles.cardDateText}>{Moment(show.dateTime).format('LT')}</Text>
                           <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows} />
                         </Card>
                       </View>
@@ -312,6 +312,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#AA8181',
     fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
+  },
+  cardDateText: {
+    fontSize: 16,
+    color: '#75A4AD',
+    fontWeight: '500',
     textAlign: 'left',
     paddingRight: 20
   },
