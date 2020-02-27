@@ -107,7 +107,6 @@ export default function Hub(props) {
   }
 
   const getPreviousBandShows = () => {
-    console.log("blablabal")
     axios.get(`https://dive-ios.appspot.com/shows/${userInfo.id}/oldShows`)
       .then(response => {
         console.log("getting old shows bands played", response.data);
@@ -196,9 +195,6 @@ export default function Hub(props) {
                           <SingleShowModal show={show} getRSVPS={getRSVPS}/>
                           <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
                           <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
-                          {show.description ?
-                            <Text style={styles.cardText}>{show.description}</Text>
-                            : null}
                           <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows} />
                         </Card>
                       </View>
