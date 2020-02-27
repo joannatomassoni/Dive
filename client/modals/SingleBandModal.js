@@ -18,6 +18,7 @@ import SingleShowModal from '../modals/SingleShowModal';
 import SpotifyButton from '../components/SpotifyButton';
 import FacebookButton from '../components/FacebookButton';
 import InstagramButton from '../components/InstagramButton';
+import Moment from 'moment';
 import { AXIOS_URL } from 'react-native-dotenv';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -174,8 +175,8 @@ export default function SingleBandModal(props) {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                       <View>
                         <SingleShowModal show={show} getRSVPS={getRSVPS}/>
-                        <Text style={styles.cardDateText}>{show.date}</Text>
-                        <Text style={styles.cardDateText}>{show.time}</Text>
+                        <Text style={styles.cardDateText}>{Moment(show.dateTime).format('ll')}</Text>
+                        <Text style={styles.cardDateText}>{Moment(show.dateTime).format('LT')}</Text>
                         <Text style={styles.cardVenueText}>{show.venue.name}</Text>
                       </View>
                       <View>
@@ -240,6 +241,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '700',
     color: '#000'
+  },
+  cardDateText: {
+    fontSize: 16,
+    color: '#75A4AD',
+    fontWeight: '500',
+    textAlign: 'left',
+    paddingRight: 20
+  },
+  cardVenueText: {
+    fontSize: 18,
+    color: '#AA8181',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
   },
   unfollowButtonContainer: {
     backgroundColor: '#AA8181',
