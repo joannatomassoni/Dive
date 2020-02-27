@@ -248,11 +248,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 40,
-    alignItems: 'center',
+    alignSelf: 'center',
     color: '#59C3D1',
-    opacity: 0.9,
     fontWeight: 'bold',
-    marginLeft: 90,
     marginBottom: 15
   },
   brightSignupContainer: {
