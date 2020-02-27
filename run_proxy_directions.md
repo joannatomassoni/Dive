@@ -14,7 +14,7 @@
 ## Running the proxy
 
 ### Start the proxy
-1. `./cloud_sql_proxy -instances=dive-ios:us-central1:dive=tcp:3307`
+1. From the server diectory, run: `./cloud_sql_proxy -instances=dive-ios:us-central1:dive=tcp:3307`
     - You should see a message like: 
     <br>`Listening on 127.0.0.1:3307 for myproject:us-central1:myinstance". Ready for new connections`
     - Keep this terminal running
