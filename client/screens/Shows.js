@@ -26,6 +26,7 @@ export default function Shows(props) {
   const getAllShows = () => {
     axios.get('https://dive-ios.appspot.com/shows')
       .then((response) => {
+        console.log('response received')
         setShows(() => response.data);
       })
       .catch((err) => {
