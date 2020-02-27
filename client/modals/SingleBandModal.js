@@ -49,6 +49,7 @@ export default function SingleBandModal(props) {
   const allBandShows = () => {
     axios.get(`https://dive-ios.appspot.com/bands/${band.id}/shows`)
       .then((response) => {
+        console.log('response');
         setShows(() => response.data.shows);
       })
       .catch((err) => {
@@ -173,10 +174,9 @@ export default function SingleBandModal(props) {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                       <View>
                         <SingleShowModal show={show} getRSVPS={getRSVPS}/>
-                        <Text style={styles.cardText}>{show.date}</Text>
-                        <Text style={styles.cardText}>{show.time}</Text>
-                        <Text style={styles.cardText}>{show.venue.name}</Text>
-                        <Text style={styles.cardText}>{show.description}</Text>
+                        <Text style={styles.cardDateText}>{show.date}</Text>
+                        <Text style={styles.cardDateText}>{show.time}</Text>
+                        <Text style={styles.cardVenueText}>{show.venue.name}</Text>
                       </View>
                       <View>
                         {/* show flyer */}
@@ -278,6 +278,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
     color: '#fff'
+  },
+  cardVenueText: {
+    fontSize: 18,
+    color: '#AA8181',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
+  },
+  cardDateText: {
+    fontSize: 16,
+    color: '#75A4AD',
+    fontWeight: '500',
+    textAlign: 'left',
+    paddingRight: 20
   },
   cardText: {
     fontSize: 16,
