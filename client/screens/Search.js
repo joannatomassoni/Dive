@@ -9,14 +9,14 @@ import SearchResultModal from '../modals/SearchResultsModal';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Search(props) {
-    return (
-        <View style={styles.container}>
-            <MenuButton navigation={props.navigation} />
-            <ScrollView style={{ marginTop: 70 }}>
-                <SearchResultModal />
-            </ScrollView>
-        </View>
-    )   
+  return (
+    <View style={styles.container}>
+      <MenuButton navigation={props.navigation} />
+      <ScrollView style={{ marginTop: 70 }}>
+          <SearchResultModal />
+      </ScrollView>
+    </View>
+  )   
 }
 
 const styles = StyleSheet.create({
