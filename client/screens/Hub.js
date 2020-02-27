@@ -107,7 +107,6 @@ export default function Hub(props) {
   }
 
   const getPreviousBandShows = () => {
-    console.log("blablabal")
     axios.get(`https://dive-ios.appspot.com/shows/${userInfo.id}/oldShows`)
       .then(response => {
         console.log("getting old shows bands played", response.data);
@@ -194,11 +193,8 @@ export default function Hub(props) {
                           borderRadius={10}
                           padding={10}>
                           <SingleShowModal show={show} getRSVPS={getRSVPS}/>
-                          <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
-                          <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
-                          {show.description ?
-                            <Text style={styles.cardText}>{show.description}</Text>
-                            : null}
+                          <Text style={styles.cardDateText}>{Moment(show.dateTime).format('ll')}</Text>
+                          <Text style={styles.cardDateText}>{Moment(show.dateTime).format('LT')}</Text>
                           <EditShowModal show={show} bandNames={bandNames} style={styles.cardText} getBandsShows={getBandsShows} />
                         </Card>
                       </View>
@@ -227,9 +223,8 @@ export default function Hub(props) {
                     <View>
                       {/* modal to display single show info */}
                       <SingleShowModal show={show} />
-                      <Text style={styles.cardText}>{show.date}</Text>
-                      <Text style={styles.cardText}>{Moment(show.dateTime).format('LT')}</Text>
-                      <Text style={styles.cardText}>{Moment(show.dateTime).format('ll')}</Text>
+                      <Text style={styles.cardDateText}>{Moment(show.dateTime).format('ll')}</Text>
+                      <Text style={styles.cardDateText}>{Moment(show.dateTime).format('LT')}</Text>
                       {show.bands ?
                         show.bands.map(band => {
                           <Text style={styles.cardText} key={band.id}>{band.name}</Text>
@@ -316,6 +311,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#AA8181',
     fontWeight: 'bold',
+    textAlign: 'left',
+    paddingRight: 20
+  },
+  cardDateText: {
+    fontSize: 16,
+    color: '#75A4AD',
+    fontWeight: '500',
     textAlign: 'left',
     paddingRight: 20
   },
