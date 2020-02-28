@@ -27,8 +27,6 @@ const ctrl = require('./db/controllers/index')
 // creates fans and bands
 router.post('/users', ctrl.createUser);
 
-// router.post('/users/push', ctrl.sendNotification)
-
 // add push token to user record
 router.patch('/users/:name/push', ctrl.addPushToken)
 
@@ -45,25 +43,26 @@ router.patch('/users/:id/bio', ctrl.updateUserBio)
 // Delete user
 router.delete('/users/:id', ctrl.deleteUser)
 
-/**
- * Search button routes
- */
 
+/**
+ * SEARCH FEATURE
+ */
 router.get('/search/bands/:query', ctrl.searchBands)
 router.get('/search/shows/:query', ctrl.searchShows)
 router.get('/search/venues/:query', ctrl.searchVenues)
 
+
 /**
- * BANDS ROUTES
+ * BANDS
  */
-// get all bands 
+// Get all bands 
 router.get('/bands', ctrl.getAllBands)
 
 // Update band photo
 // req.body = { photo }
 router.patch('/bands/:id/photo', ctrl.updateBandPhoto)
 
-// Update band SM links
+// Update band social media links
 // req.body = { link_facebook }
 router.patch('/bands/:id/fb', ctrl.updateBandFB)
 // req.body = { link_instagram }
@@ -71,76 +70,69 @@ router.patch('/bands/:id/insta', ctrl.updateBandInstagram)
 // req.body = { link_spotify }
 router.patch('/bands/:id/spotify', ctrl.updateBandSpotify)
 
-// add genre to band
-// req.body = { genreName }
-router.post('/bands/:id/genres', ctrl.addGenreToBand)
-
-// get a given band's genres. 
-router.get('/bands/:id/genres', ctrl.getBandGenres);
-
-// delete a genre from a band
-// req.body = { genreName }
-router.delete('/bands/:id/genres', ctrl.removeBandGenre)
-
-// get band's upcoming gigs
+// Get band's upcoming gigs
 router.get('/bands/:id/shows', ctrl.getBandUpcomingGigs)
 
-// get all past gigs for a bad
+// Get band's past gigs
 router.get('/bands/:id/pastgigs', ctrl.getBandPastGigs)
 
-
-// add fan for band
+/**
+ * BANDS-FANS
+ */
+// Add fan for band
 // req.body = { id_fan }
 router.post('/bands/:id/fans/', ctrl.followBand)
 
-// allow user to unfollow a band
+// Allow user to unfollow a band
 // req.body = { id_fan }
 router.delete('/bands/:id/fans', ctrl.unfollowBand)
 
-// get all fans of a given band. 
+// Get all fans of a given band. 
 router.get('/bands/:id/fans', ctrl.getBandFollowers);
 
-// get all bands that a given fan is following
+// Get all bands that a given fan is following
 router.get('/fans/:id/bands', ctrl.getFanBands);
 
 /**
  * VENUES
  */
-// create a venue
+// Create a venue
 router.post('/venues', ctrl.createVenue)
 
-// edit venue info
+// Edit venue info
 router.patch('/venues/:id', ctrl.updateVenue)
 
-// get one venue and its upcoming shows
+// Get one venue and its upcoming shows
 router.get('/venues/:id', ctrl.getSingleVenue)
 
-// get all venues
+// Get all venues
 router.get('/venues', ctrl.getAllVenues);
 
-//to remove a venue
+// Remove a venue
 router.delete('/venues/:id', ctrl.removeVenue);
 
-// add fan to venue
+/**
+ * VENUES-FANS
+ */
+// Allow fan to follow a venue
 // req.body = { id_fan }
 router.post('/venues/:id/fans', ctrl.addFanToVenue);
 
-// unfollow a venue
+// Unfollow a venue
 // req.body = { id_fan }
 router.delete('/venues/:id/fans', ctrl.unfollowVenue);
 
-
-// get all venues that a fan follows
+// Get all venues that a fan follows
 router.get('/fans/:id/venues', ctrl.getFanVenues)
 
-//get all fans who follow a given venue
+// Get all fans who follow a given venue
 router.get('/venues/:id/fans', ctrl.getVenueFans)
 
 /**
  * SHOWS
  */
 
-// create a show
+// Create a show
 // req.body = { name, date, time, venueName, photo, bandNames }
 // bandNames is an array
 // date and time are both strings, like '7/20' and '9:00PM'
@@ -151,52 +143,51 @@ router.patch('/shows/:id', ctrl.updateShow)
 
 router.delete('/shows/:id', ctrl.deleteShow)
 
-// get all upcoming public shows
+// Get all upcoming public shows
 router.get('/shows', ctrl.getAllUpcomingShows)
 
-// get a single show
+// Get a single show
 router.get('/shows/:id', ctrl.getSingleShow)
-
 
 
 /**
  * RSVPs (shows/fans)
  */
-// fan rsvps to a show
+// Fan rsvps to a show
 // req.body = { id_show, id_fan }
 router.post('/shows/rsvps', ctrl.rsvpFanToShow)
 
-// remove a fan rsvp from a show
+// Remove a fan rsvp from a show
 // req.body = { id_show, id_fan }
 router.delete('/shows/rsvps', ctrl.removeFanRSVP)
 
-// get fans who have rsvpd to a given show. 
+// Get fans who have rsvpd to a given show. 
 router.get('/shows/:id/rsvps', ctrl.getShowRSVPs)
 
-// get upcoming shows that a user has rsvpd to. 
+// Get upcoming shows that a user has rsvpd to. 
 router.get('/fans/:id/rsvps', ctrl.getFanUpcomingRSVPs)
 
-//get past shows a user has attended
+// Get past shows a user has attended
 router.get('/shows/:id/oldrsvps', ctrl.getFansPreviousShows)
 
-//gets band's previous shows
+// Get band's previous shows
 router.get('/shows/:id/oldShows', ctrl.getBandsPreviousShows)
 
 /**
  * SHOW COMMENTS
  */
-// create a comment
+// Create a comment
 // req.body = { id_user, text }
 router.post('/shows/:id/comments', ctrl.createComment);
 
-// get all comments for a show
+// Get all comments for a show
 router.get('/shows/:id/comments', ctrl.getAllComments);
 
 
 /**
  * TYPES
  */
-// get two types (for signup form?)
+// Get two types (for signup form?)
 router.get('/types', ctrl.getTypes);
 
 
