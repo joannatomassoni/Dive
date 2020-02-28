@@ -86,14 +86,12 @@ const createShow = async (req, res) => {
 }
 
 // Update show
-// TODO: add push notifications for rsvps
 const updateShow = async (req, res) => {
     try {
         const { id } = req.params;
         const { name, dateTime, flyer, venueName, bandNames, description } = req.body;
         const venue = await getRecordByName('venue', venueName);
         // format dateTime to be used for sorting and to be passed back as human-friendly strings
-        // dateTime = moment(dateTime).format('llll');
         const time = moment.utc(dateTime).format('LT');
         const date = moment(dateTime).format('ll');
 
@@ -251,7 +249,6 @@ const removeFanRSVP = async (req, res) => {
     }
 }
 
-// TODO: refactor to use eager loading
 // Get all upcoming shows that a given user has rsvpd to
 const getFanUpcomingRSVPs = async (req, res) => {
     try {
@@ -286,7 +283,7 @@ const getFanUpcomingRSVPs = async (req, res) => {
     }
 }
 
-//gets a bands previous shows
+// Gets a band's previous gigs
 const getBandsPreviousShows = async (req, res) => {
     try {
 
@@ -308,18 +305,6 @@ const getBandsPreviousShows = async (req, res) => {
             ]
         })
         res.send(shows);
-        console.log("are we getting shows", shows);
-
-        // const showId = await ShowBand.findAll({
-        //     where: {
-        //         id,
-        //     }
-        //     // return show
-        // })
-        // console.log("are we getting shows?", showId)
-        // dateTime: {
-        //     [Op.lt]: new Date()
-        // }
     }
     catch {
         console.log("error getting old shows")
@@ -327,13 +312,9 @@ const getBandsPreviousShows = async (req, res) => {
     }
 }
 
-// console.log(getBandsPreviousShows);
 
-
-//gets previous/past RSVPed shows for fans
-//will need users id
+// Gets previous/past RSVPed shows for fans
 const getFansPreviousShows = async (req, res) => {
-    // console.log("is this previousShows working?")
     try {
         const { id } = req.params;
         const rsvps = await RSVP.findAll({
