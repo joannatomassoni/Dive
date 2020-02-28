@@ -1,12 +1,10 @@
 // Requiring the models we need for our queries
 const { Venue, Show, User, FanVenue, sequelize, Sequelize } = require('../sequelize');
-const { getRecordByName, getRecordByID } = require('./utils');
 
 // import the Sequelize operators
 const Op = Sequelize.Op;
 
 // Create venue
-// should we include photos?
 const createVenue = async (req, res) => {
     try {
         const { name, address, city, state, zip_code } = req.body;
