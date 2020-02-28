@@ -1,14 +1,12 @@
 // Requiring the models we need for our queries
 const { Comment, Show, User } = require('../sequelize');
-const { getRecordByName, getRecordByID } = require('./utils')
 const { sendNotifications } = require('../pushNotifications/pushNotifications')
 
-
+// Create a comment in a show modal
 const createComment = async (req, res) => {
   try {
     const { id } = req.params;
     const { id_user, text } = req.body;
-    // const user = await getRecordByName('user', userName)
     const show = await Show.findOne({
       where: {
         id
@@ -25,6 +23,7 @@ const createComment = async (req, res) => {
       id_show: id
     })
 
+    // Send push notifications to bands when comment is added
     let pushTokens = [];
     show.bands.forEach(band => {
       pushTokens.push(band.expoPushToken);
@@ -54,7 +53,6 @@ const getAllComments = async (req, res) => {
       ]
     });
     res.status(200).send(comments);
-    // return venues;
   }
   catch (err) {
     console.log("can't get comments", err);
