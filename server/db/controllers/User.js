@@ -2,8 +2,6 @@
 // The User model contains instances of both fans and bands. 
 // Controllers for fans and bands are found here. 
 const {
-    BandGenre,
-    Genre,
     Show,
     Type,
     User,
@@ -11,7 +9,7 @@ const {
     sequelize,
     Sequelize
 } = require('../sequelize');
-const { getRecordByName, getRecordByID } = require('./utils');
+const { getRecordByName } = require('./utils');
 const moment = require('moment');
 
 
@@ -51,7 +49,6 @@ const addPushToken = async (req, res) => {
     try {
         const { name } = req.params;
         const { expoPushToken } = req.body;
-        console.log(expoPushToken);
         await User.update(
             { expoPushToken },
             { where: { name } }
@@ -118,7 +115,6 @@ const updateBandPhoto = async (req, res) => {
     try {
         const { id } = req.params;
         const { bandPhoto } = req.body;
-        // const [ number, user ]  = await getRecordByName('user', name);
         await User.update(
             { bandPhoto },
             {
@@ -135,7 +131,6 @@ const updateBandPhoto = async (req, res) => {
     }
 }
 
-// TODO: functions to let bands edit their social media info
 const updateBandFB = async (req, res) => {
     try {
         const { link_facebook } = req.body;
@@ -217,83 +212,7 @@ const getAllBands = async (req, res) => {
     }
 }
 
-// Allow bands to choose genres for themselves
-const addGenreToBand = async (req, res) => {
-    try {
-        const { genreName } = req.body;
-        const { id } = req.params;
-        const genre = await getRecordByName('genre', genreName);
-        BandGenre.create({
-            id_band: id,
-            id_genre: genre.id
-        })
-        res.sendStatus(201);
-    }
-    catch (err) {
-        console.log(err);
-        res.sendStatus(400);
-    }
-}
-
-// TODO: refactor to use eager loading
-// get band genres
-const getBandGenres = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const band = await User.findAll({
-            where: {
-                id
-            },
-            include: [
-                { model: Genre, attributes: ['genreName'] }
-            ]
-        })
-        console.log(band);
-        res.send(band[0].genres);
-        // const genres = await BandGenre.findAll({
-        //     where: { id_band: id }
-        // });
-        // Promise.all(genres.map(async(genre) => {
-        //  const singleGenre = await Genre.findOne({
-        //      where: {
-        //          id: genre.id_genre
-        //      }
-        //  }) 
-        //  return singleGenre;
-        // })).then((data) => {
-        //     const genreNames = data.map(genre => {
-        //         return genre.genreName;
-        //     })
-        // res.send(genreNames);
-        // })
-    }
-    catch (err) {
-        console.log(err);
-        res.sendStatus(400);
-    }
-}
-
-// delete genre from band
-const removeBandGenre = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { genreName } = req.body;
-        const genre = await getRecordByName('genre', genreName);
-        await BandGenre.destroy({
-            where: {
-                id_genre: genre.id,
-                id_band: id
-            }
-        })
-        res.sendStatus(200);
-    }
-    catch (err) {
-        console.log(err);
-        res.sendStatus(400);
-    }
-}
-
-// get upcoming band shows
+// Get band's upcoming gigs
 const getBandUpcomingGigs = async (req, res) => {
     try {
         const { id } = req.params;
@@ -320,7 +239,7 @@ const getBandUpcomingGigs = async (req, res) => {
     }
 }
 
-// get band's past shows
+// Get band's past shows
 const getBandPastGigs = async (req, res) => {
     try {
         const { id } = req.params;
@@ -349,7 +268,7 @@ const getBandPastGigs = async (req, res) => {
 }
 
 
-// allow a fan follow a band
+// Allow a fan follow a band
 const followBand = async (req, res) => {
     try {
         const sql = 'INSERT INTO fans_bands (id_band, id_fan) VALUES (?, ?)';
@@ -366,7 +285,7 @@ const followBand = async (req, res) => {
     }
 }
 
-// allow a fan unfollow a band
+// Allow a fan unfollow a band
 const unfollowBand = async (req, res) => {
     try {
         const sql = 'DELETE FROM fans_bands WHERE (id_band = ? AND id_fan = ?)';
@@ -418,7 +337,7 @@ const getFanBands = async (req, res) => {
     }
 }
 
-// search function
+// Search function
 const searchBands = async (req, res) => {
     try {
         const { query } = req.params;
@@ -446,7 +365,6 @@ const searchBands = async (req, res) => {
 }
 
 module.exports = {
-    addGenreToBand,
     addPushToken,
     addCalID,
     createUser,
@@ -454,12 +372,10 @@ module.exports = {
     followBand,
     getAllBands,
     getBandFollowers,
-    getBandGenres,
     getBandUpcomingGigs,
     getBandPastGigs,
     getFanBands,
     getSingleUser,
-    removeBandGenre,
     searchBands,
     unfollowBand,
     updateUserBio,
