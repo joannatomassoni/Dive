@@ -24,9 +24,7 @@ export default class VenuePicker extends React.Component {
           style={styles.createShowContainer}
           onPress={this.showActionSheet}
         >
-          <Text style={styles.selectButtonText}>
-            {(this.state.venue !== 'none selected' && this.state.venue !== 'Cancel') ?
-              this.state.venue : 'Select Venue'}
+          <Text style={styles.selectButtonText}>Select Venue
           </Text>
         </TouchableOpacity>
       </View>
