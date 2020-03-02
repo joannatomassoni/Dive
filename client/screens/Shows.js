@@ -102,10 +102,11 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 38,
-      color: '#3BAFBF',
-      fontWeight: 'bold',
-      textAlign: 'left',
-      paddingLeft: 20
+    marginTop: 5,
+    color: '#3BAFBF',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingLeft: 20
   },
   button: {
     borderRadius: 5,
