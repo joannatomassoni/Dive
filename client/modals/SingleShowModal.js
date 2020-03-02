@@ -152,7 +152,9 @@ export default function SingleShowModal(props) {
               <Text style={styles.headerText} key={show.id}>{show.name}</Text>
               {/* display show flyer if one exists */}
               {show.flyer ?
-                <View style={show.description ? { marginBottom: -170 } : { marginBottom: -150 }}>
+                <View style={show.description ? 
+                (bands.length === 1 ? { marginBottom: -170 } : {marginBottom: -190}) 
+                : { marginBottom: -150 }}>
                   <ImageBackground
                     style={{ width: 415, height: 380, alignSelf: 'center' }}
                     source={{ uri: show.flyer }}
@@ -188,7 +190,7 @@ export default function SingleShowModal(props) {
               <View style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
-                marginTop: 10,
+                marginTop: 5,
               }}>
                 {/* button to create a new comment (shows when signed in) */}
                 {userInfo.signedIn ?
@@ -280,7 +282,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#fff',
     paddingLeft: 10,
-    marginTop: -5
+    marginTop: -5,
+    marginBottom: -5
   },
   headerText: {
     fontSize: 34,
@@ -345,7 +348,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontWeight: 'bold',
     paddingLeft: 10,
-    paddingBottom: 3,
+    paddingBottom: 8,
     textShadowColor: '#111',
     textShadowOffset: { width: 5, height: 5 },
     textShadowRadius: 10
@@ -355,7 +358,6 @@ const styles = StyleSheet.create({
     color: '#75A4AD',
     textAlign: 'left',
     paddingLeft: 10,
-    paddingBottom: 1,
     textShadowColor: '#111',
     textShadowOffset: { width: 5, height: 5 },
     textShadowRadius: 10
