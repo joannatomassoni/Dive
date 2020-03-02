@@ -138,14 +138,14 @@ export default function Hub(props) {
           <Text style={styles.text}>{hubInfo.nickname}</Text>
           {/* image container */}
           {hubInfo.bandPhoto ?
-            <View style={{ marginBottom: -75 }}>
+            <View style={{ marginBottom: -117 }}>
               <ImageBackground
-                style={{ width: 415, height: 415, alignSelf: 'center', }}
+                style={{ width: 415, height: 380, alignSelf: 'center', }}
                 source={{ uri: hubInfo.bandPhoto }}
               >
                 <LinearGradient
                   colors={['transparent', 'rgba(0,0,0,0.3)', '#111']}
-                  style={{ width: 415, height: 415, alignSelf: 'center', }}
+                  style={{ width: 415, height: 380, alignSelf: 'center', }}
                 >
                 </LinearGradient>
               </ImageBackground>
