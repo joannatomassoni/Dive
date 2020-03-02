@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10
   },
   cardDateText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#75A4AD',
     fontWeight: '500',
     textAlign: 'left',
@@ -263,15 +263,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 90,
     marginBottom: 15
   },
-  cardText: {
-    fontSize: 16,
-    color: '#59C3D1',
-    fontWeight: 'bold',
-    textAlign: 'left',
-    paddingRight: 20
-  },
   cardBandText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#AA8181',
     fontWeight: 'bold',
     textAlign: 'left',
@@ -294,11 +287,5 @@ const styles = StyleSheet.create({
       top: 30,
       left: 10,
       padding: 10,
-  },
-  cardTextVenueName: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginBottom: 5,
-    color: '#fff'
   },
 })
