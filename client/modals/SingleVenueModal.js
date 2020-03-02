@@ -288,4 +288,10 @@ const styles = StyleSheet.create({
       left: 10,
       padding: 10,
   },
+  cardTextVenueName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 5,
+    color: '#fff'
+  }
 })
