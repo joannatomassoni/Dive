@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D323A',
   },
   text: {
-    fontSize: 40,
+    fontSize: 38,
     color: '#59C3D1',
     fontWeight: 'bold',
     textAlign: 'right',
