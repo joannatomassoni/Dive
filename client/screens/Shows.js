@@ -113,21 +113,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#59C3D1',
   },
   cardDateText: {
-    fontSize: 16,
+    fontSize: 13,
     color: '#75A4AD',
     fontWeight: '500',
     textAlign: 'left',
     paddingRight: 20
   },
   cardBandText: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#59C3D1',
     fontWeight: 'bold',
     textAlign: 'left',
     paddingRight: 20
   },
   cardVenueText: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#AA8181',
     fontWeight: 'bold',
     textAlign: 'left',

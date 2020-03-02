@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10
   },
   cardText: {
-    fontSize: 16,
+    fontSize: 13,
     color: '#59C3D1',
     fontWeight: 'bold',
     textAlign: 'left',
