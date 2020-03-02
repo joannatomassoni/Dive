@@ -152,7 +152,7 @@ export default function SingleShowModal(props) {
               <Text style={styles.headerText} key={show.id}>{show.name}</Text>
               {/* display show flyer if one exists */}
               {show.flyer ?
-                <View>
+                <View style={{ marginBottom: -150 }}>
                   <ImageBackground
                     style={{ width: 415, height: 380, alignSelf: 'center', }}
                     source={{ uri: show.flyer }}
@@ -165,9 +165,7 @@ export default function SingleShowModal(props) {
                   </ImageBackground>
                 </View>
                 : null}
-              {/* conditional padding if show description exists*/}
-              {show.description ?
-              <View style={{ marginTop: -170 }}>
+              <View>
                 <Text style={styles.infoDateText}>{Moment(show.dateTime).format('ll')}</Text>
                 <Text style={styles.infoDateText}>{Moment(show.dateTime).format('LT')}</Text>
                 {show.description ?
@@ -178,20 +176,6 @@ export default function SingleShowModal(props) {
                 <Text style={styles.infoVenueText}>{venue.name}</Text>
                 : null}
               </View>
-                : <View style={{ marginTop: -150 }}>
-                  <Text style={styles.infoDateText}>{Moment(show.dateTime).format('ll')}</Text>
-                  <Text style={styles.infoDateText}>{Moment(show.dateTime).format('LT')}</Text>
-                  {show.description ?
-                    <Text style={styles.infoText}>{show.description}</Text>
-                    : null
-                  }
-                  {venue ?
-                    <Text style={styles.infoVenueText}>{venue.name}</Text>
-                    : null}
-                </View>
-                }
-
-
               {/* list of all additional bands playing in current show */}
               {bands && bands.map(band => {
                 console.log(band);
