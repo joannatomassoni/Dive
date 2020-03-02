@@ -320,12 +320,13 @@ const styles = StyleSheet.create({
     marginBottom: 4
   },
   cardText: {
-    fontSize: 15,
+    fontSize: 14,
     color: '#fff',
     padding: 1,
   },
   cardTextTime: {
-    color: '#75A4AD',
+    fontSize: 12,
+    color: '#AA8181',
     padding: 1,
   },
   infoDateText: {
