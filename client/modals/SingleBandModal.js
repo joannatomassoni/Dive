@@ -116,7 +116,7 @@ export default function SingleBandModal(props) {
             colors={['#38404C', '#111']}
             style={{ flex: 1 }}
           >
-          <ScrollView style={{ marginTop: 60 }}>
+          <ScrollView style={{ marginTop: 75 }}>
             <Text style={styles.headerText} key={band.id}>{band.nickname}</Text>
             {/* band photo */}
               {band.bandPhoto ?
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerText: {
-    fontSize: 50,
+    fontSize: 34,
     color: '#59C3D1',
     fontWeight: 'bold',
     textAlign: 'right',
