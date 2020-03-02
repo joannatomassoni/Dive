@@ -13,7 +13,7 @@ import MenuDrawer from '../components/MenuDrawer'
 const WIDTH = Dimensions.get('window').width;
 const DrawerConfig = {
   //width for how far menu bar slides out
-  drawerWidth: WIDTH * 0.65,
+  drawerWidth: WIDTH * 0.60,
   //menu bar to render
   contentComponent: (props) => {
     return (<MenuDrawer navigation={props.navigation} />)
