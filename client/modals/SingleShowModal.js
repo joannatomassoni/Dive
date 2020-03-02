@@ -152,9 +152,9 @@ export default function SingleShowModal(props) {
               <Text style={styles.headerText} key={show.id}>{show.name}</Text>
               {/* display show flyer if one exists */}
               {show.flyer ?
-                <View style={{ marginBottom: -150 }}>
+                <View style={show.description ? { marginBottom: -170 } : { marginBottom: -150 }}>
                   <ImageBackground
-                    style={{ width: 415, height: 380, alignSelf: 'center', }}
+                    style={{ width: 415, height: 380, alignSelf: 'center' }}
                     source={{ uri: show.flyer }}
                   >
                     <LinearGradient
