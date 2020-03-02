@@ -13,7 +13,7 @@ export default function Search(props) {
     <View style={styles.container}>
       <MenuButton navigation={props.navigation} />
       <ScrollView style={{ marginTop: 70 }}>
-          <SearchResultModal />
+        <SearchResultModal />
       </ScrollView>
     </View>
   )   

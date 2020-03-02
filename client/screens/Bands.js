@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerText: {
-    fontSize: 50,
+    fontSize: 38,
+    marginTop: 5,
     color: '#3BAFBF',
     fontWeight: 'bold',
     textAlign: 'left',
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10
   },
   cardText: {
-    fontSize: 16,
+    fontSize: 13,
     color: '#59C3D1',
     fontWeight: 'bold',
     textAlign: 'left',

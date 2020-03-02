@@ -41,9 +41,15 @@ export default function Venues(props) {
         style={{ flex: 1 }}
       >
       <ScrollView style={{ marginTop: 70 }}>
+        <View style={{
+          marginTop: 5,
+          flexDirection: 'row',
+          justifyContent: 'space-between'
+        }}>
           <Text style={styles.headerText}>Venues</Text>
-        {/* modal to add a new venue to the venue db */}
-        {userInfo.userType === 'band' ? <AddVenueModal /> : null}
+          {/* modal to add a new venue to the venue db */}
+          {userInfo.userType === 'band' ? <AddVenueModal /> : null}
+        </View>
         {venues.reverse().map(venue => {
           return (
             <Card
@@ -72,7 +78,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerText: {
-    fontSize: 50,
+    fontSize: 38,
     color: '#3BAFBF',
     fontWeight: 'bold',
     textAlign: 'left',
@@ -90,7 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#59C3D1',
   },
   cardText: {
-    fontSize: 16,
+    fontSize: 13,
     color: '#59C3D1',
     fontWeight: 'bold',
     textAlign: 'left',

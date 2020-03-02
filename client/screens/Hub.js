@@ -155,7 +155,7 @@ export default function Hub(props) {
             {hubInfo.bio}
           </Text>
           {/* Social Media Buttons */}
-          <View style={styles.flexRowRight}>
+          <View style={styles.flexRowLeft}>
             {/* Only show spotify link if user is a band */}
             {userInfo.userType === 'band' ?
               <SpotifyButton link={hubInfo.link_spotify} />
@@ -166,7 +166,6 @@ export default function Hub(props) {
           <View style={{
             flexDirection: 'row',
             justifyContent: 'center',
-            marginTop: 30
           }}>
             {/* Button to open create show modal */}
             <EditBandBioModal getBandInfo={getBandInfo} />
@@ -286,11 +285,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D323A',
   },
   text: {
-    fontSize: 40,
+    marginTop: 5,
+    fontSize: 38,
     color: '#59C3D1',
     fontWeight: 'bold',
-    textAlign: 'right',
-    paddingRight: 20
+    textAlign: 'left',
+    paddingLeft: 20
   },
   subText: {
     fontSize: 25,
@@ -360,11 +360,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 90,
     marginBottom: 10
   },
-  flexRowRight: {
+  flexRowLeft: {
     flexDirection: 'row',
     paddingBottom: 5,
-    justifyContent: 'flex-end',
-    paddingRight: 20
+    paddingLeft: 10
   },
   thumbnail: {
     width: 300,

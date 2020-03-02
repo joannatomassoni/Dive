@@ -157,6 +157,10 @@ export default function CreateShowModal(props) {
                   }}
                 />
               </View>
+              {(venueName !== 'private' && venueName !== 'Cancel') ?
+                <Text style={styles.venueText}>{venueName}</Text>
+                : null
+              }
               {/* venue row */}
               <View style={{
                 flexDirection: 'row',
@@ -283,8 +287,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 30
   },
+  venueText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginBottom: 5,
+    fontSize: 18
+  },
   text: {
-    fontSize: 40,
+    fontSize: 38,
     alignItems: 'center',
     color: '#59C3D1',
     fontWeight: 'bold',

@@ -213,17 +213,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D323A',
   },
   headerText: {
-    fontSize: 50,
+    fontSize: 34,
     color: '#59C3D1',
     fontWeight: 'bold',
-    textAlign: 'right',
-    paddingRight: 20
+    textAlign: 'left',
+    paddingLeft: 10
   },
   infoText: {
-    fontSize: 20,
+    fontSize: 14,
+    fontWeight: '500',
     color: '#fff',
-    textAlign: 'right',
-    paddingRight: 20,
+    textAlign: 'left',
+    paddingLeft: 10,
   },
   card: {
     borderWidth: 0,
@@ -232,7 +233,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10
   },
   cardDateText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#75A4AD',
     fontWeight: '500',
     textAlign: 'left',
@@ -262,15 +263,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 90,
     marginBottom: 15
   },
-  cardText: {
-    fontSize: 16,
-    color: '#59C3D1',
-    fontWeight: 'bold',
-    textAlign: 'left',
-    paddingRight: 20
-  },
   cardBandText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#AA8181',
     fontWeight: 'bold',
     textAlign: 'left',
@@ -296,8 +290,8 @@ const styles = StyleSheet.create({
   },
   cardTextVenueName: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 16,
     marginBottom: 5,
     color: '#fff'
-  },
+  }
 })

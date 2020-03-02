@@ -116,26 +116,31 @@ export default function SingleBandModal(props) {
             colors={['#38404C', '#111']}
             style={{ flex: 1 }}
           >
-          <ScrollView style={{ marginTop: 60 }}>
+          <ScrollView style={{ marginTop: 75 }}>
             <Text style={styles.headerText} key={band.id}>{band.nickname}</Text>
             {/* band photo */}
               {band.bandPhoto ?
                 <View style={{ marginBottom: -75 }}>
                   <ImageBackground
-                    style={{ width: 415, height: 415, alignSelf: 'center', }}
+                    style={{ width: 415, height: 380, alignSelf: 'center', }}
                     source={{ uri: band.bandPhoto }}
                   >
                     <LinearGradient
                       colors={['transparent', 'rgba(0,0,0,0.3)', '#000']}
-                      style={{ width: 415, height: 415, alignSelf: 'center', }}
+                      style={{ width: 415, height: 380, alignSelf: 'center', }}
                     >
                     </LinearGradient>
                   </ImageBackground>
                 </View>
                 : null}
             <Text style={styles.infoText}>{band.bio}</Text>
+            
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between'
+              }}>
             {/* social media links */}
-            <View style={styles.flexRowRight}>
+            <View style={styles.flexRowLeft}>
               <SpotifyButton link={band.link_spotify} />
               <InstagramButton link={band.link_instagram} />
               <FacebookButton link={band.link_facebook} />
@@ -160,6 +165,8 @@ export default function SingleBandModal(props) {
                 </TouchableOpacity>)
               : null
             }
+            </View>
+
             <Text style={styles.headerText}>Shows</Text>
             {shows && shows.map(show => {
               return (
@@ -223,18 +230,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerText: {
-    fontSize: 50,
+    fontSize: 34,
     color: '#59C3D1',
     fontWeight: 'bold',
-    textAlign: 'right',
-    paddingRight: 20,
-    paddingLeft: 40
+    textAlign: 'left',
+    paddingLeft: 10
   },
   infoText: {
     fontSize: 20,
     color: '#fff',
-    textAlign: 'right',
-    paddingRight: 20,
+    textAlign: 'left',
+    paddingLeft: 10,
     paddingBottom: 5
   },
   followButtonText: {
@@ -243,14 +249,14 @@ const styles = StyleSheet.create({
     color: '#000'
   },
   cardDateText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#75A4AD',
     fontWeight: '500',
     textAlign: 'left',
     paddingRight: 20
   },
   cardVenueText: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#AA8181',
     fontWeight: 'bold',
     textAlign: 'left',
@@ -260,21 +266,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#AA8181',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    width: 140,
+    height: 38,
+    marginRight: 10
   },
   followButtonContainer: {
     backgroundColor: '#75A4AD',
     paddingVertical: 10,
     borderRadius: 5,
-    marginHorizontal: 90,
-    marginBottom: 15
+    width: 140,
+    height: 38,
+    marginRight: 10
   },
-  flexRowRight: {
+  flexRowLeft: {
     flexDirection: 'row',
     paddingBottom: 15,
-    justifyContent: 'flex-end',
-    paddingRight: 20
+    paddingLeft: 10
   },
   menuIcon: {
     position: 'absolute',
@@ -290,30 +297,9 @@ const styles = StyleSheet.create({
   },
   cardHeaderText: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 18,
     marginBottom: 10,
     color: '#fff'
-  },
-  cardVenueText: {
-    fontSize: 18,
-    color: '#AA8181',
-    fontWeight: 'bold',
-    textAlign: 'left',
-    paddingRight: 20
-  },
-  cardDateText: {
-    fontSize: 16,
-    color: '#75A4AD',
-    fontWeight: '500',
-    textAlign: 'left',
-    paddingRight: 20
-  },
-  cardText: {
-    fontSize: 16,
-    color: '#59C3D1',
-    fontWeight: 'bold',
-    textAlign: 'left',
-    paddingRight: 20
   },
   card: {
     borderWidth: 0,

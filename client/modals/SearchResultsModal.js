@@ -60,142 +60,139 @@ export default function SearchResultsModal() {
 
     return (
         <View>
-            <Modal 
-                animationType="slide"
-                transparent={false}
-                visible={modalVisible}    
-            >
-                {/* start of modal when showing */}
-                <SafeAreaView behavior="padding" style={styles.container}>
-
-                    {/* back button */}
-                    <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
-                        <Ionicons
-                            name='ios-arrow-back'
-                            color='#59C3D1'
-                            size={32}
-                            style={styles.menuIcon}
-                        />
-                    </Ionicons>
-                    {/* main body */}
-                    <ScrollView style={{ marginTop: 30 }}>
-                        <Text style={styles.headerText}>Results</Text>       
-                        {/* conditionally rendering lists of venues, bands, and shows */}            
-                        {bands.length ? 
-                            <View>
-                                <Text style={styles.subheaderText}>Bands</Text>
+          <Modal 
+            animationType="slide"
+            transparent={false}
+            visible={modalVisible}    
+          >
+            {/* start of modal when showing */}
+            <SafeAreaView behavior="padding" style={styles.container}>
+              {/* back button */}
+              <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}> 
+                <Ionicons
+                  name='ios-arrow-back'
+                  color='#59C3D1'
+                  size={32}
+                  style={styles.menuIcon}
+                />
+                </Ionicons>
+                {/* main body */}
+              <ScrollView style={{ marginTop: 30 }}>
+                <Text style={styles.headerText}>Results</Text>       
+                {/* conditionally rendering lists of venues, bands, and shows */}            
+                {bands.length ? 
+                    <View>
+                        <Text style={styles.subheaderText}>Bands</Text>
+                      <View>
+                        {bands.map((band) => {
+                          return (
+                            <Card
+                              key={band.id}
+                              backgroundColor='#111'
+                              padding={10}
+                              borderRadius={10}
+                              containerStyle={styles.card}
+                              >
+                              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View>
-                                    {bands.map((band) => {
-                                        return (
-                                            <Card
-                                                key={band.id}
-                                                backgroundColor='#111'
-                                                padding={10}
-                                                borderRadius={10}
-                                                containerStyle={styles.card}
-                                                >
-                                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                                    <View>
-                                                        <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS}/>
-                                                        <Text style={styles.cardText}>{band.bio}</Text>
-                                                    </View>
-                                                </View>
-                                            </Card>
-                                        )
-                                    })}
+                                  <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS}/>
+                                  <Text style={styles.cardText}>{band.bio}</Text>
                                 </View>
-                            </View>
-                            : null
-                        }
-                        {shows.length ? 
-                            <View>
-                                <Text style={styles.subheaderText}>Shows</Text>
-                                <View>
-                                    {shows.map((show) => {
-                                        return (
-                                            <Card
-                                                key={show.id}
-                                                backgroundColor='#111'
-                                                padding={10}
-                                                borderRadius={10}
-                                                containerStyle={styles.card}
-                                                >
-                                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                                    <View>
-                                                        <SingleShowModal show={show} />
-                                                        <Text style={styles.cardText}>{show.date}</Text>
-                                                        <Text style={styles.cardText}>{show.time}</Text>
-                                                        { show.bands ? 
-                                                        show.bands.map(band => {
-                                                            <Text style={styles.cardText} key={band.id}>{band.name}</Text>
-                                                        })
-                                                        : null }
-                                                        {/* Change query to make this venue text work */}
-                                                        {/* <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text> */}
-                                                    </View>
-                                                </View>
-                                            </Card>
-                                        )
-                                    })}
+                              </View>
+                            </Card>
+                          )
+                        })}
+                      </View>
+                    </View>
+                    : null
+                  }
+                  {shows.length ? 
+                      <View>
+                        <Text style={styles.subheaderText}>Shows</Text>
+                        <View>
+                          {shows.map((show) => {
+                            return (
+                              <Card
+                                key={show.id}
+                                backgroundColor='#111'
+                                padding={10}
+                                borderRadius={10}
+                                containerStyle={styles.card}
+                              >
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                  <View>
+                                    <SingleShowModal show={show} />
+                                    <Text style={styles.cardText}>{show.date}</Text>
+                                    <Text style={styles.cardText}>{show.time}</Text>
+                                    { show.bands ? 
+                                    show.bands.map(band => {
+                                        <Text style={styles.cardText} key={band.id}>{band.name}</Text>
+                                    })
+                                    : null }
+                                    {/* Change query to make this venue text work */}
+                                    {/* <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text> */}
+                                  </View>
                                 </View>
+                              </Card>
+                            )
+                          })}
+                        </View>
+                      </View>
+                      : null
+                  }
+                {venues.length ? 
+                  <View>
+                    <Text style={styles.subheaderText}>Venues</Text>
+                    <View>
+                      {venues.map((venue) => {
+                        return (
+                          <Card
+                            key={venue.id}
+                            backgroundColor='#111'
+                            padding={10}
+                            borderRadius={10}
+                            containerStyle={styles.card}
+                            >
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                              <View>
+                                <SingleVenueModal venue={venue}/>
+                                <Text style={styles.cardText}>{venue.address}</Text>
+                              </View>
                             </View>
-                            : null
-                        }
-                        {venues.length ? 
-                            <View>
-                                <Text style={styles.subheaderText}>Venues</Text>
-                                <View>
-                                    {venues.map((venue) => {
-                                        return (
-                                            <Card
-                                                key={venue.id}
-                                                backgroundColor='#111'
-                                                padding={10}
-                                                borderRadius={10}
-                                                containerStyle={styles.card}
-                                                >
-                                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                                    <View>
-                                                        <SingleVenueModal venue={venue}/>
-                                                        <Text style={styles.cardText}>{venue.address}</Text>
-                                                    </View>
-                                                </View>
-                                            </Card>
-                                        )
-                                    })}
-                                </View>
-                            </View>
-                            : null
-                        }
-                    </ScrollView>
-                </SafeAreaView>
-
+                          </Card>
+                        )
+                      })}
+                    </View>
+                  </View>
+                  : null
+                  }
+              </ScrollView>
+            </SafeAreaView>
             </Modal>
-
             {/* search button when modal is hidden */}
             <Text style={styles.text}>Search</Text>
-                <View style={styles.searchBarContainer}>
-                    <View style={styles.linkRow}> 
-                        {/* search input form */}
-                        <TextInput
-                            placeholder="Type here"
-                            placeholderTextColor="#75A4AD"
-                            returnKeyType="next"
-                            color='black'
-                            onChangeText={setQuery}
-                            style={styles.input}
-                        />
+              <View style={styles.searchBarContainer}>
+                <View style={styles.linkRow}> 
+                  {/* search input form */}
+                  <TextInput
+                    placeholder="Type here"
+                    placeholderTextColor="#75A4AD"
+                    returnKeyType="next"
+                    color='black'
+                    onChangeText={setQuery}
+                    style={styles.input}
+                  />
 						<Ionicons
-                            name='md-search'
-                            color='#59C3D1'
-                            size={37}
-                            onPress={() => {
-                                searchCall(query.trim())
-                            }}
-                            style={styles.button}
-                        />
-                    </View>
-                </View>
+              name='md-search'
+              color='#59C3D1'
+              size={37}
+              onPress={() => {
+                  searchCall(query.trim())
+              }}
+              style={styles.button}
+            />
+            </View>
+          </View>
         </View>
     )
 }
@@ -207,7 +204,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: {
-        fontSize: 50,
+        fontSize: 38,
         color: '#59C3D1',
         fontWeight: 'bold',
         textAlign: 'left',

@@ -148,18 +148,18 @@ export default function SingleShowModal(props) {
             colors={['#38404C', '#111']}
             style={{ flex: 1 }}
           >
-            <ScrollView style={{ marginTop: 70 }}>
+            <ScrollView style={{ marginTop: 75 }}>
               <Text style={styles.headerText} key={show.id}>{show.name}</Text>
               {/* display show flyer if one exists */}
               {show.flyer ?
-                <View style={{ marginBottom: -140 }}>
+                <View style={{ marginBottom: -150 }}>
                   <ImageBackground
-                    style={{ width: 415, height: 415, alignSelf: 'center', }}
+                    style={{ width: 415, height: 380, alignSelf: 'center', }}
                     source={{ uri: show.flyer }}
                   >
                     <LinearGradient
                       colors={['transparent', 'rgba(0,0,0,0.5)', '#000']}
-                      style={{ width: 415, height: 415, alignSelf: 'center', }}
+                      style={{ width: 415, height: 380, alignSelf: 'center', }}
                     >
                     </LinearGradient>
                   </ImageBackground>
@@ -175,7 +175,7 @@ export default function SingleShowModal(props) {
                 {venue ?
                 <Text style={styles.infoVenueText}>{venue.name}</Text>
                 : null}
-                </View>
+              </View>
               {/* list of all additional bands playing in current show */}
               {bands && bands.map(band => {
                 console.log(band);
@@ -185,11 +185,10 @@ export default function SingleShowModal(props) {
                   </View>
                 )
               })}
-
               <View style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
-                marginTop: 20,
+                marginTop: 10,
               }}>
                 {/* button to create a new comment (shows when signed in) */}
                 {userInfo.signedIn ?
@@ -236,7 +235,7 @@ export default function SingleShowModal(props) {
                     </TouchableOpacity>
                   : null}
               </View>
-              {/* button to create a new comment (shows when signed in) */}
+              {/* button to create a new comment (shows when signed in)*/}
               {/* cards to hold comments */}
               {comments.map(comment => {
                 return (
@@ -280,15 +279,16 @@ const styles = StyleSheet.create({
   bandModal: {
     fontSize: 20,
     color: '#fff',
-    alignSelf: 'flex-end',
-    paddingRight: 20,
+    paddingLeft: 10,
+    marginTop: -5
   },
   headerText: {
-    fontSize: 45,
-    color: '#59C3D1',
+    fontSize: 34,
+    marginTop: 5,
+    color: '#3BAFBF',
     fontWeight: 'bold',
-    textAlign: 'right',
-    paddingRight: 20
+    textAlign: 'left',
+    paddingLeft: 10
   },
   signupButtonText: {
     textAlign: 'center',
@@ -320,40 +320,41 @@ const styles = StyleSheet.create({
     marginBottom: 4
   },
   cardText: {
-    fontSize: 15,
+    fontSize: 14,
     color: '#fff',
     padding: 1,
   },
   cardTextTime: {
-    color: '#75A4AD',
+    fontSize: 12,
+    color: '#AA8181',
     padding: 1,
   },
   infoDateText: {
-    fontSize: 20,
+    fontSize: 16,
     color: '#59C3D1',
-    textAlign: 'right',
-    paddingRight: 20,
+    textAlign: 'left',
+    paddingLeft: 10,
     fontWeight: 'bold',
     textShadowColor: '#111',
     textShadowOffset: { width: 5, height: 5 },
     textShadowRadius: 10
   },
   infoVenueText: {
-    fontSize: 22,
+    fontSize: 18,
     color: '#AA8181',
-    textAlign: 'right',
+    textAlign: 'left',
     fontWeight: 'bold',
-    paddingRight: 20,
+    paddingLeft: 10,
     paddingBottom: 3,
     textShadowColor: '#111',
     textShadowOffset: { width: 5, height: 5 },
     textShadowRadius: 10
   },
   infoText: {
-    fontSize: 20,
+    fontSize: 16,
     color: '#75A4AD',
-    textAlign: 'right',
-    paddingRight: 20,
+    textAlign: 'left',
+    paddingLeft: 10,
     paddingBottom: 1,
     textShadowColor: '#111',
     textShadowOffset: { width: 5, height: 5 },
@@ -373,8 +374,8 @@ const styles = StyleSheet.create({
   },
   modalShowText: {
     fontWeight: 'bold',
-    fontSize: 20,
-    marginBottom: 10,
+    fontSize: 17,
+    marginBottom: 5,
     color: '#fff',
   },
   card: {

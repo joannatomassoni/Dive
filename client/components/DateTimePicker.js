@@ -112,6 +112,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 15,
     marginTop: 5,
-    fontSize: 20
+    fontSize: 18
   }
 })

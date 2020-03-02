@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     padding: 20
   },
   input: {
-    height: 40,
+    height: 38,
     backgroundColor: 'rgba(255, 255, 255, 1)',
     paddingHorizontal: 10,
     borderRadius: 5,
@@ -287,11 +287,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 50,
+    fontSize: 38,
     color: '#59C3D1',
     fontWeight: 'bold',
     alignSelf: 'center',
-    marginBottom: 15
+    marginBottom: 10
   },
   returnButtonContainer: {
     backgroundColor: '#59C3D1',
