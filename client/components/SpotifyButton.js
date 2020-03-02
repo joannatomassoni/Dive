@@ -8,7 +8,7 @@ export default function SpotifyButton ({ link }) {
       name='spotify'
       color='#59C3D1'
       style={{ padding: 5 }}
-      size={34}
+      size={30}
       onPress={() => {
         Linking.openURL(`${link}`);
       }}
