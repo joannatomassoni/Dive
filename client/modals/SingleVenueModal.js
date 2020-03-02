@@ -213,17 +213,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#2D323A',
   },
   headerText: {
-    fontSize: 50,
+    fontSize: 34,
     color: '#59C3D1',
     fontWeight: 'bold',
-    textAlign: 'right',
-    paddingRight: 20
+    textAlign: 'left',
+    paddingLeft: 10
   },
   infoText: {
-    fontSize: 20,
+    fontSize: 14,
+    fontWeight: '500',
     color: '#fff',
-    textAlign: 'right',
-    paddingRight: 20,
+    textAlign: 'left',
+    paddingLeft: 10,
   },
   card: {
     borderWidth: 0,
