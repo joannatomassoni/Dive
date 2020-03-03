@@ -77,7 +77,7 @@ export default function SearchResultsModal() {
                 />
                 </Ionicons>
                 {/* main body */}
-              <ScrollView style={{ marginTop: 30 }}>
+              <ScrollView style={{ marginTop: 70 }}>
                 <Text style={styles.headerText}>Results</Text>       
                 {/* conditionally rendering lists of venues, bands, and shows */}            
                 {bands.length ? 
