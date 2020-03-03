@@ -40,6 +40,9 @@ export default function CreateShowModal(props) {
   const [showDesc, setShowDesc] = useState('');
   //list of venues
   const [allVenues, setAllVenues] = useState([]);
+  //status is flyer is selected
+  const [flyerStatus, setFlyerStatus] = useState(false);
+  //array to hold all venues in application
   const venues = [];
   //sets photo uploaded from phone
   const [selectedImage, setSelectedImage] = useState({});
@@ -82,6 +85,9 @@ export default function CreateShowModal(props) {
       "file": base64Img,
       "upload_preset": "oecwb18t",
     }
+
+    //set flyer status to true
+    setFlyerStatus(true);
 
     //sends photo to cloudinary
     fetch(CLOUDINARY_URL, {
@@ -188,6 +194,10 @@ export default function CreateShowModal(props) {
               </View>
               {/* date time picker */}
               <DateTimePicker setDateTime={setDateTime} />
+              {flyerStatus ?
+                <Text style={styles.flyerStatus}>Flyer Selected!</Text>
+                : null
+              }
               {/*  button to upload photo */}
               <View style={styles.button} >
                 <TouchableOpacity
@@ -323,6 +333,14 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     fontWeight: '700',
+  },
+  flyerStatus: {
+    color: '#fff',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginBottom: 10,
+    marginTop: -5,
+    fontSize: 18
   },
   signupButtonText: {
     textAlign: 'center',
