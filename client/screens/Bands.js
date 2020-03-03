@@ -27,7 +27,8 @@ export default function Bands(props) {
   const getAllBands = () => {
     axios.get(`https://dive-ios.appspot.com/bands`)
       .then((response) => {
-        setBands(() => response.data);
+        const bands = response.data.sort((a, b) => (a.nickname > b.nickname ? 1 : -1))
+        setBands(() => bands);
       })
       .catch(err => console.log(err))
   }
