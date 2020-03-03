@@ -51,7 +51,8 @@ export default function SingleBandModal(props) {
     axios.get(`https://dive-ios.appspot.com/bands/${band.id}/shows`)
       .then((response) => {
         console.log('response');
-        setShows(() => response.data.shows);
+        const shows = response.data.shows.sort((a, b) => (a.dateTime > b.dateTime ? 1 : -1));
+        setShows(() => shows);
       })
       .catch((err) => {
         console.log(err);
