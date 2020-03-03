@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
         color: '#3BAFBF',
         fontWeight: 'bold',
         textAlign: 'left',
-        paddingLeft: 10
+        paddingLeft: 20
     },
     subheaderText: {
         fontSize: 35,
