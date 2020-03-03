@@ -153,7 +153,7 @@ export default function SingleShowModal(props) {
               {/* display show flyer if one exists */}
               {show.flyer ?
                 <View style={show.description ? 
-                (bands.length === 1 ? { marginBottom: -170 } : {marginBottom: -190}) 
+                (bands.length < 2 ? { marginBottom: -170 } : {marginBottom: -230}) 
                 : { marginBottom: -150 }}>
                   <ImageBackground
                     style={{ width: 415, height: 380, alignSelf: 'center' }}
