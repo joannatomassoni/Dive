@@ -223,11 +223,11 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     headerText: {
-        fontSize: 50,
+        fontSize: 38,
         color: '#3BAFBF',
         fontWeight: 'bold',
         textAlign: 'left',
-        paddingLeft: 20
+        paddingLeft: 10
     },
     subheaderText: {
         fontSize: 35,
