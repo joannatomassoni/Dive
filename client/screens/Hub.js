@@ -63,7 +63,8 @@ export default function Hub(props) {
     await axios.get(`https://dive-ios.appspot.com/bands/${userInfo.id}/shows`)
       .then((response) => {
         if (response.data.shows) {
-          setShows(() => response.data.shows.filter((show) => {
+          const shows = response.data.shows.sort((a, b) => (a.dateTime > b.dateTime ? 1 : -1));
+          setShows(() => shows.filter((show) => {
             return Moment(show.dateTime).toDate() > new Date();
           }))
         }
