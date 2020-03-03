@@ -22,7 +22,8 @@ export default function Venues(props) {
   const getAllVenues = () => {
     axios.get(`https://dive-ios.appspot.com/venues`)
       .then((response) => {
-        setVenues(() => response.data.reverse());
+        const venues = response.data.sort((a, b) => (a.name < b.name ? 1 : -1))
+        setVenues(() => venues);
       })
       .catch((err) => {
         console.log("error getting venues", err);
