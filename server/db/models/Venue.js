@@ -1,3 +1,9 @@
+/**
+ * Define and export the venues table.
+ * Prepopulated with a handful of New Orleans venues.
+ * Referenced in shows table.
+ */
+
 module.exports = (sequelize, type) => {
     return sequelize.define('venue', {
         name: {

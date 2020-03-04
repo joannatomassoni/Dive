@@ -1,7 +1,9 @@
 /**
- * require and define the FanVenue table. fields are two foreign keys.
+ * Define and export the fans_venues table. 
+ * Fields are two foreign keys referencing the users and venues tables.
+ * Represents which user follows which venue.
  * */
 
-module.exports = (sequelize, type) => {
+module.exports = (sequelize) => {
     return sequelize.define('fans_venue', {})
 }
