@@ -1,5 +1,5 @@
 // Requiring the models we need for our queries
-const { Venue, Show, User, FanVenue, sequelize, Sequelize } = require('../sequelize');
+const { Venue, Show, User, FanVenue, Sequelize } = require('../sequelize');
 
 // import the Sequelize operators
 const Op = Sequelize.Op;

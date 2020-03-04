@@ -1,6 +1,9 @@
+/**
+ * The User model contains instances of both fans and bands. 
+ * Controllers for fans and bands are found here.
+ * */  
+
 // Requiring the models we need for our queries
-// The User model contains instances of both fans and bands. 
-// Controllers for fans and bands are found here. 
 const {
     Show,
     Type,

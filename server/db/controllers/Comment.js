@@ -1,4 +1,4 @@
-// Requiring the models we need for our queries
+// Requiring the models we need for our controller queries
 const { Comment, Show, User } = require('../sequelize');
 const { sendNotifications } = require('../pushNotifications/pushNotifications')
 
@@ -55,7 +55,7 @@ const getAllComments = async (req, res) => {
     res.status(200).send(comments);
   }
   catch (err) {
-    console.log("can't get comments", err);
+    console.log(err);
     res.send(err);
   }
 
