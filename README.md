@@ -8,13 +8,15 @@
 4. Select `run on iOs simulator` from the expo browser page, or press `i` in terminal running the client server
 5. Select the `Dive` application from the expo app in iOs simulator
 
+## Backend server URL
+1. The deployed URL for the backend server is https://dive-ios.appspot.com
 
-## Running the client on your mobile device on the Expo app using your local server
+## Running a local backend server
 
 1. Run `ngrok http localhost:8080`
 2. Note the Forwarding URL that is provided (the https protocol is what worked for us).
-3. Use that URL for all your Assign that to a variable called AXIOS_URL in your client-side .env file. 
-4. Make sure your backend server is running (a command like `node/index.js` from inside the server directory will do)
+3. Use that URL for all your axios requests on the frontend. 
+4. Make sure your backend server is running (a command like `node index.js` from inside the server directory will do)
 
 ## Running the backend server with a local database
 
