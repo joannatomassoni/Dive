@@ -1,4 +1,5 @@
 # Dive
+Dive is an iOS app built primarily on React Native and Node.js. It's a live music hub designed for New Orleans musicians and their fans to connect. Musicians can quickly create show announcements, and fans are notified whenever their favorite bands and venues announce those new shows. All users have easy access to the local bands they care about most.
 
 ## Running the client
 
