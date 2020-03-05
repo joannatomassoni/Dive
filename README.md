@@ -17,12 +17,12 @@ Dive is an iOS app built primarily on React Native and Node.js. It's a live musi
 1. Run `ngrok http localhost:8080`
 2. Note the Forwarding URL that is provided (the https protocol is what worked for us).
 3. Use that URL for all your axios requests on the frontend. 
-4. Make sure your backend server is running (a command like `node index.js` from inside the server directory will do)
+4. Run your backend server with `yarn start` from inside the `server` directory
 
 ## Running the backend server with a local database
 
 1. In `server/db/sequelize.js`, make sure the local/development configuration of the the database is set to connect. (`host` should be `localhost`).
-2. In your terminal, run `node server/index.js`.
+2. In your terminal, run `yarn start`.
 3. Shell into the MySQL database with `mysql -u root`.
 
 ## Cloudinary
