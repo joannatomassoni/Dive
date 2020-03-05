@@ -13,7 +13,6 @@ import {
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 import { SignedInContext } from '../context/UserContext';
-import { AXIOS_URL } from 'react-native-dotenv';
 import VenuePicker from '../components/VenuePicker'
 import DateTimePicker from '../components/DateTimePicker';
 import * as ImagePicker from 'expo-image-picker';
@@ -206,15 +205,7 @@ export default function CreateShowModal(props) {
                 >
                   <Text style={styles.buttonText}>Upload Flyer</Text>
                 </TouchableOpacity>
-                {/* {image.uri && */}
-                {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
               </View>
-              {/* <TouchableOpacity
-                style={styles.buttonContainer}
-                onPress={savePhoto}
-              >
-                <Text style={styles.buttonText}>Save Photo</Text>
-              </TouchableOpacity> */}
 
               {/* create show button when modal is showing */}
               <TouchableOpacity

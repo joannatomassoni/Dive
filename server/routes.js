@@ -72,8 +72,8 @@ router.patch('/bands/:id/spotify', ctrl.updateBandSpotify)
 // Get band's upcoming gigs
 router.get('/bands/:id/shows', ctrl.getBandUpcomingGigs)
 
-// Get band's past gigs
-router.get('/bands/:id/pastgigs', ctrl.getBandPastGigs)
+// Get band's previous shows
+router.get('/shows/:id/oldShows', ctrl.getBandsPreviousShows)
 
 /**
  * BANDS-FANS
@@ -168,9 +168,6 @@ router.get('/fans/:id/rsvps', ctrl.getFanUpcomingRSVPs)
 
 // Get past shows a user has attended
 router.get('/shows/:id/oldrsvps', ctrl.getFansPreviousShows)
-
-// Get band's previous shows
-router.get('/shows/:id/oldShows', ctrl.getBandsPreviousShows)
 
 /**
  * SHOW COMMENTS

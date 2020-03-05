@@ -5,13 +5,12 @@ import {
   Text, 
   TextInput,
   TouchableOpacity,
-  Alert
   } from 'react-native';
 import axios from 'axios';
 import { SignedInContext } from '../context/UserContext';
 import * as Google from "expo-google-app-auth";
 import SignUpModal from '../modals/SignUpModal';
-import { IOS_AUTH_KEY, ANDROID_AUTH_KEY, AXIOS_URL } from 'react-native-dotenv';
+import { IOS_AUTH_KEY, ANDROID_AUTH_KEY } from 'react-native-dotenv';
 
 export default function LoginForm (props) {
   //pull signedin boolean from glabal context
@@ -22,14 +21,13 @@ export default function LoginForm (props) {
   //function to sign in with google auth
   const googleSignIn = async () => {
     try {
-      const { type, user, accessToken } = await Google.logInAsync({
+      const { type, user } = await Google.logInAsync({
         iosClientId: IOS_AUTH_KEY,
         androidClioentId: ANDROID_AUTH_KEY,
         scopes: ["profile", "email"]
       })
       if (type === "success") {
-        //console.log('User Info: ', user, 'Access Token: ', accessToken);
-        //key values to add to the userInfo global state
+        // key values to add to the userInfo global state
         axios.get(`https://dive-ios.appspot.com/users/${user.email}`)
           .then(res => setUserInfo(userInfo => ({
             ...userInfo,
@@ -50,6 +48,7 @@ export default function LoginForm (props) {
 
   return (
     <View style={styles.container}>
+
       {/* username text box */}
       <TextInput 
       placeholder="username or email"
@@ -60,6 +59,7 @@ export default function LoginForm (props) {
       keyboardType="email-address"
       style={styles.input} 
       />
+
       {/* password text box */}
       <TextInput 
       placeholder="password"
@@ -74,10 +74,12 @@ export default function LoginForm (props) {
         height: 50,
         justifyContent: 'center',
       }}>
+
       {/* login button */}
       <TouchableOpacity 
         style={styles.loginContainer}
         onPress={() => {
+          // retrieve user info from database
           axios.get(`https://dive-ios.appspot.com/users/${usernameValue}`)
             .then(res => setUserInfo(userInfo => ({
               ...userInfo,
@@ -92,6 +94,7 @@ export default function LoginForm (props) {
       >
       <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
+
       {/* google login button */}
       <TouchableOpacity
         onPress={() => {googleSignIn()}}

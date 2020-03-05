@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   Image
 } from 'react-native';
 import {
@@ -11,15 +10,11 @@ import {
 } from 'react-native-elements'
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
-import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 import SingleBandModal from '../modals/SingleBandModal';
-import { AXIOS_URL } from 'react-native-dotenv';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Bands(props) {
-  //global user signin info and editing function
-  const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state to hold bands
   const [bands, setBands] = useState([]);
 
@@ -55,7 +50,6 @@ export default function Bands(props) {
       <ScrollView style={{ marginTop: 70 }}>
         <Text style={styles.headerText}>Bands</Text>
         {bands && bands.map(band => {
-          console.log(band);
           return (
             <Card
               key={band.id}

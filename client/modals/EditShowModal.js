@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   Modal,
   Text,
@@ -12,8 +12,6 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
-import { SignedInContext } from '../context/UserContext';
-import { AXIOS_URL } from 'react-native-dotenv';
 import VenuePicker from '../components/VenuePicker'
 import DateTimePicker from '../components/DateTimePicker';
 import RadioForm from 'react-native-simple-radio-button';
@@ -21,8 +19,6 @@ import RadioForm from 'react-native-simple-radio-button';
 
 export default function EditShowModal(props) {
   const show = props.show;
-  //global user signin info and editing function
-  const [userInfo, setUserInfo] = useContext(SignedInContext);
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //shwo title
@@ -43,7 +39,6 @@ export default function EditShowModal(props) {
   const [flyer, setFlyer] = useState(show.flyer);
   //list of venues
   const [allVenues, setAllVenues] = useState([]);
-  const venues = [];
   const getBandsShows = props.getBandsShows;
   // values for public/private option for venue
   const radio_props = [
@@ -144,7 +139,6 @@ export default function EditShowModal(props) {
               <TouchableOpacity
                 style={styles.buttonContainer}
                 onPress={() => {
-                  console.log(showTitle)
                   axios.patch(`https://dive-ios.appspot.com/shows/${show.id}`, {
                     name: showTitle,
                     dateTime: dateTime,

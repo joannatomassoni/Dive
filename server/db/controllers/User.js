@@ -242,35 +242,6 @@ const getBandUpcomingGigs = async (req, res) => {
     }
 }
 
-// Get band's past shows
-const getBandPastGigs = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const shows = await User.findOne({
-            where: {
-                id
-            },
-            include: [
-                {
-                    model: Show,
-                    where: { dateTime: { [Op.lt]: moment().toDate() } },
-                    include: [
-                        { model: Venue },
-                        { model: User, as: 'bands' },
-                    ]
-                }
-            ]
-        })
-        // shows = shows.filter((show) => show.dateTime < new Date())
-        res.status(200).send(shows);
-    }
-    catch (err) {
-        console.log(err);
-        res.sendStatus(400);
-    }
-}
-
-
 // Allow a fan follow a band
 const followBand = async (req, res) => {
     try {
@@ -376,7 +347,6 @@ module.exports = {
     getAllBands,
     getBandFollowers,
     getBandUpcomingGigs,
-    getBandPastGigs,
     getFanBands,
     getSingleUser,
     searchBands,

@@ -14,7 +14,6 @@ import { Ionicons } from '@expo/vector-icons';
 import CreateCommentModal from './CreateCommentModal';
 import Moment from 'moment';
 import axios from 'axios';
-import { AXIOS_URL } from 'react-native-dotenv';
 import * as Calendar from 'expo-calendar';
 import SingleBandModal from './SingleBandModal'
 import { LinearGradient } from 'expo-linear-gradient';
@@ -95,7 +94,6 @@ export default function SingleShowModal(props) {
   const createEvent = async () => {
     try {
       const eventId = await Calendar.createEventAsync(userInfo.calID, details);
-      console.log("added event");
     }
     catch (error) {
       console.log('Error', error);
@@ -180,7 +178,6 @@ export default function SingleShowModal(props) {
               </View>
               {/* list of all additional bands playing in current show */}
               {bands && bands.map(band => {
-                console.log(band);
                 return (
                   <View style={styles.bandModal}>
                     <SingleBandModal band={band} getFollowedBands={getFollowedBands} getRSVPS={getRSVPS} />

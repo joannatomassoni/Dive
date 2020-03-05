@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
-import { AXIOS_URL } from 'react-native-dotenv';
 
 
 export default function CreateCommentModal({ showId, userId, getShowComments }) {
@@ -28,6 +27,7 @@ export default function CreateCommentModal({ showId, userId, getShowComments }) 
       >
         {/* start of modal when showing */}
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
+
           {/* back button */}
           <Ionicons size={64} style={styles.menuIconContainer} onPress={() => { setModalVisible(false) }}>
             <Ionicons
@@ -41,6 +41,7 @@ export default function CreateCommentModal({ showId, userId, getShowComments }) 
           <View style={styles.container}>
             <View style={styles.title}>
               <Text style={styles.text}>New Comment</Text>
+
               {/* new bio text box */}
               <TextInput
                 placeholder="Comment"
@@ -51,6 +52,7 @@ export default function CreateCommentModal({ showId, userId, getShowComments }) 
                 style={styles.input}
                 value={comment}
               />
+
               {/* edit bio button when modal is showing */}
               <TouchableOpacity
                 style={styles.loginContainer}
@@ -71,6 +73,7 @@ export default function CreateCommentModal({ showId, userId, getShowComments }) 
           </View>
         </KeyboardAvoidingView>
       </Modal>
+      
       {/* edit bio button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}

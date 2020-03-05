@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Modal,
   Text,
@@ -9,31 +9,11 @@ import {
 import { Card } from 'react-native-elements'
 import SingleShowModal from '../modals/SingleShowModal';
 import { Ionicons } from '@expo/vector-icons';
-import axios from 'axios';
-import { AXIOS_URL } from 'react-native-dotenv';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function PastGigsModal(props) {
-  const [pastGigs, setPastGigs] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  //allows user to get shows they previously went to on button click
-  let userId = props.userId;
-
-  const getPastGigs = () => {
-    axios.get(`https://dive-ios.appspot.com/bands/${userId}/pastgigs`)
-      .then(response => {
-        if (response.data.shows.length) {
-          setPastGigs(response.data.shows)
-        }
-      })
-      .catch(err => {
-        console.log("not getting older gigs", err);
-      })
-  }
-
-  useEffect(() => {
-    getPastGigs();
-  }, []);
+  let { pastGigs } = props;
 
   return (
     <View>
@@ -65,33 +45,32 @@ export default function PastGigsModal(props) {
                   pastGigs.map(show => {
                   return (
                     <Card
-                      // key={show.id}
+                      key={show.id}
                       style={styles.card}
                       backgroundColor='#111'
                       padding={10}
                       borderRadius={10}
                       containerStyle={styles.card}
                     >
-                      {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
                       {/* modal to display single show info */}
                       <SingleShowModal show={show} />
-                      <Text style={styles.cardText}>{show.name}</Text>
-                      <Text style={styles.cardText}>{show.time}</Text>
-                      <Text style={styles.cardText}>{show.date}</Text>
-                      <Text style={styles.cardText}>{show.description}</Text>
-                      {/* <EditShowModal /> */}
+                      <Text style={styles.cardDateText}>{show.time}</Text>
+                      <Text style={styles.cardDateText}>{show.date}</Text>
+                      {show.description ? 
+                        <Text style={styles.cardText}>{show.description}</Text>
+                        : null
+                      }
                     </Card>
                   )
                 })
                 : null
                 }
-                {/* </View> */}
               </View>
             </View>
             </LinearGradient>
           </View>
       </Modal >
-      {/* edit bio button when modal is hidden */}
+      {/* when modal is hidden */}
       < TouchableOpacity
         style={styles.signupContainer}
         onPress={() => { setModalVisible(true); }
@@ -128,6 +107,13 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     paddingRight: 20,
     marginBottom: 10
+  },
+  cardDateText: {
+    fontSize: 16,
+    color: '#75A4AD',
+    fontWeight: '500',
+    textAlign: 'left',
+    paddingRight: 20
   },
   text: {
     fontSize: 30,

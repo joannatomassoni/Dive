@@ -7,13 +7,13 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { Card } from 'react-native-elements';
 import Moment from 'moment';
 import SingleShowModal from '../modals/SingleShowModal';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
-import { MAP_KEY, AXIOS_URL } from 'react-native-dotenv';
+import { MAP_KEY } from 'react-native-dotenv';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -133,8 +133,6 @@ export default function SingleVenueModal(props) {
             {/* map view for current venue */}
             <View style={{padding: 10}}>
             <MapView 
-            // use line below for google maps
-            // provider={PROVIDER_GOOGLE}
             showsUserLocation={true}
             style={styles.mapStyle}
             region={venueLocation}
