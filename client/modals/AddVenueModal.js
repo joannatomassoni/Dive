@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   Modal,
   Text,
@@ -11,15 +11,8 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
-import { SignedInContext } from '../context/UserContext';
-import { AXIOS_URL } from 'react-native-dotenv';
-import VenuePicker from '../components/VenuePicker'
-import DateTimePicker from '../components/DateTimePicker';
 
-
-export default function AddVenueModal(props) {
-  //global user signin info and editing function
-  const [userInfo, setUserInfo] = useContext(SignedInContext);
+export default function AddVenueModal() {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //venue name

@@ -1,7 +1,7 @@
 /**
- * This is where our endpoints are created and our controllers are called.
+ * This is where our endpoints are created and our controller functions are called.
  * Descriptions will include what is needed from the request body and/or endpoint parameters
- * Mostly req.body should include strings of names
+ * Mostly, req.body should include strings of names
  */
 
 const express = require('express');
@@ -11,20 +11,19 @@ const ctrl = require('./db/controllers/index')
 
 // GENERAL USERS ROUTES
 
-// signup / create user
+// Signup / create user
 /**
  * req.body = 
  * { 
- * name REQUIRED
- * typeName REQUIRED
- * bio
- * link_facebook
- * link_spotify
- * link_instagram
- * photo 
+ *  name REQUIRED
+ *  typeName REQUIRED
+ *  bio
+ *  link_facebook
+ *  link_spotify
+ *  link_instagram
+ *  photo 
  * }
  */
-// creates fans and bands
 router.post('/users', ctrl.createUser);
 
 // add push token to user record
@@ -73,17 +72,17 @@ router.patch('/bands/:id/spotify', ctrl.updateBandSpotify)
 // Get band's upcoming gigs
 router.get('/bands/:id/shows', ctrl.getBandUpcomingGigs)
 
-// Get band's past gigs
-router.get('/bands/:id/pastgigs', ctrl.getBandPastGigs)
+// Get band's previous shows
+router.get('/shows/:id/oldShows', ctrl.getBandsPreviousShows)
 
 /**
  * BANDS-FANS
  */
-// Add fan for band
+// User follows a band
 // req.body = { id_fan }
 router.post('/bands/:id/fans/', ctrl.followBand)
 
-// Allow user to unfollow a band
+// User unfollows a band
 // req.body = { id_fan }
 router.delete('/bands/:id/fans', ctrl.unfollowBand)
 
@@ -114,18 +113,18 @@ router.delete('/venues/:id', ctrl.removeVenue);
 /**
  * VENUES-FANS
  */
-// Allow fan to follow a venue
+// User follows a venue
 // req.body = { id_fan }
 router.post('/venues/:id/fans', ctrl.addFanToVenue);
 
-// Unfollow a venue
+// User unfollows a venue
 // req.body = { id_fan }
 router.delete('/venues/:id/fans', ctrl.unfollowVenue);
 
-// Get all venues that a fan follows
+// Get all venues that a user follows
 router.get('/fans/:id/venues', ctrl.getFanVenues)
 
-// Get all fans who follow a given venue
+// Get all users who follow a given venue
 router.get('/venues/:id/fans', ctrl.getVenueFans)
 
 /**
@@ -169,9 +168,6 @@ router.get('/fans/:id/rsvps', ctrl.getFanUpcomingRSVPs)
 
 // Get past shows a user has attended
 router.get('/shows/:id/oldrsvps', ctrl.getFansPreviousShows)
-
-// Get band's previous shows
-router.get('/shows/:id/oldShows', ctrl.getBandsPreviousShows)
 
 /**
  * SHOW COMMENTS

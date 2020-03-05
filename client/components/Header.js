@@ -1,6 +1,5 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
-import { MenuButton } from './MenuButton';
 
 const Header = () => (
   // <View style={{ flexDirection: "row" }}>

@@ -1,3 +1,9 @@
+/**
+ * Define and export the shows table.
+ * Has foreign key reference to venues and users tables 
+ * (the latter for bands who are playing the show)
+ */
+
 module.exports = (sequelize, type) => {
   return sequelize.define('show', {
     name: {

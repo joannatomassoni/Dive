@@ -12,7 +12,6 @@ import {
 import axios from 'axios';
 import { SignedInContext } from '../context/UserContext';
 import { Ionicons } from '@expo/vector-icons';
-import { AXIOS_URL } from 'react-native-dotenv';
 import * as ImagePicker from 'expo-image-picker';
 
 
@@ -30,7 +29,6 @@ export default function EditBandBioModal({ getBandInfo }) {
   //new instagram link
   const [instagramLink, setInstagramLink] = useState('');
 
-  // const [image, setImage] = useState({});
   //sets photo uploaded from phone
   let [selectedImage, setSelectedImage] = useState({});
   //cloudinary url to send photo to
@@ -86,9 +84,6 @@ export default function EditBandBioModal({ getBandInfo }) {
     await axios.patch(`https://dive-ios.appspot.com/bands/${userInfo.id}/photo`, {
       bandPhoto: bandPhoto
     })
-      .then(response => {
-        console.log("saving photo to db", bandPhoto)
-      })
       .catch(err => {
         console.log("not saving to db", err)
       })
@@ -226,21 +221,7 @@ export default function EditBandBioModal({ getBandInfo }) {
               >
                   <Text style={styles.signupButtonText}>Select Photo</Text>
                 </TouchableOpacity>
-
-                {/* {image.uri && */}
-                {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
               </View>
-              {/* <View style={styles.button} >
-                <TouchableOpacity
-                  style={styles.returnButtonContainer}
-                  onPress={savePhoto}
-                >
-                  <Text style={styles.signupButtonText}>Save Photo</Text>
-                </TouchableOpacity>
-              </View> */}
-
-              {/* {image.uri && */}
-              {/* <Image source={bandPhoto} style={{ width: 150, height: 150 }} />} */}
 
               {/* button to complete editing */}
               <TouchableOpacity

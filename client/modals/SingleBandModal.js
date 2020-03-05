@@ -5,7 +5,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView,
   Image,
   ImageBackground
 } from 'react-native';
@@ -19,7 +18,6 @@ import SpotifyButton from '../components/SpotifyButton';
 import FacebookButton from '../components/FacebookButton';
 import InstagramButton from '../components/InstagramButton';
 import Moment from 'moment';
-import { AXIOS_URL } from 'react-native-dotenv';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function SingleBandModal(props) {
@@ -29,7 +27,6 @@ export default function SingleBandModal(props) {
   const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
   const [isFollowing, toggleFollowing] = useState(false);
-  const getAllBands = props.getAllBands;
   const band = props.band;
  
   // request to see if user is following band

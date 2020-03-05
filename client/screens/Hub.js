@@ -4,7 +4,6 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity,
   ImageBackground,
 } from 'react-native';
 import { Card } from 'react-native-elements';
@@ -21,7 +20,7 @@ import EditShowModal from '../modals/EditShowModal';
 import SingleBandModal from '../modals/SingleBandModal';
 import SingleShowModal from '../modals/SingleShowModal';
 import PreviousRSVPShows from '../modals/PreviousRsvpShows';
-import PreviousBandShows from '../modals/PreviousBandShows';
+import PastGigsModal from '../modals/PastGigsModal';
 import Moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -31,12 +30,10 @@ export default function Hub(props) {
   //hub info to display
   const [hubInfo, setHubInfo] = useState({});
   const [shows, setShows] = useState([]);
-  // const [oldShows, setOldShows] = useState([]);
   const [fanShows, setFanShows] = useState([]);
   const [followed, setFollowed] = useState([]);
   const [oldShows, setOldShows] = useState([]);
-
-  console.log(hubInfo);
+  const [pastGigs, setPastGigs] = useState([]);
 
   //request to get all bands from db
   const getAllBands = () => {
@@ -111,7 +108,7 @@ export default function Hub(props) {
     axios.get(`https://dive-ios.appspot.com/shows/${userInfo.id}/oldShows`)
       .then(response => {
         console.log("getting old shows bands played", response.data);
-        setOldShows(response.data[0])
+        setPastGigs(response.data[0].shows)
       })
       .catch(err => {
         console.log("not getting older shows for previously played", err);
@@ -230,7 +227,6 @@ export default function Hub(props) {
                           <Text style={styles.cardText} key={band.id}>{band.name}</Text>
                         })
                         : null}
-                      {/* <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text> */}
                     </View>
                     <View >
                       {/* show flyer */}
@@ -273,7 +269,7 @@ export default function Hub(props) {
             }
           </View>
           <PreviousRSVPShows userId={userInfo.id} />
-          {/* <PreviousBandShows oldShows={oldShows} /> */}
+          <PastGigsModal user={userInfo} pastGigs={pastGigs}/>
         </ScrollView>
       </LinearGradient>
     </View >

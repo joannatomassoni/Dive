@@ -5,9 +5,9 @@ const Op = Sequelize.Op;
 
 /**
  * These are helper functions to grab all data from a single record 
- * when provided its name or id, depending on the type
+ * when provided its name or id
  * We use this in the controllers to grab record info 
- * when we're passed a name from the front end
+ * when we're passed a name or id from the front end
  * 
  * (call it with await in an async function)
  * 

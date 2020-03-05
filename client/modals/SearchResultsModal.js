@@ -3,7 +3,6 @@ import { Modal, View, SafeAreaView, StyleSheet, Text, ScrollView, TextInput } fr
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import { Card } from 'react-native-elements';
-import { AXIOS_URL } from 'react-native-dotenv';
 import SingleVenueModal from '../modals/SingleVenueModal'
 import SingleBandModal from '../modals/SingleBandModal'
 import SingleShowModal from '../modals/SingleShowModal'
@@ -129,8 +128,6 @@ export default function SearchResultsModal() {
                                         <Text style={styles.cardText} key={band.id}>{band.name}</Text>
                                     })
                                     : null }
-                                    {/* Change query to make this venue text work */}
-                                    {/* <Text style={styles.cardVenueText} key={show.venue.id}>{show.venue.name}</Text> */}
                                   </View>
                                 </View>
                               </Card>

@@ -29,20 +29,9 @@ const { DB_USER, DB_PASS, DB_NAME, DB_HOST, CLOUD_SQL_CONNECTION_NAME } = proces
 // });
 
 // // PROD
-// const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
-//   dialect: 'mysql',
-//   host: DB_HOST,
-//   timestamps: false,
-//   pool: {
-//     max: 3,
-//     min: 0,
-//     idle: 10000
-//   },
-// });
-
-const sequelize = new Sequelize('dive', 'root', 'dive', {
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
   dialect: 'mysql',
-  host: '35.225.82.14',
+  host: DB_HOST,
   timestamps: false,
   pool: {
     max: 3,
@@ -50,9 +39,6 @@ const sequelize = new Sequelize('dive', 'root', 'dive', {
     idle: 10000
   },
 });
-
-
-
 
 
 // instanstiate the models here
@@ -83,7 +69,6 @@ Venue.hasMany(Show, { foreignKey: { name: 'id_venue', allowNull: false } });
 // join table for shows and fans (RSVPs)
 Show.belongsToMany(User, { as: 'Fans', through: RSVP, foreignKey: { name: 'id_show', allowNull: false } })
 User.belongsToMany(Show, { through: RSVP, foreignKey: { name: 'id_fan', allowNull: false } })
-
 
 // join table for shows and bands
 Show.belongsToMany(User, { as: 'bands', through: ShowBand, foreignKey: { name: 'id_show', allowNull: false } });
@@ -123,11 +108,9 @@ Show.belongsToMany(Comment, { through: 'show_comments' })
 
 
 /**
- * Next we create the database and tables, and prepopulate our type, genre, and venue tables.
+ * Next we create the database and tables, and prepopulate our type and venue tables.
  */
-// TODO: should we prepopulate venues?
 
-// Use line 99 instead of line 100 if you don't want the database to drop on server refresh
 sequelize.sync()
   .then(() => {
     console.log(`Database & tables created!`)

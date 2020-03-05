@@ -10,7 +10,6 @@ import { SignedInContext } from '../context/UserContext';
 import MenuButton from '../components/MenuButton';
 import AddVenueModal from '../modals/AddVenueModal';
 import SingleVenueModal from '../modals/SingleVenueModal';
-import { AXIOS_URL } from 'react-native-dotenv';
 import { LinearGradient } from 'expo-linear-gradient';
 
 // export default class Venues extends React.Component {

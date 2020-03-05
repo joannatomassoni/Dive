@@ -1,3 +1,7 @@
+/**
+ * We compile all of our models for exporting to sequelize.js here
+ */
+
 const BandGenreModel = require('./BandGenre');
 const CommentModel = require('./Comment');
 const FanBandModel = require('./FanBand');

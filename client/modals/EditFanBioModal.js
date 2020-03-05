@@ -8,10 +8,9 @@ import {
   TextInput,
   KeyboardAvoidingView
 } from 'react-native';
-import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function EditBandBioModal(props) {
+export default function EditBandBioModal() {
   //state for modal visibility
   const [modalVisible, setModalVisible] = useState(false);
   //new bio
@@ -84,7 +83,7 @@ export default function EditBandBioModal(props) {
           </View>
         </KeyboardAvoidingView>
       </Modal>
-      {/* cedit bio button when modal is hidden */}
+      {/* edit bio button when modal is hidden */}
       <TouchableOpacity
         style={styles.signupContainer}
         onPress={() => { setModalVisible(true); }}

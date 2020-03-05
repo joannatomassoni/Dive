@@ -14,7 +14,7 @@ import RadioForm from 'react-native-simple-radio-button';
 import { Ionicons } from '@expo/vector-icons';
 import * as Google from "expo-google-app-auth";
 import * as Calendar from 'expo-calendar';
-import { IOS_AUTH_KEY, ANDROID_AUTH_KEY, AXIOS_URL } from 'react-native-dotenv';
+import { IOS_AUTH_KEY, ANDROID_AUTH_KEY } from 'react-native-dotenv';
 import registerforPushNotificationsAsync from '../expoPushFunctions/registerForPushNotificationsAsync';
 
 export default function ModalExample(props) {
@@ -55,7 +55,6 @@ export default function ModalExample(props) {
       ownerAccount: 'personal',
       accessLevel: Calendar.CalendarAccessLevel.OWNER,
     })
-    console.log(`Your new calendar ID is: ${newCalendarID}`)
     const result = await axios.patch(`https://dive-ios.appspot.com/users/${username}/cal`, {
       calID: newCalendarID,
     })
@@ -72,7 +71,6 @@ export default function ModalExample(props) {
         scopes: ["profile", "email"]
       })
       if (type === "success") {
-        //console.log('User Info: ', user, 'Access Token: ', accessToken);
         //key values to add to the userInfo global state
         setUserInfo(userInfo =>
           ({
@@ -111,8 +109,6 @@ export default function ModalExample(props) {
       const { status } = await Calendar.requestCalendarPermissionsAsync();
       if (status === 'granted') {
         const calendars = await Calendar.getCalendarsAsync();
-        console.log('Here are all your calendars:');
-        console.log({ calendars });
       }
     })();
   }, []);

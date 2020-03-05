@@ -10,7 +10,6 @@ import { Card } from 'react-native-elements'
 import SingleShowModal from '../modals/SingleShowModal';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
-import { AXIOS_URL } from 'react-native-dotenv';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function PreviousRSVPShows(props) {
@@ -72,7 +71,6 @@ export default function PreviousRSVPShows(props) {
                         borderRadius={10}
                         containerStyle={styles.card}
                       >
-                        {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> */}
                         {/* modal to display single show info */}
                         <SingleShowModal show={show} />
                         <Text style={styles.cardText}>{show.name}</Text>
@@ -97,7 +95,7 @@ export default function PreviousRSVPShows(props) {
         onPress={() => { setModalVisible(true); }
         }
       >
-        <Text style={styles.signupButtonText}>Past Attended Shows</Text>
+        <Text style={styles.signupButtonText}>Past RSVPs</Text>
       </TouchableOpacity >
 
     </View >

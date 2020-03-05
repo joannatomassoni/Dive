@@ -1,16 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   Image,
-  SafeAreaView,
-  Dimensions
 } from 'react-native';
 import { Card } from 'react-native-elements'
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
-import { SignedInContext } from '../context/UserContext'
 import MenuButton from '../components/MenuButton'
 import SingleShowModal from '../modals/SingleShowModal'
 import Moment from 'moment';
@@ -18,15 +15,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Shows(props) {
   //global user signin info and editing function
-  const [userInfo, setUserInfo] = useContext(SignedInContext);
   const [shows, setShows] = useState([]);
-  // const [flyer, setFlyer] = useState("");
 
   //request to get all shows
   const getAllShows = () => {
     axios.get('https://dive-ios.appspot.com/shows')
       .then((response) => {
-        console.log('response received')
         setShows(() => response.data);
       })
       .catch((err) => {
@@ -41,8 +35,6 @@ export default function Shows(props) {
   useEffect(() => {
     getAllShows();
   }, [])
-
-  console.log(shows);
 
   return (
     <View style={styles.container}>
@@ -87,7 +79,6 @@ export default function Shows(props) {
             )
           })}
           {/* modal for getting nearby shows */}
-          {/* <ShowsNearBy /> */}
         </ScrollView>
       </LinearGradient>
     </View >

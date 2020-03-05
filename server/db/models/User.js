@@ -1,3 +1,10 @@
+/**
+ * Define and export the users table.
+ * Has foreign key reference to types table, 
+ * indicating whether the user is of type 'fan' or 'band',
+ * which indicates what features they have access to.
+ */
+
 module.exports = (sequelize, type) => {
     return sequelize.define('user', {
         name: {
